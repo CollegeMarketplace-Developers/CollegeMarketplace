@@ -584,9 +584,9 @@
             }
         }
     </script>
-    <!-- <script
+    <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2Umn-3TUxP23ok373mWr0U4CHQDItcEk&callback=initMap&libraries=places&v=weekly"
       defer
-    ></script> -->
+    ></script>
 </x-layout>
 {{-- @endsection --}}
