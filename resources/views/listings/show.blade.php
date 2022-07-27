@@ -265,8 +265,9 @@
                 return true;
             }return false;
         }  
-                      
-        function initMap() {
+        
+        //code for dynamic map
+        /*function initMap() {
             var mapTwo;
             var geocoder;
             var listingLat = "{{$listing->latitude}}";
@@ -314,7 +315,7 @@
                 });
                 marker.setMap(mapTwo);
             }
-        }
+        }*/
 
         //trying to implement static maps
         function getGoogleMapsImage(addressElements) {
@@ -584,6 +585,7 @@
             }
         }
     </script>
+    <!-- for dynamic map, not needed since using static -->
     <!-- <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2Umn-3TUxP23ok373mWr0U4CHQDItcEk&callback=initMap&libraries=places&v=weekly"
       defer

@@ -257,8 +257,9 @@
                 return true;
             }return false;
         }
-                
-        function initMap() {
+        
+        //code for dynamic maps
+        /*function initMap() {
             var mapTwo;
             var geocoder;
             var listingLat = "{{$rentable->latitude}}";
@@ -306,7 +307,30 @@
                 });
                 marker.setMap(mapTwo);
             }
+        }*/
+
+        //trying to implement static maps
+        function getGoogleMapsImage(addressElements) {
+            var image = document.createElement('img');
+            var joined = addressElements.join(',');
+            var params = new URLSearchParams();
+            params.append('center', joined);
+            params.append('zoom', '15');
+            params.append('size', '500x240');
+            params.append('maptype', 'roadmap');
+            params.append('markers', 'color:red|label:C|' + joined);
+            params.append('key', 'AIzaSyA2Umn-3TUxP23ok373mWr0U4CHQDItcEk');
+            //params.append('signature','smZ85pItXiH894n1c2ElR0RY-HQ=');
+            var url = 'https://maps.googleapis.com/maps/api/staticmap?' + params.toString();
+            //console.log(url);
+            image.src = url;
+            document.getElementById('map-container').appendChild(image);
+            return url;
         }
+
+        let address = ['{{$rentable->street}}', '{{$rentable->city}}', '{{$rentable->state}}', '{{$rentable->postcode}}', '{{$rentable->country}}'];
+        
+        console.log(getGoogleMapsImage(address));
         
 
         function myFunction(imgs) {
@@ -553,10 +577,11 @@
         }
     </script>
 
-    <script
+    <!-- code for dynamic maps -->
+    <!-- <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2Umn-3TUxP23ok373mWr0U4CHQDItcEk&callback=initMap&libraries=places&v=weekly"
       defer
-    ></script>
+    ></script> -->
 
 </x-layout>
 {{-- @endsection --}}
