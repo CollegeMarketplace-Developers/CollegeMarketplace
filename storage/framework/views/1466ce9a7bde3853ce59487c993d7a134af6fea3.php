@@ -184,7 +184,6 @@
             
             <div class="map-chat-container">
                 <div class="map-container" id = "map-container">
-                    
                 </div>
                 
                 <div class="chat-container">

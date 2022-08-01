@@ -27,13 +27,13 @@ class SubleaseController extends Controller
             'description'=>'required',
             'image_uploads'=>'required',
             'utilities'=>'required',
-            'street'=>'required_without:latitude',
-            'city'=>'required_without:latitude',
-            'state'=>'required_without:latitude',
-            'country'=>'required_without:latitude',
-            'postcode'=>'required_without:latitude',
-            'latitude' => 'required_without:street',
-            'longitude' =>'required_without:street',
+            'street'=>'required',
+            'city'=>'required',
+            'state'=>'required',
+            'country'=>'required',
+            'postcode'=>'required',
+            // 'latitude' => 'required_without:street',
+            // 'longitude' =>'required_without:street',
             'apartment_floor'=>'nullable'
         ]);
         $formFields['user_id']=auth()->id();
@@ -185,13 +185,13 @@ class SubleaseController extends Controller
             'condition'=>'required',
             'description'=>'required',
             'utilities'=>'required',
-            'street'=>'required_without:latitude',
-            'city'=>'required_without:latitude',
-            'state'=>'required_without:latitude',
-            'country'=>'required_without:latitude',
-            'postcode'=>'required_without:latitude',
-            'latitude' => 'required_without:street',
-            'longitude' =>'required_without:street',
+            'street'=>'required',
+            'city'=>'required',
+            'state'=>'required',
+            'country'=>'required',
+            'postcode'=>'required',
+            // 'latitude' => 'required_without:street',
+            // 'longitude' =>'required_without:street',
             'apartment_floor'=>'nullable'
         ]);
 

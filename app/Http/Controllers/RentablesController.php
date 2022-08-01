@@ -27,13 +27,13 @@ class RentablesController extends Controller
             'tags'=>'required',
             'description'=>'required',
             'image_uploads'=>'required',
-            'street'=>'required_without:latitude',
-            'city'=>'required_without:latitude',
-            'state'=>'required_without:latitude',
-            'country'=>'required_without:latitude',
-            'postcode'=>'required_without:latitude',
-            'latitude' => 'required_without:street',
-            'longitude' =>'required_without:street',
+            'street'=>'required',
+            'city'=>'required',
+            'state'=>'required',
+            'country'=>'required',
+            'postcode'=>'required',
+            // 'latitude' => 'required_without:street',
+            // 'longitude' =>'required_without:street',
             'apartment_floor'=>'nullable'
         ]);
         $formFields['user_id']=auth()->id();
@@ -177,13 +177,13 @@ class RentablesController extends Controller
             'category'=>'required',
             'tags'=>'required',
             'description'=>'required',
-            'street'=>'required_without:latitude',
-            'city'=>'required_without:latitude',
-            'state'=>'required_without:latitude',
-            'country'=>'required_without:latitude',
-            'postcode'=>'required_without:latitude',
-            'latitude' => 'required_without:street',
-            'longitude' =>'required_without:street',
+            'street'=>'required',
+            'city'=>'required',
+            'state'=>'required',
+            'country'=>'required',
+            'postcode'=>'required',
+            // 'latitude' => 'required_without:street',
+            // 'longitude' =>'required_without:street',
             'apartment_floor'=>'nullable'
         ]);
 
