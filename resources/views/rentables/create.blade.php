@@ -212,11 +212,11 @@
                                 <p>{{$message}}</p>
                             @enderror
 
-                            <input type="hidden" name="latitude" id ="latitude" value = "{{null}}">
+                            {{-- <input type="hidden" name="latitude" id ="latitude" value = "{{null}}">
                             <input type="hidden" name="longitude" id = "longitude" value = "{{null}}">
 
                             <p class="create-listing-header">Use My Location:</p>
-                            <h6 onclick="getLocation()" class = "preview" id="location" style="font-size:1em;">Get Location</h6>
+                            <h6 onclick="getLocation()" class = "preview" id="location" style="font-size:1em;">Get Location</h6> --}}
                         </section>
 
 

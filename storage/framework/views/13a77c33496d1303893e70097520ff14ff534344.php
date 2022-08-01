@@ -330,11 +330,11 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
 
-                            <input type="hidden" name="latitude" id ="latitude" value = "<?php echo e(null); ?>">
-                            <input type="hidden" name="longitude" id = "longitude" value = "<?php echo e(null); ?>">
+                            
+                            
 
-                            <p class="create-listing-header">Use My Location:</p>
-                            <h6 onclick="getLocation()" class = "preview" id="location" style="font-size:1em;">Get Location</h6>
+                            
+                            
                         </section>
 
 

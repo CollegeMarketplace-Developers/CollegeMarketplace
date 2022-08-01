@@ -158,7 +158,6 @@
             {{-- user chat and map area --}}
             <div class="map-chat-container">
                 <div class="map-container" id = "map-container">
-                    {{-- <h1>Maps feature</h1> --}}
                 </div>
                 <div class="chat-container">
                     {{-- only want to go through list of users & the messages from each user if the current listing is mine --}}

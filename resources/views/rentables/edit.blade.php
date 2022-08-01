@@ -232,7 +232,7 @@
                                 <p>{{$message}}</p>
                             @enderror
 
-                            <input type="hidden" name="latitude" id ="latitude" value = "{{$rentable->latitude}}">
+                            {{-- <input type="hidden" name="latitude" id ="latitude" value = "{{$rentable->latitude}}">
                             <input type="hidden" name="longitude" id = "longitude" value = "{{$rentable->longitude}}">
 
                             <p class="create-listing-header">Use My Location:</p>
@@ -242,7 +242,7 @@
                                 @else
                                     Get My Location
                                 @endif
-                            </h6>
+                            </h6> --}}
                         </section>
 
 

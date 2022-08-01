@@ -177,7 +177,6 @@
             
             <div class="map-chat-container">
                 <div class="map-container" id="map-container">
-                    <h1>Maps feature</h1>
                 </div>
                 <div class="chat-container">
                     
