@@ -12,21 +12,6 @@
 <?php unset($__defined_vars); ?>
 
 <li class="cards_item" data-aos="zoom-in">
-    <div class="card-type">
-        <?php if($listing instanceof \App\Models\Listing): ?>
-            <div class="card-type-inner for-sale">
-                <h5>For Sale</h5>
-            </div>
-        <?php elseif($listing instanceof \App\Models\Rentable): ?>
-            <div class="card-type-inner for-rent">
-                <h5>For Rent</h5>
-            </div>
-        <?php elseif($listing instanceof \App\Models\Sublease): ?>
-        <div class="card-type-inner for-lease">
-            <h5>For Lease</h5>
-        </div>
-        <?php endif; ?>
-    </div>
     <div class="card"> 
         <div class="card_image">
             <?php if($listing instanceof \App\Models\Listing): ?>
@@ -41,6 +26,9 @@
                     <div class="status">
                     </div>
                 <?php endif; ?>
+                <div class="card_type sale">
+                    <p>For Sale</p>
+                </div>
                 <a href="/listings/<?php echo e($listing->id); ?>">
                     <?php
                     $imgLinks = null;
@@ -63,6 +51,9 @@
                     <div class="status">
                     </div>
                 <?php endif; ?>
+                <div class="card_type rent">
+                    <p>For Rent</p>
+                </div>
                 <a href="/rentables/<?php echo e($listing->id); ?>">
                     <?php
                     $imgLinks = null;
@@ -84,6 +75,9 @@
                     <div class="status">
                     </div>
                 <?php endif; ?>
+                <div class="card_type lease">
+                    <p>For Lease</p>
+                </div>
                 <a href="/subleases/<?php echo e($listing->id); ?>">
                     <?php
                     $imgLinks = null;

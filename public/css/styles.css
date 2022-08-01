@@ -104,14 +104,11 @@ li{
     width:100%;
     height: fit-content;
     background-color: var(--background-color);
-    /* background-color: red; */
-    /* background-color: white; */
-    /* background-color: var(--light-color); */
     box-sizing: border-box;
-    /* padding: 1em 2em; */
-    /* background-color:green; */
-    /* background-color: var(--gray-color); */
     padding:0 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .listings-container{
@@ -371,9 +368,9 @@ li{
         font-size: 20px;
     }
 
-    .main-listings-container{
+    /* .main-listings-container{
         padding: 0;
-    }
+    } */
 }
 
 /* loading page end */

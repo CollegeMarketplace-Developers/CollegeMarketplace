@@ -3,7 +3,7 @@
 
  
 <link rel="stylesheet" types="text/css" href="/css/listingGallary.css">
-<section class="container" style="border: none !important"> 
+<section class="container gallary-container" style="border: none !important"> 
     <div class="subcontainer">
         <div class="controller">
             <h2><?php echo e($heading); ?></h2>

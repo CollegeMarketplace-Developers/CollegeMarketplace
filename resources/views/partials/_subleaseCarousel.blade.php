@@ -1,7 +1,7 @@
 {{-- css for the carousel --}}
 <link rel="stylesheet" types ="text/css" href="/css/carousel.css">
 
-<section id="slider">
+<section id="slider" class="sublease-slider">
     <div class="container">
         <div class="subcontainer">
             <div class="slider-wrapper">
