@@ -1,21 +1,6 @@
 @props(['listing', 'displayTags'])
 {{-- data-aos-once="true" --}}
 <li class="cards_item" data-aos="zoom-in">
-    <div class="card-type">
-        @if($listing instanceof \App\Models\Listing)
-            <div class="card-type-inner for-sale">
-                <h5>For Sale</h5>
-            </div>
-        @elseif($listing instanceof \App\Models\Rentable)
-            <div class="card-type-inner for-rent">
-                <h5>For Rent</h5>
-            </div>
-        @elseif($listing instanceof \App\Models\Sublease)
-        <div class="card-type-inner for-lease">
-            <h5>For Lease</h5>
-        </div>
-        @endif
-    </div>
     <div class="card"> 
         <div class="card_image">
             @if($listing instanceof \App\Models\Listing)
@@ -30,6 +15,9 @@
                     <div class="status">
                     </div>
                 @endif
+                <div class="card_type sale">
+                    <p>For Sale</p>
+                </div>
                 <a href="/listings/{{$listing->id}}">
                     @php
                     $imgLinks = null;
@@ -52,6 +40,9 @@
                     <div class="status">
                     </div>
                 @endif
+                <div class="card_type rent">
+                    <p>For Rent</p>
+                </div>
                 <a href="/rentables/{{$listing->id}}">
                     @php
                     $imgLinks = null;
@@ -73,6 +64,9 @@
                     <div class="status">
                     </div>
                 @endif
+                <div class="card_type lease">
+                    <p>For Lease</p>
+                </div>
                 <a href="/subleases/{{$listing->id}}">
                     @php
                     $imgLinks = null;

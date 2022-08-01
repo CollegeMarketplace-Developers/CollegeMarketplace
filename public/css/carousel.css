@@ -1,26 +1,33 @@
 
 #slider{
     height: fit-content;
-    /* border: 1px solid black; */
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-color: gray; */
     color: black;
+    width: 100%;
+    max-width: 1600px;
+}
+
+.sale-slider, .rent-slider, .sublease-slider, .gallary-container{
+    margin-bottom: 20px;
+}
+.sale-slider, .gallary-container{
+    background-color: rgb(17 16 21 / 25%) !important;
+    padding: 10px 0;
+}
+
+.rent-slider, .sublease-slider{
+    background-color: var(--red-accent-color);
+    padding: 10px;
 }
 
 .container{
-    /* background-color: maroon; */
     display: flex;
     align-items: center;
     justify-content: center;
-    /* background-color: white; */
-    /* border: 2px solid black; */
-
-    /* previous width was 1600px and no max-width */
     width: 100%;
     max-width: 1600px;
-    margin: auto;
     background-color: var(--light-gray-color);
 }
 
@@ -55,13 +62,13 @@
     outline: none;
     position: absolute;
     transition: .7s ease-in-out;
-    border: 3px solid var(--red-accent-color);
-    background-color: var(--red-accent-color);
+    border: 3px solid gray;
+    background-color: #151416;
     box-shadow: 0 0 5px black;
 }
 
 .previous:hover, .next:hover{
-    border: 3px solid gray;
+    border: 3px solid var(--red-accent-color);
 }
 
 .next{
@@ -189,7 +196,8 @@
 .slide-img a{
     width: 100%;
     height: 100%;
-    background: var(--red-accent-color);
+    /* background: var(--red-accent-color); */
+    background-color: rgb(17 16 21 / 25%);
 }
 .ribbon{
     position: absolute;

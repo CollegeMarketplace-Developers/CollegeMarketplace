@@ -184,6 +184,7 @@ input::-webkit-inner-spin-button {
     background: linear-gradient(261.71deg, #3A3845 13.92%, #2C2A36 84.19%) !important;
     padding: 10px 50px;
     list-style-type: none;
+    margin-bottom: 20px;
 }
 
 .filters-applied-list li{
