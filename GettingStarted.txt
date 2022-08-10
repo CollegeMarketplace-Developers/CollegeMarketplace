@@ -27,23 +27,25 @@ RDS_DB_NAME=college_marketplace
 RDS_USERNAME=root
 RDS_PASSWORD=
 
+8. Set Encryption key in your config/app.php by running the following command
+php artisan key:generate
 
-8. Run the following commands:
+9. Run the following commands:
 php artisan route:cache
->> php artisan route:clear
->> php artisan config:cache
->> php artisan config:clear
->> php artisan optimize
+php artisan route:clear
+php artisan config:cache
+php artisan config:clear
+php artisan optimize
 
-9. run within the C:/xampp/htdocs/College Marketplace Terminal the following command(s):
+10. run within the C:/xampp/htdocs/College Marketplace Terminal the following command(s):
 
 php artisan migrate
 php artisan db:seed
 
-10. run within the C:/xampp/htdocs/College Marketplace Terminal the following command(s):Add
+11. run within the C:/xampp/htdocs/College Marketplace Terminal the following command(s):Add
 
 php artisan serve
 
-11. CTRL + LEFT CLICK THE LINK THAT SAYS http://127.0.0.1:8000 within the terminal to launch college marketplace
+12. CTRL + LEFT CLICK THE LINK THAT SAYS http://127.0.0.1:8000 within the terminal to launch college marketplace
 
-12. Reach out to Davi or Ayub for any help with these issues. please make sure to have gone through this thoroughly before reaching out to us :)
+13. Reach out to Davi or Ayub for any help with these issues. please make sure to have gone through this thoroughly before reaching out to us :)
