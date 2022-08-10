@@ -8,15 +8,19 @@
 
     <main class = "main-listings-container">
 
+        <div class = "listings-parent-container">
+            @include('partials._carouselByCategory',['furnitureItems' => $furnitureItems, 'clothesItems'=>$clothesItems, "electronicsItems"=>$electronicsItems, 'kitchenItems' => $kitchenItems, 'schoolItems' =>$schoolItems, 'bookItems'=>$bookItems])
+        </div>
+
         {{-- carousel for listings --}}
         <div class = "listings-parent-container">
-            @include('partials._listingCarousel', ['listings' => $listingsNear, 'message' => 'Items Within A Mile', 'carouselClass'=>'my-slider','carouselControls' => 'controls', 'carouselP' =>'previous previous1', 'carouselN' => 'next next1'])
+            @include('partials._listingCarousel', ['listings' => $listingsNear, 'message' => 'Within A Mile', 'carouselClass'=>'my-slider','carouselControls' => 'controls', 'carouselP' =>'previous previous1', 'carouselN' => 'next next1'])
         </div>
 
         {{-- carousel for rentables --}}
         <div class="listings-parent-container">
             @include('partials._rentablesCarousel',
-            ['rentables'=> $rentables, 'message' => 'Items For Rent' , 'carouselClass' => 'slider2',
+            ['rentables'=> $rentables, 'message' => 'For Rent' , 'carouselClass' => 'slider2',
             'carouselControls' => 'controls2', 'carouselP' =>' previous previous2', 'carouselN' => 'next next2'])
         </div>
         

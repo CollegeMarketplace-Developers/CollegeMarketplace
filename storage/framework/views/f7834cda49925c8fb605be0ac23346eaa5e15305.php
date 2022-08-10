@@ -13,7 +13,7 @@
 <div>
     
     <?php if($listing != null): ?>
-        <div <?php echo e($attributes->merge(['class'=> 'slide single-post-cont'])); ?>>
+        <div <?php echo e($attributes->merge(['class'=> 'slide single-post-cont'])); ?> data-aos="fade-right">
             
             
             <div class="slide-img">
@@ -51,18 +51,25 @@
             </div>
             
             <div class = "listing-details">
-                <a href="/listings/<?php echo e($listing->id); ?>"><?php echo e($listing->item_name); ?></a>
-                <h4>$<?php echo e($listing->price); ?></h4>
-                <h5><?php echo e($listing->city); ?>, <?php echo e($listing->state); ?></h5>
-                
-            </div>
-            <div class="listing-type">
-                <h5>For Sale</h5>
+                <div class="listing-details-top">
+                    <h1>$<?php echo e($listing->price); ?></h1>
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+                <div class="listing-details-middle">
+                    <a href="/listings/<?php echo e($listing->id); ?>"><?php echo e($listing->item_name); ?></a>
+                </div>
+                <div class="listing-details-bottom">
+                    <div>
+                        <p><?php echo e($listing->city); ?>, <?php echo e($listing->state); ?></p>
+                        <p><?php echo e($listing->condition); ?></p>
+                    </div>
+                    <a class="type-sale" href="/listings/<?php echo e($listing->id); ?>">Buy</a>
+                </div>
             </div>
         </div>
     
     <?php elseif($rentable != null): ?>
-        <div <?php echo e($attributes->merge(['class'=> 'slide single-post-cont '])); ?>>
+        <div <?php echo e($attributes->merge(['class'=> 'slide single-post-cont '])); ?> data-aos="fade-right">
             
             
             <div class="slide-img">
@@ -94,17 +101,26 @@
                 </a>
             </div>
             
+            
             <div class = "listing-details">
-                <a href="/rentables/<?php echo e($rentable->id); ?>"><?php echo e($rentable->rental_title); ?></a>
-                <h4>$<?php echo e($rentable->rental_charging); ?> / <?php echo e($rentable->rental_duration); ?></h4>
-                <h5><?php echo e($rentable->city); ?>, <?php echo e($rentable->state); ?></h5> 
-            </div>
-            <div class="rentable-type">
-                <h5>For Rent</h5>
+                <div class="listing-details-top">
+                    <h1>$<?php echo e($rentable->rental_charging); ?> / <?php echo e($rentable->rental_duration); ?></h1>
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+                <div class="listing-details-middle">
+                    <a href="/rentables/<?php echo e($rentable->id); ?>"><?php echo e($rentable->rental_title); ?></a>
+                </div>
+                <div class="listing-details-bottom">
+                    <div>
+                        <p><?php echo e($rentable->city); ?>, <?php echo e($rentable->state); ?></p>
+                        <p><?php echo e($rentable->condition); ?></p>
+                    </div>
+                    <a class="type-rent" href="/listings/<?php echo e($rentable->id); ?>">Rent</a>
+                </div>
             </div>
         </div>
     <?php else: ?>
-         <div <?php echo e($attributes->merge(['class'=> 'slide single-post-cont '])); ?>>
+         <div <?php echo e($attributes->merge(['class'=> 'slide single-post-cont '])); ?> data-aos="fade-right">
             
             
             <div class="slide-img">
