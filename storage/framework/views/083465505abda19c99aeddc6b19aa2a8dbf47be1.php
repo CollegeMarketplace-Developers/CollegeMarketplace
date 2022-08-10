@@ -17,11 +17,11 @@
                 <?php endif; ?>
                 <div class="controller">
                     <div> 
-                        <h2><?php echo e($message); ?>: <?php echo count($rentables) ?></h2>
+                        
+                        <h2><?php echo e($message); ?></h2>
                         <a style="font-size:14px;" href="/shop/all?type=rentable" class="button1">MORE ></a>
                     </div>
                 </div>
-                <br>
                 <?php if (! (count($rentables) == 0)): ?>
                     <div class="<?php echo e($carouselClass); ?>">
                         <?php $__currentLoopData = $rentables; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rentable): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
