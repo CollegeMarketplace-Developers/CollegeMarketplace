@@ -94,14 +94,6 @@
                 </a>
             </div>
             {{-- </a> --}}
-            {{-- <div class = "listing-details">
-                <a href="/rentables/{{$rentable->id}}">{{$rentable->rental_title}}</a>
-                <h4>${{$rentable->rental_charging}} / {{$rentable->rental_duration}}</h4>
-                <h5>{{$rentable->city}}, {{$rentable->state}}</h5> 
-            </div>
-            <div class="rentable-type">
-                <h5>For Rent</h5>
-            </div> --}}
             <div class = "listing-details">
                 <div class="listing-details-top">
                     <h1>${{$rentable->rental_charging}} / {{$rentable->rental_duration}}</h1>
@@ -115,7 +107,7 @@
                         <p>{{$rentable->city}}, {{$rentable->state}}</p>
                         <p>{{$rentable->condition}}</p>
                     </div>
-                    <a class="type-rent" href="/listings/{{$rentable->id}}">Rent</a>
+                    <a class="type-rent" href="/rentables/{{$rentable->id}}">Rent</a>
                 </div>
             </div>
         </div>
@@ -150,14 +142,21 @@
                     <img src={{$sublease->image_uploads ? Storage::disk('s3')->url($imgLinks) : asset($link) }}  alt="image doesnt exist">
                 </a>
             </div>
-            {{-- </a> --}}
             <div class = "listing-details">
-                <a href="/subleases/{{$sublease->id}}">{{$sublease->sublease_title}}</a>
-                <h4>${{$sublease->rent}} / Mo | {{$sublease->negotiable}}</h4>
-                <h5>{{$sublease->location}}</h5> 
-            </div>
-            <div class="lease-type">
-                <h5>For Lease</h5>
+                <div class="listing-details-top">
+                    <h1>${{$sublease->rent}} / Mo | {{$sublease->negotiable}}</h1>
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+                <div class="listing-details-middle">
+                   <a href="/subleases/{{$sublease->id}}">{{$sublease->sublease_title}}</a>
+                </div>
+                <div class="listing-details-bottom">
+                    <div>
+                        <p>{{$sublease->city}}, {{$sublease->state}}</p>
+                        <p>{{$sublease->location}}</p>
+                    </div>
+                    <a class="type-lease" href="/subleases/{{$sublease->id}}">Lease</a>
+                </div>
             </div>
         </div>
     @endif

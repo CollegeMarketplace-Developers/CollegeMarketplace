@@ -1,6 +1,3 @@
-
-
-
 {{-- the listings page serves as the homepage and extends to layout for additional footer and navigation bar --}}
 <x-layout >
     {{-- main page hero section --}}

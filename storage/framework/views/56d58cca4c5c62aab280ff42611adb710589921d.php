@@ -1,8 +1,8 @@
-<?php foreach($attributes->onlyProps(['tags']) as $__key => $__value) {
+<?php foreach($attributes->onlyProps(['tags','isUtilities']) as $__key => $__value) {
     $$__key = $$__key ?? $__value;
 } ?>
-<?php $attributes = $attributes->exceptProps(['tags']); ?>
-<?php foreach (array_filter((['tags']), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
+<?php $attributes = $attributes->exceptProps(['tags','isUtilities']); ?>
+<?php foreach (array_filter((['tags','isUtilities']), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
     $$__key = $$__key ?? $__value;
 } ?>
 <?php $__defined_vars = get_defined_vars(); ?>
@@ -14,10 +14,17 @@
 <ul class = "unordered-tags-list">
     <?php $__currentLoopData = $tags; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tag): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <li class="tags-list-item">
-            <a href="/shop/all?type=all&tags=<?php echo e($tag); ?>">
-                <?php echo e($tag); ?>
+            <?php if($isUtilities): ?>
+                <a href="/shop/all?type=all&utilities=<?php echo e($tag); ?>">
+                    <?php echo e($tag); ?>
 
-            </a>
+                </a>
+            <?php else: ?>
+                <a href="/shop/all?type=all&tags=<?php echo e($tag); ?>">
+                    <?php echo e($tag); ?>
+
+                </a>
+            <?php endif; ?>
         </li>
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 </ul> <?php /**PATH C:\xampp\htdocs\CollegeMarketplace\resources\views/components/listing-tags.blade.php ENDPATH**/ ?>

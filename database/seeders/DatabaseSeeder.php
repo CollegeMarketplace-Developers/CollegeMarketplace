@@ -21,9 +21,9 @@ class DatabaseSeeder extends Seeder
     {
         // will create 10 random users and insert them into the db
         User::factory(10)->create();
-        Listing::factory(20)->create();
-        Rentable::factory(20)->create();
-        Sublease::factory(20)->create();
+        Listing::factory(10)->create();
+        Rentable::factory(10)->create();
+        Sublease::factory(10)->create();
         // Message::factory(10000)->create();
 
         // $user = User::factory()->create(
