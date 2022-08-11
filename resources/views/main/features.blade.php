@@ -78,8 +78,7 @@
                         <h2>Favorites</h2>
                         <p>Want to keep your eye on a special item? Save it to your favorites list by clicking the heart icon and we'll send you updates about your favorite items! (Opt-out avaiable in settings) </p>
                     </div>
-                    <div class="info-img" data-aos="fade-left">
-
+                    <div class="info-img" data-aos="fade-left"><img src = "C:\xampp\htdocs\CollegeMarketplace\resources\views\main\search.jpg" alt = "not-found">
                     </div>
                 </div>
                 <div class="info-row left-row">
