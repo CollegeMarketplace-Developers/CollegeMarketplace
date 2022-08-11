@@ -101,7 +101,6 @@
                 </a>
             </div>
             
-            
             <div class = "listing-details">
                 <div class="listing-details-top">
                     <h1>$<?php echo e($rentable->rental_charging); ?> / <?php echo e($rentable->rental_duration); ?></h1>
@@ -115,7 +114,7 @@
                         <p><?php echo e($rentable->city); ?>, <?php echo e($rentable->state); ?></p>
                         <p><?php echo e($rentable->condition); ?></p>
                     </div>
-                    <a class="type-rent" href="/listings/<?php echo e($rentable->id); ?>">Rent</a>
+                    <a class="type-rent" href="/rentables/<?php echo e($rentable->id); ?>">Rent</a>
                 </div>
             </div>
         </div>
@@ -150,14 +149,21 @@
                     <img src=<?php echo e($sublease->image_uploads ? Storage::disk('s3')->url($imgLinks) : asset($link)); ?>  alt="image doesnt exist">
                 </a>
             </div>
-            
             <div class = "listing-details">
-                <a href="/subleases/<?php echo e($sublease->id); ?>"><?php echo e($sublease->sublease_title); ?></a>
-                <h4>$<?php echo e($sublease->rent); ?> / Mo | <?php echo e($sublease->negotiable); ?></h4>
-                <h5><?php echo e($sublease->location); ?></h5> 
-            </div>
-            <div class="lease-type">
-                <h5>For Lease</h5>
+                <div class="listing-details-top">
+                    <h1>$<?php echo e($sublease->rent); ?> / Mo | <?php echo e($sublease->negotiable); ?></h1>
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+                <div class="listing-details-middle">
+                   <a href="/subleases/<?php echo e($sublease->id); ?>"><?php echo e($sublease->sublease_title); ?></a>
+                </div>
+                <div class="listing-details-bottom">
+                    <div>
+                        <p><?php echo e($sublease->city); ?>, <?php echo e($sublease->state); ?></p>
+                        <p><?php echo e($sublease->location); ?></p>
+                    </div>
+                    <a class="type-lease" href="/subleases/<?php echo e($sublease->id); ?>">Lease</a>
+                </div>
             </div>
         </div>
     <?php endif; ?>

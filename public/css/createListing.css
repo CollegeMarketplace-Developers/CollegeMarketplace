@@ -12,7 +12,7 @@
     /* color: white !important; */
     box-shadow: 3px 10px 20px 5px rgba(0, 0, 0, .5);
 	overflow: hidden;
-	background: url('../images/rotunda.jpg');
+	background: url('../images/header-image.png');
 	background-position: bottom;
     background-repeat: no-repeat;
 	background-size: cover;
@@ -42,7 +42,7 @@
 }
 
 .info h1{
-	color:var(--red-accent-color);
+	/* color:var(--red-accent-color); */
 	margin-bottom: 20px;
 }
 

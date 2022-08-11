@@ -250,7 +250,11 @@
     gap: 20px;
     /* padding: 5px; */
      /* border-radius: 12px; */
-     position: relative !important;
+    position: relative !important;
+    -webkit-transition: all 1 ease-out;
+    -moz-transition: all 1 ease-out;
+    -o-transition: all 1 ease-out;
+    transition: all 1 ease-out;
 }
 
 .single-post-cont:hover{
@@ -294,10 +298,16 @@
 } 
 .listing-details-top h1{ 
     font-size: 20px;
+    color:var(--red-accent-color);
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 } 
 
 .listing-details-top i{ 
     color:black;
+    margin-left:10px;
 } 
 .listing-details-middle{
     overflow: hidden;
@@ -332,7 +342,7 @@
 }
 
 .listing-details-bottom div{
-    width: 70%;
+    width: 65%;
 }
 .listing-details-bottom div p{
     text-decoration: none;
@@ -347,6 +357,7 @@
     border-radius: 12px;
     /* background-color: var(--red-accent-color); */
     color:white;
+    text-align: center;
     height: fit-content;
 }
 .type-sale{
@@ -355,64 +366,9 @@
 .type-rent{
     background-color: #207E82;
 }
-/* .listing-details a{
-    text-decoration: none !important;
-    font-weight: 500;
-    font-size: 18px;
-    margin-bottom: 5px !important;
-    color: #db6657 !important;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; */
-    /* 
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow:ellipsis;
-    height: 40px;
-    */
-/* } */
-/* .listing-details h4{
-    margin-bottom: 5px;
-}
-.listing-details h5{
-    font-size: .7rem;
-    color:var(--text-color-dark);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-} */
-/* .listing-type{
-    height: 25px;
-    width: 100%;
-    background-color: peru;
-    color:var(--text-color-light);
-    display:flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.rentable-type{
-    height: 25px;
-    width: 100%;
-    background-color: #207E82;
-    color:var(--text-color-light);
-    display:flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.lease-type{
-    height: 25px;
-    width: 100%;
+.type-lease{
     background-color: #A98B98;
-    color:var(--text-color-light);
-    display:flex;
-    align-items: center;
-    justify-content: center;
-} */
+}
 
 @media(max-width: 1600px){
     .container{
