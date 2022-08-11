@@ -7,6 +7,8 @@ have XAMPP on your local machine since this has been an issue before
 
 2 Open XAMPP and run Apache and MySQL
 
+2.5 If MySQL is not starting (shutting down unexpectedly) use this link to help: https://stackoverflow.com/questions/18022809/how-to-solve-error-mysql-shutdown-unexpectedly
+
 3 Add college_marketplace database within XAMPP PHPMYADMIN
 
 4 Clone repo into C:/xampp/htdocs
