@@ -29,7 +29,7 @@ RDS_DB_NAME=college_marketplace
 RDS_USERNAME=root
 RDS_PASSWORD=
 
-8. Set Encryption key in your config/app.php by running the following command
+8. Set Encryption key in your config/app.php by running the following command:
 php artisan key:generate
 
 9. Run the following commands:
