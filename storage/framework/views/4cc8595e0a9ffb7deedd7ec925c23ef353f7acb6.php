@@ -30,8 +30,8 @@
                     
                     
                     <div id="svg_wrap"></div>
-                    <h1>Post A Rental!</h1>
-                    <form class="listingForm" method = "POST" action="/rentables" id="listingForm"
+                    <h1>Post A Lease!</h1>
+                    <form class="listingForm" method = "POST" action="/subleases" id="listingForm"
                     enctype="multipart/form-data">
                         <?php echo csrf_field(); ?>
                         
@@ -40,9 +40,22 @@
 
                         
                         <section class = "listingCard default-card">
-                            <p class="create-listing-header">Rental Details</p>
-                            <input type="text" name = "rental_title" placeholder="Rental Title"  value="<?php echo e(old('rental_title', null)); ?>" />
-                            <?php $__errorArgs = ['rental_title'];
+                            <p class="create-listing-header">Lease Details</p>
+                            <input type="text" name = "sublease_title" placeholder="Lease Title"  value="<?php echo e(old('sublease_title', null)); ?>" />
+                            <?php $__errorArgs = ['sublease_title'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <p><?php echo e($message); ?></p>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+
+                            <p class="create-listing-header">General Location (shamrock, standard, etc)</p>
+                            <input type="text" name = "location" placeholder="General Location" value="<?php echo e(old('location', null)); ?>" />
+                            <?php $__errorArgs = ['location'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -53,34 +66,50 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                             
-
+                            
                             <p class="create-listing-header">
-                                Rental Duration
+                                Lease Duration
                             </p>
-                            <div class="condition-box">
-                                <select name="rental_duration" id="rentalDuration">
-                                    <option value="Hourly" <?php echo e((old("rental_duration") == 'Hourly' ? "selected":"")); ?>>Hourly</option>
-                                    
-                                    <option value="Daily" <?php echo e((old("rental_duration") == 'Daily' ? "selected":"")); ?>>Daily</option>
-
-                                    <option value="Weekly" <?php echo e((old("rental_duration") == 'Free' ? "selected":"")); ?>>Weekly</option>
-
-                                    <option value="Monthly" <?php echo e((old("rental_duration") == 'Monthly' ? "selected":"")); ?>>Monthly</option>
-                                </select>
-                                <?php $__errorArgs = ['rental_duration'];
+                            <div class="lease-duration-container">
+                                <div class="half" style="width:48%;">
+                                    <input type="date" id="datepicker"
+                                    name='date_from' 
+                                    placeholder="Available From" value="<?php echo e(old('date_from',null)); ?>"/>
+                                    <?php $__errorArgs = ['date_from'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                    <p><?php echo e($message); ?></p>
-                                <?php unset($message);
+                                        <p><?php echo e($message); ?></p>
+                                    <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                                </div>
+
+                                <div class="half" style="width:48%;">
+                                    <input type="date" id="datepicker"
+                                    name='date_to' 
+                                    placeholder="Available To" value="<?php echo e(old('date_to',null)); ?>"/>
+                                    <?php $__errorArgs = ['date_to'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <p><?php echo e($message); ?></p>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                </div>
                             </div>
 
-                            <input id="rental_charging" type="number" min="0.00" name = "rental_charging" max="10000.00" step="0.01" placeholder="Rental price per "  value="<?php echo e(old('rental_charging', null)); ?>"/>
-                            <?php $__errorArgs = ['rental_charging'];
+
+                            <p class="create-listing-header">
+                                Rental Info
+                            </p>
+                            <input id="lease_rent" type="number" min="0.00" name = "rent" max="10000.00" step="0.01" placeholder="Rent / Month" value="<?php echo e(old('rent',null)); ?>"/>
+                            <?php $__errorArgs = ['rent'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -90,15 +119,11 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-
-                            <p class="create-listing-header">
-                                Price Negotiable or Fixed
-                            </p>
                             <div class="condition-box">
                                 <select name="negotiable" id="">
-                                    <option value="Fixed" <?php echo e((old("negotiable") == 'Fixed' ? "selected":"")); ?>>Fixed</option>
+                                    <option value="Fixed" <?php echo e((old("negotiable") == 'Fixed' ? "selected":"")); ?>>Rent Fixed</option>
                                     
-                                    <option value="Negotiable" <?php echo e((old("negotiable") == 'Negotiable' ? "selected":"")); ?>>Negotiable/ OBO (best offer)</option>
+                                    <option value="Negotiable" <?php echo e((old("negotiable") == 'Negotiable' ? "selected":"")); ?>>Rent Negotiable/ OBO (best offer)</option>
                                 </select>
                                 <?php $__errorArgs = ['negotiable'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -111,7 +136,10 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
+                        </section>
 
+                        
+                        <section class = "listingCard">
                             <p class="create-listing-header">Condition</p>
                             <div class ="conditionBox">
                                 <select name="condition" id="">
@@ -130,142 +158,8 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                            </div>
-
-                            <p class="create-listing-header">Categories</p>
-                            <div class ="conditionBox">
-                                <ul class="ks-cboxtags">
-                                    <li>
-                                        <input type="checkbox" name="category[]" id="checkboxSix" value="Furniture" 
-                                        <?php echo e(old('category.0') == 'Furniture' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.1') == 'Furniture' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.2') == 'Furniture' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.3') == 'Furniture' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.4') == 'Furniture' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.5') == 'Furniture' ? 'checked' : ''); ?>
-
-                                        >
-                                        <label for="checkboxSix"
-                                        >Furniture</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" name="category[]" id="checkboxSeven" value="Clothes"
-                                        <?php echo e(old('category.0') == 'Clothes' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.1') == 'Clothes' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.2') == 'Clothes' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.3') == 'Clothes' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.4') == 'Clothes' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.5') == 'Clothes' ? 'checked' : ''); ?>
-
-                                        >
-                                        <label for="checkboxSeven">Clothes</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" name="category[]" id="checkboxEight" value="Electronics" 
-                                        <?php echo e(old('category.0') == 'Electronics' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.1') == 'Electronics' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.2') == 'Electronics' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.3') == 'Electronics' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.4') == 'Electronics' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.5') == 'Electronics' ? 'checked' : ''); ?>
-
-                                        >
-                                        <label for="checkboxEight">Electronics</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" name="category[]" id="checkboxNine" value="Kitchen"
-                                        <?php echo e(old('category.0') == 'Kitchen' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.1') == 'Kitchen' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.2') == 'Kitchen' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.3') == 'Kitchen' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.4') == 'Kitchen' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.5') == 'Kitchen' ? 'checked' : ''); ?>
-
-                                        >
-                                        <label for="checkboxNine">Kitchen</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" name="category[]" id="checkboxTen" value="School Accessories"
-                                        <?php echo e(old('category.0') == 'School Accessories' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.1') == 'School Accessories' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.2') == 'School Accessories' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.3') == 'School Accessories' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.4') == 'School Accessories' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.5') == 'School Accessories' ? 'checked' : ''); ?>
-
-                                        >
-                                        <label for="checkboxTen">School Accessories</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" name="category[]" id="checkboxEleven" value="Books"
-                                        <?php echo e(old('category.0') == 'Books' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.1') == 'Books' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.2') == 'Books' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.3') == 'Books' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.4') == 'Books' ? 'checked' : ''); ?>
-
-                                        <?php echo e(old('category.5') == 'Books' ? 'checked' : ''); ?>
-
-                                        >
-                                        <label for="checkboxEleven">Books</label>
-                                    </li>
-                                </ul>
-                                <?php $__errorArgs = ['category'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                    <p><?php echo e($message); ?></p>
-                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                            </div>        
-                        </section>
-
-                        
-                        <section class = "listingCard">
-                            <p class="create-listing-header">Sub-Categories/ Tags (comma seperated)</p>
-                            <input name = "tags" type="text" placeholder="Tags" value="<?php echo e(old('tags', null)); ?>"/>
-                            <?php $__errorArgs = ['tags'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                <p><?php echo e($message); ?></p>
-                            <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
+                            </div> 
+                            
                             <textarea name="description" placeholder="Description" rows="3" style="resize: none;"><?php echo e(old('description', null)); ?></textarea>
                             <?php $__errorArgs = ['description'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -292,11 +186,93 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+
+                            <p class="create-listing-header">Utilities Available</p>
+                            <div class ="conditionBox">
+                                <ul class="ks-cboxtags">
+                                    <li>
+                                        <input type="checkbox" name="utilities[]" id="checkboxSix" value="Electric" 
+                                        <?php echo e(old('utilities.0') == 'Electric' ? 'checked' : ''); ?>
+
+                                        <?php echo e(old('utilities.1') == 'Electric' ? 'checked' : ''); ?>
+
+                                        <?php echo e(old('utilities.2') == 'Electric' ? 'checked' : ''); ?>
+
+                                        <?php echo e(old('utilities.3') == 'Electric' ? 'checked' : ''); ?>
+
+                                        <?php echo e(old('utilities.4') == 'Electric' ? 'checked' : ''); ?>>
+                                        <label for="checkboxSix"
+                                        >Electric</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" name="utilities[]" id="checkboxSeven" value="Gas"
+                                        <?php echo e(old('utilities.0') == 'Gas' ? 'checked' : ''); ?>
+
+                                        <?php echo e(old('utilities.1') == 'Gas' ? 'checked' : ''); ?>
+
+                                        <?php echo e(old('utilities.2') == 'Gas' ? 'checked' : ''); ?>
+
+                                        <?php echo e(old('utilities.3') == 'Gas' ? 'checked' : ''); ?>
+
+                                        <?php echo e(old('utilities.4') == 'Gas' ? 'checked' : ''); ?>>
+                                        <label for="checkboxSeven">Gas</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" name="utilities[]" id="checkboxEight" value="Water" 
+                                        <?php echo e(old('utilities.0') == 'Water' ? 'checked' : ''); ?>
+
+                                        <?php echo e(old('utilities.1') == 'Water' ? 'checked' : ''); ?>
+
+                                        <?php echo e(old('utilities.2') == 'Water' ? 'checked' : ''); ?>
+
+                                        <?php echo e(old('utilities.3') == 'Water' ? 'checked' : ''); ?>
+
+                                        <?php echo e(old('utilities.4') == 'Water' ? 'checked' : ''); ?>>
+                                        <label for="checkboxEight">Water</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" name="utilities[]" id="checkboxNine" value="Trash"
+                                        <?php echo e(old('utilities.0') == 'Trash' ? 'checked' : ''); ?>
+
+                                        <?php echo e(old('utilities.1') == 'Trash' ? 'checked' : ''); ?>
+
+                                        <?php echo e(old('utilities.2') == 'Trash' ? 'checked' : ''); ?>
+
+                                        <?php echo e(old('utilities.3') == 'Trash' ? 'checked' : ''); ?>
+
+                                        <?php echo e(old('utilities.4') == 'Trash' ? 'checked' : ''); ?>>
+                                        <label for="checkboxNine">Trash</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" name="utilities[]" id="checkboxTen" value="Internet"
+                                        <?php echo e(old('utilities.0') == 'Internet' ? 'checked' : ''); ?>
+
+                                        <?php echo e(old('utilities.1') == 'Internet' ? 'checked' : ''); ?>
+
+                                        <?php echo e(old('utilities.2') == 'Internet' ? 'checked' : ''); ?>
+
+                                        <?php echo e(old('utilities.3') == 'Internet' ? 'checked' : ''); ?>
+
+                                        <?php echo e(old('utilities.4') == 'Internet' ? 'checked' : ''); ?>>
+                                        <label for="checkboxTen">Internet</label>
+                                    </li>
+                                </ul>
+                                <?php $__errorArgs = ['utilities'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <p><?php echo e($message); ?></p>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                            </div>  
                         </section>
 
                         
                         <section class = "listingCard">
-                            <p class="create-listing-header">Location</p>
+                        <p class="create-listing-header">Location</p>
                             <input type="text" id = "street" name="street" placeholder="Enter a Location*"  value="<?php echo e(old('street', null)); ?>"/>
                             <?php $__errorArgs = ['street'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -450,6 +426,7 @@ unset($__errorArgs, $__bag); ?>
             address2Field.focus();
         }
 
+
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -497,26 +474,27 @@ unset($__errorArgs, $__bag); ?>
         // script to change between view cards for create listing
         $( document ).ready(function() {
 
-            $("#rental_charging").attr("placeholder", "Rental Price per Hour");
+            $("#rental_charging").attr("placeholder", "Rental Price per hour");
             $('#rentalDuration').change(function(){
                 switch ($(this).val()){
                     case 'Hourly':
-                        $("#rental_charging").attr("placeholder", "Rental Price per Hour");
+                        $("#rental_charging").attr("placeholder", "Rental Price per hour");
                         break;
                     case 'Daily':
-                        $("#rental_charging").attr("placeholder", "Rental Price per Day");
+                        $("#rental_charging").attr("placeholder", "Rental Price per day");
                         break;
                     case 'Weekly':
-                        $("#rental_charging").attr("placeholder", "Rental Price per Week");
+                        $("#rental_charging").attr("placeholder", "Rental Price per week");
                         break;
                     case 'Monthly':
-                        $("#rental_charging").attr("placeholder", "Rental Price per Month");
+                        $("#rental_charging").attr("placeholder", "Rental Price per month");
                         break;
                 }
             })
 
             var base_color = "black";
-            var active_color = "#db6657";
+            // var active_color = "rgb(237, 40, 70)";
+            var active_color = "#cc5500";
 
             var child = 1;
             var length = $("section").length - 1;
@@ -612,7 +590,6 @@ unset($__errorArgs, $__bag); ?>
             });
 
         });
-
 
         const input = document.querySelector('.imgUpload');
         const preview = document.querySelector('.preview');
@@ -720,4 +697,4 @@ unset($__errorArgs, $__bag); ?>
 <?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
 <?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
 <?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
-<?php endif; ?><?php /**PATH C:\xampp\htdocs\CollegeMarketplace\resources\views/rentables/create.blade.php ENDPATH**/ ?>
+<?php endif; ?><?php /**PATH C:\xampp\htdocs\CollegeMarketplace\resources\views/subleases/create.blade.php ENDPATH**/ ?>

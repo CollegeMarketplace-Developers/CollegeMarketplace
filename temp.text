@@ -2,7 +2,7 @@
 <div>
     {{-- if the card is a listing card --}}
     @if($listing != null)
-        <div {{$attributes->merge(['class'=> 'slide single-post-cont'])}} data-aos="fade-right">
+        <div {{$attributes->merge(['class'=> 'slide single-post-cont'])}}>
             {{-- <div class="cr cr-top cr-right cr-sticky listing">{{$listing->status}}</div> --}}
             {{-- <a href="/listings/{{$listing->id}}"> --}}
             <div class="slide-img">
@@ -42,25 +42,18 @@
             </div>
             {{-- </a> --}}
             <div class = "listing-details">
-                <div class="listing-details-top">
-                    <h1>${{$listing->price}}</h1>
-                    <i class="fa-solid fa-heart"></i>
-                </div>
-                <div class="listing-details-middle">
-                    <a href="/listings/{{$listing->id}}">{{$listing->item_name}}</a>
-                </div>
-                <div class="listing-details-bottom">
-                    <div>
-                        <p>{{$listing->city}}, {{$listing->state}}</p>
-                        <p>{{$listing->condition}}</p>
-                    </div>
-                    <a class="type-sale" href="/listings/{{$listing->id}}">Buy</a>
-                </div>
+                <a href="/listings/{{$listing->id}}">{{$listing->item_name}}</a>
+                <h4>${{$listing->price}}</h4>
+                <h5>{{$listing->city}}, {{$listing->state}}</h5>
+                {{-- <p>{{$listing->status}}</p> --}}
+            </div>
+            <div class="listing-type">
+                <h5>For Sale</h5>
             </div>
         </div>
     {{-- if the card is a rentable card --}}
     @elseif($rentable != null)
-        <div {{$attributes->merge(['class'=> 'slide single-post-cont '])}} data-aos="fade-right">
+        <div {{$attributes->merge(['class'=> 'slide single-post-cont '])}}>
             {{-- <div class="cr cr-top cr-right cr-sticky rentable">{{$rentable->status}}</div> --}}
             {{-- <a href="/rentables/{{$rentable->id}}"> --}}
             <div class="slide-img">
@@ -95,24 +88,16 @@
             </div>
             {{-- </a> --}}
             <div class = "listing-details">
-                <div class="listing-details-top">
-                    <h1>${{$rentable->rental_charging}} / {{$rentable->rental_duration}}</h1>
-                    <i class="fa-solid fa-heart"></i>
-                </div>
-                <div class="listing-details-middle">
-                    <a href="/rentables/{{$rentable->id}}">{{$rentable->rental_title}}</a>
-                </div>
-                <div class="listing-details-bottom">
-                    <div>
-                        <p>{{$rentable->city}}, {{$rentable->state}}</p>
-                        <p>{{$rentable->condition}}</p>
-                    </div>
-                    <a class="type-rent" href="/rentables/{{$rentable->id}}">Rent</a>
-                </div>
+                <a href="/rentables/{{$rentable->id}}">{{$rentable->rental_title}}</a>
+                <h4>${{$rentable->rental_charging}} / {{$rentable->rental_duration}}</h4>
+                <h5>{{$rentable->city}}, {{$rentable->state}}</h5> 
+            </div>
+            <div class="rentable-type">
+                <h5>For Rent</h5>
             </div>
         </div>
     @else
-         <div {{$attributes->merge(['class'=> 'slide single-post-cont '])}} data-aos="fade-right">
+         <div {{$attributes->merge(['class'=> 'slide single-post-cont '])}}>
             {{-- <div class="cr cr-top cr-right cr-sticky sublease">{{$sublease->status}}</div> --}}
             {{-- <a href="/subleases/{{$sublease->id}}"> --}}
             <div class="slide-img">
@@ -142,21 +127,14 @@
                     <img src={{$sublease->image_uploads ? Storage::disk('s3')->url($imgLinks) : asset($link) }}  alt="image doesnt exist">
                 </a>
             </div>
+            {{-- </a> --}}
             <div class = "listing-details">
-                <div class="listing-details-top">
-                    <h1>${{$sublease->rent}} / Mo | {{$sublease->negotiable}}</h1>
-                    <i class="fa-solid fa-heart"></i>
-                </div>
-                <div class="listing-details-middle">
-                   <a href="/subleases/{{$sublease->id}}">{{$sublease->sublease_title}}</a>
-                </div>
-                <div class="listing-details-bottom">
-                    <div>
-                        <p>{{$sublease->city}}, {{$sublease->state}}</p>
-                        <p>{{$sublease->location}}</p>
-                    </div>
-                    <a class="type-lease" href="/subleases/{{$sublease->id}}">Lease</a>
-                </div>
+                <a href="/subleases/{{$sublease->id}}">{{$sublease->sublease_title}}</a>
+                <h4>${{$sublease->rent}} / Mo | {{$sublease->negotiable}}</h4>
+                <h5>{{$sublease->location}}</h5> 
+            </div>
+            <div class="lease-type">
+                <h5>For Lease</h5>
             </div>
         </div>
     @endif

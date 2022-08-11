@@ -1,7 +1,7 @@
 
 <link rel="stylesheet" types ="text/css" href="/css/carousel.css">
 
-<section id="slider" class="sale-slider">
+<section id="slider" class="category-slider">
     <div class="container">
         <div class="subcontainer">
             <div class="slider-wrapper">
@@ -18,15 +18,17 @@
                 <div class="controller">
                     <div> 
                         
-                        <h2><?php echo e($message); ?></h2>
+                        <h2><?php echo e($message); ?> <span>Recently Added</span></h2>
                         <a style="font-size:14px;" href="/shop/all?type=listing" class="button1">MORE ></a>
                     </div>
                 </div>
+                
                 <?php if (! (count($listings) == 0)): ?>
-                    <div class="my-slider <?php echo e($carouselClass); ?>">
+                    <div class="<?php echo e($carouselClass); ?>">
                         <?php $__currentLoopData = $listings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $listing): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <div>
-                                <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
+                                <?php if($listing instanceof App\Models\Listing): ?>
+                                    <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
 <?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'components.carousel-card','data' => ['listing' => $listing]] + (isset($attributes) ? (array) $attributes->getIterator() : [])); ?>
 <?php $component->withName('carousel-card'); ?>
 <?php if ($component->shouldRender()): ?>
@@ -41,6 +43,23 @@
 <?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
 <?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
 <?php endif; ?>
+                                <?php elseif($listing instanceof App\Models\Rentable): ?>
+                                    <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
+<?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'components.carousel-card','data' => ['listing' => null,'rentable' => $listing]] + (isset($attributes) ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('carousel-card'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['listing' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(null),'rentable' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($listing)]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
+<?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
+<?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
+<?php endif; ?>
+                                <?php endif; ?>
                             </div>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>                      
                     </div>
@@ -50,40 +69,4 @@
             </div>
         </div>
     </div>
-    <script>
-
-        tns({
-            container: ".my-slider",
-            "slideBy":1,
-            "speed":400,
-            "nav":false,
-            controlsContainer:"#controls",
-            responsive:{
-                1500:{
-                    items: 5,
-                    gutter: 5
-                },
-                1200:{
-                    items: 4,
-                    gutter: 10
-                },
-                // 1100:{
-                //     items: 3,
-                //     gutter: 15
-                // },
-                1024:{
-                    items: 3,
-                    gutter: 15
-                },
-                700:{
-                    items: 2,
-                    gutter: 20
-                },
-                480:{
-                    items: 1
-                }
-            }
-        })
-
-    </script>
-</section><?php /**PATH C:\xampp\htdocs\CollegeMarketplace\resources\views/partials/_listingCarousel.blade.php ENDPATH**/ ?>
+</section><?php /**PATH C:\xampp\htdocs\CollegeMarketplace\resources\views/partials/_mixedCarousel.blade.php ENDPATH**/ ?>

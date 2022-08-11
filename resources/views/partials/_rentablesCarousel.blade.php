@@ -17,11 +17,11 @@
                 @endunless
                 <div class="controller">
                     <div> 
-                        <h2>{{$message}}: @php echo count($rentables) @endphp</h2>
+                        {{-- : @php echo count($rentables) @endphp --}}
+                        <h2>{{$message}}</h2>
                         <a style="font-size:14px;" href="/shop/all?type=rentable" class="button1">MORE ></a>
                     </div>
                 </div>
-                <br>
                 @unless(count($rentables) == 0)
                     <div class="{{$carouselClass}}">
                         @foreach($rentables as $rentable)

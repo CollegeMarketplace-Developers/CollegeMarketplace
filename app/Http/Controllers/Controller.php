@@ -39,14 +39,38 @@ class Controller extends BaseController
         // }
 
         //Option 2: retun results from all three types that are the latest
-        $listingResults = Listing::latest()->where('status', '!=', 'Sold' )->limit(16)->get();
-        $rentableResults = Rentable::latest()->where('status', 'like', 'Available' )->limit(16)->get();
-        $subleaseResults = Sublease::latest()->where('status', 'like', 'Available')->limit(16)->get();
-        $totalResults = collect($listingResults)->merge($rentableResults)->merge($subleaseResults)->sortByDesc('created_at')->slice(0,16);
+        $listingResults = Listing::latest()->where('status', '!=', 'Sold' )->limit(24)->get();
+        $rentableResults = Rentable::latest()->where('status', 'like', 'Available' )->limit(24)->get();
+        $subleaseResults = Sublease::latest()->where('status', 'like', 'Available')->limit(24)->get();
+        $totalResults = collect($listingResults)->merge($rentableResults)->merge($subleaseResults)->sortByDesc('created_at')->slice(0,24);
         // dd($totalResults);
 
+        $furnitureItems = Listing::latest()->where('status', '!=', 'Sold' )->orWhere('category', 'LIKE', '%furniture%' )->limit(10)->get();
+        $clothesItems = Listing::latest()->where('status', '!=', 'Sold' )->orWhere('category', 'LIKE', '%clothes%' )->limit(10)->get();
+        $electronicsItems = Listing::latest()->where('status', '!=', 'Sold' )->orWhere('category', 'LIKE', '%electronics%' )->limit(10)->get();
+        $kitchenItems = Listing::latest()->where('status', '!=', 'Sold' )->orWhere('category', 'LIKE', '%kitchen%' )->limit(10)->get();
+        $schoolItems = Listing::latest()->where('status', '!=', 'Sold' )->orWhere('category', 'LIKE', '%school accesories%' )->limit(10)->get();
+        $bookItems = Listing::latest()->where('status', '!=', 'Sold' )->orWhere('category', 'LIKE', '%sbooks%' )->limit(10)->get();
+
+
+        $furnitureRent = Rentable::latest()->where('status', '!=', 'Rented' )->orWhere('category', 'LIKE', '%furniture%' )->limit(10)->get();
+        $clothesRent = Rentable::latest()->where('status', '!=', 'Rented' )->orWhere('category', 'LIKE', '%clothes%' )->limit(10)->get();
+        $electronicsRent = Rentable::latest()->where('status', '!=', 'Rented' )->orWhere('category', 'LIKE', '%electronics%' )->limit(10)->get();
+        $kitchenRent = Rentable::latest()->where('status', '!=', 'Rented' )->orWhere('category', 'LIKE', '%kitchen%' )->limit(10)->get();
+        $schoolRent = Rentable::latest()->where('status', '!=', 'Rented' )->orWhere('category', 'LIKE', '%school accesories%' )->limit(10)->get();
+        $bookRent = Rentable::latest()->where('status', '!=', 'Rented' )->orWhere('category', 'LIKE', '%sbooks%' )->limit(10)->get();
+
+    //     dd(collect($furnitureItems)->merge($furnitureRent)->sortByDesc('created_at')->slice(0,16),
+    // collect($clothesItems)->merge($clothesRent)->sortByDesc('created_at')->slice(0,16)
+    //     );
         return view('main.index', [
             'listings'=> $totalResults,
+            'furnitureItems' => collect($furnitureItems)->merge($furnitureRent)->sortByDesc('created_at')->slice(0,16),
+            'clothesItems' => collect($clothesItems)->merge($clothesRent)->sortByDesc('created_at')->slice(0,16),
+            'electronicsItems' => collect($electronicsItems)->merge($electronicsRent)->sortByDesc('created_at')->slice(0,16),
+            'kitchenItems' => collect($kitchenItems)->merge($kitchenRent)->sortByDesc('created_at')->slice(0,16),
+            'schoolItems' => collect($schoolItems)->merge($schoolRent)->sortByDesc('created_at')->slice(0,16),
+            'bookItems' => collect($bookItems)->merge($bookRent)->sortByDesc('created_at')->slice(0,16),
             'listingsNear' => Listing::latest()->where('status', '!=', 'Sold' )->take(10)->get(),
             'rentables' => Rentable::latest()->where('status', 'like', 'Available' )->take(10)->get(),
             'subleases'=>Sublease::latest()->where('status', 'like', 'Available')->take(10)->get()

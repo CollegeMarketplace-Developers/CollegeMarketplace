@@ -83,48 +83,63 @@
         </div>
         <div class="card_content">
             @if($listing instanceof \App\Models\Listing)
-                <a href="/listings/{{$listing->id}}">
-                <h1 class="card_title">{{$listing->item_name}}</h1>
-                </a>
-                <h4>${{$listing->price}}</h4>
-                <h4 class="card_text">{{$listing->city}}, {{$listing->state}}</h4>
+                <div>
+                    <h4>${{$listing->price}}</h4>  
+                    <i class="fa-solid fa-heart"></i>
+                </div>  
+                <div>
+                    <a href="/listings/{{$listing->id}}">
+                        <h1 class="card_title">{{$listing->item_name}}</h1>
+                    </a>
+                    <h4 class="card_text">{{$listing->city}}, {{$listing->state}}</h4>
+                </div>
                 <div class="listing-tags">
                     @if($displayTags)
                         @php
                             $tags = explode(", ", $listing->tags);
                         @endphp
-                        <x-listing-tags :tags="$tags"/>
+                        <x-listing-tags :tags="$tags" :isUtilities=false/>
                     @endif
                 </div>
             @elseif($listing instanceof \App\Models\Rentable)
-                <a href="/rentables/{{$listing->id}}">
-                <h1 class="card_title">{{$listing->rental_title}}</h1>
-                </a>
-                <h4>${{$listing->rental_charging}} / {{$listing->rental_duration}}</h4>
-                <h4 class="card_text">{{$listing->city}}, {{$listing->state}}</h4>
+                <div>
+                    <h4>${{$listing->rental_charging}} / {{$listing->rental_duration}}</h4>  
+                    <i class="fa-solid fa-heart"></i>
+                </div>  
+                <div>
+                    <a href="/rentables/{{$listing->id}}">
+                        <h1 class="card_title">{{$listing->rental_title}}</h1>
+                    </a>
+                    <h4 class="card_text">{{$listing->city}}, {{$listing->state}}</h4>
+                </div>
                 <div class="listing-tags">
                     @if($displayTags)
                         @php
                             $tags = explode(", ", $listing->tags);
                         @endphp
-                        <x-listing-tags :tags="$tags"/>
+                        <x-listing-tags :tags="$tags" :isUtilities=false/>
                     @endif
                 </div>
             @else
-                <a href="/subleases/{{$listing->id}}">
-                <h1 class="card_title">{{$listing->sublease_title}}</h1>
-                </a>
-                <h4>${{$listing->rent}} | {{$listing->negotiable}}</h4>
-                <h4 class="card_text">{{$listing->city}}, {{$listing->state}}</h4>
+                <div>
+                    <h4>${{$listing->rent}} / Mo| {{$listing->negotiable}}</h4>  
+                    <i class="fa-solid fa-heart"></i>
+                </div>  
+                <div>
+                    <a href="/subleases/{{$listing->id}}">
+                        <h1 class="card_title">{{$listing->sublease_title}}</h1>
+                    </a>
+                    <h4 class="card_text">{{$listing->city}}, {{$listing->state}}</h4>
+                </div>
                 <div class="listing-tags">
                     @if($displayTags)
                         @php
-                            $tags = explode(", ", $listing->tags);
+                            $tags = explode(", ", $listing->utilities);
                         @endphp
-                        <x-listing-tags :tags="$tags"/>
+                        <x-listing-tags :tags="$tags" :isUtilities=true />
                     @endif
                 </div>
             @endif
-        </div> 
+        </div>
     </div>
 </li>

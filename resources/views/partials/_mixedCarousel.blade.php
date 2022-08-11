@@ -1,7 +1,7 @@
 {{-- css for the carousel --}}
 <link rel="stylesheet" types ="text/css" href="/css/carousel.css">
 
-<section id="slider" class="sale-slider">
+<section id="slider" class="category-slider">
     <div class="container">
         <div class="subcontainer">
             <div class="slider-wrapper">
@@ -18,15 +18,20 @@
                 <div class="controller">
                     <div> 
                         {{-- : @php echo count($listings) @endphp --}}
-                        <h2>{{$message}}</h2>
+                        <h2>{{$message}} <span>Recently Added</span></h2>
                         <a style="font-size:14px;" href="/shop/all?type=listing" class="button1">MORE ></a>
                     </div>
                 </div>
+                {{-- <br> --}}
                 @unless(count($listings) == 0)
-                    <div class="my-slider {{$carouselClass}}">
+                    <div class="{{$carouselClass}}">
                         @foreach($listings as $listing)
                             <div>
-                                <x-carousel-card :listing="$listing"/>
+                                @if($listing instanceof App\Models\Listing)
+                                    <x-carousel-card :listing="$listing"/>
+                                @elseif($listing instanceof App\Models\Rentable)
+                                    <x-carousel-card :listing="null" :rentable="$listing"/>
+                                @endif
                             </div>
                         @endforeach                      
                     </div>
@@ -36,40 +41,4 @@
             </div>
         </div>
     </div>
-    <script>
-
-        tns({
-            container: ".my-slider",
-            "slideBy":1,
-            "speed":400,
-            "nav":false,
-            controlsContainer:"#controls",
-            responsive:{
-                1500:{
-                    items: 5,
-                    gutter: 5
-                },
-                1200:{
-                    items: 4,
-                    gutter: 10
-                },
-                // 1100:{
-                //     items: 3,
-                //     gutter: 15
-                // },
-                1024:{
-                    items: 3,
-                    gutter: 15
-                },
-                700:{
-                    items: 2,
-                    gutter: 20
-                },
-                480:{
-                    items: 1
-                }
-            }
-        })
-
-    </script>
 </section>

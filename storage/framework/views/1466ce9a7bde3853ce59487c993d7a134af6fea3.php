@@ -49,12 +49,20 @@
                     <div class = "product-imgs">
                         <div class = "img-display">
                             <?php
+                            function debug_to_console($data) {
+                                $output = $data;
+                                if (is_array($output))
+                                    $output = implode(',', $output);
+
+                                echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+                            }
                                 if(isset($listing->image_uploads)){
                                     //decode the json object
                                     $imgLinks = json_decode($listing->image_uploads);
                                     $titleImage = null;
                                     if(is_array($imgLinks)){
                                         $titleImage = $imgLinks[0];
+                                        debug_to_console($titleImage);
                                     }
                                 }
                             ?>
@@ -295,17 +303,14 @@
             var geocoder;
             var listingLat = "<?php echo e($listing->latitude); ?>";
             var listingLong = "<?php echo e($listing->longitude); ?>";
-
             geocoder = new google.maps.Geocoder();
             var latlng = new google.maps.LatLng(-34.397, 150.644);
             var mapOptions = {
                 zoom: 15,
                 center: latlng
             }
-
             mapTwo = new google.maps.Map(document.getElementById('map-container'), mapOptions);
                 console.log(listingLat, listingLong);
-
             if(!isEmpty("<?php echo e($listing->street); ?>")  && !isEmpty("<?php echo e($listing->state); ?>")) {
                 console.log('top if');
                 var address = "<?php echo e($listing->street." ".$listing->city); ?>";
@@ -339,7 +344,6 @@
                 marker.setMap(mapTwo);
             }
         }*/
-
         //trying to implement static maps
         function getGoogleMapsImage(addressElements) {
             var image = document.createElement('img');
@@ -358,16 +362,13 @@
             document.getElementById('map-container').appendChild(image);
             return url;
         }
-
         let address = ['<?php echo e($listing->street); ?>', '<?php echo e($listing->city); ?>', '<?php echo e($listing->state); ?>', '<?php echo e($listing->postcode); ?>', '<?php echo e($listing->country); ?>'];
         
         console.log(getGoogleMapsImage(address));
-
         function myFunction(imgs) {
             var expandImg = document.getElementById("expandedImg");
             expandImg.src = imgs.src;
         }
-
         var listing_id = "<?php echo e($listing->id); ?>"
         var listingOwner = "<?php echo e($listing->user_id); ?>";
         var userLoggedIn = "<?php echo e($currentUser ? $currentUser->id : -1); ?>";
@@ -378,13 +379,10 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-
             // Pusher.logToConsole = true;
-
             var pusher = new Pusher('5b40ba1f12ea9bf24b29', {
                 cluster: 'us2'
             });
-
             var channel = pusher.subscribe('my-channel');
             // 2 cases
             // if I am not the listing owner, show me messages that have been sent to me instantly
@@ -421,13 +419,11 @@
                     }
                 }
             });
-
             // if I am the listing owner, I want to see all the users that have contacted me
             if(listingOwner == userLoggedIn){
                 $('.messages-container').removeClass('active');
                 $('.user-wrapper').addClass('active');
             }
-
             // back button to switch from messages container to users list container
             $('.message-back').click(function(){
                 $('.messages-container').removeClass('active');
@@ -472,7 +468,6 @@
                                     date.innerHTML = "<?php echo e(date('d M y, h:i a', strtotime(" + data[i].created_at + "))); ?>";
                                     date.className='date';
                                     div.appendChild(date);
-
                                     li.appendChild(div);
                                     ul.appendChild(li);
                                     scrollToBottomFunc();
@@ -485,17 +480,14 @@
                     });
                 }
             }
-
             // if I am the listing owner, I want to click on a user and get all the messages from me to them or them to me
             $('.user').click(function(){
                 var ul = document.getElementById("messages");
                 ul.innerHTML = null;
-
                 $('.user-wrapper').removeClass('active');
                 $('.messages-container').addClass('active');
                 receiverSelected = $(this).attr('id');
                 $(this).find('.pending').remove();
-
                 $.ajax({
                     type: "GET",
                     url: "/messages?from=" + receiverSelected + "&to=" + listingOwner + "&listing_id=" + listing_id, // need to create this route
@@ -524,7 +516,6 @@
                                 date.innerHTML = "<?php echo e(date('d M y, h:i a', strtotime(" + data[i].created_at + "))); ?>";
                                 date.className='date';
                                 div.appendChild(date);
-
                                 li.appendChild(div);
                                 ul.appendChild(li);
                                 scrollToBottomFunc();
@@ -536,7 +527,6 @@
                     }
                 });
             });
-
             // take to take in to account two different scenarios
             //1) if the listing is not mine, i wanna be able to message the listing owner
             //2) if the listing is mine, select a specifc user, then get their id and sent them the message
@@ -578,7 +568,6 @@
                 });
             }
         });
-
          // make a function to scroll down auto
         function scrollToBottomFunc() {
            let scroll_to_bottom = document.getElementById('messages');
@@ -587,7 +576,6 @@
         function scrollBottom(element) {
             element.scroll({ top: element.scrollHeight, behavior: "smooth"})
         }
-
         //delete modal
         var deleteModal = document.getElementById("delete-modal");
         var deleteButton = document.getElementById("delete-modal-trigger");

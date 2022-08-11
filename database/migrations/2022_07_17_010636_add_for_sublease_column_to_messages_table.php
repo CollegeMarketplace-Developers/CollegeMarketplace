@@ -26,6 +26,7 @@ return new class extends Migration
      */
     public function down()
     {
+        //Schema::dropIfExists('messages');
         Schema::table('messages', function (Blueprint $table) {
             $table->dropColumn('for_sublease');
         });

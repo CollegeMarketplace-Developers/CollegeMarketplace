@@ -34,7 +34,8 @@ li{
 
 :root{    
     /* color palette */
-    --background-color:#24222c;
+    /* --background-color:#24222c; */
+    --background-color:#1F1D26;
     --red-accent-color: #db6657;
     --green-accent-color:#92EBC4;
     --text-color-light:#EDEFF8;
@@ -57,8 +58,17 @@ li{
     z-index: 10;
 }
 .header-cont{
+    width:100%;
+    height: 500px;
+    background-color: var(--background-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.header-cont-inner{
     width: 100%;
-    height: 70vh;
+    max-width: 1600px;
+    height: 100%;
     /* margin-top: 70px; */
     color: white;
     text-align: center;
@@ -66,20 +76,20 @@ li{
     align-items: center;
     justify-content: center;
     background-color: var(--dark-color);
-    background:url("../images/old-cabell.jpg");
+    background:url("../images/group\ study.svg");
     background-repeat:  no-repeat;
-    background-position:bottom;
+    background-position:center -40px ;
     background-size: cover;
 }
 
-.header-cont div{
+.header-cont-inner div{
     background: rgba(36,34,44, .7);
     padding: 10px 20px;
     border-radius: 5px;
     margin: 20px;
 }
 
-.header-cont h1{
+.header-cont-inner h1{
     font-size: 3rem;
     color: var(--red-accent-color);
     font-weight: 800;
@@ -87,7 +97,7 @@ li{
     text-align: center;
 }
 
-.header-cont p{
+.header-cont-inner p{
     font-size: 1.5rem;
 }
 
@@ -105,7 +115,7 @@ li{
     height: fit-content;
     background-color: var(--background-color);
     box-sizing: border-box;
-    padding:0 50px;
+    padding:20px 70px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -179,7 +189,9 @@ li{
     padding: 0 5px;
     /* background-color: var(--red-accent-color); */
     /* backdrop-filter: blur(10px); */
-    background-color: rgb(17 16 21 / 25%);
+    /* background: linear-gradient(261.71deg, #3A3845 13.92%, #2C2A36 84.19%); */
+    background-color: #3A3845;
+    /* background-color: rgb(17 16 21 / 25%); */
     color: white;
     margin: 2.5px !important;
     border-radius: 5px;
@@ -342,11 +354,12 @@ li{
   }
 }
 
-@media (max-width: 1000px){
+@media(max-width: 1200px){
     .listings-parent-container{
-        padding:0;
+        padding: 20px 50px;
     }
 }
+
 @media(max-width: 900px){
 
     .header-cont div h1{
@@ -357,7 +370,11 @@ li{
         font-size: 25px;
     }
 }
-
+@media(max-width: 900px){
+    .header-cont{
+        height: 400px;
+    }
+}
 @media(max-width: 700px){
 
     .header-cont div h1{
@@ -371,14 +388,32 @@ li{
     /* .main-listings-container{
         padding: 0;
     } */
+    .header-cont{
+        height: 350px;
+    }
 }
-
+@media(max-width: 600px){
+    .header-cont{
+        height: 300px;
+    }
+}
+@media(max-width:550px){
+    .listings-parent-container{
+        padding:30px;
+    }
+}
 /* loading page end */
 @media(max-width: 480px){
-    /* .listings-parent-container{
-        padding: 20px !important;
-    } */
+    .listings-parent-container{
+        padding: 20px;
+    }
 
+    .header-cont{
+        height: 250px;
+    }
+    .header-cont-inner{
+        background-position: center;
+    }
     .header-cont div h1{
         font-size: 32px;
     }
