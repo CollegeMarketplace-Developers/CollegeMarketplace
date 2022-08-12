@@ -104,7 +104,7 @@
                             @php
                                 $tags = explode(", ", $listing->tags);
                             @endphp
-                            <x-listing-tags :tags="$tags"/>
+                            <x-listing-tags :tags="$tags" :isUtilities=false/>
                         </div>
 
                         <div class="product-buttons">
