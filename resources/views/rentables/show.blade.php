@@ -98,7 +98,7 @@
                             @php
                                 $tags = explode(", ", $rentable->tags);
                             @endphp
-                            <x-listing-tags :tags="$tags"/>
+                            <x-listing-tags :tags="$tags" :isUtilities=false/>
                         </div>
 
                         <div class="product-buttons">

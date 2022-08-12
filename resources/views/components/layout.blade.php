@@ -47,7 +47,7 @@
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     </head>
     <body>
-        <header style="height: 70px; width: 100%; position: relative;">
+        <header style="height: 50px; width: 100%; position: relative; display:flex;justify-content:center;background:#151416;">
             {{-- import the navigation bar --}}
             @include('partials._navigationBar')
         </header>
