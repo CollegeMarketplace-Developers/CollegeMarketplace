@@ -353,11 +353,11 @@ a:hover, label:hover{
 }
 
 
-@media only screen 
+/* @media only screen 
 and (max-width : 1024px)
 and (orientation:landscape) {
-  /* Styles */
+
    .wrapper{
     position: relative;
   }
-}
+} */
