@@ -15,7 +15,6 @@
     <div class="card"> 
         <div class="card_image">
             <?php if($listing instanceof \App\Models\Listing): ?>
-            
                 <?php if($listing->status =='Available'): ?>
                     <div class="status green">
                     </div>
@@ -43,7 +42,6 @@
                     <img src=<?php echo e($listing->image_uploads ? Storage::disk('s3')->url($imgLinks) : asset('/images/rotunda.jpg')); ?>  alt="image doesnt exist">
                 </a>
             <?php elseif($listing instanceof \App\Models\Rentable): ?>
-            
                 <?php if($listing->status =='Available'): ?>
                     <div class="status green">
                     </div>
@@ -67,7 +65,6 @@
                     <img src=<?php echo e($listing->image_uploads ? Storage::disk('s3')->url($imgLinks) : asset('/images/rotunda.jpg')); ?>  alt="image doesnt exist">
                 </a>
             <?php else: ?>
-                
                 <?php if($listing->status =='Available'): ?>
                     <div class="status green">
                     </div>

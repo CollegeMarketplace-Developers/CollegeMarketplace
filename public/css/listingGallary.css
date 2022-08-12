@@ -37,8 +37,11 @@
 .cards_item {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
-  width: 100%;
+  padding: 10px;
+  width: calc(100% / 5);
+  aspect-ratio: 1 / 1;
+  -webkit-aspect-ratio: 1 / 1;
+  transition: all .2s ease;
 }
 
 .card {
@@ -50,7 +53,7 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    border-radius: 20px;
+    border-radius: 10px;
     /* background: linear-gradient(261.71deg, #3A3845 13.92%, #2C2A36 84.19%); */
     box-shadow: 0px 12px 32px rgb(17 16 21 / 25%);
     z-index: 10;
@@ -79,14 +82,13 @@
 }
 .card_image{
   width: 100%;
-  max-height: 250px;
-  min-height: 250px;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   position: relative;
-  border-radius: 20px;
+  /* border-radius: 20px; */
 }
 
 .card_image a{
@@ -260,18 +262,6 @@
   /* overflow-x:inherit; */
 }
 
-/* .pagination-container::before{
-  content: '';
-    position: absolute;
-    width: 800px;
-    height: 800px;
-    left: -253px;
-    top: -400px;
-    background: radial-gradient(50% 50% at 50% 50%, #AEFFFA 0%, rgba(221,255,251,0) 100%);
-    opacity: .1;
-    z-index: 1;
-} */
-
 .pagination-container nav{
   width: 100%;
   /* background-color: blue; */
@@ -288,18 +278,6 @@
   color:white;
 }
 
-@media (min-width: 480px) {
-  .cards_item {
-    width: 100%;
-  }
-}
-
-/* @media(max-width: 768px){
-  .cards_item{
-    padding: 1rem 0;
-  }
-} */
-
 @media(max-width: 600px){
   .controller h2{
     font-size: 22px;
@@ -312,26 +290,30 @@
   }
 }
 
-@media (min-width: 700px) {
+
+@media only screen and (max-width: 1050px) {
   .cards_item {
-    width: 50%;
+    width: calc(100% / 4);
   }
 }
 
-@media (min-width: 1100px) {
+@media only screen and (max-width: 825px) {
   .cards_item {
-    width: 33.3333%;
+    width: calc(100% / 3);
   }
 }
 
-@media (min-width: 1400px) {
+@media only screen and (max-width: 600px) {
   .cards_item {
-    width: 25%;
+    width: calc(100% / 2);
+  }
+  .cards_item{
+    padding: 5px;
   }
 }
 
-@media (min-width: 1600px) {
+@media only screen and (min-width: 1400px) {
   .cards_item {
-    width: 20%;
+    width: calc(100% / 6);
   }
 }

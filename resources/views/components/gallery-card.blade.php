@@ -4,7 +4,6 @@
     <div class="card"> 
         <div class="card_image">
             @if($listing instanceof \App\Models\Listing)
-            {{-- <span class="ribbon ribbon-listing">{{$listing->status}}</span> --}}
                 @if($listing->status =='Available')
                     <div class="status green">
                     </div>
@@ -32,7 +31,6 @@
                     <img src={{$listing->image_uploads ? Storage::disk('s3')->url($imgLinks) : asset('/images/rotunda.jpg') }}  alt="image doesnt exist">
                 </a>
             @elseif($listing instanceof \App\Models\Rentable)
-            {{-- <span class="ribbon ribbon-rental">{{$listing->status}}</span> --}}
                 @if($listing->status =='Available')
                     <div class="status green">
                     </div>
@@ -56,7 +54,6 @@
                     <img src={{$listing->image_uploads ? Storage::disk('s3')->url($imgLinks) : asset('/images/rotunda.jpg') }}  alt="image doesnt exist">
                 </a>
             @else
-                {{-- <span class="ribbon ribbon-lease">{{$listing->status}}</span> --}}
                 @if($listing->status =='Available')
                     <div class="status green">
                     </div>

@@ -286,7 +286,7 @@
     color: white;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 5px;
     border-radius: 20px;
 }
 
@@ -373,5 +373,11 @@
 @media(max-width: 1600px){
     .container{
         width: 100%;
+    }
+}
+
+@media(max-width: 700px){
+    .controller{
+        padding: 15px 0;
     }
 }

@@ -87,10 +87,24 @@
         </div>
 
         
-        <label for="show-search" class="search-icon"><i class="fas fa-search"></i></label>
+
+        
+        <div class="searchAndProfile">
+            <label for="show-search" class="search-icon">
+                
+                <i class="fas fa-search"></i>
+            </label>
+            <?php if(auth()->guard()->check()): ?>
+                <span class="profile-icon"><i class="fa-solid fa-user"></i></span>
+            <?php endif; ?>
+        </div>
+
+        
         <form action="/shop/all" class="search-box">
             <input type="hidden" name="type" value="all">
             <input type="text" name = "search" placeholder="Type Something to Search..." required>
+
+            
             <button type="submit" class="go-icon"><i class="fas fa-long-arrow-alt-right"></i></button>
         </form>
         <div class="search-message">

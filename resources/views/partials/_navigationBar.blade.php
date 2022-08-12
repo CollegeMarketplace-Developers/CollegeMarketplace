@@ -87,10 +87,24 @@
         </div>
 
         {{-- this is the search forum --}}
-        <label for="show-search" class="search-icon"><i class="fas fa-search"></i></label>
+
+        {{-- label for search icon checkbox --}}
+        <div class="searchAndProfile">
+            <label for="show-search" class="search-icon">
+                {{-- search icon gets converted into x mark when search bar is displayed .... navigation : 81 --}}
+                <i class="fas fa-search"></i>
+            </label>
+            @auth
+                <span class="profile-icon"><i class="fa-solid fa-user"></i></span>
+            @endauth
+        </div>
+
+        {{-- THe search bar is the input --}}
         <form action="/shop/all" class="search-box">
             <input type="hidden" name="type" value="all">
             <input type="text" name = "search" placeholder="Type Something to Search..." required>
+
+            {{-- This is the arrow button to submit the joint --}}
             <button type="submit" class="go-icon"><i class="fas fa-long-arrow-alt-right"></i></button>
         </form>
         <div class="search-message">
