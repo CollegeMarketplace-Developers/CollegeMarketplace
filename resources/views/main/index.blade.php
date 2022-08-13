@@ -5,15 +5,19 @@
 
     <main class = "main-listings-container">
 
+        {{-- showing items based on category --}}
         <div class = "listings-parent-container">
             @include('partials._carouselByCategory',['furnitureItems' => $furnitureItems, 'clothesItems'=>$clothesItems, "electronicsItems"=>$electronicsItems, 'kitchenItems' => $kitchenItems, 'schoolItems' =>$schoolItems, 'bookItems'=>$bookItems])
         </div>
 
-        {{-- carousel for listings --}}
+        {{-- Showing items based on distance--}}
         <div class = "listings-parent-container">
             @include('partials._listingCarousel', ['listings' => $listingsNear, 'message' => 'Within A Mile', 'carouselClass'=>'my-slider','carouselControls' => 'controls', 'carouselP' =>'previous previous1', 'carouselN' => 'next next1'])
         </div>
 
+        <div class="listings-parent-container">
+            @include('partials._componentDesignOne')
+        </div>
         {{-- carousel for rentables --}}
         <div class="listings-parent-container">
             @include('partials._rentablesCarousel',

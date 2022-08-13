@@ -1,10 +1,9 @@
 .wrapper{
   background: #151416;;
-  position: fixed;
+  position: relative;
   height: 50px;;
   width: 100%;
   max-width:1600px;
-  z-index: 100;
   padding: 0 70px;
 }
 .wrapper nav{

@@ -360,15 +360,6 @@
     text-align: center;
     height: fit-content;
 }
-.type-sale{
-    background-color: peru;
-}
-.type-rent{
-    background-color: #207E82;
-}
-.type-lease{
-    background-color: #A98B98;
-}
 
 @media(max-width: 1600px){
     .container{
