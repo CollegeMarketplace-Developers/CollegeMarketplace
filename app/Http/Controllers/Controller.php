@@ -30,8 +30,6 @@ class Controller extends BaseController
     
      //show the index page
     public function index(){
-        
-
         //Option 1: return results that were added in the last 24 hours for only sale items
         // $latest = Listing::latest()->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())->simplePaginate(16);
         // if(count($latest) == 0){
@@ -341,6 +339,32 @@ class Controller extends BaseController
         }
         $enrollEmail = NewsLetter::create($formfields);
         return back()->with('message', 'Successfully Enrolled in News Letter');
+    }
+
+    public static function getRandomItem(){
+        // $model1s = Listing::inRandomOrder()->take(1)->get();
+        // $model2s = Rentable::inRandomOrder()->take(1)->get();
+        // $model3s = Sublease::inRandomOrder()->take(1)->get();
+        // $result =  $model1s->concat($model2s)->concat($model3s)->shuffle()->random();
+        
+        $array = array();
+        $listing = Listing::inRandomOrder()->where('status', '!=', 'Sold' )->first();
+        $rental = Rentable::inRandomOrder()->where('status', 'like', 'Available')->first();
+        $lease = Sublease::inRandomOrder()->where('status', 'like', 'Available')->first();
+        array_push($array, $listing);
+        array_push($array, $rental);
+        array_push($array, $lease);
+        $get = $array[random_int(0, count($array)-1)];
+        while(count($array) > 0){
+            if($get == null){
+                if (($key = array_search($get, $array)) !== false) {
+                    unset($array[$key]);
+                }
+            }else{
+                return $get;
+            }
+        }
+        return null;
     }
 }
 
