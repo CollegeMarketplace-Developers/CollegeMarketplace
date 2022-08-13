@@ -4,7 +4,7 @@
 {{-- css for footer --}}
 <link rel="stylesheet" types="text/css" href="/css/footer.css">
 
-<footer>
+<footer style="display: flex;justify-content:center; background:#151416;">
     <div class = "footer-container">
       <div class = "row">
         <div class="col">
