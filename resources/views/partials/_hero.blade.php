@@ -1,14 +1,22 @@
 <!-- Header-->
 <div class="header-cont">
     <div class="header-cont-inner">
-        {{-- <div>
-            <h1 class="h1-animation">Shop in <span data-aos="fade-left">style</span></h1>
-            <p>Buy & Sell Accessories and Furniture in Minutes!</p>
-        </div> --}}
-        <div class="hero-diagonal-blur">
+        {{-- open --}}
+        <div class="hero-diagonal-blur open">
+            <div class="arrow-icon-container">
+                <i class="fa-solid fa-chevron-left"></i> 
+            </div>
             <div class="countPlusRecent">
 
             </div>
         </div>
     </div>  
 </div> 
+
+<script>
+    $(document).ready(function() {
+        $( ".arrow-icon-container" ).click(function() {
+            $(".hero-diagonal-blur").toggleClass("open");
+        });
+    });
+</script>
