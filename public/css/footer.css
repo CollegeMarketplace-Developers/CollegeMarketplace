@@ -4,6 +4,7 @@ footer{
 
 .footer-container{ 
   width: 100%;
+  max-width: 1600px;
   height: auto;
   /* position: absolute; */
   /* bottom: 0; */

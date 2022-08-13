@@ -105,6 +105,7 @@ li{
     margin-left: 50%;
     background: rgba(0, 0, 0, 0.01);
     backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     transform: skewX(-10deg);
     -ms-transform: skewX(-10deg);
     -webkit-transform: skewX(-10deg);
@@ -462,6 +463,7 @@ li{
         -webkit-transform: skewX(-10deg);
         background: rgba(0, 0, 0, 0.01);
         backdrop-filter: blur(5px);
+        -webkit-backdrop-filter:blur(5px);
     }
 }
 @media(max-width: 700px){
