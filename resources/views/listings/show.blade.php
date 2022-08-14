@@ -89,6 +89,35 @@
                             <h4>Condition: 
                                 <span>{{$listing->condition}}</span>
                             </h4>
+                            <!-- code for listing amount of times a page has been visited -->
+                            <style>
+                                header {
+                                display: flex;
+                                text-align: left;
+                                
+                                /* Remove the next line to make the Views text and the views count next to each other */
+                                justify-content: space-between;
+                                }
+                            </style>
+                            <header>
+                            <h4>Views:</h4>
+                            <h4 style = "color: var(--red-accent-color);" class="website-counter"></h4>
+                            </header>
+                                    <script>
+                                    var counterContainer = document.querySelector(".website-counter");
+                                    var visitCount = localStorage.getItem("page_view");
+
+                                    // Check if page_view entry is present
+                                    if (visitCount) {
+                                    visitCount = Number(visitCount) + 1;
+                                    localStorage.setItem("page_view", visitCount);
+                                    } else {
+                                    visitCount = 1;
+                                    localStorage.setItem("page_view", 1);
+                                    }
+                                    counterContainer.innerHTML = visitCount;
+                                    </script>
+                            <!-- code for listing amount of times a page has been visited -->
                         </div>
                         
                         <div class = "product-categories show-top">
@@ -134,6 +163,20 @@
                                         </form>
                                     @endif                                
                                 </li>
+                                <li> 
+                                <form><button class="clipboard"><i class="fa fa-share-alt"></i></button></form> <!-- adding a form adds a page jump bug and simply adding this list item adds a vertical line to the right of the heart -->
+                                <script>
+                                var $temp = $("<input>");
+                                var $url = $(location).attr('href');
+                                $('.clipboard').on('click', function() {
+                                $("body").append($temp);
+                                $temp.val($url).select();
+                                document.execCommand("copy");
+                                $temp.remove();
+                                alert("URL Copied! :)");
+                                })
+                                </script>             
+                                </li>
                                 @if($currentUser != null and $listing->user_id == $currentUser->id)
                                     <li>
                                         <form method="POST" action="/listings/{{$listing->id}}/update">
@@ -147,6 +190,7 @@
                                             </select>
                                         </form>
                                     </li>
+                                    
                                     <li>
                                         <form action="/listings/{{$listing->id}}/edit" method = "GET">
                                             @csrf
