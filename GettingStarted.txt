@@ -9,13 +9,13 @@ have XAMPP on your local machine since this has been an issue before
 
 2.5 If MySQL is not starting (shutting down unexpectedly) use this link to help: https://stackoverflow.com/questions/18022809/how-to-solve-error-mysql-shutdown-unexpectedly
 
-3 Add college_marketplace database within XAMPP PHPMYADMIN
+3 Select 'Admin' in XAMPP in the MySQL row (its to the right of the stop button) -> Click the New button in PhpMyAdmin -> Add college_marketplace database within XAMPP PHPMYADMIN -> Click Create Button
 
 4 Clone repo into C:/xampp/htdocs
 
-5 Add college marketplace folder that was cloned to VSCode workspace
+5 Add college marketplace folder that was cloned to VSCode workspace (File -> Add Folder To Workspace -> C:/xampp/htdocs/college_marketplace)
 
-6. run within the C:/xampp/htdocs/College Marketplace Terminal the following command(s):
+6. Run within the C:/xampp/htdocs/College Marketplace Terminal the following command(s):
 
 cp .env.example .env
 composer update --no-scripts
@@ -39,15 +39,15 @@ php artisan config:cache
 php artisan config:clear
 php artisan optimize
 
-10. run within the C:/xampp/htdocs/College Marketplace Terminal the following command(s):
+10. Run within the C:/xampp/htdocs/College Marketplace Terminal the following command(s):
 
 php artisan migrate
 php artisan db:seed
 
-11. run within the C:/xampp/htdocs/College Marketplace Terminal the following command(s):Add
+11. Run within the C:/xampp/htdocs/College Marketplace Terminal the following command(s):Add
 
 php artisan serve
 
 12. CTRL + LEFT CLICK THE LINK THAT SAYS http://127.0.0.1:8000 within the terminal to launch college marketplace
 
-13. Reach out to Davi or Ayub for any help with these issues. please make sure to have gone through this thoroughly before reaching out to us :)
+13. Reach out to Davi or Ayub for any help with these issues. Please make sure to have gone through these steps thoroughly before reaching out to us :)
