@@ -16,9 +16,7 @@
                 <a href="/">College Marketplace</a>
             </div>
             <ul class="links">
-                <li><a href="/">Home</a></li>
                 
-                <li><a href="#">Requests</a></li>
                 
                 <li>
                     <a class="desktop-link">Buy </a>
@@ -61,6 +59,8 @@
                     <li><a href="/subleases/create">Post a Lease</a></li>
                     </ul>
                 </li>
+                
+                <li><a href="#">Requests</a></li>
 
                 <?php if(auth()->guard()->check()): ?>
                     <li>
