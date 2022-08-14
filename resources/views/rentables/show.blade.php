@@ -167,7 +167,7 @@
                                 @endif
                             </ul>
                         </div>
-                        <p id='demo' style='text-align:right; display: none; padding-right: 20px;'>Text Copied!</p>
+                        <p id='demo' style='text-align:right; display: none; padding-right: 20px;'>Link Copied!</p>
                     </div>
                 </div>
             </div>
