@@ -129,6 +129,22 @@
                                         </form>
                                     @endif                                
                                 </li>
+                                <!-- vertical line added by this code --> 
+                                <li>
+                                <form><button id = 'share' onclick = "toggleText()" type = "button"><i class="fa fa-share-alt"></i></button></form> 
+                                <script>
+                                    function toggleText() {
+                                        navigator.clipboard.writeText(window.location.href);
+                                        var text = document.getElementById("demo");
+                                        if (text.style.display === "none") {
+                                            text.style.display = "block";
+                                        } else {
+                                            text.style.display = "none";
+                                        }
+                                    }
+                                </script>             
+                                </li>
+                                <!-- vertical line added by this code -->
                                 @if($currentUser != null and $leaseItem->user_id == $currentUser->id)
                                     <li>
                                         <form method="POST" action="/subleases/{{$leaseItem->id}}/update">
@@ -156,6 +172,7 @@
                                 @endif
                             </ul>
                         </div>
+                        <p id='demo' style='text-align:right; display: none; padding-right: 20px;'>Text Copied!</p>
                     </div>
                 </div>
             </div>
