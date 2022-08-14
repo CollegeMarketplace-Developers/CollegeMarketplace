@@ -3,6 +3,7 @@
 {{-- @section('content') --}}
 
 {{-- css for individual user listing --}}
+@inject('listingController', 'App\Http\Controllers\ListingController')
 <link rel="stylesheet" type="text/css" href="/css/listing.css">
 
 <x-layout>
@@ -90,20 +91,12 @@
                                 <span>{{$listing->condition}}</span>
                             </h4>
                             <!-- code for listing amount of times a page has been visited -->
-                            <style>
-                                header {
-                                display: flex;
-                                text-align: left;
-                                
-                                /* Remove the next line to make the Views text and the views count next to each other */
-                                justify-content: space-between;
-                                }
-                            </style>
-                            <header>
-                            <h4>Views:</h4>
-                            <h4 style = "color: var(--red-accent-color);" class="website-counter"></h4>
-                            </header>
-                                    <script>
+                            <h4>Views: <span>{{$listing->view_count}}</span></h4>
+                            @php
+                            $listingController::updateViewCount($listing);
+                            @endphp
+                                    <!-- session storage code for updating view count -->
+                                    <!-- <script>
                                     var counterContainer = document.querySelector(".website-counter");
                                     var visitCount = localStorage.getItem("page_view");
 
@@ -116,7 +109,7 @@
                                     localStorage.setItem("page_view", 1);
                                     }
                                     counterContainer.innerHTML = visitCount;
-                                    </script>
+                                    </script> -->
                             <!-- code for listing amount of times a page has been visited -->
                         </div>
                         

@@ -209,4 +209,10 @@ class RentablesController extends Controller
         // dd("test");
         return Rentable::find($rentable);
     }
+
+    public static function updateViewCount($rentable) {
+        $data = Rentable::find($rentable->id);
+        $data->view_count = $rentable->view_count + 1;
+        $data->save();
+    }
 }

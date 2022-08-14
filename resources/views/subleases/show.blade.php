@@ -3,6 +3,7 @@
 {{-- @section('content') --}}
 
 {{-- css for individual user listing --}}
+@inject('subleaseController', 'App\Http\Controllers\SubleaseController')
 <link rel="stylesheet" type="text/css" href="/css/listing.css">
 
 <x-layout>
@@ -86,6 +87,10 @@
                             <h4>Condition: 
                                 <span>{{$leaseItem->condition}}</span>
                             </h4>
+                            <h4>Views: <span>{{$leaseItem->view_count}}</span></h4>
+                            @php
+                            $subleaseController::updateViewCount($leaseItem);
+                            @endphp
                         </div>
 
                         <div class = "product-categories show-top">

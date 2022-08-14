@@ -3,6 +3,7 @@
 {{-- @section('content') --}}
 
 {{-- css for individual user listing --}}
+@inject('rentablesController', 'App\Http\Controllers\RentablesController')
 <link rel="stylesheet" type="text/css" href="/css/listing.css">
 
 <x-layout>
@@ -75,6 +76,10 @@
                             <h4>Condition: 
                                 <span>{{$rentable->condition}}</span>
                             </h4>
+                            <h4>Views: <span>{{$rentable->view_count}}</span></h4>
+                            @php
+                            $rentablesController::updateViewCount($rentable);
+                            @endphp
                         </div>
                         
                         <div class = "product-categories show-top">

@@ -44,10 +44,15 @@ php artisan optimize
 php artisan migrate
 php artisan db:seed
 
-11. Run within the C:/xampp/htdocs/College Marketplace Terminal the following command(s):Add
+11. Add GCP Keys To .env file Be Able To Login
+    - GOOGLE_CLIENT_ID=230882673413-evo8etj4jtiqlihvsb47vpigunudo1vl.apps.googleusercontent.com
+    - GOOGLE_CLIENT_SECRET=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
+    - GOOGLE_REDIRECT=http://localhost:8000/callback
+
+12. Run within the C:/xampp/htdocs/College Marketplace Terminal the following command(s):Add
 
 php artisan serve
 
-12. CTRL + LEFT CLICK THE LINK THAT SAYS http://127.0.0.1:8000 within the terminal to launch college marketplace
+13. CTRL + LEFT CLICK THE LINK THAT SAYS http://127.0.0.1:8000 within the terminal to launch college marketplace
 
-13. Reach out to Davi or Ayub for any help with these issues. Please make sure to have gone through these steps thoroughly before reaching out to us :)
+14. Reach out to Davi or Ayub for any help with these issues. Please make sure to have gone through these steps thoroughly before reaching out to us :)

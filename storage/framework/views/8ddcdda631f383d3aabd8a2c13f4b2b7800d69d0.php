@@ -3,6 +3,7 @@
 
 
 
+<?php $subleaseController = app('App\Http\Controllers\SubleaseController'); ?>
 <link rel="stylesheet" type="text/css" href="/css/listing.css">
 
 <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
@@ -95,6 +96,10 @@
                             <h4>Condition: 
                                 <span><?php echo e($leaseItem->condition); ?></span>
                             </h4>
+                            <h4>Views: <span><?php echo e($leaseItem->view_count); ?></span></h4>
+                            <?php
+                            $subleaseController::updateViewCount($leaseItem);
+                            ?>
                         </div>
 
                         <div class = "product-categories show-top">
