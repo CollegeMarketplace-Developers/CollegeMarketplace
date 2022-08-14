@@ -44,10 +44,7 @@ php artisan optimize
 php artisan migrate
 php artisan db:seed
 
-11. Add GCP Keys To .env file Be Able To Login
-    - GOOGLE_CLIENT_ID=230882673413-evo8etj4jtiqlihvsb47vpigunudo1vl.apps.googleusercontent.com
-    - GOOGLE_CLIENT_SECRET=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
-    - GOOGLE_REDIRECT=http://localhost:8000/callback
+11. Add GCP Keys To .env file Be Able To Login -> Refer to the notion page for the keys
 
 12. Run within the C:/xampp/htdocs/College Marketplace Terminal the following command(s):Add
 
