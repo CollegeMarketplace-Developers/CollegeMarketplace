@@ -179,20 +179,22 @@
                                         </form>
                                     <?php endif; ?>                                
                                 </li>
-                                <li> 
-                                <form><button class="clipboard"><i class="fa fa-share-alt"></i></button></form> <!-- adding a form adds a page jump bug and simply adding this list item adds a vertical line to the right of the heart -->
+                                <!-- vertical line added by this code --> 
+                                <li>
+                                <form><button id = 'share' onclick = "toggleText()" type = "button"><i class="fa fa-share-alt"></i></button></form> 
                                 <script>
-                                var $temp = $("<input>");
-                                var $url = $(location).attr('href');
-                                $('.clipboard').on('click', function() {
-                                $("body").append($temp);
-                                $temp.val($url).select();
-                                document.execCommand("copy");
-                                $temp.remove();
-                                alert("URL Copied! :)");
-                                })
+                                    function toggleText() {
+                                        navigator.clipboard.writeText(window.location.href);
+                                        var text = document.getElementById("demo");
+                                        if (text.style.display === "none") {
+                                            text.style.display = "block";
+                                        } else {
+                                            text.style.display = "none";
+                                        }
+                                    }
                                 </script>             
                                 </li>
+                                <!-- vertical line added by this code --> 
                                 <?php if($currentUser != null and $listing->user_id == $currentUser->id): ?>
                                     <li>
                                         <form method="POST" action="/listings/<?php echo e($listing->id); ?>/update">
@@ -222,6 +224,7 @@
                                 <?php endif; ?>
                             </ul>
                         </div>
+                        <p id='demo' style='text-align:right; display: none; padding-right: 20px;'>Text Copied!</p>
                     </div>
                 </div>
             </div>
