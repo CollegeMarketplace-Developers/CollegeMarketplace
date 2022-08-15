@@ -18,7 +18,7 @@
 } */
 
 /* .rent-slider, .sublease-slider{
-    background-color: var(--red-accent-color);
+    background-color: var(--accent-color);
     padding: 10px;
 } */
 
@@ -59,7 +59,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border-radius: 12px;
+    border-radius: var(--br-medium);
     outline: none;
     position: absolute;
     transition: .7s ease-in-out;
@@ -69,7 +69,7 @@
 }
 
 .previous:hover, .next:hover{
-    border: 3px solid var(--red-accent-color);
+    border: 3px solid var(--accent-color);
 }
 
 .next{
@@ -103,7 +103,7 @@
 
 .controller div span{
     font-size: 15px;
-    color:var(--red-accent-color);
+    color:var(--accent-color);
     flex-wrap: wrap;
 }
 
@@ -151,12 +151,12 @@
   color: var(--green-accent-color);
   /* background-color: #151416; */
   /* background: linear-gradient(261.71deg, #3A3845 13.92%, #2C2A36 84.19%); */
-  /* background: var(--red-accent-color); */
+  /* background: var(--accent-color); */
   /* color:white; */
 }
 
 .rentable{
-    background-color: var(--red-accent-color);
+    background-color: var(--accent-color);
     color:white;
 }
 
@@ -190,13 +190,13 @@
     overflow: hidden;
     position: relative;
     z-index: 10;
-    border-radius:20px;
+    border-radius:var(--br-large);
 }
 
 .slide-img a{
     width: 100%;
     height: 100%;
-    /* background: var(--red-accent-color); */
+    /* background: var(--accent-color); */
     background-color: rgb(17 16 21 / 25%);
 }
 .ribbon{
@@ -213,7 +213,7 @@
 }
 
 .ribbon-rental{
-  background-color: var(--red-accent-color);
+  background-color: var(--accent-color);
 }
 
 .ribbon-lease{
@@ -223,7 +223,6 @@
     height: 250px;
     width: 100%;
     object-fit: cover !important;
-    /* border-radius: 12px; */
 }
 
 .slide-img .status{
@@ -254,8 +253,6 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    /* padding: 5px; */
-     /* border-radius: 12px; */
     position: relative !important;
     -webkit-transition: all 1 ease-out;
     -moz-transition: all 1 ease-out;
@@ -293,7 +290,7 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
-    border-radius: 20px;
+    border-radius: var(--br-large);
 }
 
 .listing-details-top{
@@ -304,7 +301,7 @@
 } 
 .listing-details-top h1{ 
     font-size: 20px;
-    color:var(--red-accent-color);
+    color:var(--accent-color);
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -360,8 +357,8 @@
 
 .listing-details-bottom a{
     padding: 10px 20px;
-    border-radius: 12px;
-    /* background-color: var(--red-accent-color); */
+    border-radius: var(--br-medium);
+    /* background-color: var(--accent-color); */
     color:white;
     text-align: center;
     height: fit-content;

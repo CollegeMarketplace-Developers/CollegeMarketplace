@@ -15,7 +15,7 @@
                     </div>
                 @endif
                 <div class="card_type sale">
-                    <p>For Sale</p>
+                    <p>Buy</p>
                 </div>
                 <a href="/listings/{{$listing->id}}">
                     @php
@@ -27,8 +27,9 @@
                                 
                             }
                         }
+                        $site = 'https://picsum.photos/300/200?sig='. rand(0,100);
                     @endphp
-                    <img src={{$listing->image_uploads ? Storage::disk('s3')->url($imgLinks) : asset('/images/rotunda.jpg') }}  alt="image doesnt exist">
+                    <img src={{$listing->image_uploads ? Storage::disk('s3')->url($imgLinks) : $site }}  alt="image doesnt exist">
                 </a>
             @elseif($listing instanceof \App\Models\Rentable)
                 @if($listing->status =='Available')
@@ -39,7 +40,7 @@
                     </div>
                 @endif
                 <div class="card_type rent">
-                    <p>For Rent</p>
+                    <p>Rent</p>
                 </div>
                 <a href="/rentables/{{$listing->id}}">
                     @php
@@ -50,8 +51,10 @@
                                 $imgLinks = $imgLinks[0];
                             }
                         }
+                        $site = 'https://picsum.photos/300/200?sig='. rand(0,100);
                     @endphp
-                    <img src={{$listing->image_uploads ? Storage::disk('s3')->url($imgLinks) : asset('/images/rotunda.jpg') }}  alt="image doesnt exist">
+                    {{-- asset('/images/rotunda.jpg') --}}
+                    <img src={{$listing->image_uploads ? Storage::disk('s3')->url($imgLinks) : $site }}  alt="image doesnt exist">
                 </a>
             @else
                 @if($listing->status =='Available')
@@ -62,7 +65,7 @@
                     </div>
                 @endif
                 <div class="card_type lease">
-                    <p>For Lease</p>
+                    <p>Lease</p>
                 </div>
                 <a href="/subleases/{{$listing->id}}">
                     @php
@@ -73,8 +76,9 @@
                                 $imgLinks = $imgLinks[0];
                             }
                         }
+                        $site = 'https://picsum.photos/300/200?sig='. rand(0,100);
                     @endphp
-                    <img src={{$listing->image_uploads ? Storage::disk('s3')->url($imgLinks) : asset('/images/rotunda.jpg') }}  alt="image doesnt exist">
+                    <img src={{$listing->image_uploads ? Storage::disk('s3')->url($imgLinks) : $site }}  alt="image doesnt exist">
                 </a>
             @endif
         </div>

@@ -26,7 +26,7 @@
                     </div>
                 <?php endif; ?>
                 <div class="card_type sale">
-                    <p>For Sale</p>
+                    <p>Buy</p>
                 </div>
                 <a href="/listings/<?php echo e($listing->id); ?>">
                     <?php
@@ -38,8 +38,9 @@
                                 
                             }
                         }
+                        $site = 'https://picsum.photos/300/200?sig='. rand(0,100);
                     ?>
-                    <img src=<?php echo e($listing->image_uploads ? Storage::disk('s3')->url($imgLinks) : asset('/images/rotunda.jpg')); ?>  alt="image doesnt exist">
+                    <img src=<?php echo e($listing->image_uploads ? Storage::disk('s3')->url($imgLinks) : $site); ?>  alt="image doesnt exist">
                 </a>
             <?php elseif($listing instanceof \App\Models\Rentable): ?>
                 <?php if($listing->status =='Available'): ?>
@@ -50,7 +51,7 @@
                     </div>
                 <?php endif; ?>
                 <div class="card_type rent">
-                    <p>For Rent</p>
+                    <p>Rent</p>
                 </div>
                 <a href="/rentables/<?php echo e($listing->id); ?>">
                     <?php
@@ -61,8 +62,10 @@
                                 $imgLinks = $imgLinks[0];
                             }
                         }
+                        $site = 'https://picsum.photos/300/200?sig='. rand(0,100);
                     ?>
-                    <img src=<?php echo e($listing->image_uploads ? Storage::disk('s3')->url($imgLinks) : asset('/images/rotunda.jpg')); ?>  alt="image doesnt exist">
+                    
+                    <img src=<?php echo e($listing->image_uploads ? Storage::disk('s3')->url($imgLinks) : $site); ?>  alt="image doesnt exist">
                 </a>
             <?php else: ?>
                 <?php if($listing->status =='Available'): ?>
@@ -73,7 +76,7 @@
                     </div>
                 <?php endif; ?>
                 <div class="card_type lease">
-                    <p>For Lease</p>
+                    <p>Lease</p>
                 </div>
                 <a href="/subleases/<?php echo e($listing->id); ?>">
                     <?php
@@ -84,8 +87,9 @@
                                 $imgLinks = $imgLinks[0];
                             }
                         }
+                        $site = 'https://picsum.photos/300/200?sig='. rand(0,100);
                     ?>
-                    <img src=<?php echo e($listing->image_uploads ? Storage::disk('s3')->url($imgLinks) : asset('/images/rotunda.jpg')); ?>  alt="image doesnt exist">
+                    <img src=<?php echo e($listing->image_uploads ? Storage::disk('s3')->url($imgLinks) : $site); ?>  alt="image doesnt exist">
                 </a>
             <?php endif; ?>
         </div>

@@ -33,13 +33,38 @@ li{
 
 
 :root{    
-    /* color palette */
-    /* --background-color:#24222c; */
+    /* border radius */
+    --br-small: 3px;
+    --br-medium:6px;
+    --br-large: 12px;
+
+    /* red accent: #db6657 */
+    /* orange accent: #C98748 */
+
+    /* color palette dark */
+    --accent-color: #db6657;
     --background-color:#1F1D26;
-    --red-accent-color: #db6657;
     --green-accent-color:#92EBC4;
     --text-color-light:#EDEFF8;
     --text-color-dark:#C9C9DC;
+
+    /* color palette light */
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.4);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background:rgba(0,0,0,.6);
 }
 
 .type-sale{
@@ -57,7 +82,7 @@ li{
     top:0;
     left: 50%;
     transform: translateX(-50%);
-    background-color: var(--red-accent-color);
+    background-color: var(--accent-color);
     color: white;
     width: fit-content;
     padding: 20px 40px;
@@ -107,6 +132,7 @@ li{
     background: rgba(0, 0, 0, 0.01);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
+    -ms-backdrop-filter: blur(15px);
     transform: skewX(-10deg);
     -ms-transform: skewX(-10deg);
     -webkit-transform: skewX(-10deg);
@@ -241,7 +267,7 @@ li{
 .tags-list-item{
     display: inline-block;
     padding: 0 5px;
-    /* background-color: var(--red-accent-color); */
+    /* background-color: var(--accent-color); */
     /* backdrop-filter: blur(10px); */
     /* background: linear-gradient(261.71deg, #3A3845 13.92%, #2C2A36 84.19%); */
     background-color: #3A3845;
@@ -257,7 +283,7 @@ li{
 }
 
 .tags-list-item:hover{
-    background-color: var(--red-accent-color);
+    background-color: var(--accent-color);
 }
 .tags-list-item a{
     text-decoration: none;
@@ -292,7 +318,7 @@ li{
 .empty-gallary-message{
     padding: 15px 25px;
     height: 20%;
-    color:var(--red-accent-color);
+    color:var(--accent-color);
     width: 100%;
     border-radius: 12px;
     background: rgba(49,47,59,0.5);
