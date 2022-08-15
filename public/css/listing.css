@@ -122,6 +122,8 @@
 
 .img-showcase img{
     border-radius: var(--br-small);
+    max-width: 250px;
+    object-fit: cover;
 }
 
 .img-showcase img:hover{

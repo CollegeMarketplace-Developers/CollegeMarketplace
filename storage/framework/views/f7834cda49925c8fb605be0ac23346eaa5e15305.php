@@ -51,7 +51,6 @@
                 </a>
             </div>
             
-            
             <div class = "listing-details">
                 <div class="listing-details-top">
                     <h1>$<?php echo e($listing->price); ?></h1>

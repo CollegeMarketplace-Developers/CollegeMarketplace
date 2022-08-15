@@ -3,6 +3,7 @@
 {{-- @section('content') --}}
 
 {{-- css for individual user listing --}}
+@inject('listingController', 'App\Http\Controllers\ListingController')
 <link rel="stylesheet" type="text/css" href="/css/listing.css">
 
 <x-layout>
@@ -104,6 +105,9 @@
                                     <p>Condition:</p>
                                     <span>{{$listing->condition}}</span>
                                 </div>
+                                @php
+                                    $listingController::updateViewCount($listing);
+                                @endphp
                                 <p><i class="fa-solid fa-eye"></i><span>{{$listing->view_count}}</span></p>
                                 <p><i class="fa-solid fa-location-dot"></i><span>{{$listing->city}}, {{$listing->state}}</span></p>
                             </div>

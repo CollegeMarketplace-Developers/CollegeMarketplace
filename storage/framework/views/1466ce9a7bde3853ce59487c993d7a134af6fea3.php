@@ -3,6 +3,7 @@
 
 
 
+<?php $listingController = app('App\Http\Controllers\ListingController'); ?>
 <link rel="stylesheet" type="text/css" href="/css/listing.css">
 
 <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
@@ -112,6 +113,9 @@
                                     <p>Condition:</p>
                                     <span><?php echo e($listing->condition); ?></span>
                                 </div>
+                                <?php
+                                    $listingController::updateViewCount($listing);
+                                ?>
                                 <p><i class="fa-solid fa-eye"></i><span><?php echo e($listing->view_count); ?></span></p>
                                 <p><i class="fa-solid fa-location-dot"></i><span><?php echo e($listing->city); ?>, <?php echo e($listing->state); ?></span></p>
                             </div>
