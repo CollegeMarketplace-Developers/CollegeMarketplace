@@ -214,4 +214,10 @@ class SubleaseController extends Controller
         // dd("test");
         return Sublease::find($sublease);
     }
+
+    public static function updateViewCount($sublease) {
+        $data = Sublease::find($sublease->id);
+        $data->view_count = $sublease->view_count + 1;
+        $data->save();
+    }
 }

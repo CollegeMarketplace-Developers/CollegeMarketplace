@@ -3,6 +3,7 @@
 {{-- @section('content') --}}
 
 {{-- css for individual user listing --}}
+@inject('subleaseController', 'App\Http\Controllers\SubleaseController')
 <link rel="stylesheet" type="text/css" href="/css/listing.css">
 
 <x-layout>
@@ -86,6 +87,10 @@
                             <h4>Condition: 
                                 <span>{{$leaseItem->condition}}</span>
                             </h4>
+                            <h4>Views: <span>{{$leaseItem->view_count}}</span></h4>
+                            @php
+                            $subleaseController::updateViewCount($leaseItem);
+                            @endphp
                         </div>
 
                         <div class = "product-categories show-top">
@@ -124,6 +129,22 @@
                                         </form>
                                     @endif                                
                                 </li>
+                                <!-- vertical line added by this code --> 
+                                <li>
+                                <form><button id = 'share' onclick = "toggleText()" type = "button"><i class="fa fa-share-alt"></i></button></form> 
+                                <script>
+                                    function toggleText() {
+                                        navigator.clipboard.writeText(window.location.href);
+                                        var text = document.getElementById("demo");
+                                        if (text.style.display === "none") {
+                                            text.style.display = "block";
+                                        } else {
+                                            text.style.display = "none";
+                                        }
+                                    }
+                                </script>             
+                                </li>
+                                <!-- vertical line added by this code -->
                                 @if($currentUser != null and $leaseItem->user_id == $currentUser->id)
                                     <li>
                                         <form method="POST" action="/subleases/{{$leaseItem->id}}/update">
@@ -151,6 +172,7 @@
                                 @endif
                             </ul>
                         </div>
+                        <p id='demo' style='text-align:right; display: none; padding-right: 20px;'>Link Copied!</p>
                     </div>
                 </div>
             </div>

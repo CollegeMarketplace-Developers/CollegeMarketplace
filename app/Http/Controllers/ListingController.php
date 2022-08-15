@@ -254,4 +254,10 @@ class ListingController extends Controller
         //if no listing is found - > meaning the listing must have been deleted then remove that recommendation from that watchlist
         return Listing::find($listing);
     }
+
+    public static function updateViewCount($listing) {
+        $data = Listing::find($listing->id);
+        $data->view_count = $listing->view_count + 1;
+        $data->save();
+    }
 }

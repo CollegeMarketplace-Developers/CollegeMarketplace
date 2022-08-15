@@ -3,6 +3,7 @@
 
 
 
+<?php $subleaseController = app('App\Http\Controllers\SubleaseController'); ?>
 <link rel="stylesheet" type="text/css" href="/css/listing.css">
 
 <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
@@ -95,6 +96,10 @@
                             <h4>Condition: 
                                 <span><?php echo e($leaseItem->condition); ?></span>
                             </h4>
+                            <h4>Views: <span><?php echo e($leaseItem->view_count); ?></span></h4>
+                            <?php
+                            $subleaseController::updateViewCount($leaseItem);
+                            ?>
                         </div>
 
                         <div class = "product-categories show-top">
@@ -133,6 +138,22 @@
                                         </form>
                                     <?php endif; ?>                                
                                 </li>
+                                <!-- vertical line added by this code --> 
+                                <li>
+                                <form><button id = 'share' onclick = "toggleText()" type = "button"><i class="fa fa-share-alt"></i></button></form> 
+                                <script>
+                                    function toggleText() {
+                                        navigator.clipboard.writeText(window.location.href);
+                                        var text = document.getElementById("demo");
+                                        if (text.style.display === "none") {
+                                            text.style.display = "block";
+                                        } else {
+                                            text.style.display = "none";
+                                        }
+                                    }
+                                </script>             
+                                </li>
+                                <!-- vertical line added by this code -->
                                 <?php if($currentUser != null and $leaseItem->user_id == $currentUser->id): ?>
                                     <li>
                                         <form method="POST" action="/subleases/<?php echo e($leaseItem->id); ?>/update">
@@ -160,6 +181,7 @@
                                 <?php endif; ?>
                             </ul>
                         </div>
+                        <p id='demo' style='text-align:right; display: none; padding-right: 20px;'>Text Copied!</p>
                     </div>
                 </div>
             </div>

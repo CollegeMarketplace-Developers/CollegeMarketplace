@@ -46,8 +46,8 @@
           </form>
           <div class="social-icons">
               <a href=""><i class="fa-brands fa-facebook-f"></i></a>
-              <a href=""><i class="fa-brands fa-twitter"></i></a>
-              <a href=""><i class="fa-brands fa-discord"></i></a>
+              <a href="https://twitter.com/CollegeMarketUS"><i class="fa-brands fa-twitter"></i></a>
+              <a href="https://discord.gg/sKhbUhUhfw"><i class="fa-brands fa-discord"></i></a>
               <a href=""><i class="fa-brands fa-instagram"></i></a>
           </div>
         </div>
