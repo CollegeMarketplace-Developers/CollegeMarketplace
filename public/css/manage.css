@@ -19,7 +19,7 @@
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
     transition: all .3s ease;
-    border-right: 10px solid var(--red-accent-color);
+    border-right: 10px solid var(--accent-color);
     box-sizing: content-box;
 }
 
@@ -35,7 +35,7 @@
     position: absolute;
     top: 20px;
     left: calc(100%);
-    background: var(--red-accent-color);
+    background: var(--accent-color);
     padding: 20px 15px 20px 25px;
     text-align: center;
     border-radius: 8px;
@@ -81,11 +81,11 @@
 .panel-options li span:hover{
     text-decoration: none !important;
     cursor:pointer;
-    background: var(--red-accent-color) !important;
+    background: var(--accent-color) !important;
     color:white;
 }
 .default-select{
-    background: var(--red-accent-color) !important;
+    background: var(--accent-color) !important;
 }
 .show-panel{
     width: calc(100% - 250px);
@@ -131,7 +131,7 @@
     background-color: maroon;
     margin: 0 25px 0 25px;
     border-radius: 100%;
-    border: 5px solid var(--red-accent-color);
+    border: 5px solid var(--accent-color);
     /* overflow: hidden; */
     opacity: .8;
     position: relative;
@@ -159,7 +159,7 @@
 
 .account-delete i{
     font-size: 30px;
-    color:var(--red-accent-color);
+    color:var(--accent-color);
 }
 
 .account-delete i:hover{
@@ -200,7 +200,7 @@
 }
 
 .left-side span, h5{
-    color:var(--red-accent-color);
+    color:var(--accent-color);
 }
 
 .details-cont{
@@ -270,7 +270,7 @@
     width: 100%;
 }
 .addressForm h3{
-    color:var(--red-accent-color);
+    color:var(--accent-color);
 }
 .addressForm input[type='text']:not(:last-child),
 .modal-content input[type='text'],
@@ -288,7 +288,7 @@
     background: none;
     color: var(--background-color);
     /* color: #92EBC4;*/
-    color:var(--red-accent-color);
+    color:var(--accent-color);
 }
 
 .addressForm input[type='text']:hover,
@@ -310,7 +310,7 @@
     padding:2px 10px;
     width: 100%;
     text-align: center;
-    background-color: var(--red-accent-color);
+    background-color: var(--accent-color);
     margin-bottom: 5px;
 }
 .post-count h5{
@@ -394,7 +394,7 @@
 .create-watch-item{
     width: 50px;
     height: 50px;
-    background-color: var(--red-accent-color);
+    background-color: var(--accent-color);
     border-radius:100% ;
     display:flex;
     align-items: center;
@@ -434,7 +434,7 @@
     top:-10px;
     z-index: 2;
     border-radius: 25px;
-    background-color: var(--red-accent-color);
+    background-color: var(--accent-color);
 }
 .watchitem-container .watchitem h3,
 .watchitem-container .watchitem h5{
@@ -470,7 +470,7 @@
 .watchitem-crud form{
     width: 30px;
     height:30px;
-    background-color: var(--red-accent-color);
+    background-color: var(--accent-color);
     margin:5px;
     border-radius: 25%;
 }
@@ -559,14 +559,14 @@
 }
 
 .slides-item:hover{
-    box-shadow: 0px 12px 32px var(--red-accent-color);
+    box-shadow: 0px 12px 32px var(--accent-color);
     cursor: pointer;
 }
 
 .slides-item a{
     width: 100%;
     height: 100%;
-    /* background: var(--red-accent-color); */
+    /* background: var(--accent-color); */
     overflow: hidden;
     display:flex;
     align-items:center;
@@ -600,7 +600,7 @@
 
 .slidesitem-details h3{
     font-size: 16px;
-    color:var(--red-accent-color);
+    color:var(--accent-color);
 }
 
 
@@ -625,7 +625,7 @@
 }
 
 .remove-recommendation button:hover > i{
-    color:var(--red-accent-color);
+    color:var(--accent-color);
 }
 
 .remove-recommendation i{
@@ -674,7 +674,7 @@
 .modal-content p{
     margin:10px 30px 10px 0;
     width: 100%;
-    color:var(--red-accent-color);
+    color:var(--accent-color);
 }
 
 .modal-content .clearfix{
@@ -698,7 +698,7 @@
 
 .close:hover,
 .close:focus {
-  color: var(--red-accent-color);
+  color: var(--accent-color);
   text-decoration: none;
   cursor: pointer;
 }
@@ -725,7 +725,7 @@
     display: inline-block;
     padding: 0 5px;
     /* background-color: var(--background-color); */
-    background-color: var(--red-accent-color);
+    background-color: var(--accent-color);
     color: white;
     margin: 2.5px !important;
     border-radius: 5px;
@@ -771,7 +771,7 @@
 
 
 .submit-form{
-    background-color: var(--red-accent-color) !important;
+    background-color: var(--accent-color) !important;
     color:white !important;
 }
 

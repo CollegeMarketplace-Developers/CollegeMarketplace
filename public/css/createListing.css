@@ -42,7 +42,7 @@
 }
 
 .info h1{
-	/* color:var(--red-accent-color); */
+	/* color:var(--accent-color); */
 	margin-bottom: 20px;
 }
 
@@ -110,7 +110,7 @@
 }
 .button {
 	
-	background-color: var(--red-accent-color) !important;
+	background-color: var(--accent-color) !important;
 	border-radius: 5px;
 	padding: 7.5px 15px !important;
 	display: inline-block;
@@ -275,7 +275,7 @@ ul.ks-cboxtags li input[type="checkbox"] {
 	font: inherit;
 	cursor: pointer;
 	outline: inherit;
-	background-color: var(--red-accent-color);
+	background-color: var(--accent-color);
 }
 
 /* sublease styling */

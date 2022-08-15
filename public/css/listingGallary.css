@@ -75,7 +75,7 @@
   width: 100%;
   border-bottom: none;
   text-align: center;
-  color:var(--red-accent-color);
+  color:var(--accent-color);
   border-radius: 12px 12px 0 0;
   /* background-color: var(--background-color); */
 
@@ -102,7 +102,7 @@
 }
 
 .ribbon-rental{
-  background-color: var(--red-accent-color);
+  background-color: var(--accent-color);
 }
 
 .ribbon-lease{
@@ -206,7 +206,7 @@
 
 .card_content div:first-child i:hover{
   cursor: pointer;
-  color:var(--red-accent-color);
+  color:var(--accent-color);
 }
 
 .card_content a{
@@ -227,7 +227,7 @@
   font-weight: 400 !important;
   text-transform: capitalize;
   margin-bottom: 5px;
-  color:var(--red-accent-color);
+  color:var(--accent-color);
   /* color: white; */
     text-decoration: none;
     overflow: hidden;
@@ -272,7 +272,7 @@
 
 .pagination-container nav a,
 .pagination-container nav span{
-  background-color: var(--red-accent-color);
+  background-color: var(--accent-color);
   padding: 5px 10px;
   border-radius: 5px;
   color:white;

@@ -107,7 +107,7 @@
 .filter-list #cond:checked + label,
 .filter-list #type:checked + label,
 .filter-list #util:checked + label{
-    background-color: var(--red-accent-color);
+    background-color: var(--accent-color);
 }
 
 .price-label{
@@ -142,7 +142,7 @@
 .price-label input[type=number]{
     border:none;
     background:transparent;
-    color:var(--red-accent-color);
+    color:var(--accent-color);
     font-size:18px;
     font-weight:500;
     width: 30%;
@@ -171,11 +171,11 @@ input::-webkit-inner-spin-button {
 }
 
 .price-label input[type=submit]:hover{
-    background-color: var(--red-accent-color);
+    background-color: var(--accent-color);
     cursor: pointer;
 }
 .picked {
-    background: var(--red-accent-color) !important;
+    background: var(--accent-color) !important;
 }
 
 .filters-applied-container{
@@ -190,7 +190,7 @@ input::-webkit-inner-spin-button {
 .filters-applied-list li{
     display: inline-block;
     padding: 3px 6px;
-    background-color: var(--red-accent-color);
+    background-color: var(--accent-color);
 
     color: white;
     margin: 2.5px 0 !important;

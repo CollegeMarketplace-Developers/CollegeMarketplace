@@ -53,7 +53,7 @@
         </header>
         {{-- <div class="loading-page" id='loading-page'>
             <div class="loading-icon">
-                <i class="fa fa-spinner fa-spin" style=" color:var(--red-accent-color);"></i>
+                <i class="fa fa-spinner fa-spin" style=" color:var(--accent-color);"></i>
             </div>
         </div> --}}
 
