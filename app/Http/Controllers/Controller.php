@@ -37,10 +37,10 @@ class Controller extends BaseController
         // }
 
         //Option 2: retun results from all three types that are the latest
-        $listingResults = Listing::latest()->where('status', '!=', 'Sold' )->limit(24)->get();
-        $rentableResults = Rentable::latest()->where('status', 'like', 'Available' )->limit(24)->get();
-        $subleaseResults = Sublease::latest()->where('status', 'like', 'Available')->limit(24)->get();
-        $totalResults = collect($listingResults)->merge($rentableResults)->merge($subleaseResults)->sortByDesc('created_at')->slice(0,24);
+        $listingResults = Listing::latest()->where('status', '!=', 'Sold' )->limit(40)->get();
+        $rentableResults = Rentable::latest()->where('status', 'like', 'Available' )->limit(40)->get();
+        $subleaseResults = Sublease::latest()->where('status', 'like', 'Available')->limit(40)->get();
+        $totalResults = collect($listingResults)->merge($rentableResults)->merge($subleaseResults)->sortByDesc('created_at')->slice(0,40);
         // dd($totalResults);
 
         $furnitureItems = Listing::latest()->where('status', '!=', 'Sold' )->orWhere('category', 'LIKE', '%furniture%' )->limit(10)->get();
