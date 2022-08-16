@@ -2,7 +2,7 @@
 <div>
     {{-- if the card is a listing card --}}
     @if($listing != null)
-        <div {{$attributes->merge(['class'=> 'slide single-post-cont'])}} data-aos="fade-right">
+        <div {{$attributes->merge(['class'=> 'slide single-post-cont'])}} data-aos="fade-right" data-aos-once="true">
             {{-- <div class="cr cr-top cr-right cr-sticky listing">{{$listing->status}}</div> --}}
             {{-- <a href="/listings/{{$listing->id}}"> --}}
             <div class="slide-img">
@@ -61,7 +61,7 @@
         </div>
     {{-- if the card is a rentable card --}}
     @elseif($rentable != null)
-        <div {{$attributes->merge(['class'=> 'slide single-post-cont '])}} data-aos="fade-right">
+        <div {{$attributes->merge(['class'=> 'slide single-post-cont '])}} data-aos="fade-right" data-aos-once="true">
             {{-- <div class="cr cr-top cr-right cr-sticky rentable">{{$rentable->status}}</div> --}}
             {{-- <a href="/rentables/{{$rentable->id}}"> --}}
             <div class="slide-img">
@@ -114,7 +114,7 @@
             </div>
         </div>
     @else
-         <div {{$attributes->merge(['class'=> 'slide single-post-cont '])}} data-aos="fade-right">
+         <div {{$attributes->merge(['class'=> 'slide single-post-cont '])}} data-aos="fade-right" data-aos-once="true">
             {{-- <div class="cr cr-top cr-right cr-sticky sublease">{{$sublease->status}}</div> --}}
             {{-- <a href="/subleases/{{$sublease->id}}"> --}}
             <div class="slide-img">

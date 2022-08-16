@@ -1,6 +1,6 @@
 @props(['listing', 'displayTags'])
 {{-- data-aos-once="true" --}}
-<li class="cards_item" data-aos="zoom-in">
+<li class="cards_item" data-aos="zoom-in" data-aos-once="true">
     <div class="card"> 
         <div class="card_image">
             @if($listing instanceof \App\Models\Listing)

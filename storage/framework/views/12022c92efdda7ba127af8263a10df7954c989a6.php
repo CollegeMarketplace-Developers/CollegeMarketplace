@@ -15,7 +15,7 @@
                         </button>
                     </div>
                 <?php endif; ?>
-                <div class="controller">
+                <div class="controller mixed-controller">
                     <div> 
                         
                         <h2><?php echo e($message); ?> <span>Recently Added</span></h2>
@@ -69,4 +69,5 @@
             </div>
         </div>
     </div>
+    
 </section><?php /**PATH C:\xampp\htdocs\CollegeMarketplace\resources\views/partials/_mixedCarousel.blade.php ENDPATH**/ ?>

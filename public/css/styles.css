@@ -129,10 +129,10 @@ li{
     position: relative;
     /* margin-left: 50%; */
     left:80%;
-    background: rgba(0, 0, 0, 0.01);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    -ms-backdrop-filter: blur(15px);
+    background: rgba(0, 0, 0, 0.4);
+    /* backdrop-filter: blur(15px); */
+    /* -webkit-backdrop-filter: blur(15px); */
+    /* -ms-backdrop-filter: blur(15px); */
     transform: skewX(-10deg);
     -ms-transform: skewX(-10deg);
     -webkit-transform: skewX(-10deg);

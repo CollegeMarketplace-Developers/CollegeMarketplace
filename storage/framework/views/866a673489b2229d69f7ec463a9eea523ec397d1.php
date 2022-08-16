@@ -34,6 +34,7 @@
 </section>
 
 <script>
+
     function toggleDiv(index){
         var features = ["type1", "type2", "type3", "type4" , "type5" ,"type6"];
         var categoryToggle = ["furniture-toggle", "clothes-toggle", "electronics-toggle", "kitchen-toggle" , "school-toggle" ,"books-toggle"];

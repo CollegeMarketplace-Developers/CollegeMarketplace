@@ -13,7 +13,7 @@
 <div>
     
     <?php if($listing != null): ?>
-        <div <?php echo e($attributes->merge(['class'=> 'slide single-post-cont'])); ?> data-aos="fade-right">
+        <div <?php echo e($attributes->merge(['class'=> 'slide single-post-cont'])); ?> data-aos="fade-right" data-aos-once="true">
             
             
             <div class="slide-img">
@@ -70,7 +70,7 @@
         </div>
     
     <?php elseif($rentable != null): ?>
-        <div <?php echo e($attributes->merge(['class'=> 'slide single-post-cont '])); ?> data-aos="fade-right">
+        <div <?php echo e($attributes->merge(['class'=> 'slide single-post-cont '])); ?> data-aos="fade-right" data-aos-once="true">
             
             
             <div class="slide-img">
@@ -121,7 +121,7 @@
             </div>
         </div>
     <?php else: ?>
-         <div <?php echo e($attributes->merge(['class'=> 'slide single-post-cont '])); ?> data-aos="fade-right">
+         <div <?php echo e($attributes->merge(['class'=> 'slide single-post-cont '])); ?> data-aos="fade-right" data-aos-once="true">
             
             
             <div class="slide-img">

@@ -15,7 +15,7 @@
                         </button>
                     </div>
                 @endunless
-                <div class="controller">
+                <div class="controller mixed-controller">
                     <div> 
                         {{-- : @php echo count($listings) @endphp --}}
                         <h2>{{$message}} <span>Recently Added</span></h2>
@@ -41,4 +41,27 @@
             </div>
         </div>
     </div>
+    {{-- <script>
+        $(document).ready(function() {
+            var stickyElementPositioner = $('.controller');
+            function stickyElementFixed() {
+                stickyElementPositioner.addClass("sticky-class");
+            }
+
+            function stickyElementStatic() {
+                stickyElementPositioner.removeClass("sticky-class");
+            }
+
+            $(window).scroll(function() {
+                var windowScroll = $(window).scrollTop() + 50;
+
+                if (windowScroll < stickyElementPositioner.offset().top) {
+                    stickyElementStatic();
+                } else {
+                    stickyElementFixed();
+                }
+
+            });
+        });
+    </script> --}}
 </section>

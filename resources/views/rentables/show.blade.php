@@ -9,32 +9,32 @@
 <x-layout>
     <section class = "product-details-container">
         <div class = "card-wrapper-selected">
+
+            {{-- back button --}}
+            <div class="back-button">
+                <a href="javascript:history.back()" class="button1 b-button">
+                    <i class="fa-solid fa-arrow-left"></i> Back
+                </a>
+            </div> 
+
+            {{-- main show area --}}
             <div class = "card-selected">
-                <div class="back-button">
-                    <a href="javascript:history.back()" class="button1 b-button">
-                        <i class="fa-solid fa-arrow-left"></i> Back
-                    </a>
-                </div> 
-                <div class = "track">
-                    <h5>Home > Clothes > Pants > Ripped Jeans</h5>
-                    @if($rentable->status =='Available')
-                        <div class="stat-container">
-                            <div class="stat green">
-                            </div>
-                            <h4>{{$rentable->status}}</h4>
-                        </div>
-                    @else
-                        <div class="stat-container">
-                            <div class="stat">
-                            </div>
-                            <h4>{{$rentable->status}}</h4>
-                        </div>
-                    @endif 
-                </div>
                 <div class="selected-row">
+                    
                     <!-- card left -->
                     <div class = "product-imgs">
                         <div class = "img-display">
+                            @if($rentable->status =='Available')
+                                <div class="stat-container">
+                                    <div class="stat green">
+                                    </div>
+                                </div>
+                            @else
+                                <div class="stat-container">
+                                    <div class="stat">
+                                    </div>
+                                </div>
+                            @endif 
                             @php
                                 if(isset($rentable->image_uploads)){
                                     //decode the json object
@@ -52,94 +52,82 @@
                                 @foreach(json_decode($rentable->image_uploads) as $link)
                                     <img src={{$rentable->image_uploads ? Storage::disk('s3')->url($link) : asset('/images/rotunda.jpg')}} alt = "shoe image" onclick="myFunction(this);">
                                 @endforeach
-                            @endif 
+                            @else
+                                @php
+                                    $site = 'https://picsum.photos/300/200?sig='. rand(0,100);
+                                @endphp
+                                <img src="{{$site}}" alt="" onclick="myFunction(this);">
+                                <img src="{{$site}}" alt="" onclick="myFunction(this);">
+                                <img src="{{$site}}" alt="" onclick="myFunction(this);"> 
+                                <img src="{{$site}}" alt="" onclick="myFunction(this);">
+                                <img src="{{$site}}" alt="" onclick="myFunction(this);">
+                            @endif
                         </div>
                     </div>
                     <!-- card right -->
                     <div class = "product-content">
+                        <div class="product-details">
+                            <div class="price-favorite">
+                                <h1>${{$rentable->rental_charging}} / {{$rentable->rental_duration}}</h1>
+                                @if($currentUser != null and $currentUser->rentableFavorites != null and in_array($rentable->id, explode(", " , $currentUser->rentableFavorites)))
+                                    <form action="/users/removefavorite" method="GET">
+                                        @csrf
+                                        <input type="hidden" name="type" value="rentable">
+                                        <input type="hidden" name="id" value={{$rentable->id}}>
+                                        <button><i class="fa-solid fa-heart saved"></i></button>
+                                    </form>
+                                @else
+                                    <form action="/users/addfavorite" method="GET">
+                                        @csrf
+                                        <input type="hidden" name="type" value="rentable">
+                                        <input type="hidden" name="id" value="{{$rentable->id}}">
+                                        <button><i class="fa-solid fa-heart bouncy"></i></button>
+                                    </form>
+                                @endif
 
-                        {{-- product title --}}
-                        <div class = "product-header show-top">
-                            <div class="name-status">
+                            </div>
+                            <div class="product-header">
                                 <h1>{{$rentable->rental_title}}</h1> 
                             </div>
-                            <h3> 
-                                <span>${{$rentable->rental_charging}} / {{$rentable->rental_duration}}</span> | {{$rentable->city}}, {{$rentable->state}}
-                            </h3>    
+                            <div class="product-extra">
+                                <div>
+                                    <p>Price:</p> 
+                                    <span>{{$rentable->negotiable}}</span>
+                                </div>
+                                <div>
+                                    <p>Condition:</p>
+                                    <span>{{$rentable->condition}}</span>
+                                </div>
+                                @php
+                                    $rentablesController::updateViewCount($rentable);
+                                @endphp
+                                <p><i class="fa-solid fa-eye"></i><span>{{$rentable->view_count}}</span></p>
+                                <p><i class="fa-solid fa-location-dot"></i><span>{{$rentable->city}}, {{$rentable->state}}</span></p>
+                            </div>
+                            <div class="product-category">
+                                @php
+                                    $categories = explode(", ", $rentable->category);
+                                    $date = $rentable->created_at ->format('Y-m-d');
+                                @endphp
+                                <div class="categories-container">
+                                    <p>Categories:</p>
+                                    <div class="categories">
+                                        @foreach($categories as $category)
+                                            <a href="/shop/all?type=all&category={{$category}}">{{$category}}</a>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div>
+                                    <p>Date Posted:</p>
+                                    <span>{{$date}}</span>
+                                </div>
+                            </div>
                         </div>
-
-                        {{-- price and other info --}}
-                        <div class = "product-details show-top">
-                            <h4>Item Negotiable or Fixed: 
-                                <span>{{$rentable->negotiable}}</span>
-                            </h4>
-                            <h4>Condition: 
-                                <span>{{$rentable->condition}}</span>
-                            </h4>
-                            <h4>Views: <span>{{$rentable->view_count}}</span></h4>
-                            @php
-                            $rentablesController::updateViewCount($rentable);
-                            @endphp
+                        <div class="map-container" id = "map-container">
                         </div>
-                        
-                        <div class = "product-categories show-top">
-                            @php
-                                $categories = explode(", ", $rentable->category);
-                            @endphp
-                            <div class="categories">
-                                <h4 class="spacer">Categories:</h4>
-                                @foreach($categories as $category)
-                                    <a href="/shop/all?type=all&category={{$category}}">{{$category}}</a>
-                                @endforeach
-                            </div> 
-                        </div>  
-
-                        <div class = "product-description show-top">
-                            <h4>Rental Description:</h4>
-                            <p>{{$rentable->description}}</p>
-                        </div>
-
-                        <div class = "tags-container show-top">
-                            @php
-                                $tags = explode(", ", $rentable->tags);
-                            @endphp
-                            <x-listing-tags :tags="$tags" :isUtilities=false/>
-                        </div>
-
+                        {{-- 
                         <div class="product-buttons">
                             <ul>
-                                <li>
-                                    @if($currentUser != null and $currentUser->rentableFavorites != null and in_array($rentable->id, explode(", " , $currentUser->rentableFavorites)))
-                                        <form action="/users/removefavorite" method="GET">
-                                            @csrf
-                                            <input type="hidden" name="type" value="rentable">
-                                            <input type="hidden" name="id" value={{$rentable->id}}>
-                                            <button><i class="fa-solid fa-heart saved"></i></button>
-                                        </form>
-                                    @else
-                                        <form action="/users/addfavorite" method="GET">
-                                            @csrf
-                                            <input type="hidden" name="type" value="rentable">
-                                            <input type="hidden" name="id" value="{{$rentable->id}}">
-                                            <button><i class="fa-solid fa-heart bouncy"></i></button>
-                                        </form>
-                                    @endif
-                                </li>
-                                <!-- vertical line added by this code --> 
-                                <li>
-                                <form><button id = 'share' onclick = "toggleText()" type = "button"><i class="fa fa-share-alt"></i></button></form> 
-                                <script>
-                                    function toggleText() {
-                                        navigator.clipboard.writeText(window.location.href);
-                                        var text = document.getElementById("demo");
-                                        if (text.style.display === "none") {
-                                            text.style.display = "block";
-                                        } else {
-                                            text.style.display = "none";
-                                        }
-                                    }
-                                </script>             
-                                </li>
                                 <!-- vertical line added by this code -->
                                 @if($currentUser != null and $rentable->user_id == $currentUser->id)
                                     <li>
@@ -167,81 +155,51 @@
                                 @endif
                             </ul>
                         </div>
-                        <p id='demo' style='text-align:right; display: none; padding-right: 20px;'>Link Copied!</p>
+                        <p id='demo' style='text-align:right; display: none; padding-right: 20px;'>Link Copied!</p> --}}
                     </div>
                 </div>
-            </div>
-
-            {{-- user chat and map area --}}
-            <div class="map-chat-container">
-                <div class="map-container" id="map-container">
-                </div>
-                <div class="chat-container">
-                    {{-- only want to go through list of users & the messages from each user if the current listing is mine --}}
-                    @if($currentUser != null and $rentable->user_id == $currentUser->id)
-                        <div class="user-wrapper">
-                            <ul class="users">
-                                @if(count($allUsers) >= 1)
-                                    @foreach($allUsers as $user)
-                                        <li class="user" id="{{ $user->id }}">
-                                            {{--will show unread count notification--}}
-                                            @if($user->unread)
-                                                <span class="pending">{{ $user->unread }}</span>
-                                            @endif
-
-                                            
-                                            {{-- <span class="pending">1</span> --}}
-
-
-                                            <div class="media-left">
-                                                <img src="{{ $user->avatar }}" alt="" class="media-object">
-                                            </div>
-
-                                            <div class="media-body">
-                                                <p class="name">{{ $user->first_name }} {{$user->last_name }} | ID: {{$user->id}} </p>
-                                                <p class='email'>{{$user ->email}} </p>   
-                                            </div>
-                                        </li>
-                                    @endforeach
-                                @else
-                                    <li class="no-messages"><span>You have no messages</span></li>
-                                @endif
-                            </ul>
-                        </div>
-                    @endif
-
-                    {{-- the messages container should be default active, and only inactive the current listing is the user's own --}}
-                    <div id="scroll-to-bottom" class="messages-container active">
+                <div class="product-description-area">
+                    <div class="controls">
                         @if($currentUser != null and $rentable->user_id == $currentUser->id)
-                            <a class="message-back">
-                                <i class="fa-solid fa-arrow-left"></i> Back
-                            </a>
-                        @else
-                            <a class="back-placeholder">
-                                Chat with {{$rentableOwner->first_name}} {{$rentableOwner->last_name}}
-                            </a>
+                            <form method="POST" action="/rentables/{{$rentable->id}}/update">
+                                @csrf
+                                @method('PUT')
+                                <select name="status" id="status" style = " font-size: 17px; text-align:center;" onchange="this.form.submit()">
+                                    <option style = "text-align:center;">Status</option>
+                                    <option style = "text-align:center;" value="Available">Available</option>
+                                    <option style = "text-align:center;" value="Rented">Rented</option>
+                                </select>
+                            </form>
+                            <form class="editForm" action="/rentables/{{$rentable->id}}/edit" method="GET">
+                                @csrf
+                                <button><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                            </form>
+                            <span id="delete-modal-trigger">
+                                <i class="fa fa-trash" ></i>
+                            </span>
                         @endif
-                       
-                        <ul class="messages" id='messages'>
-                            @if(auth()->guest())
-                                <li class="message clearfix">
-                                    <div class="sent">
-                                        <p>Please log in to begin chat</p>
-                                        <p class='date'>-System</p>
-                                    </div>
-                                </li>
-                            @endif
-                            
-                        </ul>
-                        <div id = "input-text" class=.input-text>
-                            <input type="text" name="message" placeholder="Message Seller" class="submit">
-                        </div>
-                    </div> 
+                        <form class="shareForm"><button id = 'share' onclick = "toggleText()" type = "button"><i class="fa fa-share-alt"></i></button></form> 
+                    </div>
+                    <h1>Description</h1>
+                    <p>{{$rentable->description}}</p>
                 </div>
-            </div> 
+                <div class="map-container-mobile" id="map-container-mobile">
+    
+                </div>
+                <div>
+                    {{-- community thread goes here --}}
+                </div>
+            </div>
+            {{-- old user chat and map area was here--}}
+            {{-- map chat container was here --}}
         </div>
+
+        {{-- delete modal is here --}}
         <div class="modal" id="delete-modal">
             <div class="modal-content">
+                <div class="sad-dog-container">
+                    <img src="{{asset('/images/sad-dog.png')}}" alt="">
+                </div>
                 <span class="close">&times;</span>
                 <h1>Delete Listing</h1>
                 <p>Are you sure you want to delete this listing?</p>
@@ -344,7 +302,10 @@
             var url = 'https://maps.googleapis.com/maps/api/staticmap?' + params.toString();
             //console.log(url);
             image.src = url;
+            var image2 = document.createElement('img');
+            image2.src = url;
             document.getElementById('map-container').appendChild(image);
+            document.getElementById('map-container-mobile').appendChild(image2);
             return url;
         }
 
@@ -593,6 +554,16 @@
         window.onclick = function(event) {
             if (event.target == deleteModal) {
                 deleteModal.style.display = "none";
+            }
+        }
+
+        function toggleText() {
+            navigator.clipboard.writeText(window.location.href);
+            var text = document.getElementById("demo");
+            if (text.style.display === "none") {
+                text.style.display = "block";
+            } else {
+                text.style.display = "none";
             }
         }
     </script>

@@ -17,11 +17,15 @@
 <?php $component->withAttributes([]); ?>
     <section class = "product-details-container">
         <div class = "card-wrapper-selected">
+
+            
             <div class="back-button">
                 <a href="javascript:history.back()" class="button1 b-button">
                     <i class="fa-solid fa-arrow-left"></i> Back
                 </a>
             </div> 
+
+            
             <div class = "card-selected">
                 <div class="selected-row">
                     <!-- card left -->
@@ -44,20 +48,12 @@
                                 </div>
                             <?php endif; ?> 
                             <?php
-                            function debug_to_console($data) {
-                                $output = $data;
-                                if (is_array($output))
-                                    $output = implode(',', $output);
-
-                                echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
-                            }
                                 if(isset($listing->image_uploads)){
                                     //decode the json object
                                     $imgLinks = json_decode($listing->image_uploads);
                                     $titleImage = null;
                                     if(is_array($imgLinks)){
                                         $titleImage = $imgLinks[0];
-                                        debug_to_console($titleImage);
                                     }
                                 }
                             ?>
@@ -184,6 +180,25 @@
                 </div>
                 <div>
                     
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="delete-modal">
+            <div class="modal-content">
+                <div class="sad-dog-container">
+                    <img src="<?php echo e(asset('/images/sad-dog.png')); ?>" alt="">
+                </div>
+                <span class="close">&times;</span>
+                <h1>Delete Listing</h1>
+                <p>Are you sure you want to delete this listing?</p>
+
+                <div class="clearfix">
+                    <input type="button" class="button1" class="cancelbtn" id="cancelbtn" value="Cancel" />
+                    <form method="POST" action="/listings/<?php echo e($listing->id); ?>">
+                        <?php echo csrf_field(); ?>
+                        <?php echo method_field('DELETE'); ?>
+                        <input type="submit" class="deletebtn button1" value="Delete"/>
+                    </form>
                 </div>
             </div>
         </div>

@@ -12,7 +12,7 @@
     width: 100%;
     max-width: 1600px;
     height: fit-content;
-    padding: 5% 140px;
+    padding: 3% 140px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -48,6 +48,9 @@
     justify-content: space-around;
     box-sizing: border-box;
 }
+
+
+/* left side of the show page, aka the image and the showcase/gallery */
 .selected-row .product-imgs{
     width: 65%;
     min-width: 65%;
@@ -159,6 +162,10 @@
 .img-list li img:hover{
     cursor: pointer;
 }
+
+/* lef side of the show page ends here */
+
+/* right side of the show page css */
 .product-content{
     display: flex;
     flex-direction: column;
@@ -224,6 +231,10 @@
 .price-favorite form button i{
     font-size: 30px;
     cursor: pointer;
+}
+
+.price-favorite form button i:hover{
+    color:var(--accent-color);
 }
 
 .saved{
@@ -319,6 +330,10 @@
     white-space: nowrap;
 }
 
+/* right side of the show page css ends here */
+
+
+/* bottom description and map stuff beings here */
 .product-description-area{
     width: 100%;
     background-color: #2D2B37;
@@ -383,6 +398,78 @@
     overflow: hidden;
 }
 
+/* bottom page description and map stuff ends here */
+
+/* Modal Content/Box styling begins here*/
+.modal {
+    display: none;
+    position: fixed; /* Stay in place */
+    /* background-color: brown; */
+    width:100%;
+    height: 100%;
+    top:0;
+    left:0;
+    /* background-color: rgb(0,0,0); */
+    background-color: rgba(0,0,0,0.7);
+    z-index: 20;
+}
+
+.modal-content {
+  margin: auto;
+  padding: 20px;
+  width: 50%;
+  height: fit-content;
+  position: relative;
+  background: linear-gradient(261.71deg, #3A3845 13.92%, #2C2A36 84.19%);
+}
+
+.sad-dog-container{
+    position: absolute;
+    right: 10px;
+    width: 100px;
+    height: 100px;
+    top:-85px;
+    /* background-color: red; */
+}
+
+.sad-dog-container img{
+    width: 100%;
+    height:100%;
+    object-fit: contain;
+}
+.modal-content p{
+    margin:10px 30px 10px 0;
+    width: 100%;
+    color:var(--accent-color);
+}
+
+.modal-content .clearfix{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap:20px;
+    justify-content: center;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: var(--accent-color);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* end modal styling */
+
+/* responsive css begins here */
+
 @media(max-width:1500px){
     .card-wrapper-selected{
         padding:3% 100px;
@@ -434,11 +521,17 @@
     .product-description-area .controls {
         margin-bottom: 20px;
     }
+    .modal-content{
+        width: 75%;
+    }
 }
 
 @media(max-width: 550px){
     .card-wrapper-selected{
         padding: 2% 30px;
+    }
+    .modal-content{
+        width: 80%;
     }
 }
 
@@ -447,172 +540,22 @@
         padding: 2% 20px;
     }
 }
-/* .product-buttons ul li form{
-    padding: 0;
-    background-color: #312F3B !important;
-}
-.product-buttons ul li form button,
-.product-buttons ul li form select{
-    text-decoration: none;
-    border: none;
-    width: 100%;
-    height: 100%;
-    color:white;
-    border: none;
-    outline: none;
-    padding: 7px;
-    background-color: #312F3B !important;
-}
-
-.product-buttons ul li form button:hover, 
-.product-buttons ul li form select:hover,
-.product-buttons ul li span:hover{
-    cursor:pointer;
-}
-
-.product-buttons ul li form button:hover > i,
-.product-buttons ul li span:hover > i
-{
-    color:var(--accent-color);
-}
-
-.product-buttons ul li form button i{
-    font-size: 20px;
-    color:white;
-}
-.product-buttons ul li a i{
-    font-size: 20px;
-    color:white;
-} */
-
-
-/* .show-top{
-    position: relative;
-    z-index:10;
-}
-.product-header h1{
-    font-size: 2rem;
-} */
-/* 
-.name-status{
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items:center;
-    border-bottom: 2px solid var(--text-color-dark);;
-    margin: 0 0 5px 0;
-}
-
-.name-status h1{
-    font-size: 25px;
-    margin-bottom: 5px;
-} */
-/* 
-.stat-container{
-    display:flex;
-    flex-direction: row;
-}
-.stat{
-    width: 15px;
-    height: 15px;
-    background-color: red;
-    border: 2px solid white;
-    border-radius: 100%;
-    margin-right: 5px;
-} */
-/* .green{
-    background-color: green !important;
-}
-.yellow{
-    background-color: yellow !important;
-}
- */
-/* 
-.product-content span{
-    font-weight: 300;
-    color: var(--accent-color);
-}
-
-.product-details{
-    text-transform: capitalize;
-}
-
-.product-details, .product-description{
-    margin: 20px 0;
-    color:#C9C9DC;
-} */
-
-/* .product-description p{
-    font-size: .8rem;
-}
-
-
-.categories h4{
-    color: #C9C9DC;
-    margin-bottom: 5px;
-} */
-/* 
-.categories a{
-    padding: 5px;
-    border: 1px solid var(--accent-color);
-    border-radius: 5px;
-    margin: 2px;
-    display: inline-block;
-    color: var(--accent-color);
-} */
-
-/* .product-buttons{
-    width: 100%;
-    height:fit-content;
-    padding: 10px 0;
-    border-radius: 5px;
-    margin:10px 0;
-    background-color: var(--background-color);
-} */
-
-/* .product-buttons ul{
-    list-style-type: none;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-} */
-
-/* .product-buttons ul li{
-    list-style:none;
-    width: fit-content;
-    display: block;
-    width: 25%;
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    border-right: 2px solid var(--text-color-dark);
-} */
-/* 
-.product-buttons ul li:last-child{
-    border-right: none;
-} */
-
-/* .product-buttons ul li a,
-.product-buttons ul li form,
-.product-buttons ul li span{
-    width: 80%;
-    padding: 7px;
-    text-align: center;
-    background-color: #312F3B;
-    color:white;
-} */
-
-
-.tags-container{
-    background-color: var(--background-color);
-    padding: 5px;
-    box-sizing: border-box;
-    border-radius:12px;
-}
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+/* old css that needs to be refactored */
 .map-chat-container{
     width: 90%;
     height: fit-content;
@@ -824,59 +767,4 @@ input[type=text]::placeholder {
     /* border: 1px solid #aaaaaa; */
     color:var(--accent-color);
 }
-
-.active{
-    display:flex;
-}
-
-.modal {
-    display: none;
-    position: fixed; /* Stay in place */
-    /* background-color: brown; */
-    width:100%;
-    height: 100%;
-    top:0;
-    left:0;
-    /* background-color: rgb(0,0,0); */
-    background-color: rgba(0,0,0,0.7);
-    z-index: 20;
-}
-
-/* Modal Content/Box */
-.modal-content {
-  margin: auto;
-  padding: 20px;
-  width: 50%;
-  height: fit-content;
-  background: linear-gradient(261.71deg, #3A3845 13.92%, #2C2A36 84.19%);
-}
-
-.modal-content p{
-    margin:10px 30px 10px 0;
-    width: 100%;
-    color:var(--accent-color);
-}
-
-.modal-content .clearfix{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: var(--accent-color);
-  text-decoration: none;
-  cursor: pointer;
-}
-
 
