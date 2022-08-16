@@ -50,6 +50,7 @@
 }
 .selected-row .product-imgs{
     width: 65%;
+    min-width: 65%;
     display:flex;
     flex-direction: column;
 }
@@ -397,6 +398,7 @@
 @media(max-width: 1200px){
     .selected-row .product-imgs{
         width: 60%;
+        min-width: 60%;
     }
     .card-wrapper-selected{
         padding: 2% 50px;
