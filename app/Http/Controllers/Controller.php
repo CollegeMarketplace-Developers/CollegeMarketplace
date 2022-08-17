@@ -27,6 +27,19 @@ class Controller extends BaseController
     public function features(){
         return view('main.features');
     }
+
+    public function getDistance($latitude1, $longitude1, $latitude2, $longitude2) {
+        $earth_radius = 3959;
+    
+        $dLat = deg2rad($latitude2 - $latitude1);
+        $dLon = deg2rad($longitude2 - $longitude1);
+    
+        $a = sin($dLat/2) * sin($dLat/2) + cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * sin($dLon/2) * sin($dLon/2);
+        $c = 2 * asin(sqrt($a));
+        $d = $earth_radius * $c;
+    
+        return $d;
+    }
     
      //show the index page
     public function index(){
@@ -61,6 +74,30 @@ class Controller extends BaseController
     //     dd(collect($furnitureItems)->merge($furnitureRent)->sortByDesc('created_at')->slice(0,16),
     // collect($clothesItems)->merge($clothesRent)->sortByDesc('created_at')->slice(0,16)
     //     );
+
+        $stack = array();
+        if(User::find(auth()->user()) != null) {
+            $currentUser = User::find(auth()->user())->first();
+            $listingResultsFull = Listing::latest()->where('status', '!=', 'Sold' )->get();
+        
+            //if the user has an address saved (if the user has an address saved they will always have latitude and longitude bec of the way its implemented)
+            if($currentUser->latitude != NULL && $currentUser->longitude != NULL) {
+                $counter = 0;
+                foreach ($listingResultsFull as $res) {
+                    //make sure the listing by the owner wont show up in the carousel
+                    if($res->user_id != $currentUser->id) {
+                        if($this->getDistance($currentUser->latitude,$currentUser->longitude,$res->latitude,$res->longitude) <= 1) {
+                            array_push($stack,$res);
+                            $counter+=1;
+                        }
+                    }
+                    if($counter == 10){
+                        break;
+                    }
+                }
+            }
+        }
+
         return view('main.index', [
             'listings'=> $totalResults,
             'furnitureItems' => collect($furnitureItems)->merge($furnitureRent)->sortByDesc('created_at')->slice(0,16),
@@ -69,7 +106,8 @@ class Controller extends BaseController
             'kitchenItems' => collect($kitchenItems)->merge($kitchenRent)->sortByDesc('created_at')->slice(0,16),
             'schoolItems' => collect($schoolItems)->merge($schoolRent)->sortByDesc('created_at')->slice(0,16),
             'bookItems' => collect($bookItems)->merge($bookRent)->sortByDesc('created_at')->slice(0,16),
-            'listingsNear' => Listing::latest()->where('status', '!=', 'Sold' )->take(10)->get(),
+            //'listingsNear' => Listing::latest()->where('status', '!=', 'Sold' )->take(10)->get(),
+            'listingsNear' => $stack,
             'rentables' => Rentable::latest()->where('status', 'like', 'Available' )->take(10)->get(),
             'subleases'=>Sublease::latest()->where('status', 'like', 'Available')->take(10)->get()
         ]);

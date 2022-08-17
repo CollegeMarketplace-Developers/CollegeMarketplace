@@ -197,7 +197,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         
-        Stevebauman\Location\LocationServiceProvider::class
+        Stevebauman\Location\LocationServiceProvider::class,
+
+        //for reverse geocoding
+        Spatie\Geocoder\GeocoderServiceProvider::class
 
     ],
 
@@ -216,6 +219,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Location' => 'Stevebauman\Location\Facades\Location',
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Geocoder' => Spatie\Geocoder\Facades\Geocoder::class,
     ])->toArray(),
 
 ];

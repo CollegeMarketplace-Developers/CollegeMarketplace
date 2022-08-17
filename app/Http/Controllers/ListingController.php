@@ -14,6 +14,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Spatie\Geocoder\Facades\Geocoder;
 
 class ListingController extends Controller
 {
@@ -120,8 +121,8 @@ class ListingController extends Controller
             'state'=>'required',
             'country'=>'required',
             'postcode'=>'required',
-            // 'latitude' => 'required_without:street',
-            // 'longitude' =>'required_without:street',
+            'latitude' => 'required_without:street',
+            'longitude' =>'required_without:street',
             'apartment_floor'=>'nullable'
         ]);
         //  dd($formFields);
@@ -141,8 +142,16 @@ class ListingController extends Controller
         $formFields['image_uploads']=json_encode($data);
         $formFields['category']=implode(", " ,$formFields['category']);
 
+        Geocoder::setApiKey(config('geocoder.key'));
+        Geocoder::setCountry(config('geocoder.country', 'US'));
+        $resArr = Geocoder::getCoordinatesForAddress($formFields['street'].' '.$formFields['city']);
+
+        $formFields['latitude'] = $resArr['lat'];
+        $formFields['longitude'] = $resArr['lng'];
+
         // dd($formFields);
         $newListing=Listing::create($formFields);
+
         return redirect('/listings/'.$newListing->id)->with('message', 'Listing Created Successfully!');
 
     }
@@ -198,6 +207,16 @@ class ListingController extends Controller
         // dd($formFields);
 
         $listing->update($formFields);
+
+        $client = new \GuzzleHttp\Client();
+        $geocoder = new Geocoder($client);
+        $geocoder->setApiKey(config('geocoder.key'));
+        $geocoder->setCountry(config('geocoder.country', 'US'));
+        $resArr = $geocoder->getCoordinatesForAddress($newListing->street.' '.$newListing->city);
+
+        $newListing->latitude = $resArr['lat'];
+        $newListing->longitude = $resArr['lng']; 
+
         return redirect('/listings/'.$listing->id)->with('message', 'Listing Updated Successfully!');
     }
 
