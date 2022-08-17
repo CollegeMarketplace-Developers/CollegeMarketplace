@@ -22,7 +22,14 @@ nav .content{
 nav .content .links{
   margin-left: 80px;
   display: flex;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
 }
+
+nav .content .links::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
 
 nav .content .user-panel,
 nav .content .notifications-panel{
@@ -72,11 +79,11 @@ nav #show-notifications-panel:checked ~ .content .notifications-panel{
 .content .links li,
 .content .user-panel li{
   list-style: none;
-  line-height: 70px;
+  line-height: 40px;
 }
 
 .content .user-panel li{
-  margin: 15px 20px;
+  margin: 10px 20px;
 }
 
 .content .links li a,
@@ -91,6 +98,11 @@ nav #show-notifications-panel:checked ~ .content .notifications-panel{
   text-decoration: none !important;
   text-transform: capitalize;
 }
+
+.content .user-panel li a{
+  display: block;
+}
+
 .content .links li label{
   display: none;
 }
@@ -278,7 +290,7 @@ a:hover, label:hover{
     -webkit-backdrop-filter: blur(30px);
   }
   .content .links li{
-    margin: 15px 20px;
+    margin: 10px 20px;
   }
   .content .links li a,
   .content .links li label,
