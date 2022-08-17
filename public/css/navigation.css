@@ -47,6 +47,7 @@ nav .content .notifications-panel{
   transition: all 0.3s ease;
   background: rgba(29,28,36,0.1);
   backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
   right:-100%;
   z-index:1;
 }
