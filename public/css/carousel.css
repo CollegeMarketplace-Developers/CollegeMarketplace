@@ -255,6 +255,7 @@
     -moz-transition: all 1 ease-out;
     -o-transition: all 1 ease-out;
     transition: all 1 ease-out;
+    border-radius: var(--br-large);
 }
 
 /* .single-post-cont:hover{
