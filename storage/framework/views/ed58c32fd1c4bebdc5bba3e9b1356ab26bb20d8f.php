@@ -51,16 +51,16 @@
 
                 
                 <li>
-                    <a class="desktop-link">Sell</a>
+                    <a class="desktop-link">Post</a>
                     <input type="checkbox" id="show-services">
 
                     
-                    <label for="show-services" style="position:relative;">Sell <span class="down-arrow"></span></label>
+                    <label for="show-services" style="position:relative;">Post <span class="down-arrow"></span></label>
                     <ul>
-                    <li><a href="/listings/create">Post Single Item</a></li>
+                    <li><a href="/listings/create">For Sale</a></li>
                     
-                    <li><a href="/rentables/create">Post Item for Rent</a></li>
-                    <li><a href="/subleases/create">Post a Lease</a></li>
+                    <li><a href="/rentables/create">For Rent</a></li>
+                    <li><a href="/subleases/create">For Lease</a></li>
                     </ul>
                 </li>
                 

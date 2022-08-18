@@ -44,15 +44,25 @@ li{
 
     /* red accent: #db6657 */
     /* orange accent: #C98748 */
-
+    /* background-color: #fafafa; */
     /* color palette dark */
-    --accent-color: #db6657;
+    /* --accent-color: #db6657;
     --background-color:#1F1D26;
     --green-accent-color:#92EBC4;
     --text-color-light:#EDEFF8;
-    --text-color-dark:#C9C9DC;
+    --text-color-dark:#C9C9DC; */
 
     /* color palette light */
+    --background-color:white;
+    --background-color-light:#fafafa;
+    --background-color-dark:#2D2B37;
+
+    --accent-color: #db6657;
+    --accent-color-green:  #00a87e;
+    --font-color-light:#EDEFF8;
+    --font-color-dark:black;
+
+    --border-color-1:#e2e2e2;
 }
 
 ::-webkit-scrollbar {
