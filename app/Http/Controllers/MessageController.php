@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Auth;
 class MessageController extends Controller
 {
     //
-    public function getMessages(Request $request){
+    public function getMessages(Request $request)
+    {
         // if the current listing is mine that i have clicked on
         //all messages will be from the other person(s) to me
         // return "from: ".$request->from . " " . " to: ". $request->to . " listing_id=" . $request->listing_id;
@@ -29,10 +30,10 @@ class MessageController extends Controller
         Message::where(['from' => $from, 'to' => $to])->update(['is_read' => 1]);
 
         $messages = Message::where(
-            function ($query) use ($from, $to, $listing_id){
-               $query->where('from', $from)->where('to', $to)->where('for_listing', $listing_id);
+            function ($query) use ($from, $to, $listing_id) {
+                $query->where('from', $from)->where('to', $to)->where('for_listing', $listing_id);
             }
-        )->orWhere(function ($query) use ($from, $to, $listing_id){
+        )->orWhere(function ($query) use ($from, $to, $listing_id) {
             $query->where('from', $to)->where('to', $from)->where('for_listing', $listing_id);
         })->get();
 
@@ -42,7 +43,8 @@ class MessageController extends Controller
         // for now, we want from $listing->user_id to reciever id, which will be passed in as $user_id
     }
 
-    public function postMessage(Request $request){
+    public function postMessage(Request $request)
+    {
         $from = Auth::id();
         $to = $request->receiver_id;
         $message = $request->message;
@@ -53,9 +55,9 @@ class MessageController extends Controller
         $data = new Message();
         $data->from = $from;
         $data->to = $to;
-        $data->for_listing= $listing_id;
-        $data->for_rentals=$rental_id;
-        $data->for_sublease=$sublease_id;
+        $data->for_listing = $listing_id;
+        $data->for_rentals = $rental_id;
+        $data->for_sublease = $sublease_id;
         $data->message = $message;
         $data->is_read = 0; // message will be unread when sending message
         $data->save();
@@ -72,23 +74,21 @@ class MessageController extends Controller
             env('PUSHER_APP_ID'),
             $options
         );
-        
-        return array('worked' => "partially");
-        
-        $data = ['from' => $from, 'to' => $to, 'for_listing' =>$listing_id, 'for_rentals' => $rental_id,'for_sublease' => $sublease_id]; // sending from and to user id when pressed enter
+
+        $data = ['from' => $from, 'to' => $to, 'for_listing' => $listing_id, 'for_rentals' => $rental_id, 'for_sublease' => $sublease_id]; // sending from and to user id when pressed enter
 
         $pusher->trigger('my-channel', 'my-event', $data);
 
         $response = array(
             'status' => 'success',
             'reciever_id' => $request->receiver_id,
-            'for_listing' => $request ->for_listing,
+            'for_listing' => $request->for_listing,
             // 'message' => $request -> message
             'for_rentals' => $request->for_rentals,
             'for_sublease' => $request->for_sublease,
-            "message"=>$data
+            "message" => $data
         );
-        return response()->json($response); 
+        return response()->json($response);
     }
 
     public function goToMessagePage(Request $request){
