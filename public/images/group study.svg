@@ -4,7 +4,8 @@
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1400px"
 	 height="980px" viewBox="0 0 1400 980" enable-background="new 0 0 1400 980" xml:space="preserve">
 <g id="BACKGROUND">
-	<rect x="-5.721" y="-6.772" fill="#1F1D26" width="1414.429" height="995.95"/>
+<!-- #1F1D26 -->
+	<rect x="-5.721" y="-6.772" fill="white" width="1414.429" height="995.95"/>
 </g>
 <g id="OBJECTS">
 	<g>

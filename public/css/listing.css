@@ -68,16 +68,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background:var(--accent-color);
+    background:var(--background-color-light);
     position: relative;
     border-radius: var(--br-large);
     z-index:10;
+    box-shadow: 0px 12px 32px rgb(17 16 21 / 60%);
+    border:1px solid var(--border-color-1);
 }
 
 .img-display img{
     width: 100%;
     height: 100%;
-    object-fit: cover !important;
+    object-fit: contain !important;
     border-radius:var(--br-large)
 }
 
@@ -110,10 +112,12 @@
     display: flex;
     gap:10px;
     overflow: scroll;
-    background-color: #2D2B37;
+    background-color: var(--background-color-dark);
     padding:5px;
     border-radius: var(--br-medium);
+    border: 1px solid var(--border-color-1);
 }
+
 
 .img-showcase {
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
@@ -171,28 +175,29 @@
     flex-direction: column;
     flex-grow:1;
     gap: 20px;
+    color:var(--font-color-dark);
 }
 
 .product-content .product-details{
     height: 60%;
     width: 100%;
     margin:0;
-    background-color: #2D2B37;
-    border-radius: var(--br-large);
+    background-color: var(--background-color);
+    /* border-radius: var(--br-large); */
     padding:10px;
     display: flex;
     flex-direction: column;
     /* gap:20px; */
     justify-content: space-between;
+    border-top:1px solid var(--border-color-1);
+    border-bottom:1px solid var(--border-color-1);
 }
 
 .map-container{
     width: 100%;
     flex-grow: 1;
     display: flex;
-    background-color: var(--accent-color);
-    border-radius: var(--br-large);
-    overflow: hidden;
+    background-color: var(--background-color-light);
 }
 
 .map-container img, .map-container-mobile img{
@@ -221,7 +226,7 @@
 }
 
 .price-favorite form button{
-    color: white;
+    color: var(--font-color-dark);
     border: none;
     outline: none;
     padding: 7px;
@@ -336,10 +341,11 @@
 /* bottom description and map stuff beings here */
 .product-description-area{
     width: 65%;
-    background-color: #2D2B37;
-    padding:20px 10px;
+    background-color: var(--background-color-light);
+    padding:20px;
     border-radius: var(--br-large);
     overflow: hidden;
+    color:var(--font-color-dark);
 }
 
 .product-description-area .controls{
@@ -427,7 +433,7 @@
 .chat-seller{
     width: 100%;
     height: 50px;
-    background-color: #00a87e;
+    background-color: var(--accent-color-green);
     border-radius: var(--br-large);
 }
 
@@ -526,7 +532,7 @@
     position: relative;
     overflow: hidden;
     padding: 10px;
-    background-color: #2D2B37;
+    background-color: var(--background-color-light);
     border-radius: var(--br-large);
 }
 
@@ -536,7 +542,9 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    background-color: #2D2B37;
+    align-items: center;
+    justify-content: center;
+    background-color:var(--background-color-light);
     border-radius: var(--br-large);
 }
 
@@ -560,6 +568,7 @@
 
 .message-product-details{
     gap:20px;
+    height: 100% !important;
 }
 
 .user-panel{
@@ -700,6 +709,10 @@
     .chat-container{
         width: 100%;
     }
+
+    .product-header h1{
+        font-size: 16px;
+    }
 }
 
 @media(max-width: 700px){
@@ -740,7 +753,18 @@
         width: 100%;
         z-index: 20;
         padding: 20px;
+        background-color:var(--accent-color-green);
+        line-height: 25px;
+        font-size: 20px;
+        color:var(--font-color-light);
     }
+
+    .input-text input[type=text]::placeholder,
+    .input-text input[type=text]::-ms-input-placeholder,
+    .input-text input[type=text]::-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color: white !important;
+    }
+
     .messages{
         height: 100% !important;
     }
@@ -847,6 +871,7 @@
     border-bottom: 2px solid var(--text-color-light);
     display:flex;
     align-items: center;
+    font-weight: bold;
 }
 
 .messages{
@@ -906,8 +931,3 @@ input[type=text] {
     color:var(--accent-color);
     /* border: 1px solid #cccccc; */
 }
-input[type=text]::placeholder {
-    /* border: 1px solid #aaaaaa; */
-    color:var(--accent-color);
-}
-
