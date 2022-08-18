@@ -3,8 +3,13 @@
 namespace App\Http\Controllers;
 
 use Pusher\Pusher;
+use App\Models\User;
+use App\Models\Listing;
 use App\Models\Message;
+use App\Models\Rentable;
+use App\Models\Sublease;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
@@ -57,6 +62,7 @@ class MessageController extends Controller
         $data->is_read = 0; // message will be unread when sending message
         $data->save();
 
+
         // pusher
         $options = array(
             'cluster' => 'us2'
@@ -69,9 +75,8 @@ class MessageController extends Controller
             $options
         );
 
-
-
         $data = ['from' => $from, 'to' => $to, 'for_listing' => $listing_id, 'for_rentals' => $rental_id, 'for_sublease' => $sublease_id]; // sending from and to user id when pressed enter
+
         $pusher->trigger('my-channel', 'my-event', $data);
 
         $response = array(
@@ -84,5 +89,45 @@ class MessageController extends Controller
             "message" => $data
         );
         return response()->json($response);
+    }
+
+    public function goToMessagePage(Request $request){
+        // dd( $request->type, $request->itemID, $request->ownerID, $request->from);
+        if($request->type=='listing'){
+            $listing = Listing::find($request->itemID);
+            $userQuery = null;
+            if(Auth::user()){
+                $userQuery = DB::select(
+                    "
+                    SELECT users2.id, users2.first_name, users2.last_name, users2.avatar, users2.email, COUNT(case messages.is_read WHEN 0 then 1 else NULL end) as unread
+                    FROM users
+                    INNER JOIN messages on messages.to = users.id
+                    INNER JOIN users as users2 ON messages.from = users2.id
+                    WHERE messages.for_listing = ". $listing->id." and users2.id != ".auth()->id()."
+                    GROUP BY users2.id, users2.first_name, users2.last_name, users2.avatar, users2.email
+                    "
+                );
+            }
+            
+            // dd($userQuery);
+            // dd(Auth::guest());
+
+            // dd($request->type, $listing, User::find($listing->user_id),$request->from, $userQuery );
+            return view('users.message-page', [
+                // type of object 
+                'type'=>$request->type,
+                // the item itself
+                'listing' => $listing,
+                //owner of the item
+                'listingOwner' => User::find($listing->user_id),
+                // currentUser is the one from
+                'currentUser' => $request->from,
+                // all users that have sent a message regarding current listing
+                'allUsers' => $userQuery,
+            ]);
+        }
+
+        // add two more else ifs for rentables and lease items
+        dd('didnt work | check message controller | goToMessagePage');
     }
 }
