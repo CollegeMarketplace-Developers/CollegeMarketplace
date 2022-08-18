@@ -6,13 +6,14 @@
     background-color: var(--background-color);
     overflow-x: clip;
     padding-top:50px;
+    flex-grow:1;
 }
 
 .card-wrapper-selected{
     width: 100%;
     max-width: 1600px;
     height: fit-content;
-    padding: 3% 140px;
+    padding: 4% 140px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -45,7 +46,6 @@
     display: flex;
     flex-direction: row;
     gap:20px;
-    justify-content: space-around;
     box-sizing: border-box;
 }
 
@@ -335,7 +335,7 @@
 
 /* bottom description and map stuff beings here */
 .product-description-area{
-    width: 100%;
+    width: 65%;
     background-color: #2D2B37;
     padding:20px 10px;
     border-radius: var(--br-large);
@@ -393,6 +393,52 @@
     margin-bottom: 10px;
 }
 
+.about-seller-and-chat{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    flex-grow: 1;
+    height: fit-content;
+}
+
+.about-seller{
+    height:80px;
+    width: 100%;
+    background-color: #2D2B37;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: var(--br-large);
+}
+
+.about-seller i{
+    height: 80px;
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+}
+
+.about-seller p{
+    line-height: 22px;
+}
+
+.chat-seller{
+    width: 100%;
+    height: 50px;
+    background-color: #00a87e;
+    border-radius: var(--br-large);
+}
+
+.chat-seller a{
+    height: 100%;
+    width: 100%;
+    color:white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .map-container-mobile{
     display: none;
     overflow: hidden;
@@ -468,27 +514,123 @@
 
 /* end modal styling */
 
+
+/* messaging page css */
+
+.chat-container{
+    display: flex;
+    width: 65%;
+    min-width: 65%;
+    min-height: 500px;
+    max-height: 500px;
+    position: relative;
+    overflow: hidden;
+    padding: 10px;
+    background-color: #2D2B37;
+    border-radius: var(--br-large);
+}
+
+.product-showcase{
+    min-height: 500px;
+    max-height: 500px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: #2D2B37;
+    border-radius: var(--br-large);
+}
+
+.main-image-area,
+.main-image{
+    width: 100%;
+    height: 50%;
+    max-height: 300px;
+    position: relative;
+}
+
+.main-image{
+    height: 100%;
+}
+
+.main-image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.message-product-details{
+    gap:20px;
+}
+
+.user-panel{
+    width: 100%;
+    height: 100%;
+}
+
+.user-wrapper, .messages-container{
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    overflow: hidden;
+    display: none;
+    overflow:scroll;
+    overflow-x:hidden;
+    scroll-behavior: auto;
+    padding:10px 10px;
+}
+
+.user, .no-messages{
+    cursor: pointer;
+    padding: 10px;
+    position: relative;
+    min-height: fit-content;
+    width: 100%;
+    margin-bottom: 10px;
+    display:flex;
+    flex-direction: row;
+    border-radius: 12px;
+    background-color: #3C384D;
+    box-shadow: 0px 12px 32px rgb(17 16 21 / 50%);
+    overflow: hidden;
+}
+
+.no-messages{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-wrapper::-webkit-scrollbar{
+    display: none;
+}
+
+.active{
+    display:flex;
+}
+/* messaging page end css */
+
 /* responsive css begins here */
 
 @media(max-width:1500px){
     .card-wrapper-selected{
-        padding:3% 100px;
+        padding:4% 100px;
     }
 }
 
 @media(max-width:1300px){
     .card-wrapper-selected{
-        padding:3% 70px;
+        padding:4% 70px;
     }
 }
 
 @media(max-width: 1200px){
-    .selected-row .product-imgs{
+    .selected-row .product-imgs,
+    .selected-row .product-description-area{
         width: 60%;
         min-width: 60%;
     }
     .card-wrapper-selected{
-        padding: 2% 50px;
+        padding: 4% 50px;
     }
 }
 
@@ -497,11 +639,29 @@
         flex-direction: column;
     }
     
+    .selected-row-message{
+        flex-direction: column-reverse;
+    }
+
+    .product-showcase{
+        display: flex;
+        flex-direction: row;
+        padding:10px;
+        height: fit-content;
+        min-height: fit-content;
+        gap:10px;
+    }
+    .product-showcase .main-image-area,
+    .product-showcase .main-image-area .main-image{
+        width: 190px;
+        height: 190px;
+    }
     .selected-row .product-details{
         gap:10px;
     }
 
-    .selected-row .product-imgs{
+    .selected-row .product-imgs,
+    .selected-row .product-description-area{
         width: 100%;
     }
 
@@ -524,20 +684,69 @@
     .modal-content{
         width: 75%;
     }
+
+    .about-seller{
+        padding: 50px 0;
+    }
+
+    .chat-seller{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 20;
+        margin:20px 50px;
+        width: -webkit-fill-available;
+    }
+    .chat-container{
+        width: 100%;
+    }
 }
 
+@media(max-width: 700px){
+    .product-showcase .main-image-area,
+    .product-showcase .main-image-area .main-image{
+        width: 100px;
+        height: 100px;
+    }
+    .chat-container{
+        min-height: 400px;
+        max-height: 400px;
+    }
+
+    .product-extra{
+        display: none;
+    }
+}
 @media(max-width: 550px){
     .card-wrapper-selected{
-        padding: 2% 30px;
+        padding: 5% 30px;
     }
     .modal-content{
         width: 80%;
+    }
+    .chat-seller{
+        margin:20px 30px;
     }
 }
 
 @media(max-width: 480px){
     .card-wrapper-selected{
-        padding: 2% 20px;
+        padding: 6% 20px;
+    }
+    .input-text input[type=text]{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 20;
+        padding: 20px;
+    }
+    .messages{
+        height: 100% !important;
+    }
+
+    .chat-container{
+        padding: 0 10px;
     }
 }
 
@@ -555,48 +764,6 @@
 
 
 
-/* old css that needs to be refactored */
-.map-chat-container{
-    width: 90%;
-    height: fit-content;
-    display: flex;
-    flex-direction: row;
-    height: 400px;
-    /* background-color: palevioletred; */
-    padding: 10px 5%;
-    
-}
-
-.chat-container{
-    display: flex;
-    color: var(--text-color-light);
-    position: relative;
-    margin-left: 20px;
-    background: linear-gradient(261.71deg, #3A3845 13.92%, #2C2A36 84.19%);
-   overflow: hidden;
-   padding: 10px;
-   position: relative;
-   z-index: 10;
-}
-
-.user-wrapper, .messages-container{
-    position: relative;
-    z-index: 10;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    
-    overflow:scroll;
-    overflow-x:hidden;
-    scroll-behavior: auto;
-    padding:10px 10px;
-    display: none;
-    box-shadow: inset 0px 12px 32px rgb(17 16 21 / 50%);
-}
-
-.user-wrapper::-webkit-scrollbar{
-    display: none;
-}
 
 
 .user-wrapper ul {
@@ -608,28 +775,7 @@
     list-style: none;
 }
 
-.user, .no-messages{
-    cursor: pointer;
-    padding: 5px 5px;
-    position: relative;
-    height: 20%;
-    min-height: fit-content;
-    width: 100%;
-    margin-bottom: 10px;
-    display:flex;
-    flex-direction: row;
-    border-radius: 12px;
-    background: rgba(49,47,59,0.5);
-    backdrop-filter: blur(44px);
-    box-shadow: 0px 12px 32px rgb(17 16 21 / 50%);
-    overflow: hidden;
-}
 
-.no-messages{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 .user:hover {
     box-shadow: 0px 12px 32px rgb(17 16 21 / 100%);
 }
@@ -723,6 +869,7 @@
 }
 .received, .sent {
     max-width: 70%;
+    min-width: 40%;
     width: fit-content;
     padding: 6px 10px;
     border-radius: 10px;
@@ -730,6 +877,7 @@
 }
 
 .sent{
+    background: #6E4EFF;
     float: right;
     text-align: right;
 }
@@ -737,11 +885,6 @@
 .received {
     /* background: #ffffff; */
     background-color: var(--background-color);
-}
-.sent {
-    background: var(--accent-color);
-    float: right;
-    text-align: right;
 }
 .message p {
     margin: 5px 0;

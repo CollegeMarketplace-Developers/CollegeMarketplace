@@ -55,41 +55,11 @@ class ListingController extends Controller
                             })->limit(10)->get();
 
 
-
-        // if i am the owner of the listing-> i wanna see messages that have been sent to me first and i can repy to them
-        // first see messages that are regarding the current listing id and have been sent to the listing owner
-        // show users if they have texted first, or pending text, or users u have talked to before
-        $userQuery = null;
-        if(Auth::user()){
-            // $userQuery = DB::select(
-            // "select users.id, users.first_name, users.last_name, users.avatar, users.email, 
-            // count(is_read) as unread 
-            // from users 
-            // LEFT  JOIN  messages ON users.id = messages.from and (is_read = 0 and messages.to = " . auth()->id() . " and for_listing = ". $listing->id.")
-            // where users.id != " . auth()->id() . "
-            // group by users.id, users.first_name, users.last_name, users.avatar, users.email");
-
-            $userQuery = DB::select(
-                "
-                SELECT users2.id, users2.first_name, users2.last_name, users2.avatar, users2.email, COUNT(case messages.is_read WHEN 0 then 1 else NULL end) as unread
-                FROM users
-                INNER JOIN messages on messages.to = users.id
-                INNER JOIN users as users2 ON messages.from = users2.id
-                WHERE messages.for_listing = ". $listing->id." and users2.id != ".auth()->id()."
-                GROUP BY users2.id, users2.first_name, users2.last_name, users2.avatar, users2.email
-                "
-            );
-        }
-        
-        // dd($userQuery);
-        // dd(Auth::guest());
         return view('listings.show',[
             // the current listings we are looking at
             'listing' => $listing,
             // list of relatd listings to be used in carousel
             'listings' => $listingQuery,
-            // all users that have sent a message regarding current listing
-            'allUsers' => $userQuery,
             'listingOwner' => User::find($listing->user_id),
             // current users id
             'currentUser'=> Auth::guest() ? null : User::find(auth()->user()->id)

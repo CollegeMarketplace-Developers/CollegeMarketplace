@@ -48,7 +48,7 @@ class Handler extends ExceptionHandler
         //     //
         // });
 
-         $this->renderable(function (NotFoundHttpException $e, $request) {
+        $this->renderable(function (NotFoundHttpException $e, $request) {
             return redirect('/')->with('message', 'There was an error performing that Request.');
         });
     }

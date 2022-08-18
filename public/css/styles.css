@@ -11,6 +11,10 @@ html{
 body{
     color:white;
     font-family: Georgia, 'Times New Roman', Times, serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    flex-grow: 1;
 }
 
 ul{
@@ -36,7 +40,7 @@ li{
     /* border radius */
     --br-small: 3px;
     --br-medium:6px;
-    --br-large: 12px;
+    --br-large: 9px;
 
     /* red accent: #db6657 */
     /* orange accent: #C98748 */

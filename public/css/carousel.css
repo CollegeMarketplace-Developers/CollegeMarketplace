@@ -242,7 +242,7 @@
     z-index: 10 !important;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     position: relative !important;
     -webkit-transition: all 1 ease-out;
     -moz-transition: all 1 ease-out;
