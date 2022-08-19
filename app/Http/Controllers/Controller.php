@@ -17,6 +17,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Log;
 
 
 
@@ -76,12 +77,14 @@ class Controller extends BaseController
     //     );
 
         $stack = array();
-        if(User::find(auth()->user()) != null) {
-            $currentUser = User::find(auth()->user())->first();
-            $listingResultsFull = Listing::latest()->where('status', '!=', 'Sold' )->get();
+        $user = User::find(auth()->user());
         
+        if($user != null) {
+            $currentUser = $user->first();
+            $listingResultsFull = Listing::latest()->where('status', '!=', 'Sold' )->get();
             //if the user has an address saved (if the user has an address saved they will always have latitude and longitude bec of the way its implemented)
             if($currentUser->latitude != NULL && $currentUser->longitude != NULL) {
+                $listingResultsFull = Listing::latest()->where('status', '!=', 'Sold' )->get();
                 $counter = 0;
                 foreach ($listingResultsFull as $res) {
                     //make sure the listing by the owner wont show up in the carousel
@@ -97,7 +100,7 @@ class Controller extends BaseController
                 }
             }
         }
-
+        
         return view('main.index', [
             'listings'=> $totalResults,
             'furnitureItems' => collect($furnitureItems)->merge($furnitureRent)->sortByDesc('created_at')->slice(0,16),
@@ -109,8 +112,37 @@ class Controller extends BaseController
             //'listingsNear' => Listing::latest()->where('status', '!=', 'Sold' )->take(10)->get(),
             'listingsNear' => $stack,
             'rentables' => Rentable::latest()->where('status', 'like', 'Available' )->take(10)->get(),
-            'subleases'=>Sublease::latest()->where('status', 'like', 'Available')->take(10)->get()
+            'subleases'=>Sublease::latest()->where('status', 'like', 'Available')->take(10)->get(),
+            'user' => $user
         ]);
+    }
+
+
+    public function getListingsFromLatLng(Request $request) {
+        //error_log($request->longitude);
+        return $this->getProximateListings($request->latitude,$request->longitude); 
+        //return array('success'=>'it worked');
+    }
+
+    public function getProximateListings($latitude, $longitude) {
+        //error_log($longitude);
+        $stack = array();
+        $listingResultsFull = Listing::latest()->where('status', '!=', 'Sold' )->get();
+        $counter = 0;
+    
+        error_log((float) $latitude.' '.(float)$longitude);
+
+        foreach ($listingResultsFull as $res) {
+            //make sure the listing by the owner wont show up in the carousel
+            if($this->getDistance(floatval($latitude),floatval($longitude),$res->latitude,$res->longitude) <= 1) {
+                array_push($stack,$res);
+                $counter+=1;
+            }
+            if($counter == 10){
+                break;
+            }
+        }
+        return $stack;
     }
 
     public function search(Request $request){
