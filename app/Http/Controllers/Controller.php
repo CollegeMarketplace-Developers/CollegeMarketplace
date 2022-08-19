@@ -50,16 +50,16 @@ class Controller extends BaseController
         $clothesItems = Listing::latest()->where('status', '!=', 'Sold')->where('category', 'LIKE', '%clothes%')->limit(10)->get();
         $electronicsItems = Listing::latest()->where('status', '!=', 'Sold')->where('category', 'LIKE', '%electronics%')->limit(10)->get();
         $kitchenItems = Listing::latest()->where('status', '!=', 'Sold')->where('category', 'LIKE', '%kitchen%')->limit(10)->get();
-        $schoolItems = Listing::latest()->where('status', '!=', 'Sold')->where('category', 'LIKE', '%school accesories%')->limit(10)->get();
-        $bookItems = Listing::latest()->where('status', '!=', 'Sold')->where('category', 'LIKE', '%sbooks%')->limit(10)->get();
+        $schoolItems = Listing::latest()->where('status', '!=', 'Sold')->where('category', 'LIKE', '%school accessories%')->limit(10)->get();
+        $bookItems = Listing::latest()->where('status', '!=', 'Sold')->where('category', 'LIKE', '%books%')->limit(10)->get();
 
 
         $furnitureRent = Rentable::latest()->where('status', '!=', 'Rented')->where('category', 'LIKE', '%furniture%')->limit(10)->get();
         $clothesRent = Rentable::latest()->where('status', '!=', 'Rented')->where('category', 'LIKE', '%clothes%')->limit(10)->get();
         $electronicsRent = Rentable::latest()->where('status', '!=', 'Rented')->where('category', 'LIKE', '%electronics%')->limit(10)->get();
         $kitchenRent = Rentable::latest()->where('status', '!=', 'Rented')->where('category', 'LIKE', '%kitchen%')->limit(10)->get();
-        $schoolRent = Rentable::latest()->where('status', '!=', 'Rented')->where('category', 'LIKE', '%school accesories%')->limit(10)->get();
-        $bookRent = Rentable::latest()->where('status', '!=', 'Rented')->where('category', 'LIKE', '%sbooks%')->limit(10)->get();
+        $schoolRent = Rentable::latest()->where('status', '!=', 'Rented')->where('category', 'LIKE', '%school accessories%')->limit(10)->get();
+        $bookRent = Rentable::latest()->where('status', '!=', 'Rented')->where('category', 'LIKE', '%books%')->limit(10)->get();
 
         //     dd(collect($furnitureItems)->merge($furnitureRent)->sortByDesc('created_at')->slice(0,16),
         // collect($clothesItems)->merge($clothesRent)->sortByDesc('created_at')->slice(0,16)
