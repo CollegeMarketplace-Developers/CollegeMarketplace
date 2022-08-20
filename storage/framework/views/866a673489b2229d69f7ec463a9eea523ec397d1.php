@@ -21,7 +21,7 @@
                 <?php echo $__env->make('partials._mixedCarousel', ['listings' => $electronicsItems, 'message' => 'Electronics Items', 'carouselClass'=>'electronics-slider','carouselControls' => 'electronics-controls', 'carouselP' =>'previous electronics-previous', 'carouselN' => 'next electronics-next'], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             </div>
             <div class="category-display type4">
-                <?php echo $__env->make('partials._mixedCarousel', ['listings' => $kitchenItems, 'message' => 'Kithchen Items', 'carouselClass'=>'kitchen-slider','carouselControls' => 'kitchen-controls', 'carouselP' =>'previous kitchen-previous', 'carouselN' => 'next kitchen-next'], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                <?php echo $__env->make('partials._mixedCarousel', ['listings' => $kitchenItems, 'message' => 'Kitchen Items', 'carouselClass'=>'kitchen-slider','carouselControls' => 'kitchen-controls', 'carouselP' =>'previous kitchen-previous', 'carouselN' => 'next kitchen-next'], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             </div>
             <div class="category-display type5">
                 <?php echo $__env->make('partials._mixedCarousel', ['listings' => $schoolItems, 'message' => 'School Items', 'carouselClass'=>'school-slider','carouselControls' => 'school-controls', 'carouselP' =>'previous school-previous', 'carouselN' => 'next school-next'], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
