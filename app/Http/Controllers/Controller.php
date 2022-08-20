@@ -76,17 +76,22 @@ class Controller extends BaseController
     // collect($clothesItems)->merge($clothesRent)->sortByDesc('created_at')->slice(0,16)
     //     );
 
+        $listingResultsFull = Listing::latest()->where('status', '!=', 'Sold' )->limit(50)->get();
+        $retnablesResultsFull = Rentable::latest()->where('status', '!=', 'Rented' )->limit(50)->get();
+        $subleaseResultsFull = Sublease::latest()->where('status', 'like', 'Available' )->limit(50)->get();
+        $allFull = collect($listingResultsFull)->merge($retnablesResultsFull)->merge($subleaseResultsFull)->sortByDesc('created_at');
+
         $stack = array();
         $user = User::find(auth()->user());
         
         if($user != null) {
             $currentUser = $user->first();
-            $listingResultsFull = Listing::latest()->where('status', '!=', 'Sold' )->get();
+            
             //if the user has an address saved (if the user has an address saved they will always have latitude and longitude bec of the way its implemented)
             if($currentUser->latitude != NULL && $currentUser->longitude != NULL) {
-                $listingResultsFull = Listing::latest()->where('status', '!=', 'Sold' )->get();
+                //$listingResultsFull = Listing::latest()->where('status', '!=', 'Sold' )->get();
                 $counter = 0;
-                foreach ($listingResultsFull as $res) {
+                foreach ($allFull as $res) {
                     //make sure the listing by the owner wont show up in the carousel
                     if($res->user_id != $currentUser->id) {
                         if($this->getDistance($currentUser->latitude,$currentUser->longitude,$res->latitude,$res->longitude) <= 1) {
@@ -127,12 +132,17 @@ class Controller extends BaseController
     public function getProximateListings($latitude, $longitude) {
         //error_log($longitude);
         $stack = array();
-        $listingResultsFull = Listing::latest()->where('status', '!=', 'Sold' )->get();
+        
+        $listingResultsFull = Listing::latest()->where('status', '!=', 'Sold' )->limit(50)->get();
+        $retnablesResultsFull = Rentable::latest()->where('status', '!=', 'Rented' )->limit(50)->get();
+        $subleaseResultsFull = Sublease::latest()->where('status', 'like', 'Available' )->limit(50)->get();
+        $allFull = collect($listingResultsFull)->merge($retnablesResultsFull)->merge($subleaseResultsFull)->sortByDesc('created_at');
+
         $counter = 0;
     
-        error_log((float) $latitude.' '.(float)$longitude);
+        //error_log((float) $latitude.' '.(float)$longitude);
 
-        foreach ($listingResultsFull as $res) {
+        foreach ($allFull as $res) {
             //make sure the listing by the owner wont show up in the carousel
             if($this->getDistance(floatval($latitude),floatval($longitude),$res->latitude,$res->longitude) <= 1) {
                 array_push($stack,$res);
