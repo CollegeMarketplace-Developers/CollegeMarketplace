@@ -28,6 +28,7 @@ return new class extends Migration
     {
         //Schema::dropIfExists('messages');
         Schema::table('messages', function (Blueprint $table) {
+            $table->dropForeign('messages_for_sublease_foreign');
             $table->dropColumn('for_sublease');
         });
     }
