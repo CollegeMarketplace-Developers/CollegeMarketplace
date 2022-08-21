@@ -89,7 +89,7 @@
                                         </form>
                                     @endif
                 
-                                    <form><button class="share-button" type="button" title="Share this listing!"><i class="fa-solid fa-arrow-up-from-bracket"></i></button></form>
+                                    <form><button class="share-button" type="button"><i class="fa-solid fa-arrow-up-from-bracket"></i></button></form>
             
     <script>
         const shareButton = document.querySelector('.share-button');
