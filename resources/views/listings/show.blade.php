@@ -87,7 +87,8 @@
                                             <input type="hidden" name="id" value="{{$listing->id}}">
                                             <button><i class="fa-solid fa-heart bouncy"></i></button>
                                         </form>
-                                    @endif  
+                                    @endif 
+                                    <h1>YO</h1>
                             </div>
                             <div class="product-header">
                                 <h1>{{$listing->item_name}}</h1>
