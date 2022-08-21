@@ -46,7 +46,7 @@ php artisan db:seed
 
 11. Add GCP Keys To .env file Be Able To Login -> Refer to the notion page for the keys
 
-12. Run within the C:/xampp/htdocs/College Marketplace Terminal the following command(s):Add
+12. Run within the C:/xampp/htdocs/College Marketplace Terminal the following command(s):
 
 php artisan serve
 

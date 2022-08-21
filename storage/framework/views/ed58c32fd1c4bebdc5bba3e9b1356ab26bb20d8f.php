@@ -9,6 +9,10 @@
         <input type="checkbox" id="show-search">
         <input type="checkbox" id="show-menu">
         <label for="show-menu" class="menu-icon"><i class="fas fa-bars"></i></label>
+
+        <input type="checkbox" id="show-notifications-panel">
+        <input type="checkbox" id="show-profile-panel">
+
         <div class="content">
 
             
@@ -47,42 +51,37 @@
 
                 
                 <li>
-                    <a class="desktop-link">Sell</a>
+                    <a class="desktop-link">Post</a>
                     <input type="checkbox" id="show-services">
 
                     
-                    <label for="show-services" style="position:relative;">Sell <span class="down-arrow"></span></label>
+                    <label for="show-services" style="position:relative;">Post <span class="down-arrow"></span></label>
                     <ul>
-                    <li><a href="/listings/create">Post Single Item</a></li>
+                    <li><a href="/listings/create">For Sale</a></li>
                     
-                    <li><a href="/rentables/create">Post Item for Rent</a></li>
-                    <li><a href="/subleases/create">Post a Lease</a></li>
+                    <li><a href="/rentables/create">For Rent</a></li>
+                    <li><a href="/subleases/create">For Lease</a></li>
                     </ul>
                 </li>
                 
                 <li><a href="#">Requests</a></li>
 
-                <?php if(auth()->guard()->check()): ?>
-                    <li>
-                        <a class="desktop-link"><?php echo e(auth()->user()->first_name); ?></a>
-                        <input type="checkbox" id="show-user-links">
-                        <label for="show-user-links"><?php echo e(auth()->user()->first_name); ?></label>
-                        <ul>
-                            
-                            <li><a href="/users/manage">Manage Listings</a></li>
-                            <li>
-                                <a id="logout-button" onclick="document.getElementById('logout-form').submit();">Logout</a>
-                                <form method="POST" id="logout-form" action="/logout">
-                                    <?php echo csrf_field(); ?>
-                                    
-                                </form>
-                            </li>
-                        </ul>
-                        
-                    </li>
-                <?php else: ?>   
-                    <li><a href="/login">Login</a></li>
-                <?php endif; ?>
+                
+            </ul>
+
+            <ul class="notifications-panel">
+                <p>notifications</p>
+            </ul>
+            <ul class="user-panel">
+                <li>
+                    <a class="desktop-link" href="/users/manage">My Profile</a>
+                </li>
+                <li>
+                    <a id="logout-button" onclick="document.getElementById('logout-form').submit();">Logout</a>
+                    <form method="POST" id="logout-form" action="/logout">
+                        <?php echo csrf_field(); ?>
+                    </form>
+                </li>
             </ul>
         </div>
 
@@ -94,8 +93,26 @@
                 
                 <i class="fas fa-search"></i>
             </label>
+            
+            
             <?php if(auth()->guard()->check()): ?>
-                <span class="profile-icon"><i class="fa-solid fa-user"></i></span>
+                <label for="show-profile-panel" class="profile-icon">
+                    <i class="fa-solid fa-user"></i>
+                </label>
+                <label for="show-notifications-panel" class="bell-icon">
+                    <i class="fa-solid fa-bell"></i>
+                </label>
+            <?php else: ?>
+                <label class="profile-icon">
+                    <a href="/login">
+                        <i class="fa-solid fa-user"></i>
+                    </a>
+                </label>
+                <label class="bell-icon">
+                    <a href="/login">
+                        <i class="fa-solid fa-bell"></i>
+                    </a>
+                </label>
             <?php endif; ?>
         </div>
 

@@ -87,7 +87,34 @@
                                             <input type="hidden" name="id" value="{{$listing->id}}">
                                             <button><i class="fa-solid fa-heart bouncy"></i></button>
                                         </form>
-                                    @endif  
+                                    @endif
+                
+                                    <form><button class="share-button" type="button"><i class="fa-solid fa-arrow-up-from-bracket"></i></button></form>
+            
+    <script>
+        const shareButton = document.querySelector('.share-button');
+
+        shareButton.addEventListener('click', event => {
+        if (navigator.share) { 
+        navigator.share({
+            title: 'College Marketplace',
+            url: '',
+            text: 'Check out this listing!'
+            }).then(() => {
+            console.log('Thanks for sharing!');
+            })
+            .catch(console.error);
+        } 
+        else {
+                // Fallback
+                shareDialog.classList.add('is-open');
+        }
+        });
+
+        closeButton.addEventListener('click', event => {
+        shareDialog.classList.remove('is-open');
+        });
+    </script>
                             </div>
                             <div class="product-header">
                                 <h1>{{$listing->item_name}}</h1>
@@ -130,45 +157,89 @@
                         </div>
                     </div>
                 </div>
-                <div class="product-description-area">
-                    <div class="controls">
-                        {{-- edit --}}
-                        {{-- delete --}}
-                        {{-- share --}}
-                        {{-- chat with owner --}}
-                        @if($currentUser != null and $listing->user_id == $currentUser->id)
-                            <form method="POST" action="/listings/{{$listing->id}}/update">
-                                @csrf
-                                @method('PUT')
-                                <select name="status" id="status" style = " font-size: 17px; text-align:center;" onchange="this.form.submit()">
-                                    <option style = "text-align:center;">Status</option>
-                                    <option style = "text-align:center;" value="Available">Available</option>
-                                    <option style = "text-align:center;" value="Pending">Pending</option>
-                                    <option style = "text-align:center;" value="Sold">Sold</option>  
-                                </select>
-                            </form>
+                <div class="selected-row">
+                    <div class="product-description-area">
+                        <div class="controls">
+                            {{-- edit --}}
+                            {{-- delete --}}
+                            {{-- share --}}
+                            {{-- chat with owner --}}
+                            @if($currentUser != null and $listing->user_id == $currentUser->id)
+                                <form method="POST" action="/listings/{{$listing->id}}/update">
+                                    @csrf
+                                    @method('PUT')
+                                    <select name="status" id="status" style = " font-size: 17px; text-align:center;" onchange="this.form.submit()">
+                                        <option style = "text-align:center;">Status</option>
+                                        <option style = "text-align:center;" value="Available">Available</option>
+                                        <option style = "text-align:center;" value="Pending">Pending</option>
+                                        <option style = "text-align:center;" value="Sold">Sold</option>  
+                                    </select>
+                                </form>
+                                
                             
-                         
-                            <form class = "editForm" action="/listings/{{$listing->id}}/edit" method = "GET">
-                                @csrf
-                                <input type="hidden" name="id" value="{{$listing->id}}">
-                                <button><i class="fa fa-pencil" aria-hidden="true"></i></button>
-                            </form>
+                                <form class = "editForm" action="/listings/{{$listing->id}}/edit" method = "GET">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{$listing->id}}">
+                                    <button><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                </form>
 
-                            <span id="delete-modal-trigger">
-                                <i class="fa fa-trash" ></i>
-                            </span>
-                        @endif
-                        <form class="shareForm">
-                            <button id = 'share' onclick = "toggleText()" type = "button"><i class="fa fa-share-alt"></i>
-                            </button>
-                        </form> 
+                                <span id="delete-modal-trigger">
+                                    <i class="fa fa-trash" ></i>
+                                </span>
+                            @endif
+                            <form class="shareForm">
+                                <button id = 'share' onclick = "toggleText()" type = "button"><i class="fa fa-share-alt"></i>
+                                </button>
+                            </form> 
+                        </div>
+                        <h1>Description</h1>
+                        <p>{{$listing->description}}</p>
                     </div>
-                    <h1>Description</h1>
-                    <p>{{$listing->description}}</p>
+                    <div class="about-seller-and-chat">
+                        <div class="about-seller">
+                            <i class="fa-solid fa-user"></i>
+                            <div>
+                                <p>Name</p>
+                                <p>Joined: <span>2001-14-16</span></p>
+                            </div>
+                        </div>
+                        <div class="chat-seller">
+                            @php
+                                $type = null;
+                                if($listing instanceof \App\Models\Listing){
+                                    $type="listing";
+                                }
+                                elseif($listing instanceof \App\Models\Rentable){
+                                    $type="rentable";
+                                }
+                                else {
+                                    $type="lease";
+                                }
+                                // this is the listing owner
+                                $itemID = $listing->id;
+                                $ownerID = $listing->user_id;
+
+                                // this is the current user logged in and the one messaging the owner
+                                $from = $currentUser ? $currentUser->id : -1;
+                                $item = $listing->id;
+                            @endphp
+
+                            @if($currentUser != null && $currentUser->id == $ownerID)
+                                {{-- if post is mine --}}
+                                <a href="/all/{{$type}}/{{$itemID}}/{{$ownerID}}/{{$from}}/messages">
+                                    <p>My Messages</p>
+                                </a>
+                            @else
+                                {{-- only go to this link if I am not the listing owner, aka I'm messaging buyer --}}
+                                <a href="/all/{{$type}}/{{$itemID}}/{{$ownerID}}/{{$from}}/messages">
+                                    <p>Chat with Seller</p>
+                                </a>
+                            @endif
+                        </div>
+                    </div>
                 </div>
                 <div class="map-container-mobile" id="map-container-mobile">
-    
+                    {{--this mobile map is only shown on small screens  --}}
                 </div>
                 <div>
                     {{-- community thread goes here --}}
@@ -297,209 +368,7 @@
         var listingOwner = "{{$listing->user_id}}";
         var userLoggedIn = "{{$currentUser ? $currentUser->id : -1}}";
         var receiverSelected = null; //the person whose chat we have open
-        $(document).ready(function(){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            // Pusher.logToConsole = true;
-            var pusher = new Pusher('5b40ba1f12ea9bf24b29', {
-                cluster: 'us2'
-            });
-            var channel = pusher.subscribe('my-channel');
-            // 2 cases
-            // if I am not the listing owner, show me messages that have been sent to me instantly
-            // if I am the listing owner -> get selected user and update their information or display a pending symbol
-            channel.bind('my-event', function(data) {
-                console.log(data);
-                if (userLoggedIn == data.from) {
-                    // if I am not the listing owner and I am sending a message
-                    if(userLoggedIn != listingOwner){
-                        loadConversation(listingOwner, userLoggedIn);
-                    }else{ //if I am the listing owner and I am sending the message
-                        //  need to have an option for a user selected or pending
-                        if(receiverSelected != null){ // if the receiver is selected
-                            $('#'+receiverSelected).click();
-                        }
-                    }
-                }else if (userLoggedIn == data.to) {
-                    if(userLoggedIn != listingOwner){
-                        loadConversation(listingOwner, userLoggedIn);
-                    }else{ //if the listing owner is the user logged in
-                        if(receiverSelected != null){ // if the receiver is selected
-                            $('#'+receiverSelected).click();
-                        }else{
-                            console.log(data);
-                            if(data.for_listing == listing_id){
-                                var pending = parseInt($('#' + data.from).find('.pending').html());
-                                if (pending) {
-                                    $('#' + data.from).find('.pending').html(pending + 1);
-                                } else {
-                                    $('#' + data.from).append('<span class="pending">1</span>');
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-            // if I am the listing owner, I want to see all the users that have contacted me
-            if(listingOwner == userLoggedIn){
-                $('.messages-container').removeClass('active');
-                $('.user-wrapper').addClass('active');
-            }
-            // back button to switch from messages container to users list container
-            $('.message-back').click(function(){
-                $('.messages-container').removeClass('active');
-                $('.user-wrapper').addClass('active');
-                receiverSelected = null;
-            });
-            
-            // if the listing is not mine, load all messages from the listing owner, to me the current user logged in
-            if("{{!auth()->guest()}}"){
-                loadConversation(listingOwner, userLoggedIn);
-            }
-            function loadConversation(UserSending, UserReceiving ){
-                if("{{$listing->user_id}}" != userLoggedIn){
-                    var ul = document.getElementById("messages");
-                    ul.innerHTML = null;
-                    
-                    $.ajax({
-                        type: "GET",
-                        url: "/messages?from=" + UserSending + "&to=" + UserReceiving + "&listing_id=" + listing_id, // need to create this route
-                        data: "JSON",
-                        cache: false,
-                        success: function (data) {
-                            // console.log(data);
-                            if(data != null){
-                                
-                                var ul = document.getElementById("messages");
-                                for(var i = 0; i< data.length; i++){
-                                    // console.log(data[i]);
-                                    var li = document.createElement("li");
-                                    li.className = 'message clearfix'
-                                    
-                                    var div = document.createElement('div');
-                                    if(data[i].from == userLoggedIn){
-                                        div.className="sent"
-                                    }else{
-                                        div.className="received"
-                                    }
-                                    var message = document.createElement('p');
-                                    message.innerHTML = data[i].message;
-                                    div.appendChild(message);
-                                    var date = document.createElement('p');
-                                    date.innerHTML = "{{date('d M y, h:i a', strtotime(" + data[i].created_at + "))}}";
-                                    date.className='date';
-                                    div.appendChild(date);
-                                    li.appendChild(div);
-                                    ul.appendChild(li);
-                                    scrollToBottomFunc();
-                                }
-                            }
-                        },
-                        error: function(XMLHttpRequest, textStatus, errorThrown) { 
-                            alert("Status: " + textStatus); alert("Error: " + errorThrown); 
-                        }
-                    });
-                }
-            }
-            // if I am the listing owner, I want to click on a user and get all the messages from me to them or them to me
-            $('.user').click(function(){
-                var ul = document.getElementById("messages");
-                ul.innerHTML = null;
-                $('.user-wrapper').removeClass('active');
-                $('.messages-container').addClass('active');
-                receiverSelected = $(this).attr('id');
-                $(this).find('.pending').remove();
-                $.ajax({
-                    type: "GET",
-                    url: "/messages?from=" + receiverSelected + "&to=" + listingOwner + "&listing_id=" + listing_id, // need to create this route
-                    data: "JSON",
-                    cache: false,
-                    success: function (data) {
-                        // console.log(data);
-                        if(data != null){
-                            
-                            var ul = document.getElementById("messages");
-                            for(var i = 0; i< data.length; i++){
-                                // console.log(data[i]);
-                                var li = document.createElement("li");
-                                li.className = 'message clearfix'
-                                
-                                var div = document.createElement('div');
-                                if(data[i].from == listingOwner){
-                                    div.className="sent"
-                                }else{
-                                    div.className="received"
-                                }
-                                var message = document.createElement('p');
-                                message.innerHTML = data[i].message;
-                                div.appendChild(message);
-                                var date = document.createElement('p');
-                                date.innerHTML = "{{date('d M y, h:i a', strtotime(" + data[i].created_at + "))}}";
-                                date.className='date';
-                                div.appendChild(date);
-                                li.appendChild(div);
-                                ul.appendChild(li);
-                                scrollToBottomFunc();
-                            }
-                        }
-                    },
-                    error: function(XMLHttpRequest, textStatus, errorThrown) { 
-                        alert("Status: " + textStatus); alert("Error: " + errorThrown); 
-                    }
-                });
-            });
-            // take to take in to account two different scenarios
-            //1) if the listing is not mine, i wanna be able to message the listing owner
-            //2) if the listing is mine, select a specifc user, then get their id and sent them the message
-            if("{{!auth()->guest()}}"){
-                $(document).on('keyup', 'input', function(e){
-                    var msg = $(this).val();
-                    var datastr = null;
-                    // if I am the listing owner, then i need a receiver id which should be the person I have selected form the users list
-                    if(listingOwner == userLoggedIn){
-                        // if it is my ownlisting, use receiver id, instead of listing owner id
-                        datastr = "receiver_id=" + receiverSelected + "&message=" + msg + "&for_listing=" + listing_id;
-                            // console.log(datastr);
-                    }else{ //else send a message to the listing owner from me thats default
-                        // console.log("bottom branch");
-                        datastr = "receiver_id=" + listingOwner + "&message=" + msg + "&for_listing=" + listing_id;
-                    }
-                    console.log(datastr);
-                    if(e.keyCode == 13 && msg != '' && listingOwner != ''){
-                        $(this).val(''); // while pressed enter text box will be empty
-                        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                        $.ajax({
-                            url: "/sendmessage", 
-                            type: 'POST',
-                            data: datastr,
-                            dataType: 'JSON',
-                            _token: CSRF_TOKEN,
-                            cache: false,
-                            success: function (data) {
-                                console.log(data);
-                            },
-                            error: function (jqXHR, status, err) {
-                                console.log(err);
-                            },
-                            complete: function () {
-                                // scrollToBottomFunc();
-                            }
-                        })
-                    }
-                });
-            }
-        });
-         // make a function to scroll down auto
-        function scrollToBottomFunc() {
-           let scroll_to_bottom = document.getElementById('messages');
-            scrollBottom(scroll_to_bottom);
-        }
-        function scrollBottom(element) {
-            element.scroll({ top: element.scrollHeight, behavior: "smooth"})
-        }
+
         //delete modal
         var deleteModal = document.getElementById("delete-modal");
         var deleteButton = document.getElementById("delete-modal-trigger");

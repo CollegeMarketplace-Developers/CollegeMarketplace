@@ -21,8 +21,10 @@
     align-items: center;
     justify-content: center;
     box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
-    background: #2D2B37;
+    background: var(--background-color-light);
+    color:var(--font-color-dark);
     border-radius: var(--br-large);
+    z-index: 10;
 }
 
 .category-carousel-inner ul li{
@@ -33,6 +35,11 @@
 .category-carousel-inner ul li:hover{
     color:var(--accent-color) !important;
     cursor:pointer;
+}
+
+.category-carousel-inner ul li:hover i{
+    transition: all .2s ease-in;
+    transform: translateY(-5px);
 }
 
 .category-carousel-inner ul li i{

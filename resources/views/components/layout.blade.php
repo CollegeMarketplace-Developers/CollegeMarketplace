@@ -48,6 +48,11 @@
 
         <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
         <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+        {{-- for shake animation --}}
+        <link rel="stylesheet" type="text/css" href="csshake.min.css">
+        <!-- or from surge.sh -->
+        <link rel="stylesheet" type="text/css" href="https://csshake.surge.sh/csshake.min.css">
     </head>
     <body>
         <header style="height: 50px; width: 100%; position: fixed; z-index:100; display:flex;justify-content:center;background:#151416;">

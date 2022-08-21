@@ -9,6 +9,10 @@
         <input type="checkbox" id="show-search">
         <input type="checkbox" id="show-menu">
         <label for="show-menu" class="menu-icon"><i class="fas fa-bars"></i></label>
+
+        <input type="checkbox" id="show-notifications-panel">
+        <input type="checkbox" id="show-profile-panel">
+
         <div class="content">
 
             {{-- logo for college marketplace --}}
@@ -47,42 +51,55 @@
 
                 {{-- button to sell --}}
                 <li>
-                    <a class="desktop-link">Sell</a>
+                    <a class="desktop-link">Post</a>
                     <input type="checkbox" id="show-services">
 
                     {{-- used in the collapsed menu --}}
-                    <label for="show-services" style="position:relative;">Sell <span class="down-arrow"></span></label>
+                    <label for="show-services" style="position:relative;">Post <span class="down-arrow"></span></label>
                     <ul>
-                    <li><a href="/listings/create">Post Single Item</a></li>
+                    <li><a href="/listings/create">For Sale</a></li>
                     {{-- <li><a href="/yardsales/create">Host a Yard Sale</a></li> --}}
-                    <li><a href="/rentables/create">Post Item for Rent</a></li>
-                    <li><a href="/subleases/create">Post a Lease</a></li>
+                    <li><a href="/rentables/create">For Rent</a></li>
+                    <li><a href="/subleases/create">For Lease</a></li>
                     </ul>
                 </li>
                 {{-- button to requets --}}
                 <li><a href="#">Requests</a></li>
 
-                @auth
+                {{-- @auth
                     <li>
                         <a class="desktop-link">{{auth()->user()->first_name}}</a>
                         <input type="checkbox" id="show-user-links">
                         <label for="show-user-links">{{auth()->user()->first_name}}</label>
                         <ul>
-                            {{-- onclick="displayLoadingPage()" --}}
+                            onclick="displayLoadingPage()"
                             <li><a href="/users/manage">Manage Listings</a></li>
                             <li>
                                 <a id="logout-button" onclick="document.getElementById('logout-form').submit();">Logout</a>
                                 <form method="POST" id="logout-form" action="/logout">
                                     @csrf
-                                    {{-- <input type='submit' value="Logout"> --}}
                                 </form>
                             </li>
                         </ul>
-                        {{-- <a href="/listings/manage">{{auth()->user()->first_name}}</a> --}}
                     </li>
                 @else   
                     <li><a href="/login">Login</a></li>
-                @endauth
+                @endauth --}}
+            </ul>
+
+            <ul class="notifications-panel">
+                <p>notifications</p>
+            </ul>
+            <ul class="user-panel">
+                <li>
+                    <a class="desktop-link" href="/users/manage">My Profile</a>
+                </li>
+                <li>
+                    <a id="logout-button" onclick="document.getElementById('logout-form').submit();">Logout</a>
+                    <form method="POST" id="logout-form" action="/logout">
+                        @csrf
+                    </form>
+                </li>
             </ul>
         </div>
 
@@ -94,8 +111,26 @@
                 {{-- search icon gets converted into x mark when search bar is displayed .... navigation : 81 --}}
                 <i class="fas fa-search"></i>
             </label>
+            
+            {{-- only if the user is logged in, then the side panels will show --}}
             @auth
-                <span class="profile-icon"><i class="fa-solid fa-user"></i></span>
+                <label for="show-profile-panel" class="profile-icon">
+                    <i class="fa-solid fa-user"></i>
+                </label>
+                <label for="show-notifications-panel" class="bell-icon">
+                    <i class="fa-solid fa-bell"></i>
+                </label>
+            @else
+                <label class="profile-icon">
+                    <a href="/login">
+                        <i class="fa-solid fa-user"></i>
+                    </a>
+                </label>
+                <label class="bell-icon">
+                    <a href="/login">
+                        <i class="fa-solid fa-bell"></i>
+                    </a>
+                </label>
             @endauth
         </div>
 
