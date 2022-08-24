@@ -7,6 +7,7 @@ use App\Models\Sublease;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Geocoder\Facades\Geocoder;
 
 class SubleaseController extends Controller
 {
@@ -45,8 +46,16 @@ class SubleaseController extends Controller
             \Storage::disk('s3')->setVisibility($file, 'public');
             $data[] = $path;
         }
-        $formFields['image_uploads'] = json_encode($data);
-        $formFields['utilities'] = implode(", ", $formFields['utilities']);
+        $formFields['image_uploads']=json_encode($data);
+        $formFields['utilities']=implode(", " ,$formFields['utilities']);
+
+        Geocoder::setApiKey(config('geocoder.key'));
+        Geocoder::setCountry(config('geocoder.country', 'US'));
+        $resArr = Geocoder::getCoordinatesForAddress($formFields['street'].' '.$formFields['city']);
+
+        $formFields['latitude'] = $resArr['lat'];
+        $formFields['longitude'] = $resArr['lng'];
+
         // dd($formFields);
         $newSublease = Sublease::create($formFields);
         return redirect('/subleases/' . $newSublease->id)->with('message', 'Lease Created Successfully!');

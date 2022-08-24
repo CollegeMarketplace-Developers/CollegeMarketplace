@@ -15,6 +15,7 @@
         "laravel/tinker": "^2.7",
         "league/flysystem-aws-s3-v3": "3.0",
         "pusher/pusher-php-server": "^7.0",
+        "spatie/geocoder": "^3.14",
         "stevebauman/location": "^6.5"
     },
     "require-dev": {
