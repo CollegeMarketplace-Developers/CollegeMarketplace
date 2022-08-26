@@ -55,6 +55,9 @@
         "slideBy":1,
         "speed":400,
         "nav":false,
+        autoplayButton: false,
+        autoplay: true,
+        autoplayText:["",""],
         controlsContainer:"#furniture-controls",
         responsive:{
             1500:{
@@ -88,6 +91,9 @@
         "slideBy":1,
         "speed":400,
         "nav":false,
+        autoplayButton: false,
+        autoplay: true,
+        autoplayText:["",""],
         controlsContainer:"#clothes-controls",
         responsive:{
             1500:{
@@ -121,6 +127,9 @@
         "slideBy":1,
         "speed":400,
         "nav":false,
+        autoplayButton: false,
+        autoplay: true,
+        autoplayText:["",""],
         controlsContainer:"#electronics-controls",
         responsive:{
             1500:{
@@ -154,6 +163,9 @@
         "slideBy":1,
         "speed":400,
         "nav":false,
+        autoplayButton: false,
+        autoplay: true,
+        autoplayText:["",""],
         controlsContainer:"#kitchen-controls",
         responsive:{
             1500:{
@@ -187,6 +199,9 @@
         "slideBy":1,
         "speed":400,
         "nav":false,
+        autoplayButton: false,
+        autoplay: true,
+        autoplayText:["",""],
         controlsContainer:"#school-controls",
         responsive:{
             1500:{
@@ -220,6 +235,9 @@
         "slideBy":1,
         "speed":400,
         "nav":false,
+        autoplayButton: false,
+        autoplay: true,
+        autoplayText:["",""],
         controlsContainer:"#book-controls",
         responsive:{
             1500:{
