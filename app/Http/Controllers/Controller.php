@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Listing;
 use App\Models\Rentable;
 use App\Models\Sublease;
+use App\Models\Message;
 use App\Libraries\HashMap;
 use App\Models\NewsLetter;
 use Illuminate\Http\Request;
@@ -51,6 +52,12 @@ class Controller extends BaseController
         // if(count($latest) == 0){
         //     $latest = Listing::latest()->take(16)->get();
         // }
+
+        //dd($users = Message::join('users', 'messages.to','=','users.id')->selectRaw('count(*) as numMessages, users.email,messages.to')->groupBy('messages.to','users.email')->where('is_read','=','0')->where('is_email','=','0')->get());
+        //dd(Message::selectRaw('count(*) as numMessages,to')->where('is_read','=','0')->where('is_email','=','0')->groupBy('to'));
+        //dd(Message::where('is_read','=','0')->where('is_email','=','0')->groupBy('to')->count());
+        //dd(Message::join('users', 'messages.to','=','users.id')->select('messages.message','messages.created_at','users.email')->where('is_read','=','0')->where('is_email','=','0')->get());
+        
 
         //Option 2: retun results from all three types that are the latest
         $listingResults = Listing::latest()->where('status', '!=', 'Sold')->limit(40)->get();
