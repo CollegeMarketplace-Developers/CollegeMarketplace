@@ -53,6 +53,7 @@ class Controller extends BaseController
         //     $latest = Listing::latest()->take(16)->get();
         // }
 
+        //dd($users = Message::join('users', 'messages.to','=','users.id')->selectRaw('count(*) as numMessages, users.email,messages.to')->groupBy('messages.to','users.email')->where('is_read','=','0')->where('is_email','=','0')->get());
         //dd(Message::selectRaw('count(*) as numMessages,to')->where('is_read','=','0')->where('is_email','=','0')->groupBy('to'));
         //dd(Message::where('is_read','=','0')->where('is_email','=','0')->groupBy('to')->count());
         //dd(Message::join('users', 'messages.to','=','users.id')->select('messages.message','messages.created_at','users.email')->where('is_read','=','0')->where('is_email','=','0')->get());

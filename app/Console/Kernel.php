@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('auto:SendMail')->timezone('America/New_York')->dailyAt('22:42');
+        $schedule->command('auto:SendMail')->timezone('America/New_York')->dailyAt('15:50')->runInBackground();
     }
 
     /**
