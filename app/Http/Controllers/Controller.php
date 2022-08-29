@@ -45,7 +45,7 @@ class Controller extends BaseController
         return $d;
     }
     
-    //MashAllah
+    //MashAllah!
      //show the index page
     public function index(){
         //Option 1: return results that were added in the last 24 hours for only sale items
