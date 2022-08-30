@@ -22,13 +22,14 @@ class SendMail extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'send email reminders to people with unread messages once a day';
 
     /**
      * Execute the console command.
      *
      * @return int
      */
+    //this is what the command does when called (find #of messages people have unread)
     public function handle()
     {
         //$users = Message::join('users', 'messages.to','=','users.id')->select('users.email','is_email')->distinct()->where('is_read','=','0')->where('is_email','=','0')->get();

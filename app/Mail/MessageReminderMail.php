@@ -20,6 +20,8 @@ class MessageReminderMail extends Mailable
      * @return void
      */
 
+    //this will be accessable in the view (anything publicly declared here is accessible in the view)
+    //can add more stuff if want to display other things in the email
     public $numUnreadMessages;
 
 
