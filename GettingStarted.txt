@@ -7,7 +7,7 @@ have XAMPP on your local machine since this has been an issue before
 
 2 Open XAMPP and run Apache and MySQL
 
-2.5 If MySQL is not starting (shutting down unexpectedly) use this link to help: https://stackoverflow.com/questions/18022809/how-to-solve-error-mysql-shutdown-unexpectedly
+2.5 If MySQL is not starting (shutting down unexpectedly) use this link to help: https://stackoverflow.com/questions/18022809/how-to-solve-error-mysql-shutdown-unexpectedly OR THIS video if error 'invalid settings' https://www.youtube.com/watch?v=RjYxxYlXkOs
 
 3 Select 'Admin' in XAMPP in the MySQL row (its to the right of the stop button) -> Click the New button in PhpMyAdmin -> Add college_marketplace database within XAMPP PHPMYADMIN -> Click Create Button
 
