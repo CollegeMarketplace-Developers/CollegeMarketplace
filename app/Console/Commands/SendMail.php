@@ -45,5 +45,6 @@ class SendMail extends Command
             }
         }
         return 0;
+        //test
     }
 }
