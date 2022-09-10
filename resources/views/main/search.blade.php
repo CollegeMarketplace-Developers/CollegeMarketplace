@@ -62,8 +62,8 @@
 
 <link rel="stylesheet" types ="text/css" href="/css/search.css" />
 <x-layout>
-    <div style="position: relative; overflow:hidden; background-color:#24222c;" >
-        <input type="checkbox" id="show-filter" class="show-filter">
+    <div style="position: relative; overflow:hidden; padding-top:50px;"   >
+        <input type="checkbox" id="show-filter" class="show-filter panel">
         
         <div class = "side-filter-container">
             <label for="show-filter">
@@ -180,7 +180,7 @@
             </ul>
         </div>
         {{-- need to create an event listener for the above filters where the results is a list of listings that are paginated and then passed into the card gallery --}}
-        <div class = "listings-parent-container" style="min-height: 100vh;">
+        <div class = "search-results-container" style="min-height: 100vh;">
             @include('partials._cardGallary',['listings'=>$listings, 'heading' => 'Results Showing: '. count($listings), 'displayTags' => true, 'displayMoreButton' => false])
         </div>
     </div>

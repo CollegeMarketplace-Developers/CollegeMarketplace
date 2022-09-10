@@ -3,14 +3,15 @@
     left:-350px;
     width: 350px;
     max-width: 350px;
-    height:calc(100vh - 70px);
-    background: rgba(29,28,36,0.1);
+    height:calc(100vh - 50px);
+    /* background: rgba(29,28,36,0.1); */
+    background: rgba(0,0,0,.4);
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
-    top: 70px;
+    top: 50px;
     z-index: 20;
     transition: all .3s ease ;
-    border-right: 10px solid #151416; 
+    /* border-right: 10px solid #151416;  */
 }
 
 .show-filter{
@@ -22,9 +23,9 @@
     top: 55px;
     left: calc(100%);
     background: #151416;
-    padding: 20px 15px 20px 25px;
+    padding: 20px;
     text-align: center;
-    border-radius: 8px;
+    border-radius: 0 8px 8px 0 ;
 }
 
 .sidebar-toggle:hover{
@@ -181,12 +182,15 @@ input::-webkit-inner-spin-button {
 .filters-applied-container{
     width: 100%;
     height: fit-content;
-    background: linear-gradient(261.71deg, #3A3845 13.92%, #2C2A36 84.19%) !important;
+    /* background: linear-gradient(261.71deg, #3A3845 13.92%, #2C2A36 84.19%) !important; */
     padding: 10px 50px;
     list-style-type: none;
-    margin-bottom: 20px;
 }
 
+.filters-applied-container ul {
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border-color-1);
+}
 .filters-applied-list li{
     display: inline-block;
     padding: 3px 6px;
@@ -219,12 +223,37 @@ input::-webkit-inner-spin-button {
     background-color: var(--background-color);
     cursor:pointer;
 }
+.search-results-container{
+    width: 100%;
+    height: fit-content;
+    background-color: var(--background-color);
+    box-sizing: border-box;
+    padding:20px 70px;
+}
 
 /* @media (max-width: 480px){
     .filters-applied-container{
         padding: 10px 20px !important;
     }
 } */
+
+@media(max-width: 1200px){
+    .search-results-container{
+        padding:20px 50px;
+    }
+}
+
+@media(max-width: 550px){
+    .search-results-container{
+        padding:30px;
+    }
+}
+
+@media(max-width: 480px){
+    .search-results-container{
+        padding:20px;
+    }
+}
 
 @media (max-width: 400px){
     .side-filter-container{

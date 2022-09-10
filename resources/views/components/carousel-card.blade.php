@@ -2,7 +2,8 @@
 <div>
     {{-- if the card is a listing card --}}
     @if($listing != null)
-        <div {{$attributes->merge(['class'=> 'slide single-post-cont'])}} data-aos="fade-right" data-aos-once="true">
+        
+    <div {{$attributes->merge(['class'=> 'slide single-post-cont'])}} data-aos="fade-right" data-aos-once="true">
             {{-- <div class="cr cr-top cr-right cr-sticky listing">{{$listing->status}}</div> --}}
             {{-- <a href="/listings/{{$listing->id}}"> --}}
             <div class="slide-img">
@@ -58,6 +59,8 @@
                     <a class="type-sale" href="/listings/{{$listing->id}}">Buy</a>
                 </div>
             </div>
+
+            <a href="/listings/{{$listing->id}}" class="clickable-card"></a>
         </div>
     {{-- if the card is a rentable card --}}
     @elseif($rentable != null)
@@ -112,6 +115,8 @@
                     <a class="type-rent" href="/rentables/{{$rentable->id}}">Rent</a>
                 </div>
             </div>
+
+            <a href="/rentables/{{$rentable->id}}" class="clickable-card"></a>
         </div>
     @else
          <div {{$attributes->merge(['class'=> 'slide single-post-cont '])}} data-aos="fade-right" data-aos-once="true">
@@ -161,6 +166,8 @@
                     <a class="type-lease" href="/subleases/{{$sublease->id}}">Lease</a>
                 </div>
             </div>
+
+            <a href="/subleases/{{$sublease->id}}" class="clickable-card"></a>
         </div>
     @endif
 </div>

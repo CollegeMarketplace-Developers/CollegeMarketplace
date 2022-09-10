@@ -10,9 +10,13 @@
         <div class = "listings-parent-container">
             @include('partials._carouselByCategory',['furnitureItems' => $furnitureItems, 'clothesItems'=>$clothesItems, "electronicsItems"=>$electronicsItems, 'kitchenItems' => $kitchenItems, 'schoolItems' =>$schoolItems, 'bookItems'=>$bookItems])
         </div>
+        
+        <div class="listings-parent-container">
+            @include('partials._componentDesignOne')
+        </div>
 
         {{-- Showing items based on distance--}}
-        
+       
         @if(!empty($listingsNear)) 
             <div class = "listings-parent-container">
                 @include('partials._listingCarousel', ['listings' => $listingsNear, 'message' => 'Within A Mile', 'carouselClass'=>'my-slider','carouselControls' => 'controls', 'carouselP' =>'previous previous1', 'carouselN' => 'next next1'])
@@ -22,6 +26,7 @@
         <div class="listings-parent-container">
             @include('partials._componentDesignOne')
         </div>
+
         {{-- carousel for rentables --}}
         <div class="listings-parent-container">
             @include('partials._rentablesCarousel',

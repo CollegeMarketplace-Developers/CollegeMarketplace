@@ -13,7 +13,8 @@
 <div>
     
     <?php if($listing != null): ?>
-        <div <?php echo e($attributes->merge(['class'=> 'slide single-post-cont'])); ?> data-aos="fade-right" data-aos-once="true">
+        
+    <div <?php echo e($attributes->merge(['class'=> 'slide single-post-cont'])); ?> data-aos="fade-right" data-aos-once="true">
             
             
             <div class="slide-img">
@@ -67,6 +68,8 @@
                     <a class="type-sale" href="/listings/<?php echo e($listing->id); ?>">Buy</a>
                 </div>
             </div>
+
+            <a href="/listings/<?php echo e($listing->id); ?>" class="clickable-card"></a>
         </div>
     
     <?php elseif($rentable != null): ?>
@@ -119,6 +122,8 @@
                     <a class="type-rent" href="/rentables/<?php echo e($rentable->id); ?>">Rent</a>
                 </div>
             </div>
+
+            <a href="/rentables/<?php echo e($rentable->id); ?>" class="clickable-card"></a>
         </div>
     <?php else: ?>
          <div <?php echo e($attributes->merge(['class'=> 'slide single-post-cont '])); ?> data-aos="fade-right" data-aos-once="true">
@@ -168,6 +173,8 @@
                     <a class="type-lease" href="/subleases/<?php echo e($sublease->id); ?>">Lease</a>
                 </div>
             </div>
+
+            <a href="/subleases/<?php echo e($sublease->id); ?>" class="clickable-card"></a>
         </div>
     <?php endif; ?>
 </div><?php /**PATH C:\xampp\htdocs\CollegeMarketplace\resources\views/components/carousel-card.blade.php ENDPATH**/ ?>

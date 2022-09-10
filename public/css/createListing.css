@@ -132,7 +132,7 @@ input, select, textarea, .preview {
 	font-size: 1em;
 	font-family:inherit;
 	background:white;
-	color: var(--background-color);
+	color: var(--background-color-dark);
 	/* color: #92EBC4; */
 }
 

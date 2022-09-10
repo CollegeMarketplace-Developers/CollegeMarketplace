@@ -110,7 +110,9 @@
                                         }
                                     }
                                 ?>
-                                <img src=<?php echo e($listing->image_uploads ? Storage::disk('s3')->url($titleImage) : asset('/images/rotunda.jpg')); ?> id = "expandedImg" alt="image doesnt exist">
+                                <a href="/listings/<?php echo e($listing->id); ?>">
+                                    <img src=<?php echo e($listing->image_uploads ? Storage::disk('s3')->url($titleImage) : asset('/images/rotunda.jpg')); ?> id = "expandedImg" alt="image doesnt exist">
+                                </a>
                             </div>
                         </div>
 
