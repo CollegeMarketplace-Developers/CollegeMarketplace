@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Listing;
 use App\Models\Rentable;
 use App\Models\Sublease;
+use App\Models\Message;
 use App\Libraries\HashMap;
 use App\Models\NewsLetter;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Log;
 
 
 
@@ -30,14 +32,33 @@ class Controller extends BaseController
         return view('main.features');
     }
 
-    //show the index page
-    public function index()
-    {
+    public function getDistance($latitude1, $longitude1, $latitude2, $longitude2) {
+        $earth_radius = 3959;
+    
+        $dLat = deg2rad($latitude2 - $latitude1);
+        $dLon = deg2rad($longitude2 - $longitude1);
+    
+        $a = sin($dLat/2) * sin($dLat/2) + cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * sin($dLon/2) * sin($dLon/2);
+        $c = 2 * asin(sqrt($a));
+        $d = $earth_radius * $c;
+    
+        return $d;
+    }
+    
+    //MashAllah!
+     //show the index page
+    public function index(){
         //Option 1: return results that were added in the last 24 hours for only sale items
         // $latest = Listing::latest()->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())->simplePaginate(16);
         // if(count($latest) == 0){
         //     $latest = Listing::latest()->take(16)->get();
         // }
+
+        //dd($users = Message::join('users', 'messages.to','=','users.id')->selectRaw('count(*) as numMessages, users.email,messages.to')->groupBy('messages.to','users.email')->where('is_read','=','0')->where('is_email','=','0')->get());
+        //dd(Message::selectRaw('count(*) as numMessages,to')->where('is_read','=','0')->where('is_email','=','0')->groupBy('to'));
+        //dd(Message::where('is_read','=','0')->where('is_email','=','0')->groupBy('to')->count());
+        //dd(Message::join('users', 'messages.to','=','users.id')->select('messages.message','messages.created_at','users.email')->where('is_read','=','0')->where('is_email','=','0')->get());
+        
 
         //Option 2: retun results from all three types that are the latest
         $listingResults = Listing::latest()->where('status', '!=', 'Sold')->limit(40)->get();
@@ -67,23 +88,90 @@ class Controller extends BaseController
         // dd($furnitureItems);
 
         header("Cache-Control: must-revalidate");
+    //     dd(collect($furnitureItems)->merge($furnitureRent)->sortByDesc('created_at')->slice(0,16),
+    // collect($clothesItems)->merge($clothesRent)->sortByDesc('created_at')->slice(0,16)
+    //     );
 
+        $listingResultsFull = Listing::latest()->where('status', '!=', 'Sold' )->limit(50)->get();
+        $retnablesResultsFull = Rentable::latest()->where('status', '!=', 'Rented' )->limit(50)->get();
+        $subleaseResultsFull = Sublease::latest()->where('status', 'like', 'Available' )->limit(50)->get();
+        $allFull = collect($listingResultsFull)->merge($retnablesResultsFull)->merge($subleaseResultsFull)->sortByDesc('created_at');
+
+        $stack = array();
+        $user = User::find(auth()->user());
+        
+        if($user != null) {
+            $currentUser = $user->first();
+            
+            //if the user has an address saved (if the user has an address saved they will always have latitude and longitude bec of the way its implemented)
+            if($currentUser->latitude != NULL && $currentUser->longitude != NULL) {
+                //$listingResultsFull = Listing::latest()->where('status', '!=', 'Sold' )->get();
+                $counter = 0;
+                foreach ($allFull as $res) {
+                    //make sure the listing by the owner wont show up in the carousel
+                    if($res->user_id != $currentUser->id) {
+                        if($this->getDistance($currentUser->latitude,$currentUser->longitude,$res->latitude,$res->longitude) <= 1) {
+                            array_push($stack,$res);
+                            $counter+=1;
+                        }
+                    }
+                    if($counter == 10){
+                        break;
+                    }
+                }
+            }
+        }
+        
         return view('main.index', [
-            'listings' => $totalResults,
-            'furnitureItems' => collect($furnitureItems)->merge($furnitureRent)->sortByDesc('created_at')->slice(0, 16),
-            'clothesItems' => collect($clothesItems)->merge($clothesRent)->sortByDesc('created_at')->slice(0, 16),
-            'electronicsItems' => collect($electronicsItems)->merge($electronicsRent)->sortByDesc('created_at')->slice(0, 16),
-            'kitchenItems' => collect($kitchenItems)->merge($kitchenRent)->sortByDesc('created_at')->slice(0, 16),
-            'schoolItems' => collect($schoolItems)->merge($schoolRent)->sortByDesc('created_at')->slice(0, 16),
-            'bookItems' => collect($bookItems)->merge($bookRent)->sortByDesc('created_at')->slice(0, 16),
-            'listingsNear' => Listing::latest()->where('status', '!=', 'Sold')->take(10)->get(),
-            'rentables' => Rentable::latest()->where('status', 'like', 'Available')->take(10)->get(),
-            'subleases' => Sublease::latest()->where('status', 'like', 'Available')->take(10)->get()
+            'listings'=> $totalResults,
+            'furnitureItems' => collect($furnitureItems)->merge($furnitureRent)->sortByDesc('created_at')->slice(0,16),
+            'clothesItems' => collect($clothesItems)->merge($clothesRent)->sortByDesc('created_at')->slice(0,16),
+            'electronicsItems' => collect($electronicsItems)->merge($electronicsRent)->sortByDesc('created_at')->slice(0,16),
+            'kitchenItems' => collect($kitchenItems)->merge($kitchenRent)->sortByDesc('created_at')->slice(0,16),
+            'schoolItems' => collect($schoolItems)->merge($schoolRent)->sortByDesc('created_at')->slice(0,16),
+            'bookItems' => collect($bookItems)->merge($bookRent)->sortByDesc('created_at')->slice(0,16),
+            //'listingsNear' => Listing::latest()->where('status', '!=', 'Sold' )->take(10)->get(),
+            'listingsNear' => $stack,
+            'rentables' => Rentable::latest()->where('status', 'like', 'Available' )->take(10)->get(),
+            'subleases'=>Sublease::latest()->where('status', 'like', 'Available')->take(10)->get(),
+            'user' => $user
         ]);
     }
 
-    public function search(Request $request)
-    {
+
+    public function getListingsFromLatLng(Request $request) {
+        //error_log($request->longitude);
+        return $this->getProximateListings($request->latitude,$request->longitude); 
+        //return array('success'=>'it worked');
+    }
+
+    public function getProximateListings($latitude, $longitude) {
+        //error_log($longitude);
+        $stack = array();
+        
+        $listingResultsFull = Listing::latest()->where('status', '!=', 'Sold' )->limit(50)->get();
+        $retnablesResultsFull = Rentable::latest()->where('status', '!=', 'Rented' )->limit(50)->get();
+        $subleaseResultsFull = Sublease::latest()->where('status', 'like', 'Available' )->limit(50)->get();
+        $allFull = collect($listingResultsFull)->merge($retnablesResultsFull)->merge($subleaseResultsFull)->sortByDesc('created_at');
+
+        $counter = 0;
+    
+        //error_log((float) $latitude.' '.(float)$longitude);
+
+        foreach ($allFull as $res) {
+            //make sure the listing by the owner wont show up in the carousel
+            if($this->getDistance(floatval($latitude),floatval($longitude),$res->latitude,$res->longitude) <= 1) {
+                array_push($stack,$res);
+                $counter+=1;
+            }
+            if($counter == 10){
+                break;
+            }
+        }
+        return $stack;
+    }
+
+    public function search(Request $request){
         // dd(\Request::getRequestUri());
         $map = new HashMap("String", "Array");
         $input = $request->except('_token');

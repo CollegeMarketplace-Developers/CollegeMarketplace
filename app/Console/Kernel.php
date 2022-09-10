@@ -16,6 +16,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        //setting the command to run at this time 
+        $filePath = '/var/log/job1.log';
+        $schedule->command('auto:SendMail')->timezone('America/New_York')->dailyAt('03:00')->runInBackground()->appendOutputTo($filePath);
     }
 
     /**

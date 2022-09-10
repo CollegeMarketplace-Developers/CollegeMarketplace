@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-
-        Schema::table('messages', function(Blueprint $table) {
-            $table->foreign('for_rentals')->references('id')->on('rentables')->onDelete('cascade');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
         });
     }
 
@@ -26,9 +26,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('messages', function (Blueprint $table) {
-            $table->dropForeign('messages_for_rentals_foreign');
-            $table->dropColumn('for_rentals');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('latitude');
+            $table->dropColumn('longitude');
         });
     }
 };

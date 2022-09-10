@@ -7,6 +7,7 @@ use App\Models\Rentable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Spatie\Geocoder\Facades\Geocoder;
 
 class RentablesController extends Controller
 {
@@ -48,6 +49,13 @@ class RentablesController extends Controller
         }
         $formFields['image_uploads'] = json_encode($data);
         $formFields['category'] = implode(", ", $formFields['category']);
+
+        Geocoder::setApiKey(config('geocoder.key'));
+        Geocoder::setCountry(config('geocoder.country', 'US'));
+        $resArr = Geocoder::getCoordinatesForAddress($formFields['street'].' '.$formFields['city']);
+
+        $formFields['latitude'] = $resArr['lat'];
+        $formFields['longitude'] = $resArr['lng'];
 
         // dd($formFields);
         $newRentable = Rentable::create($formFields);

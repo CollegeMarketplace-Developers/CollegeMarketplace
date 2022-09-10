@@ -42,6 +42,9 @@
             "slideBy":1,
             "speed":400,
             "nav":false,
+            autoplayButton: false,
+            autoplay: true,
+            autoplayText:["",""],
             controlsContainer:"#controls3",
             responsive:{
                 1500:{

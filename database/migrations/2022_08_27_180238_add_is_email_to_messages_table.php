@@ -14,8 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('messages', function (Blueprint $table) {
-            $table->unsignedBigInteger('for_sublease')->nullable();
-            $table->foreign('for_sublease')->references('id')->on('subleases')->onDelete('cascade');
+            $table->tinyInteger('is_email')->default(0);
         });
     }
 
@@ -26,10 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        //Schema::dropIfExists('messages');
         Schema::table('messages', function (Blueprint $table) {
-            $table->dropForeign('messages_for_sublease_foreign');
-            $table->dropColumn('for_sublease');
+            $table->dropColumn('is_email');
         });
     }
 };

@@ -10,6 +10,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use phpDocumentor\Reflection\Types\Null_;
+use Spatie\Geocoder\Facades\Geocoder;
 
 class UserController extends Controller
 {
@@ -349,6 +350,15 @@ class UserController extends Controller
             $currentUser->country = $request->country;
             $currentUser->postcode = $request->postcode;
             $currentUser->number = $request->number;
+
+            //$client = new \GuzzleHttp\Client();
+            //$geocoder = new \Geocoder($client);
+            Geocoder::setApiKey(config('geocoder.key'));
+            Geocoder::setCountry(config('geocoder.country', 'US'));
+            $resArr = Geocoder::getCoordinatesForAddress($currentUser->street.' '.$currentUser->city);
+
+            $currentUser->latitude = $resArr['lat'];
+            $currentUser->longitude = $resArr['lng']; 
         }
         $currentUser->save();
         return back()->with('message', 'User Address & Number Updated');
