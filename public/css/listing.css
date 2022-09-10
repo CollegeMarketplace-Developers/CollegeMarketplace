@@ -13,7 +13,7 @@
     width: 100%;
     max-width: 1600px;
     height: fit-content;
-    padding: 4% 140px;
+    padding: 4% 70px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -68,7 +68,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background:var(--background-color-light);
+    /* background:var(--background-color-light); */
+    /* background-color: rgba(); */
     position: relative;
     border-radius: var(--br-large);
     z-index:10;
@@ -175,22 +176,23 @@
     flex-direction: column;
     flex-grow:1;
     gap: 20px;
+    width: 100%;
     color:var(--font-color-dark);
 }
 
 .product-content .product-details{
     height: 60%;
     width: 100%;
-    margin:0;
-    background-color: var(--background-color);
-    /* border-radius: var(--br-large); */
-    padding:10px;
+    margin: 0;
+    background-color: var(--background-color-dark);
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    /* gap:20px; */
     justify-content: space-between;
-    border-top:1px solid var(--border-color-1);
-    border-bottom:1px solid var(--border-color-1);
+    border-top: 1px solid var(--border-color-1);
+    border-bottom: 1px solid var(--border-color-1);
+    color: var(--font-color-light);
+    border-radius: var(--br-large);
 }
 
 .map-container{
@@ -226,7 +228,7 @@
 }
 
 .price-favorite form button{
-    color: var(--font-color-dark);
+    color: var(--font-color-light);
     border: none;
     outline: none;
     padding: 7px;
@@ -341,11 +343,11 @@
 /* bottom description and map stuff beings here */
 .product-description-area{
     width: 65%;
-    background-color: var(--background-color-light);
-    padding:20px;
+    padding: 20px;
     border-radius: var(--br-large);
     overflow: hidden;
-    color:var(--font-color-dark);
+    color: var(--font-color-light);
+    background: var(--background-color-dark);
 }
 
 .product-description-area .controls{
@@ -385,7 +387,7 @@
 .controls span i{
     font-size:20px;
     padding: 5px 10px;
-    color:white;
+    color:var(--font-color-light);
     cursor: pointer;
 }
 
@@ -408,9 +410,10 @@
 }
 
 .about-seller{
-    height:80px;
+    height: 80px;
     width: 100%;
     background-color: #2D2B37;
+    background: var(--accent-color);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -909,7 +912,7 @@
 
 .received {
     /* background: #ffffff; */
-    background-color: var(--background-color);
+    background-color: var(--background-color-dark);
 }
 .message p {
     margin: 5px 0;

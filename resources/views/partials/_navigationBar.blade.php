@@ -7,11 +7,11 @@
 <div class="wrapper">
     <nav>
         <input type="checkbox" id="show-search">
-        <input type="checkbox" id="show-menu">
+        <input type="checkbox" id="show-menu" class="panel">
         <label for="show-menu" class="menu-icon"><i class="fas fa-bars"></i></label>
 
-        <input type="checkbox" id="show-notifications-panel">
-        <input type="checkbox" id="show-profile-panel">
+        <input type="checkbox" id="show-notifications-panel" class="panel">
+        <input type="checkbox" id="show-profile-panel" class="panel"> 
 
         <div class="content">
 
@@ -52,6 +52,7 @@
                 {{-- button to sell --}}
                 <li>
                     <a class="desktop-link">Post</a>
+                    {{-- used in the side panel --}}
                     <input type="checkbox" id="show-services">
 
                     {{-- used in the collapsed menu --}}
@@ -88,9 +89,60 @@
             </ul>
 
             <ul class="notifications-panel">
-                <p>notifications</p>
+                <div class="messages-container">
+                    <p>Messages</p>
+                    <div class="recently-messaged-list">
+                        @foreach (range(0, 9) as $number)
+                            <a href="">
+                                <img src="" alt="">
+                                <div class="recently-messaged-details">
+                                   <p>Jacob</p>
+                                   <p><span>You:</span> Yes it works. Sounds good to me</p>
+                                   <p>10 days ago</p>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="active-sales-container">
+                    <p>Active Sales</p>
+                    <div class="sales-active-list">
+                        @foreach (range(0, 9) as $number)
+                            <a href="">
+                                <img src="" alt="">
+                                <div class="sales-active-details">
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos, vero.</p>
+                                    <div class="details-row">
+                                        <p><i class="fa-solid fa-sack-dollar"></i>200</p>
+                                        <p><i class="fa-solid fa-message"></i> 100 </p>
+                                        <p><i class="fa-solid fa-eye"></i> 2.6k</p>
+                                    </div>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
             </ul>
+
             <ul class="user-panel">
+                <div class="recently-viewed">
+                    <p>Recently Viewed</p>
+                    <div class="recently-viewed-list">
+                        @foreach (range(0, 9) as $number)
+                            <a href="">
+                                <img src="" alt="">
+                                <div class="recently-viewed-details">
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos, vero.</p>
+                                    <div class="details-row">
+                                        <p><i class="fa-solid fa-sack-dollar"></i>200</p>
+                                        {{-- <p><i class="fa-solid fa-message"></i> 100 </p> --}}
+                                        <p><i class="fa-solid fa-eye"></i> 2.6k</p>
+                                    </div>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
                 <li>
                     <a class="desktop-link" href="/users/manage">My Profile</a>
                 </li>
@@ -153,5 +205,10 @@
         // document.getElementById("logout-button").addEventListener("click", function () {
         // form.submit();
         // });
+        $(document).ready(function(){
+           $('input.panel').on('change', function() {
+                $('input.panel').not(this).prop('checked', false);  
+            });
+        });
     </script>
 </div>

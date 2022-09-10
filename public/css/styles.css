@@ -220,9 +220,7 @@ li{
 .hero-text h1{
     font-size: 50px;
 }
-.hero-text span{
-    color:var(--accent-color);
-}
+
 .hero-text p{
     font-size: 20px;
     line-height: 30px;
@@ -230,7 +228,8 @@ li{
 .card-fan{
     width: -webkit-fill-available;
     height: 450px;
-    background-color: #207E82;
+    /* background-color: #207E82; */
+    background-color: var(--accent-color);
     position: absolute;
     margin: 0 70px;
     top:50%;

@@ -138,22 +138,33 @@
                                         </form>
                                     <?php endif; ?>                                
                                 </li>
-                                <!-- vertical line added by this code --> 
-                                <li>
-                                <form><button id = 'share' onclick = "toggleText()" type = "button"><i class="fa fa-share-alt"></i></button></form> 
+                                <form><button class="share-button" type="button"><i class="fa-solid fa-arrow-up-from-bracket"></i></button></form>
+            
                                 <script>
-                                    function toggleText() {
-                                        navigator.clipboard.writeText(window.location.href);
-                                        var text = document.getElementById("demo");
-                                        if (text.style.display === "none") {
-                                            text.style.display = "block";
-                                        } else {
-                                            text.style.display = "none";
-                                        }
+                                    const shareButton = document.querySelector('.share-button');
+
+                                    shareButton.addEventListener('click', event => {
+                                    if (navigator.share) { 
+                                    navigator.share({
+                                        title: 'College Marketplace',
+                                        url: '',
+                                        text: 'Check out this listing!'
+                                        }).then(() => {
+                                        console.log('Thanks for sharing!');
+                                        })
+                                        .catch(console.error);
+                                    } 
+                                    else {
+                                            // Fallback
+                                            shareDialog.classList.add('is-open');
                                     }
-                                </script>             
-                                </li>
-                                <!-- vertical line added by this code -->
+                                    });
+
+                                    closeButton.addEventListener('click', event => {
+                                    shareDialog.classList.remove('is-open');
+                                    });
+                                </script> 
+                                
                                 <?php if($currentUser != null and $leaseItem->user_id == $currentUser->id): ?>
                                     <li>
                                         <form method="POST" action="/subleases/<?php echo e($leaseItem->id); ?>/update">
@@ -181,7 +192,7 @@
                                 <?php endif; ?>
                             </ul>
                         </div>
-                        <p id='demo' style='text-align:right; display: none; padding-right: 20px;'>Text Copied!</p>
+                        <p id='demo' style='text-align:right; display: none; padding-right: 20px;'>Link Copied!</p>
                     </div>
                 </div>
             </div>

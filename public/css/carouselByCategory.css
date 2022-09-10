@@ -1,6 +1,7 @@
 .category-carousel-wrapper{
     width: 100%;
     max-width: 1600px;
+    margin-top: 50px;
 }
 
 .category-carousel-inner{
@@ -10,6 +11,7 @@
 }
 
 .category-carousel-inner ul{
+    width: 80%;
     position: absolute; 
     left: 50%;
     transform: translateX(-50%);
@@ -19,7 +21,7 @@
     gap: 40px;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
     background: var(--background-color-light);
     color:var(--font-color-dark);
@@ -69,6 +71,13 @@
 
 .type2, .type3, .type4, .type5, .type6{
     display: none;
+}
+
+@media(max-width: 800px){
+    .category-carousel-inner ul{
+        width: auto;
+        justify-content: center;
+    }
 }
 
 @media(max-width: 750px){

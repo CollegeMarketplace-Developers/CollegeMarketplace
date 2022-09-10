@@ -3,12 +3,12 @@
 <section class = "category-carousel-wrapper">
     <div class="category-carousel-inner">
         <ul >
-            <li data-aos="slide-down" data-aos-delay="50" class="furniture-toggle" onclick="toggleDiv(1)" ><i class="fa-solid fa-couch"></i> <p>Furniture</p></li>
-            <li data-aos="slide-down" data-aos-delay="100" class="clothes-toggle" onclick="toggleDiv(2)" ><i class="fa-solid fa-shirt"></i> <p>Clothes</p></li>
-            <li data-aos="slide-down" data-aos-delay="150" class="electronics-toggle" onclick="toggleDiv(3)" ><i class="fa-solid fa-laptop"></i> <p>Electronics</p></li>
-            <li data-aos="slide-down" data-aos-delay="200" class="kitchen-toggle" onclick="toggleDiv(4)" ><i class="fa-solid fa-kitchen-set"></i> <p>Kitchen</p></li>
-            <li data-aos="slide-down"   data-aos-delay="250" class="school-toggle" onclick="toggleDiv(5)" ><i class="fa-solid fa-pen-ruler"></i> <p>School</p></li>
-            <li data-aos="slide-down" data-aos-delay="300" class="books-toggle" onclick="toggleDiv(6)" ><i class="fa-solid fa-book"></i><p>Books</p></li>
+            <li class="furniture-toggle" onclick="toggleDiv(1)" ><i class="fa-solid fa-couch"></i> <p>Furniture</p></li>
+            <li class="clothes-toggle" onclick="toggleDiv(2)" ><i class="fa-solid fa-shirt"></i> <p>Clothes</p></li>
+            <li class="electronics-toggle" onclick="toggleDiv(3)" ><i class="fa-solid fa-laptop"></i> <p>Electronics</p></li>
+            <li class="kitchen-toggle" onclick="toggleDiv(4)" ><i class="fa-solid fa-kitchen-set"></i> <p>Kitchen</p></li>
+            <li class="school-toggle" onclick="toggleDiv(5)" ><i class="fa-solid fa-pen-ruler"></i> <p>School</p></li>
+            <li class="books-toggle" onclick="toggleDiv(6)" ><i class="fa-solid fa-book"></i><p>Books</p></li>
         </ul>
         <div class="category-carousel-display">
             <div class="category-display type1">

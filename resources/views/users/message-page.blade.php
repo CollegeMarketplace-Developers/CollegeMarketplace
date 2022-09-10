@@ -101,7 +101,9 @@
                                         }
                                     }
                                 @endphp
-                                <img src={{$listing->image_uploads ? Storage::disk('s3')->url($titleImage) : asset('/images/rotunda.jpg')}} id = "expandedImg" alt="image doesnt exist">
+                                <a href="/listings/{{$listing->id}}">
+                                    <img src={{$listing->image_uploads ? Storage::disk('s3')->url($titleImage) : asset('/images/rotunda.jpg')}} id = "expandedImg" alt="image doesnt exist">
+                                </a>
                             </div>
                         </div>
 
