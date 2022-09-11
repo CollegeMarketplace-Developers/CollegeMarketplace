@@ -240,12 +240,6 @@ input::-webkit-inner-spin-button {
     align-items: flex-start;
 }
 
-/* @media (max-width: 480px){
-    .filters-applied-container{
-        padding: 10px 20px !important;
-    }
-} */
-
 @media(max-width: 1200px){
     .filters-applied-container{
         padding: 10px 50px;
