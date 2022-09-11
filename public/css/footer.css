@@ -1,5 +1,10 @@
 footer{
   background-color: var(--background-color);
+  display: flex;
+  width: 100%;
+  justify-content:center; 
+  background:#151416;
+  padding: 0 70px;
 }
 
 .footer-container{ 
@@ -25,7 +30,7 @@ footer{
 }
 
 .row{
-  width: 85%;
+  width: 100%;
   margin: auto !important;
   display: flex;
   flex-wrap: wrap;
@@ -123,6 +128,12 @@ hr{
   }
 }
 
+@media(max-width: 1200px){
+  footer{
+    padding: 0 50px;
+  }
+}
+
 @media(max-width: 700px){
   .footer-container{
     bottom: unset;  
@@ -134,5 +145,17 @@ hr{
 
   .col:nth-child(2), .col:nth-child(3){
     flex-basis: 100%;
+  }
+}
+
+@media(max-width: 550px){
+  footer{
+    padding: 0 30px;
+  }
+}
+
+@media(max-width: 480px){
+  footer{
+    padding: 0 20px;
   }
 }
