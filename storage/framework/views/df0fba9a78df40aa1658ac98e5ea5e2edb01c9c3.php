@@ -28,6 +28,10 @@
                 <div class="card_type sale">
                     <p>Buy</p>
                 </div>
+
+                <div class="card_favorite">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
                 <a href="/listings/<?php echo e($listing->id); ?>">
                     <?php
                     $imgLinks = null;
@@ -52,6 +56,10 @@
                 <?php endif; ?>
                 <div class="card_type rent">
                     <p>Rent</p>
+                </div>
+
+                <div class="card_favorite">
+                    <i class="fa-solid fa-heart"></i>
                 </div>
                 <a href="/rentables/<?php echo e($listing->id); ?>">
                     <?php
@@ -78,6 +86,10 @@
                 <div class="card_type lease">
                     <p>Lease</p>
                 </div>
+
+                <div class="card_favorite">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
                 <a href="/subleases/<?php echo e($listing->id); ?>">
                     <?php
                     $imgLinks = null;
@@ -95,104 +107,21 @@
         </div>
         <div class="card_content">
             <?php if($listing instanceof \App\Models\Listing): ?>
-                <div>
-                    <h4>$<?php echo e($listing->price); ?></h4>  
-                    <i class="fa-solid fa-heart"></i>
-                </div>  
-                <div>
-                    <a href="/listings/<?php echo e($listing->id); ?>">
-                        <h1 class="card_title"><?php echo e($listing->item_name); ?></h1>
-                    </a>
-                    <h4 class="card_text"><?php echo e($listing->city); ?>, <?php echo e($listing->state); ?></h4>
-                </div>
-                <div class="listing-tags">
-                    <?php if($displayTags): ?>
-                        <?php
-                            $tags = explode(", ", $listing->tags);
-                        ?>
-                        <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
-<?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'components.listing-tags','data' => ['tags' => $tags,'isUtilities' => false]] + (isset($attributes) ? (array) $attributes->getIterator() : [])); ?>
-<?php $component->withName('listing-tags'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
-<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['tags' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($tags),'isUtilities' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(false)]); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
-<?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
-<?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
-<?php endif; ?>
-                    <?php endif; ?>
-                </div>
+                <a href="">
+                    <h4>$<?php echo e($listing->price); ?></h1>  
+                    <p><?php echo e($listing->item_name); ?></p>
+                </a>
             <?php elseif($listing instanceof \App\Models\Rentable): ?>
-                <div>
+                <a>
                     <h4>$<?php echo e($listing->rental_charging); ?> / <?php echo e($listing->rental_duration); ?></h4>  
-                    <i class="fa-solid fa-heart"></i>
-                </div>  
-                <div>
-                    <a href="/rentables/<?php echo e($listing->id); ?>">
-                        <h1 class="card_title"><?php echo e($listing->rental_title); ?></h1>
-                    </a>
-                    <h4 class="card_text"><?php echo e($listing->city); ?>, <?php echo e($listing->state); ?></h4>
-                </div>
-                <div class="listing-tags">
-                    <?php if($displayTags): ?>
-                        <?php
-                            $tags = explode(", ", $listing->tags);
-                        ?>
-                        <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
-<?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'components.listing-tags','data' => ['tags' => $tags,'isUtilities' => false]] + (isset($attributes) ? (array) $attributes->getIterator() : [])); ?>
-<?php $component->withName('listing-tags'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
-<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['tags' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($tags),'isUtilities' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(false)]); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
-<?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
-<?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
-<?php endif; ?>
-                    <?php endif; ?>
-                </div>
+                    <p><?php echo e($listing->rental_title); ?></p>
+                </a>  
             <?php else: ?>
                 <div>
-                    <h4>$<?php echo e($listing->rent); ?> / Mo| <?php echo e($listing->negotiable); ?></h4>  
-                    <i class="fa-solid fa-heart"></i>
+                    <h4>$<?php echo e($listing->rent); ?> / Mo | <?php echo e($listing->negotiable); ?></h4>  
+                    <p><?php echo e($listing->sublease_title); ?></p>
                 </div>  
-                <div>
-                    <a href="/subleases/<?php echo e($listing->id); ?>">
-                        <h1 class="card_title"><?php echo e($listing->sublease_title); ?></h1>
-                    </a>
-                    <h4 class="card_text"><?php echo e($listing->city); ?>, <?php echo e($listing->state); ?></h4>
-                </div>
-                <div class="listing-tags">
-                    <?php if($displayTags): ?>
-                        <?php
-                            $tags = explode(", ", $listing->utilities);
-                        ?>
-                        <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
-<?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'components.listing-tags','data' => ['tags' => $tags,'isUtilities' => true]] + (isset($attributes) ? (array) $attributes->getIterator() : [])); ?>
-<?php $component->withName('listing-tags'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
-<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['tags' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($tags),'isUtilities' => true]); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
-<?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
-<?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
-<?php endif; ?>
-                    <?php endif; ?>
-                </div>
+                
             <?php endif; ?>
         </div>
     </div>

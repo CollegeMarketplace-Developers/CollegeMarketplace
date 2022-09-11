@@ -23,9 +23,6 @@
             </div>
         @else 
         @endif
-        <div class="listings-parent-container">
-            @include('partials._componentDesignOne')
-        </div>
 
         {{-- carousel for rentables --}}
         <div class="listings-parent-container">
