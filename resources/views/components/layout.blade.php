@@ -55,7 +55,7 @@
         <link rel="stylesheet" type="text/css" href="https://csshake.surge.sh/csshake.min.css">
     </head>
     <body>
-        <header style="height: 50px; width: 100%; position: fixed; z-index:100; display:flex;justify-content:center;background:#151416;">
+        <header>
             {{-- import the navigation bar --}}
             @include('partials._navigationBar')
         </header>

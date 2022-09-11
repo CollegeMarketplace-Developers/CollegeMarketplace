@@ -47,6 +47,33 @@
                                     </div>
                                 </div>
                             <?php endif; ?> 
+                            <div class = "share-container">
+                            <form><button class="share-button" type="button"><i class="fa-solid fa-arrow-up-from-bracket"></i></button></form>
+                            </div>
+                            <script>
+                                const shareButton = document.querySelector('.share-button');
+
+                                shareButton.addEventListener('click', event => {
+                                if (navigator.share) { 
+                                navigator.share({
+                                    title: 'College Marketplace',
+                                    url: '',
+                                    text: 'Check out this listing!'
+                                    }).then(() => {
+                                    console.log('Thanks for sharing!');
+                                    })
+                                    .catch(console.error);
+                                } 
+                                else {
+                                        // Fallback
+                                        shareDialog.classList.add('is-open');
+                                }
+                                });
+
+                                closeButton.addEventListener('click', event => {
+                                shareDialog.classList.remove('is-open');
+                                });
+                        </script>
                             <?php
                                 if(isset($listing->image_uploads)){
                                     //decode the json object
@@ -97,32 +124,6 @@
                                         </form>
                                     <?php endif; ?>
                 
-                                    <form><button class="share-button" type="button"><i class="fa-solid fa-arrow-up-from-bracket"></i></button></form>
-            
-    <script>
-        const shareButton = document.querySelector('.share-button');
-
-        shareButton.addEventListener('click', event => {
-        if (navigator.share) { 
-        navigator.share({
-            title: 'College Marketplace',
-            url: '',
-            text: 'Check out this listing!'
-            }).then(() => {
-            console.log('Thanks for sharing!');
-            })
-            .catch(console.error);
-        } 
-        else {
-                // Fallback
-                shareDialog.classList.add('is-open');
-        }
-        });
-
-        closeButton.addEventListener('click', event => {
-        shareDialog.classList.remove('is-open');
-        });
-    </script>
                             </div>
                             <div class="product-header">
                                 <h1><?php echo e($listing->item_name); ?></h1>
@@ -195,10 +196,7 @@
                                     <i class="fa fa-trash" ></i>
                                 </span>
                             <?php endif; ?>
-                            <form class="shareForm">
-                                <button id = 'share' onclick = "toggleText()" type = "button"><i class="fa fa-share-alt"></i>
-                                </button>
-                            </form> 
+                            
                         </div>
                         <h1>Description</h1>
                         <p><?php echo e($listing->description); ?></p>

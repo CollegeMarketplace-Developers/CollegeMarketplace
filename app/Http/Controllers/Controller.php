@@ -199,9 +199,9 @@ class Controller extends BaseController
                 $totalResults = null;
                 if (!empty($request->except('_token', 'type', 'page'))) {
                     $listingResults = $this->getListingsQuery($request);
-                    $totalResults = collect($listingResults)->sortByDesc('id')->paginate(16);
+                    $totalResults = collect($listingResults)->sortByDesc('id')->paginate(50);
                 } else {
-                    $totalResults = collect(Listing::latest()->get())->sortByDesc('id')->paginate(16);
+                    $totalResults = collect(Listing::latest()->get())->sortByDesc('id')->paginate(50);
                 }
 
                 header("Cache-Control: must-revalidate");
@@ -213,9 +213,9 @@ class Controller extends BaseController
                 $totalResults = null;
                 if (!empty($request->except('_token', 'type', 'page'))) {
                     $rentableResults = $this->getRentableQuery($request);
-                    $totalResults = collect($rentableResults)->sortByDesc('id')->paginate(16);
+                    $totalResults = collect($rentableResults)->sortByDesc('id')->paginate(50);
                 } else {
-                    $totalResults = Rentable::latest()->paginate(16);
+                    $totalResults = Rentable::latest()->paginate(50);
                 }
 
                 header("Cache-Control: must-revalidate");
@@ -226,9 +226,9 @@ class Controller extends BaseController
                 $totalResults = null;
                 if (!empty($request->except('_token', 'type', 'page', 'category'))) {
                     $subleaseResults = $this->getSubleaseQuery($request);
-                    $totalResults = collect($subleaseResults)->sortByDesc('id')->paginate(16);
+                    $totalResults = collect($subleaseResults)->sortByDesc('id')->paginate(50);
                 } else {
-                    $totalResults = Sublease::latest()->paginate(16);
+                    $totalResults = Sublease::latest()->paginate(50);
                 }
 
                 header("Cache-Control: must-revalidate");
@@ -241,9 +241,9 @@ class Controller extends BaseController
                     $listingResults = $this->getListingsQuery($request);
                     $rentableResults = $this->getRentableQuery($request);
                     $subleaseResults = $this->getSubleaseQuery($request);
-                    $totalResults = collect($listingResults)->merge($rentableResults)->merge($subleaseResults)->sortByDesc('id')->paginate(16);
+                    $totalResults = collect($listingResults)->merge($rentableResults)->merge($subleaseResults)->sortByDesc('id')->paginate(50);
                 } else {
-                    $totalResults = collect(Listing::latest()->get())->merge(Rentable::latest()->get())->merge(Sublease::latest()->get())->sortByDesc('id')->paginate(16);
+                    $totalResults = collect(Listing::latest()->get())->merge(Rentable::latest()->get())->merge(Sublease::latest()->get())->sortByDesc('id')->paginate(50);
                 }
 
                 header("Cache-Control: must-revalidate");

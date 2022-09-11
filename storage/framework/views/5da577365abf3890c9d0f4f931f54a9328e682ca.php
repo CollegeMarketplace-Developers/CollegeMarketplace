@@ -188,7 +188,7 @@
             </ul>
         </div>
         
-        <div class = "search-results-container" style="min-height: 100vh;">
+        <div class = "search-results-container" >
             <?php echo $__env->make('partials._cardGallary',['listings'=>$listings, 'heading' => 'Results Showing: '. count($listings), 'displayTags' => true, 'displayMoreButton' => false], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
     </div>

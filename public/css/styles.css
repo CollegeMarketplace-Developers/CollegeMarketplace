@@ -784,6 +784,9 @@ li{
 }
 
 @media(max-width: 480px){
+    .header-cont{
+        padding: 50px 20px 0 20px;
+    }
     .listings-parent-container{
         padding: 20px;
     }
