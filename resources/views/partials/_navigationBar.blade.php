@@ -49,8 +49,10 @@
                     </ul>
                 </li>
 
-                {{-- button to sell --}}
-                <li>
+
+                
+                {{-- Old Post with Drop Down for Options --}}
+                <!-- <li>
                     <a class="desktop-link">Post</a>
                     {{-- used in the side panel --}}
                     <input type="checkbox" id="show-services">
@@ -63,9 +65,25 @@
                     <li><a href="/rentables/create">For Rent</a></li>
                     <li><a href="/subleases/create">For Lease</a></li>
                     </ul>
-                </li>
-                {{-- button to requets --}}
+                </li> -->
+
+
+
+                {{-- button to sell --}}
+                <li><a class="desktop-link" href="/listings/create">Sell</a></li>
+
+
+                {{-- button to rent --}}
+                <li><a class="desktop-link" href="/rentables/create">Rent</a></li>
+
+
+                {{-- button to lease --}}
+                <li><a class="desktop-link" href="/subleases/create">Lease</a></li>
+
+
+                {{-- button to request --}}
                 <li><a href="#">Requests</a></li>
+
 
                 {{-- @auth
                     <li>
