@@ -10,7 +10,7 @@
         <input type="checkbox" id="show-menu" class="panel">
         <label for="show-menu" class="menu-icon"><i class="fas fa-bars"></i></label>
 
-        <input type="checkbox" id="show-notifications-panel" class="panel">
+        <input type="checkbox" id="show-notifications-panel" class="panel" onclick="change()">
         <input type="checkbox" id="show-profile-panel" class="panel"> 
 
         <div class="content">
@@ -87,7 +87,7 @@
                     </div>
                 </div>
                 <div class="active-sales-container">
-                    <p>Active Sales</p>
+                    <p>Active Posts</p>
                     <div class="sales-active-list">
                         <?php $__currentLoopData = range(0, 9); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $number): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <a href="">
@@ -178,7 +178,7 @@
         </form>
         <div class="search-message">
             <span></span>
-            <p>Please keep the search generic and consise. We can't compete with Google.</p>
+            <p>Please keep the search generic. Use simple words like table or camera</p>
         </div>
     </nav>
     <script>
@@ -192,5 +192,59 @@
                 $('input.panel').not(this).prop('checked', false);  
             });
         });
+
+        function change() {
+            var decider = document.getElementById('show-notifications-panel');
+            if(decider.checked){
+                getUnreadMessages();
+                getActivePosts();
+            } else {
+                
+            }
+        }
+
+        function getUnreadMessages(){
+            //console.log("ran");
+            $.ajaxSetup({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+            });
+            $.ajax({
+                type:'GET',
+                url: '/unreadmessages',
+                data: 'JSON',
+                cache: false, //look into caching later
+                success:function(data) {
+                    //add your success handling here
+                    //console.log("worked");
+                    console.log(data);
+                },
+                error: function (data, textStatus, errorThrown) {
+                    console.log("failed");
+                    //add your failed handling here
+                },
+            });
+        }
+
+        function getActivePosts(){
+            //console.log("ran");
+            $.ajaxSetup({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+            });
+            $.ajax({
+                type:'GET',
+                url: '/activeposts',
+                data: 'JSON',
+                cache: false, //look into caching later
+                success:function(data) {
+                    //add your success handling here
+                    //console.log("worked");
+                    console.log(data);
+                },
+                error: function (data, textStatus, errorThrown) {
+                    console.log("failed");
+                    //add your failed handling here
+                },
+            });
+        }
     </script>
 </div><?php /**PATH C:\xampp\htdocs\CollegeMarketplace\resources\views/partials/_navigationBar.blade.php ENDPATH**/ ?>

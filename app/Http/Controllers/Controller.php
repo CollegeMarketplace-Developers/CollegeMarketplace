@@ -53,7 +53,12 @@ class Controller extends BaseController
         // if(count($latest) == 0){
         //     $latest = Listing::latest()->take(16)->get();
         // }
-
+        /*$user = User::find(auth()->user());
+        if($user != null) {
+            \DB::statement("SET SQL_MODE=''");
+            dd(Message::latest()->where('to','=',$user->first()->id)->where('is_read','=','0')->groupBy('from')->get());
+        }*/
+        
         //dd($users = Message::join('users', 'messages.to','=','users.id')->selectRaw('count(*) as numMessages, users.email,messages.to')->groupBy('messages.to','users.email')->where('is_read','=','0')->where('is_email','=','0')->get());
         //dd(Message::selectRaw('count(*) as numMessages,to')->where('is_read','=','0')->where('is_email','=','0')->groupBy('to'));
         //dd(Message::where('is_read','=','0')->where('is_email','=','0')->groupBy('to')->count());
@@ -138,6 +143,41 @@ class Controller extends BaseController
         ]);
     }
 
+    //method to be used in the ajax request
+    public function getUnreadMessages(Request $request) {
+        return $this->getUnrdMessages();
+    }
+
+    //helper method to get unread messages to display in notification tab (latest one from each user)
+    public function getUnrdMessages() {
+        $resultArr = array();
+
+        $user = User::find(auth()->user());
+        \DB::statement("SET SQL_MODE=''");
+        $messages = Message::join('users','messages.from','=','users.id')->orderBy('messages.created_at','desc')->where('to','=',$user->first()->id)->where('is_read','=','0')->groupBy('from')->limit(10)->get();
+
+        /*foreach($messages as $mess) {
+            $resultArr[User::select('*')->where('id','=',$mess->from)] = $mess;
+        }*/
+        return $messages;
+    }
+
+    public function getActivePosts(Request $request) {
+        return $this->getAP();
+    }
+
+    public function getAP() {
+        $user = User::find(auth()->user());
+
+        $listingResultsFull = Listing::latest()->where('status', '!=', 'Sold' )->where('user_id','=',$user->first()->id)->limit(10)->get();
+        $retnablesResultsFull = Rentable::latest()->where('status', '!=', 'Rented' )->where('user_id','=',$user->first()->id)->limit(10)->get();
+        $subleaseResultsFull = Sublease::latest()->where('status', 'like', 'Available' )->where('user_id','=',$user->first()->id)->limit(10)->get();
+        $allFull = collect($listingResultsFull)->merge($retnablesResultsFull)->merge($subleaseResultsFull)->sortByDesc('created_at');
+
+        return $allFull;
+    }
+
+    
 
     public function getListingsFromLatLng(Request $request) {
         //error_log($request->longitude);
@@ -145,6 +185,7 @@ class Controller extends BaseController
         //return array('success'=>'it worked');
     }
 
+    //helper method to get listings within a mile
     public function getProximateListings($latitude, $longitude) {
         //error_log($longitude);
         $stack = array();

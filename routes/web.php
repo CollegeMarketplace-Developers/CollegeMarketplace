@@ -28,6 +28,9 @@ use App\Http\Controllers\GoogleController;
 Route::get('/', [Controller::class, 'index']);
 Route::get('/shop/all', [Controller::class, 'search']);
 Route::get('/item',[Controller::class,'getListingsFromLatLng']);
+Route::get('/unreadmessages',[Controller::class,'getUnreadMessages']);
+Route::get('/activeposts',[Controller::class,'getActivePosts']);
+
 // supplementary routes
 Route::get('/features', [Controller::class, 'features']);
 Route::get('/about', [Controller::class, 'about']);
