@@ -27,6 +27,9 @@
                     <input type="checkbox" id="show-features">
                     <label for="show-features" style="position: relative;">Buy <span class="down-arrow"></span> </label>
                     <ul>
+                    <li><a href="/shop/all?type=listing">For Sale</a></li>
+                    <!-- <li><a href="/shop/all?type=rentable">For Rent</a></li>
+                    <li><a href="/shop/all?type=lease">For Lease</a></li> -->
                     <li><a href="/shop/all?type=all&negotiable=free">Free Listings</a></li>
                     <li>
                         <a class="desktop-link">By Category</a>
@@ -42,17 +45,20 @@
                         </ul>
                     </li>
                     <li><a href="/shop/all?distance=0%20-%200.5%20Mi">Listings < .5 Mile</a></li>
-                    <li><a href="/shop/all?type=rentable">For Rent</a></li>
-                    <li><a href="/shop/all?type=lease">For Lease</a></li>
-                    <li><a href="/shop/all?type=listing">For Sale</a></li>
                     <li><a href="/shop/all?type=all">All Items</a></li>
                     </ul>
                 </li>
 
+                {{-- button to rent --}}
+                <li><a class="desktop-link" href="/shop/all?type=rentable">Rent</a></li>
 
+
+                {{-- button to lease --}}
+                <li><a class="desktop-link" href="/shop/all?type=lease">Lease</a></li>
                 
-                {{-- Old Post with Drop Down for Options --}}
-                <!-- <li>
+                {{-- Post things --}}
+
+                <li>
                     <a class="desktop-link">Post</a>
                     {{-- used in the side panel --}}
                     <input type="checkbox" id="show-services">
@@ -65,20 +71,7 @@
                     <li><a href="/rentables/create">For Rent</a></li>
                     <li><a href="/subleases/create">For Lease</a></li>
                     </ul>
-                </li> -->
-
-
-
-                {{-- button to sell --}}
-                <li><a class="desktop-link" href="/listings/create">Sell</a></li>
-
-
-                {{-- button to rent --}}
-                <li><a class="desktop-link" href="/rentables/create">Rent</a></li>
-
-
-                {{-- button to lease --}}
-                <li><a class="desktop-link" href="/subleases/create">Lease</a></li>
+                </li>
 
 
                 {{-- button to request --}}
