@@ -27,6 +27,9 @@
                     <input type="checkbox" id="show-features">
                     <label for="show-features" style="position: relative;">Buy <span class="down-arrow"></span> </label>
                     <ul>
+                    <li><a href="/shop/all?type=listing">For Sale</a></li>
+                    <li><a href="/shop/all?type=rentable">For Rent</a></li>
+                    <li><a href="/shop/all?type=lease">For Lease</a></li>
                     <li><a href="/shop/all?type=all&negotiable=free">Free Listings</a></li>
                     <li>
                         <a class="desktop-link">By Category</a>
@@ -42,9 +45,6 @@
                         </ul>
                     </li>
                     <li><a href="/shop/all?distance=0%20-%200.5%20Mi">Listings < .5 Mile</a></li>
-                    <li><a href="/shop/all?type=rentable">For Rent</a></li>
-                    <li><a href="/shop/all?type=lease">For Lease</a></li>
-                    <li><a href="/shop/all?type=listing">For Sale</a></li>
                     <li><a href="/shop/all?type=all">All Items</a></li>
                     </ul>
                 </li>
@@ -54,10 +54,10 @@
 
 
                 {{-- button to lease --}}
-                <li><a class="desktop-link" href="/shop/all?type=listing">Lease</a></li>
+                <li><a class="desktop-link" href="/shop/all?type=lease">Lease</a></li>
                 
                 {{-- Post things --}}
-                
+
                 <li>
                     <a class="desktop-link">Post</a>
                     <input type="checkbox" id="show-services">
