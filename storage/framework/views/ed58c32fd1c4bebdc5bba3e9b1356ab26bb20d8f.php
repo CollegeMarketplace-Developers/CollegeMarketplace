@@ -49,8 +49,10 @@
                     </ul>
                 </li>
 
+
                 
-                <li>
+                
+                <!-- <li>
                     <a class="desktop-link">Post</a>
                     
                     <input type="checkbox" id="show-services">
@@ -63,9 +65,25 @@
                     <li><a href="/rentables/create">For Rent</a></li>
                     <li><a href="/subleases/create">For Lease</a></li>
                     </ul>
-                </li>
+                </li> -->
+
+
+
+                
+                <li><a class="desktop-link" href="/listings/create">Sell</a></li>
+
+
+                
+                <li><a class="desktop-link" href="/rentables/create">Rent</a></li>
+
+
+                
+                <li><a class="desktop-link" href="/subleases/create">Lease</a></li>
+
+
                 
                 <li><a href="#">Requests</a></li>
+
 
                 
             </ul>

@@ -23,7 +23,7 @@ class MessageReminderMail extends Mailable
     //this will be accessable in the view (anything publicly declared here is accessible in the view)
     //can add more stuff if want to display other things in the email
     public $numUnreadMessages;
-
+    
 
     public function __construct($numMess)
     {

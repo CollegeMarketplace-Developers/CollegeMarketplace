@@ -267,7 +267,7 @@ li{
 
 .card1{
     transform: translateX(-50%) scale(.9);
-    background:url("../images/psych-textbook.jpg");
+    background:url("https://cmimagestoragebucket.s3.amazonaws.com/devimages/psych-textbook.jpg");
     background-repeat:  no-repeat;
     background-size: cover;
 }
@@ -291,14 +291,14 @@ li{
 
 .card2{
     transform:translateX(-90%) rotate(-5deg) scale(.9) ;
-    background:url("../images/dorm-bed.jpg");
+    background:url("https://cmimagestoragebucket.s3.amazonaws.com/devimages/dorm-bed.jpg");
     background-repeat:  no-repeat;
     background-size: cover;
 }
 
 .card3{
     transform:translateX(-10%) rotate(5deg) scale(.9);
-    background:url("../images/dorm-desk.jpg");
+    background:url("https://cmimagestoragebucket.s3.amazonaws.com/devimages/dorm-desk.jpg");
     background-repeat:  no-repeat;
     background-size: cover;
 }
@@ -311,7 +311,7 @@ li{
 
 .card4{
     transform:translateX(-130%) rotate(-10deg) scale(.9) ;
-    background:url("../images/dorm-couch.jpg");
+    background:url("https://cmimagestoragebucket.s3.amazonaws.com/devimages/dorm-couch.jpg");
     background-repeat:  no-repeat;
     background-size: cover;
 }
@@ -319,7 +319,7 @@ li{
 
 .card5{
     transform: translateX(30%) rotate(10deg) scale(.9);
-    background:url("../images/dorm-clothes.jpg");
+    background:url("https://cmimagestoragebucket.s3.amazonaws.com/devimages/dorm-clothes.jpg");
     background-repeat:  no-repeat;
     background-size: cover;
 }

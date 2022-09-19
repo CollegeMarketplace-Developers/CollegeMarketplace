@@ -162,6 +162,7 @@ class Controller extends BaseController
         return $messages;
     }
 
+    //get active posts
     public function getActivePosts(Request $request) {
         return $this->getAP();
     }
@@ -176,8 +177,6 @@ class Controller extends BaseController
 
         return $allFull;
     }
-
-    
 
     public function getListingsFromLatLng(Request $request) {
         //error_log($request->longitude);
