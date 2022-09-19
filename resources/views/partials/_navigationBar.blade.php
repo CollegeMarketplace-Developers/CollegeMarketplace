@@ -49,10 +49,16 @@
                     </ul>
                 </li>
 
+                {{-- button to rent --}}
+                <li><a class="desktop-link" href="/shop/all?type=rentable">Rent</a></li>
 
+
+                {{-- button to lease --}}
+                <li><a class="desktop-link" href="/shop/all?type=listing">Lease</a></li>
                 
-                {{-- Old Post with Drop Down for Options --}}
-                <!-- <li>
+                {{-- Post things --}}
+                
+                <li>
                     <a class="desktop-link">Post</a>
                     <input type="checkbox" id="show-services">
 
@@ -64,20 +70,7 @@
                     <li><a href="/rentables/create">For Rent</a></li>
                     <li><a href="/subleases/create">For Lease</a></li>
                     </ul>
-                </li> -->
-
-
-
-                {{-- button to sell --}}
-                <li><a class="desktop-link" href="/listings/create">Sell</a></li>
-
-
-                {{-- button to rent --}}
-                <li><a class="desktop-link" href="/rentables/create">Rent</a></li>
-
-
-                {{-- button to lease --}}
-                <li><a class="desktop-link" href="/subleases/create">Lease</a></li>
+                </li>
 
 
                 {{-- button to request --}}
