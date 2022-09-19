@@ -28,8 +28,8 @@
                     <label for="show-features" style="position: relative;">Buy <span class="down-arrow"></span> </label>
                     <ul>
                     <li><a href="/shop/all?type=listing">For Sale</a></li>
-                    <li><a href="/shop/all?type=rentable">For Rent</a></li>
-                    <li><a href="/shop/all?type=lease">For Lease</a></li>
+                    <!-- <li><a href="/shop/all?type=rentable">For Rent</a></li>
+                    <li><a href="/shop/all?type=lease">For Lease</a></li> -->
                     <li><a href="/shop/all?type=all&negotiable=free">Free Listings</a></li>
                     <li>
                         <a class="desktop-link">By Category</a>
