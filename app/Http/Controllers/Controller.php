@@ -58,6 +58,10 @@ class Controller extends BaseController
             \DB::statement("SET SQL_MODE=''");
             dd(Message::latest()->where('to','=',$user->first()->id)->where('is_read','=','0')->groupBy('from')->get());
         }*/
+
+        //dd($users = Message::join('users', 'messages.to','=','users.id')->select('users.id','users.email')->where('is_read','=','0')->distinct()->get());
+
+        //dd($unreadListings = Message::join('listings','messages.to','=','listings.user_id')->select('*'));
         
         //dd($users = Message::join('users', 'messages.to','=','users.id')->selectRaw('count(*) as numMessages, users.email,messages.to')->groupBy('messages.to','users.email')->where('is_read','=','0')->where('is_email','=','0')->get());
         //dd(Message::selectRaw('count(*) as numMessages,to')->where('is_read','=','0')->where('is_email','=','0')->groupBy('to'));
