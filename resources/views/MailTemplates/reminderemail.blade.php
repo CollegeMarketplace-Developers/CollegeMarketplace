@@ -1,4 +1,4 @@
-<p>You have {{$numUnreadMessages}} unread messages!</p>
+<p>You have unread messages!</p>
 <button type="button">Message Panel</button>
 
 <!-- selling baseball
