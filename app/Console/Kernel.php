@@ -19,7 +19,7 @@ class Kernel extends ConsoleKernel
         //setting the command to run at this time 
         //$filePath = '/var/log/job1.log';
         $schedule->command('auto:SendEmailsDaily')->dailyAt('03:00')->onOneServer()->runInBackground();
-        $schedule->command('auto:SendEmailsHourly')->hourly()->unlessBetween('2:30','3:30')->onOneServer()->runInBackground();
+        $schedule->command('auto:SendEmailsHourly')->everyTenMinutes()->unlessBetween('2:30','3:30')->onOneServer()->runInBackground()->emailOutputTo("abd07142011@gmail.com");
     }
 
     /**

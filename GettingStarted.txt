@@ -53,3 +53,6 @@ php artisan serve
 13. CTRL + LEFT CLICK THE LINK THAT SAYS http://127.0.0.1:8000 within the terminal to launch college marketplace
 
 14. Reach out to Davi or Ayub for any help with these issues. Please make sure to have gone through these steps thoroughly before reaching out to us :)
+
+NOTES:
+Helpful link to set up database locally: https://stackoverflow.com/questions/28429493/how-to-connect-mysql-workbench-to-amazon-rds
