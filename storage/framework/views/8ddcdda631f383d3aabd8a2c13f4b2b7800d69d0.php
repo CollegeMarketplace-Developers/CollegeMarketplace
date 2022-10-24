@@ -17,33 +17,63 @@
 <?php $component->withAttributes([]); ?>
     <section class = "product-details-container">
         <div class = "card-wrapper-selected">
+
+            
+            <div class="back-button">
+                <a href="javascript:history.back()" class="button1 b-button">
+                    <i class="fa-solid fa-arrow-left"></i> Back
+                </a>
+            </div> 
+
+            
             <div class = "card-selected">
-                <div class="back-button">
-                    <a href="javascript:history.back()" class="button1 b-button">
-                        <i class="fa-solid fa-arrow-left"></i> Back
-                    </a>
-                </div> 
-                <div class = "track">
-                    <h5>Home > Clothes > Pants > Ripped Jeans</h5>
-                    <?php if($leaseItem->status =='Available'): ?>
-                        <div class="stat-container">
-                            <div class="stat green">
-                            </div>
-                            <h4><?php echo e($leaseItem->status); ?></h4>
-                        </div>
-                    
-                    <?php else: ?> 
-                        <div class="stat-container">
-                            <div class="stat">
-                            </div>
-                            <h4><?php echo e($leaseItem->status); ?></h4>
-                        </div>
-                    <?php endif; ?> 
-                </div>
                 <div class="selected-row">
                     <!-- card left -->
                     <div class = "product-imgs">
                         <div class = "img-display">
+                            <?php if($leaseItem->status =='Available'): ?>
+                                <div class="stat-container">
+                                    <div class="stat green">
+                                    </div>
+                                </div>
+                            <?php elseif($leaseItem->status=='Pending'): ?>
+                                <div class="stat-container">
+                                    <div class="stat yellow">
+                                    </div>
+                                </div>
+                            <?php else: ?>
+                                <div class="stat-container">
+                                    <div class="stat">
+                                    </div>
+                                </div>
+                            <?php endif; ?> 
+                            <div class = "share-container">
+                            <form><button class="share-button" type="button"><i class="fa-solid fa-arrow-up-from-bracket"></i></button></form>
+                            </div>
+                            <script>
+                                const shareButton = document.querySelector('.share-button');
+
+                                shareButton.addEventListener('click', event => {
+                                if (navigator.share) { 
+                                navigator.share({
+                                    title: 'College Marketplace',
+                                    url: '',
+                                    text: 'Check out this leaseItem!'
+                                    }).then(() => {
+                                    console.log('Thanks for sharing!');
+                                    })
+                                    .catch(console.error);
+                                } 
+                                else {
+                                        // Fallback
+                                        shareDialog.classList.add('is-open');
+                                }
+                                });
+
+                                closeButton.addEventListener('click', event => {
+                                shareDialog.classList.remove('is-open');
+                                });
+                        </script>
                             <?php
                                 if(isset($leaseItem->image_uploads)){
                                     //decode the json object
@@ -61,204 +91,175 @@
                                 <?php $__currentLoopData = json_decode($leaseItem->image_uploads); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $link): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <img src=<?php echo e($leaseItem->image_uploads ? Storage::disk('s3')->url($link) : asset('/images/rotunda.jpg')); ?> alt = "shoe image" onclick="myFunction(this);">
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            <?php endif; ?> 
+                            <?php else: ?>
+                                <?php
+                                    $site = 'https://picsum.photos/300/200?sig='. rand(0,100);
+                                ?>
+                                <img src="<?php echo e($site); ?>" alt="" onclick="myFunction(this);">
+                                <img src="<?php echo e($site); ?>" alt="" onclick="myFunction(this);">
+                                <img src="<?php echo e($site); ?>" alt="" onclick="myFunction(this);"> 
+                                <img src="<?php echo e($site); ?>" alt="" onclick="myFunction(this);">
+                                <img src="<?php echo e($site); ?>" alt="" onclick="myFunction(this);">
+                            <?php endif; ?>
                         </div>
                     </div>
                     <!-- card right -->
-                    
                     <div class = "product-content">
-                        
-                        <div class = "product-header show-top">
-                            <div class="name-status">
-                                <h1><?php echo e($leaseItem->sublease_title); ?></h1> 
-                            </div>
-                            <h3> 
-                                <span>$<?php echo e($leaseItem->rent); ?></span> | <?php echo e($leaseItem->location); ?>
-
-                            </h3>    
-                        </div>
-
-                        
-                        <div class = "product-details show-top" style="display:flex;flex-direction:row;gap:10px;">
-                            <h4>From: 
-                                <span><?php echo e($leaseItem->date_from); ?></span>
-                            </h4>
-                            <h4>To: 
-                                <span><?php echo e($leaseItem->date_to); ?></span>
-                            </h4>
-                        </div>
-
-                        
-                        <div class = "product-details show-top">
-                            <h4>Rent Negotiable/Fixed: 
-                                <span><?php echo e($leaseItem->negotiable); ?></span>
-                            </h4>
-                            <h4>Condition: 
-                                <span><?php echo e($leaseItem->condition); ?></span>
-                            </h4>
-                            <h4>Views: <span><?php echo e($leaseItem->view_count); ?></span></h4>
-                            <?php
-                            $subleaseController::updateViewCount($leaseItem);
-                            ?>
-                        </div>
-
-                        <div class = "product-categories show-top">
-                            <?php
-                                $utilities = explode(", ", $leaseItem->utilities);
-                            ?>
-                            <div class="categories">
-                                <h4 class="spacer">Utilities Included:</h4>
-                                <?php $__currentLoopData = $utilities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $utility): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <a href="/shop/all?type=lease&utilities=<?php echo e($utility); ?>"><?php echo e($utility); ?></a>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            </div> 
-                        </div>  
-
-                        <div class = "product-description show-top">
-                            <h4>Item Description:</h4>
-                            <p><?php echo e($leaseItem->description); ?></p>
-                        </div>
-
-                        <div class="product-buttons">
-                            <ul>
-                                <li>
-                                    <?php if($currentUser != null and $currentUser->leaseFavorites != null and in_array($leaseItem->id, explode(", " , $currentUser->leaseFavorites))): ?>
+                        <div class="product-details">
+                            <div class="price-favorite">
+                                <h1>$<?php echo e($leaseItem->rent); ?></h1>
+                                    <?php if($currentUser != null and $currentUser->favorites != null and in_array($leaseItem->id, explode(", " , $currentUser->favorites))): ?>
                                         <form action="/users/removefavorite" method="GET">
                                             <?php echo csrf_field(); ?>
-                                            <input type="hidden" name="type" value="sublease">
+                                            <input type="hidden" name="type" value="leaseItem">
                                             <input type="hidden" name="id" value="<?php echo e($leaseItem->id); ?>">
                                             <button><i class="fa-solid fa-heart saved"></i></button>
                                         </form>
                                     <?php else: ?>
                                         <form action="/users/addfavorite" method="GET">
                                             <?php echo csrf_field(); ?>
-                                            <input type="hidden" name="type" value="sublease">
+                                            <input type="hidden" name="type" value="leaseItem">
                                             <input type="hidden" name="id" value="<?php echo e($leaseItem->id); ?>">
                                             <button><i class="fa-solid fa-heart bouncy"></i></button>
                                         </form>
-                                    <?php endif; ?>                                
-                                </li>
-                                <!-- vertical line added by this code --> 
-                                <li>
-                                <form><button id = 'share' onclick = "toggleText()" type = "button"><i class="fa fa-share-alt"></i></button></form> 
-                                <script>
-                                    function toggleText() {
-                                        navigator.clipboard.writeText(window.location.href);
-                                        var text = document.getElementById("demo");
-                                        if (text.style.display === "none") {
-                                            text.style.display = "block";
-                                        } else {
-                                            text.style.display = "none";
-                                        }
-                                    }
-                                </script>             
-                                </li>
-                                <!-- vertical line added by this code -->
-                                <?php if($currentUser != null and $leaseItem->user_id == $currentUser->id): ?>
-                                    <li>
-                                        <form method="POST" action="/subleases/<?php echo e($leaseItem->id); ?>/update">
-                                            <?php echo csrf_field(); ?>
-                                            <?php echo method_field('PUT'); ?>
-                                            <select name="status" id="status" style = " font-size: 17px; text-align:center;" onchange="this.form.submit()">
-                                                <option style = "text-align:center;">Status</option>
-                                                <option style = "text-align:center;" value="Available">Available</option>
-                                                <option style = "text-align:center;" value="Leased">Leased</option> 
-                                            </select>
-                                        </form>
-                                    </li>
-                                    <li>
-                                        <form action="/subleases/<?php echo e($leaseItem->id); ?>/edit" method = "GET">
-                                            <?php echo csrf_field(); ?>
-                                            <input type="hidden" name="id" value="<?php echo e($leaseItem->id); ?>">
-                                            <button><i class="fa fa-pencil" aria-hidden="true"></i></button>
-                                        </form>
-                                    </li>
-                                    <li>
-                                        <span id="delete-modal-trigger">
-                                            <i class="fa fa-trash" ></i>
-                                        </span>
-                                    </li>
-                                <?php endif; ?>
-                            </ul>
+                                    <?php endif; ?>
+
+                            </div>
+                            <div class="product-header">
+                                <h1><?php echo e($leaseItem->sublease_title); ?></h1>
+                            </div>
+                            <div class="product-extra">
+                                <div>
+                                    <p>Price:</p> 
+                                    <span><?php echo e($leaseItem->negotiable); ?></span>
+                                </div>
+                                <div>
+                                    <p>Condition:</p>
+                                    <span><?php echo e($leaseItem->condition); ?></span>
+                                </div>
+                                <?php
+                                    $subleaseController::updateViewCount($leaseItem);
+                                ?>
+                                <p><i class="fa-solid fa-eye"></i><span><?php echo e($leaseItem->view_count); ?></span></p>
+                                <p><i class="fa-solid fa-location-dot"></i><span><?php echo e($leaseItem->city); ?>, <?php echo e($leaseItem->state); ?></span></p>
+                            </div>
+                            <div class="product-category">
+                                <?php
+                                    $categories = explode(", ", $leaseItem->category);
+                                    $date = $leaseItem->created_at ->format('Y-m-d');
+                                ?>
+                                <div class="categories-container">
+                                    <p>Categories:</p>
+                                    <div class="categories">
+                                        <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <a href="/shop/all?type=all&category=<?php echo e($category); ?>"><?php echo e($category); ?></a>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p>Date Posted:</p>
+                                    <span><?php echo e($date); ?></span>
+                                </div>
+                            </div>
                         </div>
-                        <p id='demo' style='text-align:right; display: none; padding-right: 20px;'>Link Copied!</p>
+                        <div class="map-container" id = "map-container">
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            
-            <div class="map-chat-container">
-                <div class="map-container" id = "map-container">
-                </div>
-                <div class="chat-container">
-                    
-                    <?php if($currentUser != null and $leaseItem->user_id == $currentUser->id): ?>
-                        <div class="user-wrapper">
-                            <ul class="users">
-                                <?php if(count($allUsers) >= 1): ?>
-                                    <?php $__currentLoopData = $allUsers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <li class="user" id="<?php echo e($user->id); ?>">
-                                            
-                                            <?php if($user->unread): ?>
-                                                <span class="pending"><?php echo e($user->unread); ?></span>
-                                            <?php endif; ?>
+                <div class="selected-row">
+                    <div class="product-description-area">
+                        <div class="controls">
+                            
+                            
+                            
+                            
+                            <?php if($currentUser != null and $leaseItem->user_id == $currentUser->id): ?>
+                                <form method="POST" action="/subleases/<?php echo e($leaseItem->id); ?>/update">
+                                    <?php echo csrf_field(); ?>
+                                    <?php echo method_field('PUT'); ?>
+                                    <select name="status" id="status" style = " font-size: 17px; text-align:center;" onchange="this.form.submit()">
+                                        <option style = "text-align:center;">Status</option>
+                                        <option style = "text-align:center;" value="Available">Available</option>
+                                        <option style = "text-align:center;" value="Pending">Pending</option>
+                                        <option style = "text-align:center;" value="Sold">Sold</option>  
+                                    </select>
+                                </form>
                                 
-                                            
+                            
+                                <form class = "editForm" action="/subleases/<?php echo e($leaseItem->id); ?>/edit" method = "GET">
+                                    <?php echo csrf_field(); ?>
+                                    <input type="hidden" name="id" value="<?php echo e($leaseItem->id); ?>">
+                                    <button><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                </form>
 
-
-                                            <div class="media-left">
-                                                <img src="<?php echo e($user->avatar); ?>" alt="" class="media-object">
-                                            </div>
-
-                                            <div class="media-body">
-                                                <p class="name"><?php echo e($user->first_name); ?> <?php echo e($user->last_name); ?> | ID: <?php echo e($user->id); ?> </p>
-                                                <p class='email'><?php echo e($user ->email); ?> </p>   
-                                            </div>
-                                        </li>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                <?php else: ?>
-                                    <li class="no-messages"><span>You have no messages</span></li>
-                                <?php endif; ?>
-                            </ul>
-                        </div>
-                    <?php endif; ?>
-
-                    
-                    <div id="scroll-to-bottom" class="messages-container active">
-                        <?php if($currentUser != null and $leaseItem->user_id == $currentUser->id): ?>
-                            <a class="message-back">
-                                <i class="fa-solid fa-arrow-left"></i> Back
-                            </a>
-                        <?php else: ?>
-                            <a class="back-placeholder">
-                                Chat with <?php echo e($listingOwner->first_name); ?> <?php echo e($listingOwner->last_name); ?>
-
-                            </a>
-                        <?php endif; ?>
-                       
-                        <ul class="messages" id='messages'>
-                            <?php if(auth()->guest()): ?>
-                                <li class="message clearfix">
-                                    <div class="sent">
-                                        <p>Please log in to begin chat</p>
-                                        <p class='date'>-System</p>
-                                    </div>
-                                </li>
+                                <span id="delete-modal-trigger">
+                                    <i class="fa fa-trash" ></i>
+                                </span>
                             <?php endif; ?>
                             
-                        </ul>
-                        <div id = "input-text" class=.input-text>
-                            <input type="text" name="message" placeholder="Message Seller" class="submit">
                         </div>
-                    </div> 
+                        <h1>Description</h1>
+                        <p><?php echo e($leaseItem->description); ?></p>
+                    </div>
+                    <div class="about-seller-and-chat">
+                        <div class="about-seller">
+                            <i class="fa-solid fa-user"></i>
+                            <div>
+                                <p>Name</p>
+                                <p>Joined: <span>2001-14-16</span></p>
+                            </div>
+                        </div>
+                        <div class="chat-seller">
+                            <?php
+                                $type = null;
+                                if($leaseItem instanceof \App\Models\Sublease){
+                                    $type="leaseItem";
+                                }
+                                elseif($leaseItem instanceof \App\Models\Sublease){
+                                    $type="leaseItem";
+                                }
+                                else {
+                                    $type="lease";
+                                }
+                                // this is the leaseItem owner
+                                $itemID = $leaseItem->id;
+                                $ownerID = $leaseItem->user_id;
+
+                                // this is the current user logged in and the one messaging the owner
+                                $from = $currentUser ? $currentUser->id : -1;
+                                $item = $leaseItem->id;
+                            ?>
+
+                            <?php if($currentUser != null && $currentUser->id == $ownerID): ?>
+                                
+                                <a href="/all/<?php echo e($type); ?>/<?php echo e($itemID); ?>/<?php echo e($ownerID); ?>/<?php echo e($from); ?>/messages">
+                                    <p>My Messages</p>
+                                </a>
+                            <?php else: ?>
+                                
+                                <a href="/all/<?php echo e($type); ?>/<?php echo e($itemID); ?>/<?php echo e($ownerID); ?>/<?php echo e($from); ?>/messages">
+                                    <p>Chat with Seller</p>
+                                </a>
+                            <?php endif; ?>
+                        </div>
+                    </div>
                 </div>
-            </div> 
+                <div class="map-container-mobile" id="map-container-mobile">
+                    
+                </div>
+                <div>
+                    
+                </div>
+            </div>
         </div>
         <div class="modal" id="delete-modal">
             <div class="modal-content">
+                <div class="sad-dog-container">
+                    <img src="<?php echo e(asset('/images/sad-dog.png')); ?>" alt="">
+                </div>
                 <span class="close">&times;</span>
-                <h1>Delete Listing</h1>
-                <p>Are you sure you want to delete this listing?</p>
+                <h1>Delete Sublease</h1>
+                <p>Are you sure you want to delete this leaseItem?</p>
 
                 <div class="clearfix">
                     <input type="button" class="button1" class="cancelbtn" id="cancelbtn" value="Cancel" />
@@ -271,13 +272,9 @@
             </div>
         </div>
     </section>
-
     
     <section class = "listings-parent-container">
-        
-        <?php echo $__env->make('partials._subleaseCarousel',
-        ['subleases'=> $subleaseQuery, 'message' => 'Places For Leasing' , 'carouselClass' => 'slider3',
-        'carouselControls' => 'controls3', 'carouselP' =>' previous previous3', 'carouselN' => 'next next3'], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+         <?php echo $__env->make('partials._subleaseCarousel', ['subleases'=> $subleaseQuery, 'message' => 'Places for Leasing', 'carouselClass'=>'slider3','carouselControls' => 'controls3', 'carouselP' =>'previous previous3', 'carouselN' => 'next next3'], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     </section>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>    
@@ -290,29 +287,26 @@
     crossorigin=""></script>
    
     <script>
-        
         function isEmpty(input){
             if(input === '' || input === null || input === undefined || input == null){
                 return true;
             }return false;
-        }   
-        //code for dynamic maps             
+        }  
+        
+        //code for dynamic map
         /*function initMap() {
             var mapTwo;
             var geocoder;
-            var listingLat = "<?php echo e($leaseItem->latitude); ?>";
-            var listingLong = "<?php echo e($leaseItem->longitude); ?>";
-
+            var SubleaseLat = "<?php echo e($leaseItem->latitude); ?>";
+            var SubleaseLong = "<?php echo e($leaseItem->longitude); ?>";
             geocoder = new google.maps.Geocoder();
             var latlng = new google.maps.LatLng(-34.397, 150.644);
             var mapOptions = {
                 zoom: 15,
                 center: latlng
             }
-
             mapTwo = new google.maps.Map(document.getElementById('map-container'), mapOptions);
-                console.log(listingLat, listingLong);
-
+                console.log(SubleaseLat, SubleaseLong);
             if(!isEmpty("<?php echo e($leaseItem->street); ?>")  && !isEmpty("<?php echo e($leaseItem->state); ?>")) {
                 console.log('top if');
                 var address = "<?php echo e($leaseItem->street." ".$leaseItem->city); ?>";
@@ -362,238 +356,24 @@
             var url = 'https://maps.googleapis.com/maps/api/staticmap?' + params.toString();
             //console.log(url);
             image.src = url;
+            var image2 = document.createElement('img');
+            image2.src = url;
             document.getElementById('map-container').appendChild(image);
+            document.getElementById('map-container-mobile').appendChild(image2);
+
             return url;
         }
-
         let address = ['<?php echo e($leaseItem->street); ?>', '<?php echo e($leaseItem->city); ?>', '<?php echo e($leaseItem->state); ?>', '<?php echo e($leaseItem->postcode); ?>', '<?php echo e($leaseItem->country); ?>'];
         
         console.log(getGoogleMapsImage(address));
-
         function myFunction(imgs) {
             var expandImg = document.getElementById("expandedImg");
             expandImg.src = imgs.src;
         }
-
-        var listing_id = "<?php echo e($leaseItem->id); ?>"
-        var listingOwner = "<?php echo e($leaseItem->user_id); ?>";
+        var Sublease_id = "<?php echo e($leaseItem->id); ?>"
+        var SubleaseOwner = "<?php echo e($leaseItem->user_id); ?>";
         var userLoggedIn = "<?php echo e($currentUser ? $currentUser->id : -1); ?>";
         var receiverSelected = null; //the person whose chat we have open
-        $(document).ready(function(){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            // Pusher.logToConsole = true;
-
-            var pusher = new Pusher('5b40ba1f12ea9bf24b29', {
-                cluster: 'us2'
-            });
-
-            var channel = pusher.subscribe('my-channel');
-            // 2 cases
-            // if I am not the listing owner, show me messages that have been sent to me instantly
-            // if I am the listing owner -> get selected user and update their information or display a pending symbol
-            channel.bind('my-event', function(data) {
-                console.log(data);
-                if (userLoggedIn == data.from) {
-                    // if I am not the listing owner and I am sending a message
-                    if(userLoggedIn != listingOwner){
-                        loadConversation(listingOwner, userLoggedIn);
-                    }else{ //if I am the listing owner and I am sending the message
-                        //  need to have an option for a user selected or pending
-                        if(receiverSelected != null){ // if the receiver is selected
-                            $('#'+receiverSelected).click();
-                        }
-                    }
-                }else if (userLoggedIn == data.to) {
-                    if(userLoggedIn != listingOwner){
-                        loadConversation(listingOwner, userLoggedIn);
-                    }else{ //if the listing owner is the user logged in
-                        if(receiverSelected != null){ // if the receiver is selected
-                            $('#'+receiverSelected).click();
-                        }else{
-                            console.log(data);
-                            if(data.for_sublease == listing_id){
-                                var pending = parseInt($('#' + data.from).find('.pending').html());
-                                if (pending) {
-                                    $('#' + data.from).find('.pending').html(pending + 1);
-                                } else {
-                                    $('#' + data.from).append('<span class="pending">1</span>');
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            // if I am the listing owner, I want to see all the users that have contacted me
-            if(listingOwner == userLoggedIn){
-                $('.messages-container').removeClass('active');
-                $('.user-wrapper').addClass('active');
-            }
-
-            // back button to switch from messages container to users list container
-            $('.message-back').click(function(){
-                $('.messages-container').removeClass('active');
-                $('.user-wrapper').addClass('active');
-                receiverSelected = null;
-            });
-            
-            // if the listing is not mine, load all messages from the listing owner, to me the current user logged in
-            if("<?php echo e(!auth()->guest()); ?>"){
-                loadConversation(listingOwner, userLoggedIn);
-            }
-            function loadConversation(UserSending, UserReceiving ){
-                if("<?php echo e($leaseItem->user_id); ?>" != userLoggedIn){
-                    var ul = document.getElementById("messages");
-                    ul.innerHTML = null;
-                    
-                    $.ajax({
-                        type: "GET",
-                        url: "/messages?from=" + UserSending + "&to=" + UserReceiving + "&sublease_id=" + listing_id, // need to create this route
-                        data: "JSON",
-                        cache: false,
-                        success: function (data) {
-                            // console.log(data);
-                            if(data != null){
-                                
-                                var ul = document.getElementById("messages");
-                                for(var i = 0; i< data.length; i++){
-                                    // console.log(data[i]);
-                                    var li = document.createElement("li");
-                                    li.className = 'message clearfix'
-                                    
-                                    var div = document.createElement('div');
-                                    if(data[i].from == userLoggedIn){
-                                        div.className="sent"
-                                    }else{
-                                        div.className="received"
-                                    }
-                                    var message = document.createElement('p');
-                                    message.innerHTML = data[i].message;
-                                    div.appendChild(message);
-                                    var date = document.createElement('p');
-                                    date.innerHTML = "<?php echo e(date('d M y, h:i a', strtotime(" + data[i].created_at + "))); ?>";
-                                    date.className='date';
-                                    div.appendChild(date);
-
-                                    li.appendChild(div);
-                                    ul.appendChild(li);
-                                    scrollToBottomFunc();
-                                }
-                            }
-                        },
-                        error: function(XMLHttpRequest, textStatus, errorThrown) { 
-                            alert("Status: " + textStatus); alert("Error: " + errorThrown); 
-                        }
-                    });
-                }
-            }
-
-            // if I am the listing owner, I want to click on a user and get all the messages from me to them or them to me
-            $('.user').click(function(){
-                var ul = document.getElementById("messages");
-                ul.innerHTML = null;
-
-                $('.user-wrapper').removeClass('active');
-                $('.messages-container').addClass('active');
-                receiverSelected = $(this).attr('id');
-                $(this).find('.pending').remove();
-
-                $.ajax({
-                    type: "GET",
-                    url: "/messages?from=" + receiverSelected + "&to=" + listingOwner + "&sublease_id=" + listing_id, // need to create this route
-                    data: "JSON",
-                    cache: false,
-                    success: function (data) {
-                        // console.log(data);
-                        if(data != null){
-                            
-                            var ul = document.getElementById("messages");
-                            for(var i = 0; i< data.length; i++){
-                                // console.log(data[i]);
-                                var li = document.createElement("li");
-                                li.className = 'message clearfix'
-                                
-                                var div = document.createElement('div');
-                                if(data[i].from == listingOwner){
-                                    div.className="sent"
-                                }else{
-                                    div.className="received"
-                                }
-                                var message = document.createElement('p');
-                                message.innerHTML = data[i].message;
-                                div.appendChild(message);
-                                var date = document.createElement('p');
-                                date.innerHTML = "<?php echo e(date('d M y, h:i a', strtotime(" + data[i].created_at + "))); ?>";
-                                date.className='date';
-                                div.appendChild(date);
-
-                                li.appendChild(div);
-                                ul.appendChild(li);
-                                scrollToBottomFunc();
-                            }
-                        }
-                    },
-                    error: function(XMLHttpRequest, textStatus, errorThrown) { 
-                        alert("Status: " + textStatus); alert("Error: " + errorThrown); 
-                    }
-                });
-            });
-
-            // take to take in to account two different scenarios
-            //1) if the listing is not mine, i wanna be able to message the listing owner
-            //2) if the listing is mine, select a specifc user, then get their id and sent them the message
-            if("<?php echo e(!auth()->guest()); ?>"){
-                $(document).on('keyup', 'input', function(e){
-                    var msg = $(this).val();
-                    var datastr = null;
-                    // if I am the listing owner, then i need a receiver id which should be the person I have selected form the users list
-                    if(listingOwner == userLoggedIn){
-                        // if it is my ownlisting, use receiver id, instead of listing owner id
-                        datastr = "receiver_id=" + receiverSelected + "&message=" + msg + "&for_sublease=" + listing_id;
-                            // console.log(datastr);
-                    }else{ //else send a message to the listing owner from me thats default
-                        // console.log("bottom branch");
-                        datastr = "receiver_id=" + listingOwner + "&message=" + msg + "&for_sublease=" + listing_id;
-                    }
-                    console.log(datastr);
-                    if(e.keyCode == 13 && msg != '' && listingOwner != ''){
-                        $(this).val(''); // while pressed enter text box will be empty
-                        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                        $.ajax({
-                            url: "/sendmessage", 
-                            type: 'POST',
-                            data: datastr,
-                            dataType: 'JSON',
-                            _token: CSRF_TOKEN,
-                            cache: false,
-                            success: function (data) {
-                                console.log(data);
-                            },
-                            error: function (jqXHR, status, err) {
-                                console.log(err);
-                            },
-                            complete: function () {
-                                // scrollToBottomFunc();
-                            }
-                        })
-                    }
-                });
-            }
-        });
-
-         // make a function to scroll down auto
-        function scrollToBottomFunc() {
-           let scroll_to_bottom = document.getElementById('messages');
-            scrollBottom(scroll_to_bottom);
-        }
-        function scrollBottom(element) {
-            element.scroll({ top: element.scrollHeight, behavior: "smooth"})
-        }
 
         //delete modal
         var deleteModal = document.getElementById("delete-modal");
@@ -614,14 +394,22 @@
                 deleteModal.style.display = "none";
             }
         }
-    </script>
 
-    <!-- code for dynamic maps -->
+        function toggleText() {
+            navigator.clipboard.writeText(window.location.href);
+            var text = document.getElementById("demo");
+            if (text.style.display === "none") {
+                text.style.display = "block";
+            } else {
+                text.style.display = "none";
+            }
+        }
+    </script>
+    <!-- for dynamic map, not needed since using static -->
     <!-- <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2Umn-3TUxP23ok373mWr0U4CHQDItcEk&callback=initMap&libraries=places&v=weekly"
       defer
     ></script> -->
-
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>

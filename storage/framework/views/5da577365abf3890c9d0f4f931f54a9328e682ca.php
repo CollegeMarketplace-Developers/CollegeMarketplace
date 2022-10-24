@@ -70,8 +70,8 @@
 <?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
 <?php endif; ?>
 <?php $component->withAttributes([]); ?>
-    <div style="position: relative; overflow:hidden; background-color:#24222c;" >
-        <input type="checkbox" id="show-filter" class="show-filter">
+    <div style="position: relative; overflow:hidden; padding-top:50px;"   >
+        <input type="checkbox" id="show-filter" class="show-filter panel">
         
         <div class = "side-filter-container">
             <label for="show-filter">
@@ -188,7 +188,7 @@
             </ul>
         </div>
         
-        <div class = "listings-parent-container" style="min-height: 100vh;">
+        <div class = "search-results-container" >
             <?php echo $__env->make('partials._cardGallary',['listings'=>$listings, 'heading' => 'Results Showing: '. count($listings), 'displayTags' => true, 'displayMoreButton' => false], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
     </div>

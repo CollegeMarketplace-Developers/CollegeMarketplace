@@ -1,11 +1,21 @@
+header{
+  height: 50px; 
+  width: 100%; 
+  position: fixed; 
+  z-index:100; 
+  display:flex;
+  justify-content:center;
+  background:#151416;
+  padding: 0 70px;
+}
 .wrapper{
   background: #151416;;
   position: relative;
   height: 50px;;
   width: 100%;
   max-width:1600px;
-  padding: 0 70px;
 }
+
 .wrapper nav{
   position: relative;
   display: flex;
@@ -33,25 +43,138 @@ nav .content .links::-webkit-scrollbar {
 
 nav .content .user-panel,
 nav .content .notifications-panel{
-  display: block;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0;
   width: 100%;
   max-width: 350px;
-  height: 100%;
+  height: calc(100vh - 50px);
   width: 100%;
   position: fixed;
   background-color: blue;
   top:50px;
   right: 0;
   overflow-y: auto;
-  padding-bottom: 100px;
   transition: all 0.3s ease;
-  background: rgba(29,28,36,0.1);
+  background: rgba(0,0,0,.4);
+  /* background: rgba(29,28,36,0.1); */
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
   right:-100%;
   z-index:1;
 }
 
+nav .content .user-panel .recently-viewed, 
+nav .content .notifications-panel .messages-container,
+nav .content .notifications-panel .active-sales-container{
+    height: 45%;
+    max-height: 50%;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin: 10px 20px;
+    border-radius: var(--br-medium);
+    padding:8px;
+    background-color: rgba(0,0,0,.25);
+}
+
+.recently-viewed p:first-of-type, 
+.messages-container p:first-of-type,
+.active-sales-container p:first-of-type{
+  color:white;
+  margin-bottom: 10px;
+}
+
+.recently-viewed .recently-viewed-list,
+.messages-container .recently-messaged-list,
+.active-sales-container .sales-active-list{
+  display:flex;
+  flex-direction: column;
+  gap:5px;
+  overflow-y: scroll;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+  color:white;
+}
+
+.recently-viewed-list::-webkit-scrollbar,
+.recently-messaged-list::-webkit-scrollbar,
+.sales-active-list::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+.recently-viewed-list a,
+.recently-messaged-list a,
+.sales-active-list a{
+    width: 100%;
+    height: fit-content;
+    background-color: rgba(21, 20, 22, .5);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px;
+    border-radius: var(--br-medium);
+}
+
+.recently-viewed-list a img,
+.recently-messaged-list a img,
+.sales-active-list a img{
+  width: 60px;
+  height:60px;
+  margin-right: 10px;
+  border-radius: var(--br-medium);
+}
+
+.recently-viewed-list p,
+.recently-messaged-list p,
+.sales-active-list p {
+  color:white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.recently-viewed-list p:first-of-type,
+.recently-messaged-list p:first-of-type,
+.sales-active-list p:first-of-type{
+  margin-bottom: 5px;
+} 
+
+.recently-messaged-list p:last-of-type{
+  margin-top: 5px;
+  font-size: 12px;
+  color:var(--accent-color);
+} 
+
+.recently-viewed-list a .recently-viewed-details,
+.sales-active-list a .sales-active-details,
+.recently-messaged-list a .recently-messaged-details{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: calc(100% - 70px);
+}
+
+.recently-viewed-details .details-row,
+.sales-active-details .details-row{
+
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.details-row p {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap:10px;
+}
+
+.details-row p i{
+  color:var(--accent-color);
+}
 nav .content .notifications-panel{
   z-index:5;
 }
@@ -80,7 +203,7 @@ nav #show-notifications-panel:checked ~ .content .notifications-panel{
 .content .links li,
 .content .user-panel li{
   list-style: none;
-  line-height: 40px;
+  line-height: 30px;
 }
 
 .content .user-panel li{
@@ -94,7 +217,7 @@ nav #show-notifications-panel:checked ~ .content .notifications-panel{
   font-size: 18px;
   font-weight: 500;
   padding: 8px 18px;
-  border-radius: 5px;
+  border-radius: var(--br-medium);
   transition: all 0.3s ease;
   text-decoration: none !important;
   text-transform: capitalize;
@@ -213,8 +336,10 @@ a:hover, label:hover{
   visibility: hidden;
 }
 .content .links li:hover > ul{
-  top: 50px;
+  padding-top:10px;
+  top: 40px;
   opacity: 1;
+  z-index: 1;
   visibility: visible;
   transition: all 0.3s ease;
 }
@@ -237,11 +362,6 @@ a:hover, label:hover{
   top: 0;
 }
 
-@media(max-width: 1200px){
-  .wrapper{
-    padding:0 50px;
-  }
-}
 /* Responsive code start */
 @media screen and (max-width: 1250px){
   /* .wrapper nav{
@@ -272,8 +392,9 @@ a:hover, label:hover{
   nav .content .links{
     display: block;
     position: fixed;
+    background:rgba(0,0,0,.4);
     /* background: #14181f; */
-    background-color: #151416;;
+    /* background-color: #151416;; */
     height: 100%;
     width: 100%;
     top: 50px;
@@ -286,7 +407,7 @@ a:hover, label:hover{
   }
   nav #show-menu:checked ~ .content .links{
     left: 0%;
-    background: rgba(29,28,36,0.1);
+    /* background: rgba(29,28,36,0.1); */
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
   }
@@ -294,8 +415,7 @@ a:hover, label:hover{
     margin: 10px 20px;
   }
   .content .links li a,
-  .content .links li label,
-  .content .user-panel a{
+  .content .links li label{
     line-height: 40px;
     font-size: 20px;
     display: block;
@@ -377,10 +497,13 @@ a:hover, label:hover{
     margin: 0 25px;
   }
 }
-@media(max-width: 650px){
-  .wrapper{
-    padding: 0 25px;
+
+@media(max-width: 1200px){
+  header{
+    padding: 0 50px;
   }
+}
+@media(max-width: 650px){
   .content .logo a{
     font-size: 25px;
   }
@@ -396,8 +519,8 @@ a:hover, label:hover{
 }
 
 @media(max-width: 550px){
-  .wrapper{
-    padding: 0px 10px;
+  header{
+    padding: 0 20px;
   }
 }
 
@@ -416,7 +539,7 @@ a:hover, label:hover{
     padding: 0 10px;
   } */
   .content .logo a{
-    font-size: 18px;
+    font-size: 16px;
   }
   .wrapper .search-box{
     max-width: calc(100% - 90px);
@@ -432,10 +555,6 @@ a:hover, label:hover{
   .wrapper .search-icon, .wrapper .menu-icon, .profile-icon, .bell-icon {
     width: 30px;
     line-height: 30px;
-  }
-
-  .wrapper{
-    padding: 0px 10px;
   }
 }
 

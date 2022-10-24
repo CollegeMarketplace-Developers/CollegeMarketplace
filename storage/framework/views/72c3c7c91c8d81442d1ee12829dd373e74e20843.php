@@ -18,18 +18,20 @@
         <div class = "listings-parent-container">
             <?php echo $__env->make('partials._carouselByCategory',['furnitureItems' => $furnitureItems, 'clothesItems'=>$clothesItems, "electronicsItems"=>$electronicsItems, 'kitchenItems' => $kitchenItems, 'schoolItems' =>$schoolItems, 'bookItems'=>$bookItems], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
+        
+        <div class="listings-parent-container">
+            <?php echo $__env->make('partials._componentDesignOne', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        </div>
 
         
-        
+       
         <?php if(!empty($listingsNear)): ?> 
             <div class = "listings-parent-container">
                 <?php echo $__env->make('partials._listingCarousel', ['listings' => $listingsNear, 'message' => 'Within A Mile', 'carouselClass'=>'my-slider','carouselControls' => 'controls', 'carouselP' =>'previous previous1', 'carouselN' => 'next next1'], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             </div>
         <?php else: ?> 
         <?php endif; ?>
-        <div class="listings-parent-container">
-            <?php echo $__env->make('partials._componentDesignOne', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-        </div>
+
         
         <div class="listings-parent-container">
             <?php echo $__env->make('partials._rentablesCarousel',

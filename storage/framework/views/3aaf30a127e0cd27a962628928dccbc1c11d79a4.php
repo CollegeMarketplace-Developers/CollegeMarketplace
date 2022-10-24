@@ -55,7 +55,7 @@
         <link rel="stylesheet" type="text/css" href="https://csshake.surge.sh/csshake.min.css">
     </head>
     <body>
-        <header style="height: 50px; width: 100%; position: fixed; z-index:100; display:flex;justify-content:center;background:#151416;">
+        <header>
             
             <?php echo $__env->make('partials._navigationBar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </header>

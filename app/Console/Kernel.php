@@ -17,8 +17,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         //setting the command to run at this time 
-        $filePath = '/var/log/job1.log';
-        $schedule->command('auto:SendMail')->timezone('America/New_York')->dailyAt('03:00')->runInBackground()->appendOutputTo($filePath);
+        //$filePath = '/var/log/job1.log';
+        $schedule->command('auto:SendEmailsDaily')->dailyAt('03:00')->onOneServer()->runInBackground();
+        $schedule->command('auto:SendEmailsHourly')->everyTenMinutes()->unlessBetween('2:30','3:30')->onOneServer()->runInBackground();
     }
 
     /**
