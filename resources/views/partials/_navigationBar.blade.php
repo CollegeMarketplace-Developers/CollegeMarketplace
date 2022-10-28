@@ -117,8 +117,8 @@
                 </div>
                 <div class="active-sales-container">
                     <p>Active Posts</p>
-                    <div class="sales-active-list">
-                        @foreach (range(0, 9) as $number)
+                    <div class="sales-active-list" id="displayActivePosts">
+                        {{-- @foreach (range(0, 3) as $number)
                             <a href="">
                                 <img src="" alt="">
                                 <div class="sales-active-details">
@@ -130,7 +130,7 @@
                                     </div>
                                 </div>
                             </a>
-                        @endforeach
+                        @endforeach --}}
                     </div>
                 </div>
             </ul>
@@ -210,70 +210,156 @@
             <p>Please keep the search generic. Use simple words like table or camera</p>
         </div>
     </nav>
-    <script>
-        // var form = document.getElementById("logout-form");
-
-        // document.getElementById("logout-button").addEventListener("click", function () {
-        // form.submit();
-        // });
-        $(document).ready(function(){
-           $('input.panel').on('change', function() {
-                $('input.panel').not(this).prop('checked', false);  
-            });
-        });
-
-        function change() {
-            var decider = document.getElementById('show-notifications-panel');
-            if(decider.checked){
-                getUnreadMessages();
-                getActivePosts();
-            } else {
-                
-            }
-        }
-
-        function getUnreadMessages(){
-            //console.log("ran");
-            $.ajaxSetup({
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-            });
-            $.ajax({
-                type:'GET',
-                url: '/unreadmessages',
-                data: 'JSON',
-                cache: false, //look into caching later
-                success:function(data) {
-                    //add your success handling here
-                    //console.log("worked");
-                    console.log(data);
-                },
-                error: function (data, textStatus, errorThrown) {
-                    console.log("failed");
-                    //add your failed handling here
-                },
-            });
-        }
-
-        function getActivePosts(){
-            //console.log("ran");
-            $.ajaxSetup({
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-            });
-            $.ajax({
-                type:'GET',
-                url: '/activeposts',
-                data: 'JSON',
-                cache: false, //look into caching later
-                success:function(data) {
-                    //add your success handling here
-                    //console.log("worked");
-                    console.log(data);
-                },
-                error: function (data, textStatus, errorThrown) {
-                    console.log("failed");
-                    //add your failed handling here
-                },
-            });
-        }
-    </script>
 </div>
+<script>
+    // var form = document.getElementById("logout-form");
+
+    // document.getElementById("logout-button").addEventListener("click", function () {
+    // form.submit();
+    // });
+    $(document).ready(function(){
+        $('input.panel').on('change', function() {
+            $('input.panel').not(this).prop('checked', false);  
+        });
+    });
+
+    function change() {
+        console.log("called functin to get unread messages")
+        var decider = document.getElementById('show-notifications-panel');
+        if(decider.checked){
+            getUnreadMessages();
+            getActivePosts();
+        } else {
+            
+        }
+    }
+
+    function getUnreadMessages(){
+        //console.log("ran");
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
+        $.ajax({
+            type:'GET',
+            url: '/unreadmessages',
+            data: 'JSON',
+            cache: false, //look into caching later
+            success:function(data) {
+                //add your success handling here
+                //console.log("worked");
+                // console.log(data);
+            },
+            error: function (data, textStatus, errorThrown) {
+                console.log("failed");
+                //add your failed handling here
+            },
+        });
+    }
+
+
+
+    function getActivePosts(){
+        //console.log("ran");
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
+        $.ajax({
+            type:'GET',
+            url: '/activeposts',
+            data: 'JSON',
+            cache: false, //look into caching later
+            success:function(data) {
+                showActivePosts(data);
+            },
+            error: function (data, textStatus, errorThrown) {
+                console.log("failed");
+                //add your failed handling here
+            },
+        });
+    }
+
+    function showActivePosts(data){
+        console.log(data);
+        $(document).ready(function(){
+            $('#displayActivePosts').empty();
+        })
+
+        if(data == null || data.length == 0 ){
+            $wrapper = $("<div/>", {
+                class: "no-active-posts",
+                html: $("<p />",{
+                    text: "No Active Posts"
+                })
+            });
+            $wrapper.appendTo('#displayActivePosts');
+        }else{
+            jQuery.each(data, function(index, value){
+                supportActivePosts(value);
+            });
+        }
+    }
+
+    function supportActivePosts(obj){
+        $(document).ready(function(){
+            $titleImage = jQuery.parseJSON(obj.image_uploads);
+            console.log($titleImage);
+            var $wrapper = $('<a>', {href: "localhost:3000"}),
+            $imgTag = $('<img />', {
+                id: 'test', 
+                src: 'https://cmimagestoragebucket.s3.amazonaws.com/'+$titleImage[0], 
+                alt: 'test'
+            }),
+            $displayActiveDetails = $("<div />", {class: "sales-active-details"});
+            
+            if(obj.item_name != null){
+                var $postTitle = $("<p />", {text: obj.item_name}),
+                    $detailsRow = $("<div />", {
+                        class: "details-row",
+                        html: $('<p />').append(
+                            $('<i />', {
+                                class: "fa-solid fa-sack-dollar"
+                            })
+                        ).append($("<span />", {text: obj.price})).add($("<p />").append(
+                            $('<i />', {
+                                class: "fa-solid fa-eye"
+                            })
+                        ).append($("<span />", {text: obj.view_count})))
+                    }); 
+                $wrapper.attr("href", "/listings/"+obj.id)
+                $wrapper.append($imgTag).append($displayActiveDetails.append($postTitle).append($detailsRow)).appendTo('#displayActivePosts'); 
+            }else if(obj.rental_title != null){
+                var $postTitle = $("<p />", {text: obj.rental_title}),
+                    $detailsRow = $("<div />", {
+                        class: "details-row",
+                        html: $('<p />').append(
+                            $('<i />', {
+                                class: "fa-solid fa-sack-dollar"
+                            })
+                        ).append($("<span />", {text: obj.rental_charging})).add($("<p />").append(
+                            $('<i />', {
+                                class: "fa-solid fa-eye"
+                            })
+                        ).append($("<span />", {text: obj.view_count})))
+                    }); 
+                $wrapper.attr("href", "/rentables/"+obj.id)
+                $wrapper.append($imgTag).append($displayActiveDetails.append($postTitle).append($detailsRow)).appendTo('#displayActivePosts'); 
+            }else if(obj.sublease_title != null){
+                var $postTitle = $("<p />", {text: obj.sublease_title}),
+                    $detailsRow = $("<div />", {
+                        class: "details-row",
+                        html: $('<p />').append(
+                            $('<i />', {
+                                class: "fa-solid fa-sack-dollar"
+                            })
+                        ).append($("<span />", {text: obj.rent})).add($("<p />").append(
+                            $('<i />', {
+                                class: "fa-solid fa-eye"
+                            })
+                        ).append($("<span />", {text: obj.view_count})))
+                    }); 
+                $wrapper.attr("href", "/subleases/"+obj.id)
+                $wrapper.append($imgTag).append($displayActiveDetails.append($postTitle).append($detailsRow)).appendTo('#displayActivePosts'); 
+            }
+        });
+    }
+</script>

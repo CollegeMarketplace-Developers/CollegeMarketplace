@@ -180,6 +180,7 @@ class Controller extends BaseController
         $allFull = collect($listingResultsFull)->merge($retnablesResultsFull)->merge($subleaseResultsFull)->sortByDesc('created_at');
 
         return $allFull;
+        // return array('success'=> 'itworked');
     }
 
     public function getListingsFromLatLng(Request $request) {
