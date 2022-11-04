@@ -219,7 +219,7 @@
             $('#displayUnreadMessages').empty();
             // if there are no unread messages
             if(data == null || data.length == 0 ){
-                console.log('no unread messages')
+                // console.log('no unread messages')
                 $wrapper = $("<div/>", {
                     class: "no-unread-messages",
                     html: $("<p />",{
@@ -287,14 +287,14 @@
         $(document).ready(function(){
             $('#displayActivePosts').empty();
             if(data == null || data.length == 0 ){
-                console.log('no active posts');
+                // console.log('no active posts');
                 $wrapper = $("<div/>", {
                     class: "no-active-posts",
                     html: $("<p />",{
                         text: "No Active Posts"
                     })
                 });
-                console.log("right before appending")
+                // console.log("right before appending")
                 $wrapper.appendTo('#displayActivePosts');
             }else{
                 jQuery.each(data, function(index, value){
