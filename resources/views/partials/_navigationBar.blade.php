@@ -102,17 +102,17 @@
             <ul class="notifications-panel">
                 <div class="messages-container">
                     <p>Messages</p>
-                    <div class="recently-messaged-list">
-                        @foreach (range(0, 9) as $number)
+                    <div class="recently-messaged-list" id="displayUnreadMessages">
+                        {{-- @foreach (range(0, 2) as $number)
                             <a href="">
                                 <img src="" alt="">
                                 <div class="recently-messaged-details">
                                    <p>Jacob</p>
                                    <p><span>You:</span> Yes it works. Sounds good to me</p>
-                                   <p>10 days ago</p>
+                                   <p>10 days ago</p> 
                                 </div>
                             </a>
-                        @endforeach
+                        @endforeach --}}
                     </div>
                 </div>
                 <div class="active-sales-container">
@@ -177,21 +177,21 @@
             
             {{-- only if the user is logged in, then the side panels will show --}}
             @auth
-                <label for="show-profile-panel" class="profile-icon">
-                    <i class="fa-solid fa-user"></i>
-                </label>
                 <label for="show-notifications-panel" class="bell-icon">
                     <i class="fa-solid fa-bell"></i>
                 </label>
-            @else
-                <label class="profile-icon">
-                    <a href="/login">
-                        <i class="fa-solid fa-user"></i>
-                    </a>
+                <label for="show-profile-panel" class="profile-icon">
+                    <i class="fa-solid fa-user"></i>
                 </label>
+            @else
                 <label class="bell-icon">
                     <a href="/login">
                         <i class="fa-solid fa-bell"></i>
+                    </a>
+                </label>
+                <label class="profile-icon">
+                    <a href="/login">
+                        <i class="fa-solid fa-user"></i>
                     </a>
                 </label>
             @endauth
@@ -224,7 +224,6 @@
     });
 
     function change() {
-        console.log("called functin to get unread messages")
         var decider = document.getElementById('show-notifications-panel');
         if(decider.checked){
             getUnreadMessages();
@@ -235,7 +234,6 @@
     }
 
     function getUnreadMessages(){
-        //console.log("ran");
         $.ajaxSetup({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
         });
@@ -246,8 +244,7 @@
             cache: false, //look into caching later
             success:function(data) {
                 //add your success handling here
-                //console.log("worked");
-                // console.log(data);
+                showUnreadMessages(data);
             },
             error: function (data, textStatus, errorThrown) {
                 console.log("failed");
@@ -256,10 +253,57 @@
         });
     }
 
+    function showUnreadMessages(data){
+        $(document).ready(function(){
+            $('#displayUnreadMessages').empty();
+            // if there are no unread messages
+            if(data == null || data.length == 0 ){
+                console.log('no unread messages')
+                $wrapper = $("<div/>", {
+                    class: "no-unread-messages",
+                    html: $("<p />",{
+                        text: "No Unread Messages"
+                    })
+                });
+                $wrapper.appendTo('#displayUnreadMessages');
+            }else{
+                // if there are unread messages, loop through each one
+                jQuery.each(data, function(index, value){
+                    supportUnreadMessages(value);
+                });
+            }
+        })
+        
+    }
 
+    function supportUnreadMessages(obj){
+        $(document).ready(function(){
+            console.log(obj);
+            // $mainImg = jQuery.parseJSON(obj.image_uploads);
+            var $wrapper = $('<a>', {href: "localhost:3000"}),
+            $imgTag = $('<img />', {
+                id: 'test', 
+                src: '', 
+                alt: 'test'
+            }),
+            $recentlyMessagedDetails = $("<div />", {class: "recently-messaged-details"});
+
+            $recentlyMessagedDetails.append($('<p />', {text: obj.first_name + obj.last_name})).append($('<p />', {
+                html: $('<span />', {text: obj.message})
+            })).append($('<p />', {text: obj.updated_at}));
+
+            if(obj.for_listing != null){
+                $wrapper.attr("href", "/listings/"+obj.for_listing);
+            }else if(obj.for_rentals != null){
+                $wrapper.attr("href", "/rentables/"+obj.for_rentals);
+            }else if(obj.for_sublease != null){
+                $wrapper.attr("href", "/subleases/"+obj.for_sublease);
+            }
+            $wrapper.append($imgTag).append($recentlyMessagedDetails).appendTo('#displayUnreadMessages');
+        });
+    }
 
     function getActivePosts(){
-        //console.log("ran");
         $.ajaxSetup({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
         });
@@ -279,30 +323,29 @@
     }
 
     function showActivePosts(data){
-        console.log(data);
         $(document).ready(function(){
             $('#displayActivePosts').empty();
+            if(data == null || data.length == 0 ){
+                console.log('no active posts');
+                $wrapper = $("<div/>", {
+                    class: "no-active-posts",
+                    html: $("<p />",{
+                        text: "No Active Posts"
+                    })
+                });
+                console.log("right before appending")
+                $wrapper.appendTo('#displayActivePosts');
+            }else{
+                jQuery.each(data, function(index, value){
+                    supportActivePosts(value);
+                });
+            }
         })
-
-        if(data == null || data.length == 0 ){
-            $wrapper = $("<div/>", {
-                class: "no-active-posts",
-                html: $("<p />",{
-                    text: "No Active Posts"
-                })
-            });
-            $wrapper.appendTo('#displayActivePosts');
-        }else{
-            jQuery.each(data, function(index, value){
-                supportActivePosts(value);
-            });
-        }
     }
 
     function supportActivePosts(obj){
         $(document).ready(function(){
             $titleImage = jQuery.parseJSON(obj.image_uploads);
-            console.log($titleImage);
             var $wrapper = $('<a>', {href: "localhost:3000"}),
             $imgTag = $('<img />', {
                 id: 'test', 

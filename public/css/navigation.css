@@ -69,6 +69,7 @@ nav .content .notifications-panel .messages-container,
 nav .content .notifications-panel .active-sales-container{
     height: 45%;
     max-height: 50%;
+    width: auto;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -105,7 +106,9 @@ nav .content .notifications-panel .active-sales-container{
 
 .recently-viewed-list a,
 .recently-messaged-list a,
-.sales-active-list a{
+.sales-active-list a,
+.recently-messaged-list .no-unread-messages,
+.sales-active-list .no-active-posts{
     width: 100%;
     height: fit-content;
     background-color: rgba(21, 20, 22, .5);
@@ -139,7 +142,7 @@ nav .content .notifications-panel .active-sales-container{
 .recently-viewed-list p:first-of-type,
 .recently-messaged-list p:first-of-type,
 .sales-active-list p:first-of-type{
-  margin-bottom: 5px;
+  margin-bottom: 0px;
 } 
 
 .recently-messaged-list p:last-of-type{
@@ -147,6 +150,12 @@ nav .content .notifications-panel .active-sales-container{
   font-size: 12px;
   color:var(--accent-color);
 } 
+
+.recently-messaged-list .no-unread-messages p{
+  margin-top: 0px;
+  font-size: 14px;
+  color:white;
+}
 
 .recently-viewed-list a .recently-viewed-details,
 .sales-active-list a .sales-active-details,
