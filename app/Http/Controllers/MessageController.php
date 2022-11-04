@@ -37,7 +37,6 @@ class MessageController extends Controller
             $query->where('from', $to)->where('to', $from)->where('for_listing', $listing_id);
         })->get();
 
-        // dd($messages);
         return $messages;
         // from Auth::id() to $user_id or $user_id to Auth::id();
 

@@ -49,8 +49,9 @@
         <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
         <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
-
-        <!-- shake animation from surge.sh -->
+        
+        <link rel="stylesheet" type="text/css" href="csshake.min.css">
+        <!-- or from surge.sh -->
         <link rel="stylesheet" type="text/css" href="https://csshake.surge.sh/csshake.min.css">
     </head>
     <body>
@@ -60,7 +61,12 @@
         </header>
         
 
-        
+        <div class="loader-wrapper">
+            <span class="loader">
+                <span class="loader-inner">
+                </span>
+            </span>
+        </div>
 
         <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
 <?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'components.flash-message','data' => []] + (isset($attributes) ? (array) $attributes->getIterator() : [])); ?>
@@ -86,27 +92,27 @@
         
         <?php echo $__env->make('partials._footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
-        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+         <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
         <script>
             AOS.init();
-            // function displayLoadingPage(){
-            //     var page = document.getElementById('loading-page');
-            //     page.style.display="flex";
-            // }
+            function displayLoadingPage(){
+                var page = document.getElementById('loading-page');
+                page.style.display="flex";
+            }
 
-            // window.addEventListener('change', (event) => {
-            //     document.getElementById('loading-page');
-            //     page.style.display='none';
-            // });
-            // window.addEventListener('load', (event) => {
-            //     document.getElementById('loading-page');
-            //     page.style.display='none';
-            // });
-            // $(document).ready(function(){
-            // $(window).on("load",function(){
-            //     $(".loader-wrapper").fadeOut("slow");
-            // });
-            // });
+            window.addEventListener('change', (event) => {
+                document.getElementById('loading-page');
+                page.style.display='none';
+            });
+            window.addEventListener('load', (event) => {
+                document.getElementById('loading-page');
+                page.style.display='none';
+            });
+            $(document).ready(function(){
+            $(window).on("load",function(){
+                $(".loader-wrapper").fadeOut("slow");
+            });
+            });
 
         </script>
     </body>
