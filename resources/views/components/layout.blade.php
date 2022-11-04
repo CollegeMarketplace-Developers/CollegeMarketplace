@@ -49,9 +49,8 @@
         <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
         <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
-        {{-- for shake animation --}}
-        <link rel="stylesheet" type="text/css" href="csshake.min.css">
-        <!-- or from surge.sh -->
+
+        <!-- shake animation from surge.sh -->
         <link rel="stylesheet" type="text/css" href="https://csshake.surge.sh/csshake.min.css">
     </head>
     <body>
@@ -65,12 +64,12 @@
             </div>
         </div> --}}
 
-        <div class="loader-wrapper">
+        {{-- <div class="loader-wrapper">
             <span class="loader">
                 <span class="loader-inner">
                 </span>
             </span>
-        </div>
+        </div> --}}
 
         <x-flash-message />
         {{-- this is body where anything can be shown --}}
@@ -81,27 +80,27 @@
         {{-- the footer section --}}
         @include('partials._footer')
 
-         <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
         <script>
             AOS.init();
-            function displayLoadingPage(){
-                var page = document.getElementById('loading-page');
-                page.style.display="flex";
-            }
+            // function displayLoadingPage(){
+            //     var page = document.getElementById('loading-page');
+            //     page.style.display="flex";
+            // }
 
-            window.addEventListener('change', (event) => {
-                document.getElementById('loading-page');
-                page.style.display='none';
-            });
-            window.addEventListener('load', (event) => {
-                document.getElementById('loading-page');
-                page.style.display='none';
-            });
-            $(document).ready(function(){
-            $(window).on("load",function(){
-                $(".loader-wrapper").fadeOut("slow");
-            });
-            });
+            // window.addEventListener('change', (event) => {
+            //     document.getElementById('loading-page');
+            //     page.style.display='none';
+            // });
+            // window.addEventListener('load', (event) => {
+            //     document.getElementById('loading-page');
+            //     page.style.display='none';
+            // });
+            // $(document).ready(function(){
+            // $(window).on("load",function(){
+            //     $(".loader-wrapper").fadeOut("slow");
+            // });
+            // });
 
         </script>
     </body>

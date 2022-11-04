@@ -71,7 +71,7 @@ Route::delete('/subleases/{sublease}',[SubleaseController::class, 'destroy'])->m
 //messaging system related routes
 Route::post('/sendmessage', [MessageController::class, 'postMessage'])->middleware('auth');
 Route::get('/messages', [MessageController::class, 'getMessages'])->middleware('auth');
-Route::get('/all/{type}/{itemID}/{ownerID}/{from}/messages', [MessageController::class, 'goToMessagePage'])->middleware('auth');
+// Route::get('/all/{type}/{itemID}/{ownerID}/{from}/messages', [MessageController::class, 'goToMessagePage'])->middleware('auth');
 
 //yard sales related routes
 Route::get('/yardsales/create', [YardSaleController::class, 'create'])->middleware('auth');

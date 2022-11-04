@@ -216,14 +216,14 @@
             </div>
         </div>
     </div>
-    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+    {{-- <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
     integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
-    crossorigin=""></script>
-    <script src="../../../node_modules/reverse-geocode/reverse-geocode.js"></script>
+    crossorigin=""></script> --}}
+    {{-- <script src="../../../node_modules/reverse-geocode/reverse-geocode.js"></script> --}}
     <script>
         function initAutocomplete() {
             address1Field = document.getElementById("street");
-            address2Field = document.getElementById("streetTwo");
+            address2Field = document.getElementById("apartment_floor");
             postalField = document.getElementById("postcode");
 
             // Create the autocomplete object, restricting the search predictions to
@@ -298,51 +298,6 @@
             // entry of subpremise information such as apartment, unit, or floor number.
             address2Field.focus();
         }
-
-
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition, showError, options);
-            } else { 
-                console.log("location not supported")
-            }
-        }
-
-        function showPosition(position) {
-            var latitude = position.coords.latitude;
-            var longitude =  position.coords.longitude;
-            console.log("Latitude: " + latitude + 
-            "<br>Longitude: " + longitude);
-
-            var test = document.getElementById("location");
-            test.innerHTML =" Latitude: " + latitude + 
-            " Longitude: " + longitude;
-            document.getElementById('latitude').value=latitude;
-            document.getElementById('longitude').value=longitude;
-        }
-
-        function showError(error) {
-            switch(error.code) {
-                case error.PERMISSION_DENIED:
-                    console.log("User denied the request for Geolocation.");
-                break;
-                case error.POSITION_UNAVAILABLE:
-                    console.log("Location information is unavailable.");
-                break;
-                case error.TIMEOUT:
-                    console.log( "The request to get user location timed out.");
-                break;
-                case error.UNKNOWN_ERROR:
-                    console.log( "An unknown error occurred.");
-                break;
-            }
-        }
-
-        var options = {
-            enableHighAccuracy: true,
-            timeout: 1000,
-            maximumAge: 0
-        };
 
         // source code from code pen
         // link: https://codepen.io/webbarks/pen/QWjwWNV
@@ -454,17 +409,22 @@
         const input = document.querySelector('.imgUpload');
         const preview = document.querySelector('.preview');
 
-        $('form').submit(function(e){
-            for(const tempFile of input.files){
-                if(validFileType(tempFile)) {
-                    if (tempFile.size > 5*1024*1024) {
-                        alert("Too large Image. Only images smaller than 5MB can be uploaded. Only images smaller then 5MB will be kept");
-                        e.preventDefault();
-                        break;
+        var canSubmit = true;
+        $(document).ready(function(){
+            $('form').submit(function(e){
+                for(const tempFile of input.files){
+                    if(validFileType(tempFile)) {
+                        if (tempFile.size > 5*1024*1024) {
+                            alert("Too large Image. Only images smaller than 5MB can be uploaded. Only images smaller then 5MB will be kept");
+                            e.preventDefault();
+                            canSubmit = false;
+                            break;
+                        }
                     }
-                }
-            }      
-            e.currentTarget.submit();     
+                }      
+                if(canSubmit){$('form').unbind('submit').submit();}
+                
+            });
         });
 
         // input.style.opacity = 0;
