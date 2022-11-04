@@ -173,7 +173,7 @@
                                         <option style = "text-align:center;">Status</option>
                                         <option style = "text-align:center;" value="Available">Available</option>
                                         <option style = "text-align:center;" value="Pending">Pending</option>
-                                        <option style = "text-align:center;" value="Sold">Sold</option>  
+                                        <option style = "text-align:center;" value="Rented">Rented</option>  
                                     </select>
                                 </form>
                                 
