@@ -84,35 +84,14 @@
             <ul class="notifications-panel">
                 <div class="messages-container">
                     <p>Messages</p>
-                    <div class="recently-messaged-list">
-                        <?php $__currentLoopData = range(0, 9); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $number): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <a href="">
-                                <img src="" alt="">
-                                <div class="recently-messaged-details">
-                                   <p>Jacob</p>
-                                   <p><span>You:</span> Yes it works. Sounds good to me</p>
-                                   <p>10 days ago</p>
-                                </div>
-                            </a>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    <div class="recently-messaged-list" id="displayUnreadMessages">
+                        
                     </div>
                 </div>
                 <div class="active-sales-container">
                     <p>Active Posts</p>
-                    <div class="sales-active-list">
-                        <?php $__currentLoopData = range(0, 9); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $number): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <a href="">
-                                <img src="" alt="">
-                                <div class="sales-active-details">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos, vero.</p>
-                                    <div class="details-row">
-                                        <p><i class="fa-solid fa-sack-dollar"></i>200</p>
-                                        <p><i class="fa-solid fa-message"></i> 100 </p>
-                                        <p><i class="fa-solid fa-eye"></i> 2.6k</p>
-                                    </div>
-                                </div>
-                            </a>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    <div class="sales-active-list" id="displayActivePosts">
+                        
                     </div>
                 </div>
             </ul>
@@ -159,21 +138,21 @@
             
             
             <?php if(auth()->guard()->check()): ?>
-                <label for="show-profile-panel" class="profile-icon">
-                    <i class="fa-solid fa-user"></i>
-                </label>
                 <label for="show-notifications-panel" class="bell-icon">
                     <i class="fa-solid fa-bell"></i>
                 </label>
-            <?php else: ?>
-                <label class="profile-icon">
-                    <a href="/login">
-                        <i class="fa-solid fa-user"></i>
-                    </a>
+                <label for="show-profile-panel" class="profile-icon">
+                    <i class="fa-solid fa-user"></i>
                 </label>
+            <?php else: ?>
                 <label class="bell-icon">
                     <a href="/login">
                         <i class="fa-solid fa-bell"></i>
+                    </a>
+                </label>
+                <label class="profile-icon">
+                    <a href="/login">
+                        <i class="fa-solid fa-user"></i>
                     </a>
                 </label>
             <?php endif; ?>
@@ -192,70 +171,199 @@
             <p>Please keep the search generic. Use simple words like table or camera</p>
         </div>
     </nav>
-    <script>
-        // var form = document.getElementById("logout-form");
+</div>
+<script>
+    // var form = document.getElementById("logout-form");
 
-        // document.getElementById("logout-button").addEventListener("click", function () {
-        // form.submit();
-        // });
-        $(document).ready(function(){
-           $('input.panel').on('change', function() {
-                $('input.panel').not(this).prop('checked', false);  
-            });
+    // document.getElementById("logout-button").addEventListener("click", function () {
+    // form.submit();
+    // });
+    $(document).ready(function(){
+        $('input.panel').on('change', function() {
+            $('input.panel').not(this).prop('checked', false);  
         });
+    });
 
-        function change() {
-            var decider = document.getElementById('show-notifications-panel');
-            if(decider.checked){
-                getUnreadMessages();
-                getActivePosts();
-            } else {
-                
+    function change() {
+        var decider = document.getElementById('show-notifications-panel');
+        if(decider.checked){
+            getUnreadMessages();
+            getActivePosts();
+        } else {
+            
+        }
+    }
+
+    function getUnreadMessages(){
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
+        $.ajax({
+            type:'GET',
+            url: '/unreadmessages',
+            data: 'JSON',
+            cache: false, //look into caching later
+            success:function(data) {
+                //add your success handling here
+                showUnreadMessages(data);
+            },
+            error: function (data, textStatus, errorThrown) {
+                console.log("failed");
+                //add your failed handling here
+            },
+        });
+    }
+
+    function showUnreadMessages(data){
+        $(document).ready(function(){
+            $('#displayUnreadMessages').empty();
+            // if there are no unread messages
+            if(data == null || data.length == 0 ){
+                console.log('no unread messages')
+                $wrapper = $("<div/>", {
+                    class: "no-unread-messages",
+                    html: $("<p />",{
+                        text: "No Unread Messages"
+                    })
+                });
+                $wrapper.appendTo('#displayUnreadMessages');
+            }else{
+                // if there are unread messages, loop through each one
+                jQuery.each(data, function(index, value){
+                    supportUnreadMessages(value);
+                });
             }
-        }
+        })
+        
+    }
 
-        function getUnreadMessages(){
-            //console.log("ran");
-            $.ajaxSetup({
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-            });
-            $.ajax({
-                type:'GET',
-                url: '/unreadmessages',
-                data: 'JSON',
-                cache: false, //look into caching later
-                success:function(data) {
-                    //add your success handling here
-                    //console.log("worked");
-                    console.log(data);
-                },
-                error: function (data, textStatus, errorThrown) {
-                    console.log("failed");
-                    //add your failed handling here
-                },
-            });
-        }
+    function supportUnreadMessages(obj){
+        $(document).ready(function(){
+            console.log(obj);
+            // $mainImg = jQuery.parseJSON(obj.image_uploads);
+            var $wrapper = $('<a>', {href: "localhost:3000"}),
+            $imgTag = $('<img />', {
+                id: 'test', 
+                src: '', 
+                alt: 'test'
+            }),
+            $recentlyMessagedDetails = $("<div />", {class: "recently-messaged-details"});
 
-        function getActivePosts(){
-            //console.log("ran");
-            $.ajaxSetup({
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-            });
-            $.ajax({
-                type:'GET',
-                url: '/activeposts',
-                data: 'JSON',
-                cache: false, //look into caching later
-                success:function(data) {
-                    //add your success handling here
-                    //console.log("worked");
-                    console.log(data);
-                },
-                error: function (data, textStatus, errorThrown) {
-                    console.log("failed");
-                    //add your failed handling here
-                },
-            });
-        }
-    </script>
-</div><?php /**PATH C:\xampp\htdocs\CollegeMarketplace\resources\views/partials/_navigationBar.blade.php ENDPATH**/ ?>
+            $recentlyMessagedDetails.append($('<p />', {text: obj.first_name + obj.last_name})).append($('<p />', {
+                html: $('<span />', {text: obj.message})
+            })).append($('<p />', {text: obj.updated_at}));
+
+            if(obj.for_listing != null){
+                $wrapper.attr("href", "/listings/"+obj.for_listing);
+            }else if(obj.for_rentals != null){
+                $wrapper.attr("href", "/rentables/"+obj.for_rentals);
+            }else if(obj.for_sublease != null){
+                $wrapper.attr("href", "/subleases/"+obj.for_sublease);
+            }
+            $wrapper.append($imgTag).append($recentlyMessagedDetails).appendTo('#displayUnreadMessages');
+        });
+    }
+
+    function getActivePosts(){
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
+        $.ajax({
+            type:'GET',
+            url: '/activeposts',
+            data: 'JSON',
+            cache: false, //look into caching later
+            success:function(data) {
+                showActivePosts(data);
+            },
+            error: function (data, textStatus, errorThrown) {
+                console.log("failed");
+                //add your failed handling here
+            },
+        });
+    }
+
+    function showActivePosts(data){
+        $(document).ready(function(){
+            $('#displayActivePosts').empty();
+            if(data == null || data.length == 0 ){
+                console.log('no active posts');
+                $wrapper = $("<div/>", {
+                    class: "no-active-posts",
+                    html: $("<p />",{
+                        text: "No Active Posts"
+                    })
+                });
+                console.log("right before appending")
+                $wrapper.appendTo('#displayActivePosts');
+            }else{
+                jQuery.each(data, function(index, value){
+                    supportActivePosts(value);
+                });
+            }
+        })
+    }
+
+    function supportActivePosts(obj){
+        $(document).ready(function(){
+            $titleImage = jQuery.parseJSON(obj.image_uploads);
+            var $wrapper = $('<a>', {href: "localhost:3000"}),
+            $imgTag = $('<img />', {
+                id: 'test', 
+                src: 'https://cmimagestoragebucket.s3.amazonaws.com/'+$titleImage[0], 
+                alt: 'test'
+            }),
+            $displayActiveDetails = $("<div />", {class: "sales-active-details"});
+            
+            if(obj.item_name != null){
+                var $postTitle = $("<p />", {text: obj.item_name}),
+                    $detailsRow = $("<div />", {
+                        class: "details-row",
+                        html: $('<p />').append(
+                            $('<i />', {
+                                class: "fa-solid fa-sack-dollar"
+                            })
+                        ).append($("<span />", {text: obj.price})).add($("<p />").append(
+                            $('<i />', {
+                                class: "fa-solid fa-eye"
+                            })
+                        ).append($("<span />", {text: obj.view_count})))
+                    }); 
+                $wrapper.attr("href", "/listings/"+obj.id)
+                $wrapper.append($imgTag).append($displayActiveDetails.append($postTitle).append($detailsRow)).appendTo('#displayActivePosts'); 
+            }else if(obj.rental_title != null){
+                var $postTitle = $("<p />", {text: obj.rental_title}),
+                    $detailsRow = $("<div />", {
+                        class: "details-row",
+                        html: $('<p />').append(
+                            $('<i />', {
+                                class: "fa-solid fa-sack-dollar"
+                            })
+                        ).append($("<span />", {text: obj.rental_charging})).add($("<p />").append(
+                            $('<i />', {
+                                class: "fa-solid fa-eye"
+                            })
+                        ).append($("<span />", {text: obj.view_count})))
+                    }); 
+                $wrapper.attr("href", "/rentables/"+obj.id)
+                $wrapper.append($imgTag).append($displayActiveDetails.append($postTitle).append($detailsRow)).appendTo('#displayActivePosts'); 
+            }else if(obj.sublease_title != null){
+                var $postTitle = $("<p />", {text: obj.sublease_title}),
+                    $detailsRow = $("<div />", {
+                        class: "details-row",
+                        html: $('<p />').append(
+                            $('<i />', {
+                                class: "fa-solid fa-sack-dollar"
+                            })
+                        ).append($("<span />", {text: obj.rent})).add($("<p />").append(
+                            $('<i />', {
+                                class: "fa-solid fa-eye"
+                            })
+                        ).append($("<span />", {text: obj.view_count})))
+                    }); 
+                $wrapper.attr("href", "/subleases/"+obj.id)
+                $wrapper.append($imgTag).append($displayActiveDetails.append($postTitle).append($detailsRow)).appendTo('#displayActivePosts'); 
+            }
+        });
+    }
+</script><?php /**PATH C:\xampp\htdocs\CollegeMarketplace\resources\views/partials/_navigationBar.blade.php ENDPATH**/ ?>
