@@ -131,18 +131,19 @@ class Controller extends BaseController
             }
         }
         
+        // dd(collect($electronicsItems)->merge($electronicsRent)->sortByDesc('created_at')->slice(0,16)->all());
         return view('main.index', [
             'listings'=> $totalResults,
-            'furnitureItems' => collect($furnitureItems)->merge($furnitureRent)->sortByDesc('created_at')->slice(0,16),
-            'clothesItems' => collect($clothesItems)->merge($clothesRent)->sortByDesc('created_at')->slice(0,16),
-            'electronicsItems' => collect($electronicsItems)->merge($electronicsRent)->sortByDesc('created_at')->slice(0,16),
-            'kitchenItems' => collect($kitchenItems)->merge($kitchenRent)->sortByDesc('created_at')->slice(0,16),
-            'schoolItems' => collect($schoolItems)->merge($schoolRent)->sortByDesc('created_at')->slice(0,16),
-            'bookItems' => collect($bookItems)->merge($bookRent)->sortByDesc('created_at')->slice(0,16),
+            'furnitureItems' => collect($furnitureItems)->merge($furnitureRent)->sortByDesc('created_at')->slice(0,16)->all(),
+            'clothesItems' => collect($clothesItems)->merge($clothesRent)->sortByDesc('created_at')->slice(0,16)->all(),
+            'electronicsItems' => collect($electronicsItems)->merge($electronicsRent)->sortByDesc('created_at')->slice(0,16)->all(),
+            'kitchenItems' => collect($kitchenItems)->merge($kitchenRent)->sortByDesc('created_at')->slice(0,16)->all(),
+            'schoolItems' => collect($schoolItems)->merge($schoolRent)->sortByDesc('created_at')->slice(0,16)->all(),
+            'bookItems' => collect($bookItems)->merge($bookRent)->sortByDesc('created_at')->slice(0,16)->all(),
             //'listingsNear' => Listing::latest()->where('status', '!=', 'Sold' )->take(10)->get(),
             'listingsNear' => $stack,
-            'rentables' => Rentable::latest()->where('status', 'like', 'Available' )->take(10)->get(),
-            'subleases'=>Sublease::latest()->where('status', 'like', 'Available')->take(10)->get(),
+            'rentables' => Rentable::latest()->where('status', 'like', 'Available' )->take(10)->get()->all(),
+            'subleases'=>Sublease::latest()->where('status', 'like', 'Available')->take(10)->get()->all(),
             'user' => $user
         ]);
     }

@@ -35,42 +35,44 @@
         </div>
     </div>
     <script>
-
-        tns({
-            container: ".slider2",
-            "slideBy":1,
-            "speed":400,
-            "nav":false,
-            autoplayButton: false,
-            autoplay: true,
-            autoplayText:["",""],
-            controlsContainer:"#controls2",
-            responsive:{
-                1500:{
-                    items: 5,
-                    gutter: 5
-                },
-                1200:{
-                    items: 4,
-                    gutter: 10
-                },
-                // 1100:{
-                //     items: 3,
-                //     gutter: 15
-                // },
-                1024:{
-                    items: 3,
-                    gutter: 15
-                },
-                700:{
-                    items: 2,
-                    gutter: 20
-                },
-                480:{
-                    items: 1
+        var rentablesArray =  {!! json_encode($rentables) !!};
+        if(rentablesArray.length > 0){
+            tns({
+                container: ".slider2",
+                "slideBy":1,
+                "speed":400,
+                "nav":false,
+                autoplayButton: false,
+                autoplay: true,
+                autoplayText:["",""],
+                controlsContainer:"#controls2",
+                responsive:{
+                    1500:{
+                        items: 5,
+                        gutter: 5
+                    },
+                    1200:{
+                        items: 4,
+                        gutter: 10
+                    },
+                    // 1100:{
+                    //     items: 3,
+                    //     gutter: 15
+                    // },
+                    1024:{
+                        items: 3,
+                        gutter: 15
+                    },
+                    700:{
+                        items: 2,
+                        gutter: 20
+                    },
+                    480:{
+                        items: 1
+                    }
                 }
-            }
-        })
+            })
+        }
 
     </script>
 </section>

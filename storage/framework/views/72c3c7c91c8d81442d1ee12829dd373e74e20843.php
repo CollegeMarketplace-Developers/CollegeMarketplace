@@ -23,8 +23,12 @@
             <?php echo $__env->make('partials._componentDesignOne', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
 
+
+
         
-       
+
+
+        
         <?php if(!empty($listingsNear)): ?> 
             <div class = "listings-parent-container">
                 <?php echo $__env->make('partials._listingCarousel', ['listings' => $listingsNear, 'message' => 'Within A Mile', 'carouselClass'=>'my-slider','carouselControls' => 'controls', 'carouselP' =>'previous previous1', 'carouselN' => 'next next1'], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -110,7 +114,8 @@
                 data: 'JSON',
                 cache: false, //look into caching later
                 success:function(data) {
-                    console.log(data);
+                    console.log("Listings near the user: ", data);
+                    // console.log(data);
                     //add your success handling here
                 },
                 error: function (data, textStatus, errorThrown) {

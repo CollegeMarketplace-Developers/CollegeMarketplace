@@ -436,7 +436,7 @@
 .about-seller-and-chat {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
     flex-grow: 1;
     height: fit-content;
 }

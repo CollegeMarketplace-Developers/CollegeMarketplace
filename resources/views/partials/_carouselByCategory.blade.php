@@ -49,220 +49,240 @@
             }
         }
     }
+    var furnitureArray =  @json(array_values($furnitureItems), JSON_PRETTY_PRINT) ;
+    var clothesArray =  {!! json_encode(array_values($clothesItems)) !!};
+    var electronicsArray = {!! json_encode(array_values($electronicsItems)) !!};
+    var kitchenArray =  {!! json_encode(array_values($kitchenItems)) !!};
+    var schoolArray =  {!! json_encode(array_values($schoolItems)) !!};
+    var bookArray =  {!! json_encode(array_values($bookItems)) !!};
 
-    tns({
-        container: ".furniture-slider",
-        "slideBy":1,
-        "speed":400,
-        "nav":false,
-        autoplayButton: false,
-        autoplay: true,
-        autoplayText:["",""],
-        controlsContainer:"#furniture-controls",
-        responsive:{
-            1500:{
-                items: 5,
-                gutter: 5
-            },
-            1200:{
-                items: 4,
-                gutter: 10
-            },
-            // 1100:{
-            //     items: 3,
-            //     gutter: 15
-            // },
-            1024:{
-                items: 3,
-                gutter: 15
-            },
-            700:{
-                items: 2,
-                gutter: 20
-            },
-            480:{
-                items: 1
-            }
-        }
-    })
+    // console.log("furniture items: ", furnitureArray.length, furnitureArray);
+    // console.log("clothes items: " , clothesArray.length, clothesArray);
+    // console.log("electronics items: ",  electronicsArray.length, electronicsArray);
+    // console.log("kitchen items: " , kitchenArray.length, kitchenArray);
+    // console.log("school items: " , schoolArray.length, schoolArray);
+    // console.log("book items: " , bookArray.length, bookArray);
 
-    tns({
-        container: ".clothes-slider",
-        "slideBy":1,
-        "speed":400,
-        "nav":false,
-        autoplayButton: false,
-        autoplay: true,
-        autoplayText:["",""],
-        controlsContainer:"#clothes-controls",
-        responsive:{
-            1500:{
-                items: 5,
-                gutter: 5
-            },
-            1200:{
-                items: 4,
-                gutter: 10
-            },
-            // 1100:{
-            //     items: 3,
-            //     gutter: 15
-            // },
-            1024:{
-                items: 3,
-                gutter: 15
-            },
-            700:{
-                items: 2,
-                gutter: 20
-            },
-            480:{
-                items: 1
+    if(furnitureArray.length>0){
+        tns({
+            container: ".furniture-slider",
+            "slideBy":1,
+            "speed":400,
+            "nav":false,
+            autoplayButton: false,
+            autoplay: true,
+            autoplayText:["",""],
+            controlsContainer:"#furniture-controls",
+            responsive:{
+                1500:{
+                    items: 5,
+                    gutter: 5
+                },
+                1200:{
+                    items: 4,
+                    gutter: 10
+                },
+                // 1100:{
+                //     items: 3,
+                //     gutter: 15
+                // },
+                1024:{
+                    items: 3,
+                    gutter: 15
+                },
+                700:{
+                    items: 2,
+                    gutter: 20
+                },
+                480:{
+                    items: 1
+                }
             }
-        }
-    })
-
-    tns({
-        container: ".electronics-slider",
-        "slideBy":1,
-        "speed":400,
-        "nav":false,
-        autoplayButton: false,
-        autoplay: true,
-        autoplayText:["",""],
-        controlsContainer:"#electronics-controls",
-        responsive:{
-            1500:{
-                items: 5,
-                gutter: 5
-            },
-            1200:{
-                items: 4,
-                gutter: 10
-            },
-            // 1100:{
-            //     items: 3,
-            //     gutter: 15
-            // },
-            1024:{
-                items: 3,
-                gutter: 15
-            },
-            700:{
-                items: 2,
-                gutter: 20
-            },
-            480:{
-                items: 1
+        })
+    }
+    if(clothesArray.length>0){
+        tns({
+            container: ".clothes-slider",
+            "slideBy":1,
+            "speed":400,
+            "nav":false,
+            autoplayButton: false,
+            autoplay: true,
+            autoplayText:["",""],
+            controlsContainer:"#clothes-controls",
+            responsive:{
+                1500:{
+                    items: 5,
+                    gutter: 5
+                },
+                1200:{
+                    items: 4,
+                    gutter: 10
+                },
+                // 1100:{
+                //     items: 3,
+                //     gutter: 15
+                // },
+                1024:{
+                    items: 3,
+                    gutter: 15
+                },
+                700:{
+                    items: 2,
+                    gutter: 20
+                },
+                480:{
+                    items: 1
+                }
             }
-        }
-    })
-
-    tns({
-        container: ".kitchen-slider",
-        "slideBy":1,
-        "speed":400,
-        "nav":false,
-        autoplayButton: false,
-        autoplay: true,
-        autoplayText:["",""],
-        controlsContainer:"#kitchen-controls",
-        responsive:{
-            1500:{
-                items: 5,
-                gutter: 5
-            },
-            1200:{
-                items: 4,
-                gutter: 10
-            },
-            // 1100:{
-            //     items: 3,
-            //     gutter: 15
-            // },
-            1024:{
-                items: 3,
-                gutter: 15
-            },
-            700:{
-                items: 2,
-                gutter: 20
-            },
-            480:{
-                items: 1
+        })
+    }
+    if(electronicsArray.length>0){
+        tns({
+            container: ".electronics-slider",
+            "slideBy":1,
+            "speed":400,
+            "nav":false,
+            autoplayButton: false,
+            autoplay: true,
+            autoplayText:["",""],
+            controlsContainer:"#electronics-controls",
+            responsive:{
+                1500:{
+                    items: 5,
+                    gutter: 5
+                },
+                1200:{
+                    items: 4,
+                    gutter: 10
+                },
+                // 1100:{
+                //     items: 3,
+                //     gutter: 15
+                // },
+                1024:{
+                    items: 3,
+                    gutter: 15
+                },
+                700:{
+                    items: 2,
+                    gutter: 20
+                },
+                480:{
+                    items: 1
+                }
             }
-        }
-    })
-
-    tns({
-        container: ".school-slider",
-        "slideBy":1,
-        "speed":400,
-        "nav":false,
-        autoplayButton: false,
-        autoplay: true,
-        autoplayText:["",""],
-        controlsContainer:"#school-controls",
-        responsive:{
-            1500:{
-                items: 5,
-                gutter: 5
-            },
-            1200:{
-                items: 4,
-                gutter: 10
-            },
-            // 1100:{
-            //     items: 3,
-            //     gutter: 15
-            // },
-            1024:{
-                items: 3,
-                gutter: 15
-            },
-            700:{
-                items: 2,
-                gutter: 20
-            },
-            480:{
-                items: 1
+        })
+    }
+    if(kitchenArray.length > 0){
+        tns({
+            container: ".kitchen-slider",
+            "slideBy":1,
+            "speed":400,
+            "nav":false,
+            autoplayButton: false,
+            autoplay: true,
+            autoplayText:["",""],
+            controlsContainer:"#kitchen-controls",
+            responsive:{
+                1500:{
+                    items: 5,
+                    gutter: 5
+                },
+                1200:{
+                    items: 4,
+                    gutter: 10
+                },
+                // 1100:{
+                //     items: 3,
+                //     gutter: 15
+                // },
+                1024:{
+                    items: 3,
+                    gutter: 15
+                },
+                700:{
+                    items: 2,
+                    gutter: 20
+                },
+                480:{
+                    items: 1
+                }
             }
-        }
-    })
-
-    tns({
-        container: ".book-slider",
-        "slideBy":1,
-        "speed":400,
-        "nav":false,
-        autoplayButton: false,
-        autoplay: true,
-        autoplayText:["",""],
-        controlsContainer:"#book-controls",
-        responsive:{
-            1500:{
-                items: 5,
-                gutter: 5
-            },
-            1200:{
-                items: 4,
-                gutter: 10
-            },
-            // 1100:{
-            //     items: 3,
-            //     gutter: 15
-            // },
-            1024:{
-                items: 3,
-                gutter: 15
-            },
-            700:{
-                items: 2,
-                gutter: 20
-            },
-            480:{
-                items: 1
+        })
+    }
+    if(schoolArray.length > 0){
+        tns({
+            container: ".school-slider",
+            "slideBy":1,
+            "speed":400,
+            "nav":false,
+            autoplayButton: false,
+            autoplay: true,
+            autoplayText:["",""],
+            controlsContainer:"#school-controls",
+            responsive:{
+                1500:{
+                    items: 5,
+                    gutter: 5
+                },
+                1200:{
+                    items: 4,
+                    gutter: 10
+                },
+                // 1100:{
+                //     items: 3,
+                //     gutter: 15
+                // },
+                1024:{
+                    items: 3,
+                    gutter: 15
+                },
+                700:{
+                    items: 2,
+                    gutter: 20
+                },
+                480:{
+                    items: 1
+                }
             }
-        }
-    })
+        })
+    }   
+    if(bookArray.length > 0){
+        tns({
+            container: ".book-slider",
+            "slideBy":1,
+            "speed":400,
+            "nav":false,
+            autoplayButton: false,
+            autoplay: true,
+            autoplayText:["",""],
+            controlsContainer:"#book-controls",
+            responsive:{
+                1500:{
+                    items: 5,
+                    gutter: 5
+                },
+                1200:{
+                    items: 4,
+                    gutter: 10
+                },
+                // 1100:{
+                //     items: 3,
+                //     gutter: 15
+                // },
+                1024:{
+                    items: 3,
+                    gutter: 15
+                },
+                700:{
+                    items: 2,
+                    gutter: 20
+                },
+                480:{
+                    items: 1
+                }
+            }
+        })
+    }
 </script>
