@@ -52,7 +52,7 @@
                                     url: '',
                                     text: 'Check out this listing!'
                                     }).then(() => {
-                                        console.log('Thanks for sharing!');
+                                    console.log('Thanks for sharing!');
                                     })
                                     .catch(console.error);
                                 } 
@@ -60,6 +60,10 @@
                                         // Fallback
                                         shareDialog.classList.add('is-open');
                                 }
+                                });
+
+                                closeButton.addEventListener('click', event => {
+                                shareDialog.classList.remove('is-open');
                                 });
                         </script>
                             @php
@@ -125,8 +129,6 @@
                                     <p>Condition:</p>
                                     <span>{{$listing->condition}}</span>
                                 </div>
-                            </div>
-                            <div class="product-extra">
                                 @php
                                     $listingController::updateViewCount($listing);
                                 @endphp
@@ -146,115 +148,91 @@
                                         @endforeach
                                     </div>
                                 </div>
+                                <div>
+                                    <p>Date Posted:</p>
+                                    <span>{{$date}}</span>
+                                </div>
                             </div>
-                            <div class = "date-posted">
-                                <p>Date Posted:</p>
-                                <span>{{$date}}</span>
-                            </div>
+                        </div>
+                        <div class="map-container" id = "map-container">
                         </div>
                     </div>
                 </div>
                 <div class="selected-row">
-                    <div class ="description-chat">
-                        <div class="product-description-area">
-                            <div class="controls">
-                                {{-- edit --}}
-                                {{-- delete --}}
-                                {{-- share --}}
-                                {{-- chat with owner --}}
-                                @if($currentUser != null and $listing->user_id == $currentUser->id)
-                                    <form method="POST" action="/listings/{{$listing->id}}/update">
-                                        @csrf
-                                        @method('PUT')
-                                        <select name="status" id="status" style = " font-size: 17px; text-align:center;" onchange="this.form.submit()">
-                                            <option style = "text-align:center;">Status</option>
-                                            <option style = "text-align:center;" value="Available">Available</option>
-                                            <option style = "text-align:center;" value="Pending">Pending</option>
-                                            <option style = "text-align:center;" value="Sold">Sold</option>  
-                                        </select>
-                                    </form>
-                                    
+                    <div class="product-description-area">
+                        <div class="controls">
+                            {{-- edit --}}
+                            {{-- delete --}}
+                            {{-- share --}}
+                            {{-- chat with owner --}}
+                            @if($currentUser != null and $listing->user_id == $currentUser->id)
+                                <form method="POST" action="/listings/{{$listing->id}}/update">
+                                    @csrf
+                                    @method('PUT')
+                                    <select name="status" id="status" style = " font-size: 17px; text-align:center;" onchange="this.form.submit()">
+                                        <option style = "text-align:center;">Status</option>
+                                        <option style = "text-align:center;" value="Available">Available</option>
+                                        <option style = "text-align:center;" value="Pending">Pending</option>
+                                        <option style = "text-align:center;" value="Sold">Sold</option>  
+                                    </select>
+                                </form>
                                 
-                                    <form class = "editForm" action="/listings/{{$listing->id}}/edit" method = "GET">
-                                        @csrf
-                                        <input type="hidden" name="id" value="{{$listing->id}}">
-                                        <button><i class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    </form>
+                            
+                                <form class = "editForm" action="/listings/{{$listing->id}}/edit" method = "GET">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{$listing->id}}">
+                                    <button><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                </form>
 
-                                    <span id="delete-modal-trigger">
-                                        <i class="fa fa-trash" ></i>
-                                    </span>
-                                @endif
-                                
-                            </div>
-                            <h1>Description</h1>
-                            <p>{{$listing->description}}</p>
-                        </div>
-                        <div class="chat-container">
-                            {{-- if I am the listing owner show user panel --}}
-                            @if($currentUser != null && $listing->user_id == $currentUser->id)
-                                <div class="user-wrapper">
-                                    <ul class="users">
-                                        @if(count($allUsers) >= 1)
-                                            @foreach($allUsers as $user)
-                                                <li class="user" id="{{ $user->id }}">
-
-                                                    @if($user->unread)
-                                                        <span class="pending">{{ $user->unread }}</span>
-                                                    @endif
-
-                                                    
-                                                    <div class="media-left">
-                                                        <img src="{{ $user->avatar }}" alt="" class="media-object">
-                                                    </div>
-
-                                                    <div class="media-body">
-                                                        <p class="name">{{ $user->first_name }} {{$user->last_name }} | ID: {{$user->id}} </p>
-                                                        <p class='email'>{{$user ->email}} </p>   
-                                                    </div>
-                                                </li>
-                                            @endforeach
-                                        @else
-                                            <li class="no-messages"><span>You have no messages</span></li>
-                                        @endif
-                                    </ul>
-                                </div>
+                                <span id="delete-modal-trigger">
+                                    <i class="fa fa-trash" ></i>
+                                </span>
                             @endif
-
-                            {{-- if I am not the listing owner --}}
-                            <div id="scroll-to-bottom" class="messages-container active">
-
-                                {{-- if I am the listing owner, display back button --}}
-                                @if($currentUser != null && $listing->user_id == $currentUser->id)
-                                    <a class="message-back">
-                                        <i class="fa-solid fa-arrow-left"></i>
-                                    </a>
-                                @else
-                                {{-- if i am not listing owner, just continue chatting | display name of person I am chatting with--}}
-                                    <a class="back-placeholder">
-                                        Chat with {{$listingOwner->first_name}} {{$listingOwner->last_name}}
-                                    </a>
-                                @endif
-
-                                <ul class="messages" id='messages'>
-                                    
-                                </ul>
-
-                                <div id = "input-text" class=input-text>
-                                    <input type="text" name="message" placeholder="Message Seller" class="submit">
-                                </div>
-                            </div> 
+                            
                         </div>
+                        <h1>Description</h1>
+                        <p>{{$listing->description}}</p>
                     </div>
                     <div class="about-seller-and-chat">
-                        <div class="map-container" id = "map-container">
-                        </div>
                         <div class="about-seller">
                             <i class="fa-solid fa-user"></i>
                             <div>
                                 <p>Name</p>
                                 <p>Joined: <span>2001-14-16</span></p>
                             </div>
+                        </div>
+                        <div class="chat-seller">
+                            @php
+                                $type = null;
+                                if($listing instanceof \App\Models\Listing){
+                                    $type="listing";
+                                }
+                                elseif($listing instanceof \App\Models\Rentable){
+                                    $type="rentable";
+                                }
+                                else {
+                                    $type="lease";
+                                }
+                                // this is the listing owner
+                                $itemID = $listing->id;
+                                $ownerID = $listing->user_id;
+
+                                // this is the current user logged in and the one messaging the owner
+                                $from = $currentUser ? $currentUser->id : -1;
+                                $item = $listing->id;
+                            @endphp
+
+                            @if($currentUser != null && $currentUser->id == $ownerID)
+                                {{-- if post is mine --}}
+                                <a href="/all/{{$type}}/{{$itemID}}/{{$ownerID}}/{{$from}}/messages">
+                                    <p>My Messages</p>
+                                </a>
+                            @else
+                                {{-- only go to this link if I am not the listing owner, aka I'm messaging buyer --}}
+                                <a href="/all/{{$type}}/{{$itemID}}/{{$ownerID}}/{{$from}}/messages">
+                                    <p>Chat with Seller</p>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -379,9 +357,7 @@
         }
         let address = ['{{$listing->street}}', '{{$listing->city}}', '{{$listing->state}}', '{{$listing->postcode}}', '{{$listing->country}}'];
         
-        // console.log("This is the address for the map: " + address);
-        console.log("This is the url for the map:  " + getGoogleMapsImage(address));
-        
+        console.log(getGoogleMapsImage(address));
         function myFunction(imgs) {
             var expandImg = document.getElementById("expandedImg");
             expandImg.src = imgs.src;

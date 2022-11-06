@@ -60,7 +60,7 @@
                                     url: '',
                                     text: 'Check out this listing!'
                                     }).then(() => {
-                                        console.log('Thanks for sharing!');
+                                    console.log('Thanks for sharing!');
                                     })
                                     .catch(console.error);
                                 } 
@@ -68,6 +68,10 @@
                                         // Fallback
                                         shareDialog.classList.add('is-open');
                                 }
+                                });
+
+                                closeButton.addEventListener('click', event => {
+                                shareDialog.classList.remove('is-open');
                                 });
                         </script>
                             <?php
@@ -133,8 +137,6 @@
                                     <p>Condition:</p>
                                     <span><?php echo e($listing->condition); ?></span>
                                 </div>
-                            </div>
-                            <div class="product-extra">
                                 <?php
                                     $listingController::updateViewCount($listing);
                                 ?>
@@ -154,116 +156,91 @@
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </div>
                                 </div>
+                                <div>
+                                    <p>Date Posted:</p>
+                                    <span><?php echo e($date); ?></span>
+                                </div>
                             </div>
-                            <div class = "date-posted">
-                                <p>Date Posted:</p>
-                                <span><?php echo e($date); ?></span>
-                            </div>
+                        </div>
+                        <div class="map-container" id = "map-container">
                         </div>
                     </div>
                 </div>
                 <div class="selected-row">
-                    <div class ="description-chat">
-                        <div class="product-description-area">
-                            <div class="controls">
-                                
-                                
-                                
-                                
-                                <?php if($currentUser != null and $listing->user_id == $currentUser->id): ?>
-                                    <form method="POST" action="/listings/<?php echo e($listing->id); ?>/update">
-                                        <?php echo csrf_field(); ?>
-                                        <?php echo method_field('PUT'); ?>
-                                        <select name="status" id="status" style = " font-size: 17px; text-align:center;" onchange="this.form.submit()">
-                                            <option style = "text-align:center;">Status</option>
-                                            <option style = "text-align:center;" value="Available">Available</option>
-                                            <option style = "text-align:center;" value="Pending">Pending</option>
-                                            <option style = "text-align:center;" value="Sold">Sold</option>  
-                                        </select>
-                                    </form>
-                                    
-                                
-                                    <form class = "editForm" action="/listings/<?php echo e($listing->id); ?>/edit" method = "GET">
-                                        <?php echo csrf_field(); ?>
-                                        <input type="hidden" name="id" value="<?php echo e($listing->id); ?>">
-                                        <button><i class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    </form>
-
-                                    <span id="delete-modal-trigger">
-                                        <i class="fa fa-trash" ></i>
-                                    </span>
-                                <?php endif; ?>
-                                
-                            </div>
-                            <h1>Description</h1>
-                            <p><?php echo e($listing->description); ?></p>
-                        </div>
-                        <div class="chat-container">
+                    <div class="product-description-area">
+                        <div class="controls">
                             
-                            <?php if($currentUser != null && $listing->user_id == $currentUser->id): ?>
-                                <div class="user-wrapper">
-                                    <ul class="users">
-                                        <?php if(count($allUsers) >= 1): ?>
-                                            <?php $__currentLoopData = $allUsers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <li class="user" id="<?php echo e($user->id); ?>">
+                            
+                            
+                            
+                            <?php if($currentUser != null and $listing->user_id == $currentUser->id): ?>
+                                <form method="POST" action="/listings/<?php echo e($listing->id); ?>/update">
+                                    <?php echo csrf_field(); ?>
+                                    <?php echo method_field('PUT'); ?>
+                                    <select name="status" id="status" style = " font-size: 17px; text-align:center;" onchange="this.form.submit()">
+                                        <option style = "text-align:center;">Status</option>
+                                        <option style = "text-align:center;" value="Available">Available</option>
+                                        <option style = "text-align:center;" value="Pending">Pending</option>
+                                        <option style = "text-align:center;" value="Sold">Sold</option>  
+                                    </select>
+                                </form>
+                                
+                            
+                                <form class = "editForm" action="/listings/<?php echo e($listing->id); ?>/edit" method = "GET">
+                                    <?php echo csrf_field(); ?>
+                                    <input type="hidden" name="id" value="<?php echo e($listing->id); ?>">
+                                    <button><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                </form>
 
-                                                    <?php if($user->unread): ?>
-                                                        <span class="pending"><?php echo e($user->unread); ?></span>
-                                                    <?php endif; ?>
-
-                                                    
-                                                    <div class="media-left">
-                                                        <img src="<?php echo e($user->avatar); ?>" alt="" class="media-object">
-                                                    </div>
-
-                                                    <div class="media-body">
-                                                        <p class="name"><?php echo e($user->first_name); ?> <?php echo e($user->last_name); ?> | ID: <?php echo e($user->id); ?> </p>
-                                                        <p class='email'><?php echo e($user ->email); ?> </p>   
-                                                    </div>
-                                                </li>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        <?php else: ?>
-                                            <li class="no-messages"><span>You have no messages</span></li>
-                                        <?php endif; ?>
-                                    </ul>
-                                </div>
+                                <span id="delete-modal-trigger">
+                                    <i class="fa fa-trash" ></i>
+                                </span>
                             <?php endif; ?>
-
                             
-                            <div id="scroll-to-bottom" class="messages-container active">
-
-                                
-                                <?php if($currentUser != null && $listing->user_id == $currentUser->id): ?>
-                                    <a class="message-back">
-                                        <i class="fa-solid fa-arrow-left"></i>
-                                    </a>
-                                <?php else: ?>
-                                
-                                    <a class="back-placeholder">
-                                        Chat with <?php echo e($listingOwner->first_name); ?> <?php echo e($listingOwner->last_name); ?>
-
-                                    </a>
-                                <?php endif; ?>
-
-                                <ul class="messages" id='messages'>
-                                    
-                                </ul>
-
-                                <div id = "input-text" class=input-text>
-                                    <input type="text" name="message" placeholder="Message Seller" class="submit">
-                                </div>
-                            </div> 
                         </div>
+                        <h1>Description</h1>
+                        <p><?php echo e($listing->description); ?></p>
                     </div>
                     <div class="about-seller-and-chat">
-                        <div class="map-container" id = "map-container">
-                        </div>
                         <div class="about-seller">
                             <i class="fa-solid fa-user"></i>
                             <div>
                                 <p>Name</p>
                                 <p>Joined: <span>2001-14-16</span></p>
                             </div>
+                        </div>
+                        <div class="chat-seller">
+                            <?php
+                                $type = null;
+                                if($listing instanceof \App\Models\Listing){
+                                    $type="listing";
+                                }
+                                elseif($listing instanceof \App\Models\Rentable){
+                                    $type="rentable";
+                                }
+                                else {
+                                    $type="lease";
+                                }
+                                // this is the listing owner
+                                $itemID = $listing->id;
+                                $ownerID = $listing->user_id;
+
+                                // this is the current user logged in and the one messaging the owner
+                                $from = $currentUser ? $currentUser->id : -1;
+                                $item = $listing->id;
+                            ?>
+
+                            <?php if($currentUser != null && $currentUser->id == $ownerID): ?>
+                                
+                                <a href="/all/<?php echo e($type); ?>/<?php echo e($itemID); ?>/<?php echo e($ownerID); ?>/<?php echo e($from); ?>/messages">
+                                    <p>My Messages</p>
+                                </a>
+                            <?php else: ?>
+                                
+                                <a href="/all/<?php echo e($type); ?>/<?php echo e($itemID); ?>/<?php echo e($ownerID); ?>/<?php echo e($from); ?>/messages">
+                                    <p>Chat with Seller</p>
+                                </a>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -388,9 +365,7 @@
         }
         let address = ['<?php echo e($listing->street); ?>', '<?php echo e($listing->city); ?>', '<?php echo e($listing->state); ?>', '<?php echo e($listing->postcode); ?>', '<?php echo e($listing->country); ?>'];
         
-        // console.log("This is the address for the map: " + address);
-        console.log("This is the url for the map:  " + getGoogleMapsImage(address));
-        
+        console.log(getGoogleMapsImage(address));
         function myFunction(imgs) {
             var expandImg = document.getElementById("expandedImg");
             expandImg.src = imgs.src;

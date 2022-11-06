@@ -49,6 +49,8 @@
     </main>
 
     <script>
+
+        //functionality for asking user location on index page load
         if("{{$user == null}}") {
             getLocation();
         }

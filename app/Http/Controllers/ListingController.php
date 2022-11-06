@@ -80,9 +80,7 @@ class ListingController extends Controller
             'listings' => $listingQuery->all(),
             'listingOwner' => User::find($listing->user_id),
             // current users id
-            'currentUser' => Auth::guest() ? null : User::find(auth()->user()->id),
-            // all users that have sent a message regarding current listing
-            'allUsers' => $userQuery,
+            'currentUser' => Auth::guest() ? null : User::find(auth()->user()->id)
         ]);
     }
 
