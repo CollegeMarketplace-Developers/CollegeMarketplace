@@ -55,6 +55,7 @@ class ListingController extends Controller
                 $query->where('status', 'NOT LIKE', 'SOLD');
             })->limit(10)->get();
 
+            // dd($listingQuery);
         $userQuery = null;
         if(Auth::user()){
             $userQuery = DB::select(
@@ -70,11 +71,13 @@ class ListingController extends Controller
         }
 
         header("Cache-Control: must-revalidate");
+
+        // dd($listingQuery->all());
         return view('listings.show',[
             // the current listings we are looking at
             'listing' => $listing,
             // list of relatd listings to be used in carousel
-            'listings' => $listingQuery,
+            'listings' => $listingQuery->all(),
             'listingOwner' => User::find($listing->user_id),
             // current users id
             'currentUser' => Auth::guest() ? null : User::find(auth()->user()->id),

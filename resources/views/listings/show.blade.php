@@ -386,40 +386,43 @@
             var expandImg = document.getElementById("expandedImg");
             expandImg.src = imgs.src;
         }
+
         var listing_id = "{{$listing->id}}"
         var listingOwner = "{{$listing->user_id}}";
         var userLoggedIn = "{{$currentUser ? $currentUser->id : -1}}";
         var receiverSelected = null; //the person whose chat we have open
 
         //delete modal
-        var deleteModal = document.getElementById("delete-modal");
-        var deleteButton = document.getElementById("delete-modal-trigger");
-        var deleteSpan = document.getElementsByClassName("close")[0];
-        var cancelBtn = document.getElementById('cancelbtn');
-        deleteButton.onclick = function() {
-            deleteModal.style.display = "grid";
-        }
-        deleteSpan.onclick = function() {
-            deleteModal.style.display = "none";
-        }
-        cancelBtn.onclick = function() {
-            deleteModal.style.display = "none";
-        }
-        window.onclick = function(event) {
-            if (event.target == deleteModal) {
+        if(userLoggedIn == listingOwner){
+            var deleteModal = document.getElementById("delete-modal");
+            var deleteButton = document.getElementById("delete-modal-trigger");
+            var deleteSpan = document.getElementsByClassName("close")[0];
+            var cancelBtn = document.getElementById('cancelbtn');
+            deleteButton.onclick = function() {
+                deleteModal.style.display = "grid";
+            }
+            deleteSpan.onclick = function() {
                 deleteModal.style.display = "none";
+            }
+            cancelBtn.onclick = function() {
+                deleteModal.style.display = "none";
+            }
+            window.onclick = function(event) {
+                if (event.target == deleteModal) {
+                    deleteModal.style.display = "none";
+                }
             }
         }
 
-        function toggleText() {
-            navigator.clipboard.writeText(window.location.href);
-            var text = document.getElementById("demo");
-            if (text.style.display === "none") {
-                text.style.display = "block";
-            } else {
-                text.style.display = "none";
-            }
-        }
+        // function toggleText() {
+        //     navigator.clipboard.writeText(window.location.href);
+        //     var text = document.getElementById("demo");
+        //     if (text.style.display === "none") {
+        //         text.style.display = "block";
+        //     } else {
+        //         text.style.display = "none";
+        //     }
+        // }
 
         $(document).ready(function(){
             $.ajaxSetup({

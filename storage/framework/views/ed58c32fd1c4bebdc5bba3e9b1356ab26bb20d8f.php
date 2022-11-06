@@ -306,11 +306,13 @@
 
     function supportActivePosts(obj){
         $(document).ready(function(){
-            $titleImage = jQuery.parseJSON(obj.image_uploads);
+            //if the image_uploads are not null, parse the data or set it equal to null
+            $titleImage = obj.image_uploads != null ? jQuery.parseJSON(obj.image_uploads) : null;
+            $source = $titleImage == null ? 'https://picsum.photos/300/200?sig=' + Math.floor(Math.random() * 100) + 1 : 'https://cmimagestoragebucket.s3.amazonaws.com/'+$titleImage[0];
             var $wrapper = $('<a>', {href: "localhost:3000"}),
             $imgTag = $('<img />', {
                 id: 'test', 
-                src: 'https://cmimagestoragebucket.s3.amazonaws.com/'+$titleImage[0], 
+                src: $source, 
                 alt: 'test'
             }),
             $displayActiveDetails = $("<div />", {class: "sales-active-details"});
@@ -330,7 +332,7 @@
                         ).append($("<span />", {text: obj.view_count})))
                     }); 
                 $wrapper.attr("href", "/listings/"+obj.id)
-                $wrapper.append($imgTag).append($displayActiveDetails.append($postTitle).append($detailsRow)).appendTo('#displayActivePosts'); 
+                $wrapper.append($imgTag).append($displayActiveDetails.append($postTitle).append($detailsRow)).append($('<p/>', {text: "Sale",class: 'type-badge type-listing'})).appendTo('#displayActivePosts'); 
             }else if(obj.rental_title != null){
                 var $postTitle = $("<p />", {text: obj.rental_title}),
                     $detailsRow = $("<div />", {
@@ -346,7 +348,7 @@
                         ).append($("<span />", {text: obj.view_count})))
                     }); 
                 $wrapper.attr("href", "/rentables/"+obj.id)
-                $wrapper.append($imgTag).append($displayActiveDetails.append($postTitle).append($detailsRow)).appendTo('#displayActivePosts'); 
+                $wrapper.append($imgTag).append($displayActiveDetails.append($postTitle).append($detailsRow)).append($('<p/>', {text: "Rent",class: 'type-badge type-rent'})).appendTo('#displayActivePosts'); 
             }else if(obj.sublease_title != null){
                 var $postTitle = $("<p />", {text: obj.sublease_title}),
                     $detailsRow = $("<div />", {
@@ -362,7 +364,7 @@
                         ).append($("<span />", {text: obj.view_count})))
                     }); 
                 $wrapper.attr("href", "/subleases/"+obj.id)
-                $wrapper.append($imgTag).append($displayActiveDetails.append($postTitle).append($detailsRow)).appendTo('#displayActivePosts'); 
+                $wrapper.append($imgTag).append($displayActiveDetails.append($postTitle).append($detailsRow)).append($('<p/>', {text: "Lease",class: 'type-badge type-lease'})).appendTo('#displayActivePosts'); 
             }
         });
     }

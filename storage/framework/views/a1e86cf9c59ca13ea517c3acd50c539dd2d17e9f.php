@@ -16,6 +16,7 @@
                     </div>
                 <?php endif; ?>
                 <div class="controller">
+                    
                     <div> 
                         
                         <h2><?php echo e($message); ?></h2>
@@ -51,42 +52,44 @@
         </div>
     </div>
     <script>
-
-        tns({
-            container: ".my-slider",
-            "slideBy":1,
-            "speed":400,
-            "nav":false,
-            autoplayButton: false,
-            autoplay: true,
-            autoplayText:["",""],
-            controlsContainer:"#controls",
-            responsive:{
-                1500:{
-                    items: 5,
-                    gutter: 5
-                },
-                1200:{
-                    items: 4,
-                    gutter: 10
-                },
-                // 1100:{
-                //     items: 3,
-                //     gutter: 15
-                // },
-                1024:{
-                    items: 3,
-                    gutter: 15
-                },
-                700:{
-                    items: 2,
-                    gutter: 20
-                },
-                480:{
-                    items: 1
+        var array =  <?php echo json_encode($listings); ?>;
+        if(array.length > 0){
+            tns({
+                container: ".my-slider",
+                "slideBy":1,
+                "speed":400,
+                "nav":false,
+                autoplayButton: false,
+                autoplay: true,
+                autoplayText:["",""],
+                controlsContainer:"#controls",
+                responsive:{
+                    1500:{
+                        items: 5,
+                        gutter: 5
+                    },
+                    1200:{
+                        items: 4,
+                        gutter: 10
+                    },
+                    // 1100:{
+                    //     items: 3,
+                    //     gutter: 15
+                    // },
+                    1024:{
+                        items: 3,
+                        gutter: 15
+                    },
+                    700:{
+                        items: 2,
+                        gutter: 20
+                    },
+                    480:{
+                        items: 1
+                    }
                 }
-            }
-        })
+            })
+        }
 
     </script>
 </section><?php /**PATH C:\xampp\htdocs\CollegeMarketplace\resources\views/partials/_listingCarousel.blade.php ENDPATH**/ ?>

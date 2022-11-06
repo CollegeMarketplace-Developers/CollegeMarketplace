@@ -5,7 +5,7 @@
     <div class="component-container-inner">
         <div class="img-slider-container">
             <div class="single-slide active">
-                <img src="1.jpg" alt="">
+                <img src="" alt="">
                 <div class="info">
                     <h2>BUY</h2>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="single-slide">
-                <img src="2.jpg" alt="">
+                <img src="" alt="">
                 <div class="info">
                     <h2>Sell</h2>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="single-slide">
-                <img src="3.jpg" alt="">
+                <img src="" alt="">
                 <div class="info">
                     <h2>RENT</h2>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="single-slide">
-                <img src="4.jpg" alt="">
+                <img src="" alt="">
                 <div class="info">
                     <h2>LEASE</h2>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
@@ -164,7 +164,7 @@
                     return;
                 }
                 repeater();
-            }, 10000);
+            }, 5000);
         }
         repeater();
     }

@@ -24,6 +24,8 @@ class ListingFactory extends Factory
         $listingStatus = array('Sold', 'Pending', 'Available');
         $listingCategory = array('Furniture', 'Clothes', 'Electronics', 'Kitchen', 'School Accessories', "Books");
         $listingNegotiable =array('Fixed', 'Negotiable' , 'Free');
+        // $temp = 'https://picsum.photos/300/200?sig='. random_int(0,100);
+        // $imgUploads = array($temp);
         return [
             'user_id'=> random_int(1,10),
             'item_name' => $this->faker->text(random_int(5,100)),
@@ -33,6 +35,7 @@ class ListingFactory extends Factory
             'category' => $listingCategory[array_rand($listingCategory)],
             'tags' => strval($commaSeperatedString) ,
             'description' => $this->faker->paragraph(5),
+            // 'image_uploads'=>json_encode($imgUploads),
             'image_uploads'=>null,
             'street' => $this->faker->streetAddress(),
             'city' =>$this->faker->city(),

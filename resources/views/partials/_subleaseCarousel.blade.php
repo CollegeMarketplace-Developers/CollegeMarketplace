@@ -36,42 +36,43 @@
         </div>
     </div>
     <script>
-
-        tns({
-            container: ".slider3",
-            "slideBy":1,
-            "speed":400,
-            "nav":false,
-            autoplayButton: false,
-            autoplay: true,
-            autoplayText:["",""],
-            controlsContainer:"#controls3",
-            responsive:{
-                1500:{
-                    items: 5,
-                    gutter: 5
-                },
-                1200:{
-                    items: 4,
-                    gutter: 10
-                },
-                // 1100:{
-                //     items: 3,
-                //     gutter: 15
-                // },
-                1024:{
-                    items: 3,
-                    gutter: 15
-                },
-                700:{
-                    items: 2,
-                    gutter: 20
-                },
-                480:{
-                    items: 1
+        var array =  {!! json_encode($subleases) !!};
+        if(array.length > 0){
+            tns({
+                container: ".slider3",
+                "slideBy":1,
+                "speed":400,
+                "nav":false,
+                autoplayButton: false,
+                autoplay: true,
+                autoplayText:["",""],
+                controlsContainer:"#controls3",
+                responsive:{
+                    1500:{
+                        items: 5,
+                        gutter: 5
+                    },
+                    1200:{
+                        items: 4,
+                        gutter: 10
+                    },
+                    // 1100:{
+                    //     items: 3,
+                    //     gutter: 15
+                    // },
+                    1024:{
+                        items: 3,
+                        gutter: 15
+                    },
+                    700:{
+                        items: 2,
+                        gutter: 20
+                    },
+                    480:{
+                        items: 1
+                    }
                 }
-            }
-        })
-
+            })
+        }
     </script>
 </section>

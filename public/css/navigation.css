@@ -119,6 +119,10 @@ nav .content .notifications-panel .active-sales-container{
     border-radius: var(--br-medium);
 }
 
+.sales-active-list a{
+  position: relative;
+}
+
 .recently-viewed-list a img,
 .recently-messaged-list a img,
 .sales-active-list a img{
@@ -164,6 +168,8 @@ nav .content .notifications-panel .active-sales-container{
     flex-direction: column;
     justify-content: center;
     width: calc(100% - 70px);
+    height: 100%;
+    justify-content: space-evenly;
 }
 
 .recently-viewed-details .details-row,
@@ -183,6 +189,27 @@ nav .content .notifications-panel .active-sales-container{
 
 .details-row p i{
   color:var(--accent-color);
+}
+
+.sales-active-list a .type-badge{
+  position: absolute;
+  left: 8px;
+  bottom: 5px;
+  z-index: 1;
+  padding: 1px 7px;
+  border-radius: var(--br-medium);
+}
+
+.type-listing{
+  background: var(--listing-color);
+}
+
+.type-rent{
+  background:var(--rent-color);
+}
+
+.type-lease{
+  background:var(--lease-color);
 }
 nav .content .notifications-panel{
   z-index:5;
