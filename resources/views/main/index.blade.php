@@ -15,12 +15,8 @@
             @include('partials._componentDesignOne')
         </div>
 
-
-
-        {{-- Show liked items--}}
-
-
-        {{-- Show listings near--}}
+        {{-- Showing items based on distance--}}
+       
         @if(!empty($listingsNear)) 
             <div class = "listings-parent-container">
                 @include('partials._listingCarousel', ['listings' => $listingsNear, 'message' => 'Within A Mile', 'carouselClass'=>'my-slider','carouselControls' => 'controls', 'carouselP' =>'previous previous1', 'carouselN' => 'next next1'])
@@ -49,8 +45,6 @@
     </main>
 
     <script>
-
-        //functionality for asking user location on index page load
         if("{{$user == null}}") {
             getLocation();
         }
@@ -108,8 +102,7 @@
                 data: 'JSON',
                 cache: false, //look into caching later
                 success:function(data) {
-                    console.log("Listings near the user: ", data);
-                    // console.log(data);
+                    console.log(data);
                     //add your success handling here
                 },
                 error: function (data, textStatus, errorThrown) {

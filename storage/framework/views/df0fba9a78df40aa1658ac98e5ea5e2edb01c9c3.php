@@ -29,10 +29,7 @@
                     <p>Buy</p>
                 </div>
 
-
-                
                 <div class="card_favorite">
-                    
                     <i class="fa-solid fa-heart"></i>
                 </div>
                 <a href="/listings/<?php echo e($listing->id); ?>">

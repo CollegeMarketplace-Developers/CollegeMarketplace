@@ -192,7 +192,7 @@
 }
 
 .product-content .product-details {
-    height: 60%;
+    height: 100%;
     width: 100%;
     margin: 0;
     background-color: var(--background-color-dark);
@@ -210,7 +210,12 @@
 .map-container {
     width: 100%;
     flex-grow: 1;
+    height: 200px;
+    min-height: 200px;
+    max-height: 200px;
     display: flex;
+    border-radius: var(--br-large);
+    overflow: hidden;
     background-color: var(--background-color-light);
 }
 
@@ -305,7 +310,7 @@
 }
 
 .product-extra div,
-.product-category div:nth-of-type(2) {
+.product-details .date-posted {
     display: flex;
     flex-direction: row;
 }
@@ -314,12 +319,12 @@
     margin-bottom: 5px;
 }
 .product-extra div p,
-.product-category div p {
+.product-details .date-posted p {
     width: 150px;
 }
 
 .product-extra div span,
-.product-category div span {
+.product-details .date-posted span{
     color: var(--accent-color);
 }
 
@@ -371,11 +376,20 @@
 /* right side of the show page css ends here */
 
 /* bottom description and map stuff beings here */
-.product-description-area {
+.description-chat{
     width: 65%;
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+    border-radius: var(--br-large);
+    height: fit-content;
+}
+.product-description-area {
+    width: 100%;
     padding: 20px;
     border-radius: var(--br-large);
     overflow: hidden;
+    height: fit-content;
     color: var(--font-color-light);
     background: var(--background-color-dark);
 
@@ -436,7 +450,7 @@
 .about-seller-and-chat {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     flex-grow: 1;
     height: fit-content;
 }
@@ -445,7 +459,7 @@
     height: 80px;
     width: 100%;
     background-color: #2D2B37;
-    background: var(--accent-color);
+    /* background: var(--accent-color); */
 
     display: flex;
     flex-direction: row;
@@ -466,7 +480,7 @@
     line-height: 22px;
 }
 
-.chat-seller {
+/* .chat-seller {
     width: 100%;
     height: 50px;
     background-color: var(--accent-color-green);
@@ -480,7 +494,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
+} */
 .map-container-mobile {
     display: none;
     overflow: hidden;
@@ -560,14 +574,14 @@
 
 .chat-container {
     display: flex;
-    width: 65%;
-    min-width: 65%;
-    min-height: 500px;
-    max-height: 500px;
+    width: 100%;
+    min-width: 100%;
+    min-height: 350px;
+    max-height: 350px;
     position: relative;
     overflow: hidden;
     padding: 10px;
-    background-color: var(--background-color-light);
+    background-color: var(--background-color-dark);
     border-radius: var(--br-large);
 }
 
@@ -635,7 +649,7 @@
     display: flex;
     flex-direction: row;
     border-radius: 12px;
-    background-color: #3c384d;
+    background-color: #3a3845;
     box-shadow: 0px 12px 32px rgb(17 16 21 / 50%);
     overflow: hidden;
 }
@@ -670,10 +684,12 @@
 }
 
 @media (max-width: 1200px) {
-    .selected-row .product-imgs,
-    .selected-row .product-description-area {
+    .selected-row .product-imgs{
         width: 60%;
         min-width: 60%;
+    }
+    .description-chat{
+        width: 60%;
     }
     .card-wrapper-selected {
         padding: 4% 50px;
@@ -683,6 +699,10 @@
 @media (max-width: 1050px) {
     .selected-row {
         flex-direction: column;
+    }
+
+    .description-chat{
+        width: 100%;
     }
 
     .selected-row-message {
@@ -762,10 +782,6 @@
         min-height: 400px;
         max-height: 400px;
     }
-
-    .product-extra {
-        display: none;
-    }
 }
 @media (max-width: 550px) {
     .card-wrapper-selected {
@@ -805,10 +821,6 @@
 
     .messages {
         height: 100% !important;
-    }
-
-    .chat-container {
-        padding: 0 10px;
     }
 }
 
@@ -926,14 +938,15 @@
 }
 
 .sent {
-    background: #6e4eff;
+    background: var(--accent-color);
     float: right;
     text-align: right;
 }
 
 .received {
     /* background: #ffffff; */
-    background-color: var(--background-color-dark);
+    /* background: #6e4eff; */
+    background-color: #151416;
 }
 .message p {
     margin: 5px 0;
@@ -948,6 +961,7 @@ input[type="text"] {
     width: 100%;
     padding: 12px 20px;
     display: inline-block;
+    font-size: 14px;
     box-sizing: border-box;
     outline: none;
     background-color: var(--background-color);

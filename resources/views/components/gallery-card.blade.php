@@ -18,24 +18,7 @@
                     <p>Buy</p>
                 </div>
 
-
-                {{-- has the item been favorited --}}
                 <div class="card_favorite">
-                    {{-- @if($currentUser != null and $currentUser->favorites != null and in_array($listing->id, explode(", " , $currentUser->favorites)))
-                        <form action="/users/removefavorite" method="GET">
-                            @csrf
-                            <input type="hidden" name="type" value="listing">
-                            <input type="hidden" name="id" value="{{$listing->id}}">
-                            <button><i class="fa-solid fa-heart saved"></i></button>
-                        </form>
-                    @else
-                        <form action="/users/addfavorite" method="GET">
-                            @csrf
-                            <input type="hidden" name="type" value="listing">
-                            <input type="hidden" name="id" value="{{$listing->id}}">
-                            <button><i class="fa-solid fa-heart bouncy"></i></button>
-                        </form>
-                    @endif --}}
                     <i class="fa-solid fa-heart"></i>
                 </div>
                 <a href="/listings/{{$listing->id}}">

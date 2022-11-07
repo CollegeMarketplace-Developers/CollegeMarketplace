@@ -55,32 +55,19 @@ class ListingController extends Controller
                 $query->where('status', 'NOT LIKE', 'SOLD');
             })->limit(10)->get();
 
-            // dd($listingQuery);
-        $userQuery = null;
-        if(Auth::user()){
-            $userQuery = DB::select(
-                "
-                SELECT users2.id, users2.first_name, users2.last_name, users2.avatar, users2.email, COUNT(case messages.is_read WHEN 0 then 1 else NULL end) as unread
-                FROM users
-                INNER JOIN messages on messages.to = users.id
-                INNER JOIN users as users2 ON messages.from = users2.id
-                WHERE messages.for_listing = ". $listing->id." and users2.id != ".auth()->id()."
-                GROUP BY users2.id, users2.first_name, users2.last_name, users2.avatar, users2.email
-                "
-            );
-        }
+
 
         header("Cache-Control: must-revalidate");
-
-        // dd($listingQuery->all());
         return view('listings.show',[
             // the current listings we are looking at
             'listing' => $listing,
             // list of relatd listings to be used in carousel
-            'listings' => $listingQuery->all(),
+            'listings' => $listingQuery,
             'listingOwner' => User::find($listing->user_id),
             // current users id
-            'currentUser' => Auth::guest() ? null : User::find(auth()->user()->id)
+            'currentUser' => Auth::guest() ? null : User::find(auth()->user()->id),
+            // all users that have sent a message regarding current listing
+            'allUsers' => $userQuery,
         ]);
     }
 

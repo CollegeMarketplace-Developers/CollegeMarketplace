@@ -219,7 +219,7 @@
             $('#displayUnreadMessages').empty();
             // if there are no unread messages
             if(data == null || data.length == 0 ){
-                console.log('no unread messages')
+                // console.log('no unread messages')
                 $wrapper = $("<div/>", {
                     class: "no-unread-messages",
                     html: $("<p />",{
@@ -287,14 +287,14 @@
         $(document).ready(function(){
             $('#displayActivePosts').empty();
             if(data == null || data.length == 0 ){
-                console.log('no active posts');
+                // console.log('no active posts');
                 $wrapper = $("<div/>", {
                     class: "no-active-posts",
                     html: $("<p />",{
                         text: "No Active Posts"
                     })
                 });
-                console.log("right before appending")
+                // console.log("right before appending")
                 $wrapper.appendTo('#displayActivePosts');
             }else{
                 jQuery.each(data, function(index, value){
@@ -306,13 +306,11 @@
 
     function supportActivePosts(obj){
         $(document).ready(function(){
-            //if the image_uploads are not null, parse the data or set it equal to null
-            $titleImage = obj.image_uploads != null ? jQuery.parseJSON(obj.image_uploads) : null;
-            $source = $titleImage == null ? 'https://picsum.photos/300/200?sig=' + Math.floor(Math.random() * 100) + 1 : 'https://cmimagestoragebucket.s3.amazonaws.com/'+$titleImage[0];
+            $titleImage = jQuery.parseJSON(obj.image_uploads);
             var $wrapper = $('<a>', {href: "localhost:3000"}),
             $imgTag = $('<img />', {
                 id: 'test', 
-                src: $source, 
+                src: 'https://cmimagestoragebucket.s3.amazonaws.com/'+$titleImage[0], 
                 alt: 'test'
             }),
             $displayActiveDetails = $("<div />", {class: "sales-active-details"});
@@ -332,7 +330,7 @@
                         ).append($("<span />", {text: obj.view_count})))
                     }); 
                 $wrapper.attr("href", "/listings/"+obj.id)
-                $wrapper.append($imgTag).append($displayActiveDetails.append($postTitle).append($detailsRow)).append($('<p/>', {text: "Sale",class: 'type-badge type-listing'})).appendTo('#displayActivePosts'); 
+                $wrapper.append($imgTag).append($displayActiveDetails.append($postTitle).append($detailsRow)).appendTo('#displayActivePosts'); 
             }else if(obj.rental_title != null){
                 var $postTitle = $("<p />", {text: obj.rental_title}),
                     $detailsRow = $("<div />", {
@@ -348,7 +346,7 @@
                         ).append($("<span />", {text: obj.view_count})))
                     }); 
                 $wrapper.attr("href", "/rentables/"+obj.id)
-                $wrapper.append($imgTag).append($displayActiveDetails.append($postTitle).append($detailsRow)).append($('<p/>', {text: "Rent",class: 'type-badge type-rent'})).appendTo('#displayActivePosts'); 
+                $wrapper.append($imgTag).append($displayActiveDetails.append($postTitle).append($detailsRow)).appendTo('#displayActivePosts'); 
             }else if(obj.sublease_title != null){
                 var $postTitle = $("<p />", {text: obj.sublease_title}),
                     $detailsRow = $("<div />", {
@@ -364,7 +362,7 @@
                         ).append($("<span />", {text: obj.view_count})))
                     }); 
                 $wrapper.attr("href", "/subleases/"+obj.id)
-                $wrapper.append($imgTag).append($displayActiveDetails.append($postTitle).append($detailsRow)).append($('<p/>', {text: "Lease",class: 'type-badge type-lease'})).appendTo('#displayActivePosts'); 
+                $wrapper.append($imgTag).append($displayActiveDetails.append($postTitle).append($detailsRow)).appendTo('#displayActivePosts'); 
             }
         });
     }
