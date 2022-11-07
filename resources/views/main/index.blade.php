@@ -12,9 +12,9 @@
         </div>
         
         
-        {{-- <div class="listings-parent-container">
+        <div class="listings-parent-container">
             @include('partials._componentDesignOne')
-        </div> --}}
+        </div>
 
         {{-- Show liked items--}}
 

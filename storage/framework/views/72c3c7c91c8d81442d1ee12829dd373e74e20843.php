@@ -20,7 +20,9 @@
         </div>
         
         
-        
+        <div class="listings-parent-container">
+            <?php echo $__env->make('partials._componentDesignOne', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        </div>
 
         
 

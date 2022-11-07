@@ -3,7 +3,46 @@
 <link rel="stylesheet" types ="text/css" href="/css/componentDesign.css">
 <section class = "component-container-outer">
     <div class="component-container-inner">
-        
+        <div class="img-slider-container">
+            <div class="single-slide active">
+                <img src="" alt="">
+                <div class="info">
+                    <h2>BUY</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
+                        et dolore magna aliqua.</p>
+                </div>
+            </div>
+            <div class="single-slide">
+                <img src="" alt="">
+                <div class="info">
+                    <h2>Sell</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
+                        et dolore magna aliqua.</p>
+                </div>
+            </div>
+            <div class="single-slide">
+                <img src="" alt="">
+                <div class="info">
+                    <h2>RENT</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
+                        et dolore magna aliqua.</p>
+                </div>
+            </div>
+            <div class="single-slide">
+                <img src="" alt="">
+                <div class="info">
+                    <h2>LEASE</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
+                        et dolore magna aliqua.</p>
+                </div>
+            </div>
+            <div class="navigation">
+                <div class="btn active"></div>
+                <div class="btn"></div>
+                <div class="btn"></div>
+                <div class="btn"></div>
+            </div>
+        </div>
         <div class="showRandomItem">
             <?php
                 $randomItem = $generalController::getRandomItem();
