@@ -19,14 +19,10 @@
             <?php echo $__env->make('partials._carouselByCategory',['furnitureItems' => $furnitureItems, 'clothesItems'=>$clothesItems, "electronicsItems"=>$electronicsItems, 'kitchenItems' => $kitchenItems, 'schoolItems' =>$schoolItems, 'bookItems'=>$bookItems], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
         
-        <div class="listings-parent-container">
-            <?php echo $__env->make('partials._componentDesignOne', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-        </div>
-
-
-
+        
         
 
+        
 
         
         <?php if(!empty($listingsNear)): ?> 

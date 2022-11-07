@@ -11,14 +11,12 @@
             @include('partials._carouselByCategory',['furnitureItems' => $furnitureItems, 'clothesItems'=>$clothesItems, "electronicsItems"=>$electronicsItems, 'kitchenItems' => $kitchenItems, 'schoolItems' =>$schoolItems, 'bookItems'=>$bookItems])
         </div>
         
-        <div class="listings-parent-container">
+        
+        {{-- <div class="listings-parent-container">
             @include('partials._componentDesignOne')
-        </div>
-
-
+        </div> --}}
 
         {{-- Show liked items--}}
-
 
         {{-- Show listings near--}}
         @if(!empty($listingsNear)) 

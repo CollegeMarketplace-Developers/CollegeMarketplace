@@ -3,7 +3,7 @@
 <link rel="stylesheet" types ="text/css" href="/css/componentDesign.css">
 <section class = "component-container-outer">
     <div class="component-container-inner">
-        <div class="img-slider-container">
+        {{-- <div class="img-slider-container">
             <div class="single-slide active">
                 <img src="" alt="">
                 <div class="info">
@@ -36,23 +36,14 @@
                         et dolore magna aliqua.</p>
                 </div>
             </div>
-            {{-- <div class="single-slide">
-                <img src="5.jpg" alt="">
-                <div class="info">
-                    <h2>Slide 05</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua.</p>
-                </div>
-            </div> --}}
             <div class="navigation">
                 <div class="btn active"></div>
                 <div class="btn"></div>
                 <div class="btn"></div>
                 <div class="btn"></div>
-                {{-- <div class="btn"></div> --}}
             </div>
-        </div>
-        <div class="showRandomItem">
+        </div> --}}
+        {{-- <div class="showRandomItem">
             @php
                 $randomItem = $generalController::getRandomItem();
 
@@ -112,7 +103,7 @@
                     <p>No Items Found :(</p>
                 </div>
             @endif
-        </div>
+        </div> --}}
     </div>
 </section>
 
