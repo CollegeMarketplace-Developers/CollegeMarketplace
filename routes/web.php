@@ -64,6 +64,7 @@ Route::post('/logout', [GoogleController::class, 'logout'])->middleware('auth');
 Route::post('/sendmessage', [MessageController::class, 'postMessage'])->middleware('auth');
 Route::get('/messages', [MessageController::class, 'getMessages'])->middleware('auth');
 
+//test change
 //no longer active
 // Route::get('/all/{type}/{itemID}/{ownerID}/{from}/messages', [MessageController::class, 'goToMessagePage'])->middleware('auth');
 
