@@ -108,7 +108,7 @@
                         <div class="product-details">
                             <div class="price-favorite">
                                 <h1>$<?php echo e($rentable->rental_charging); ?></h1>
-                                    <?php if($currentUser != null and $currentUser->favorites != null and in_array($rentable->id, explode(", " , $currentUser->favorites))): ?>
+                                    <?php if($currentUser != null and $currentUser->rentableFavorites != null and in_array($rentable->id, explode(", " , $currentUser->rentableFavorites))): ?>
                                         <form action="/users/removefavorite" method="GET">
                                             <?php echo csrf_field(); ?>
                                             <input type="hidden" name="type" value="rentable">
@@ -274,7 +274,7 @@
     </section>
     
     <section class = "listings-parent-container">
-         <?php echo $__env->make('partials._rentablesCarousel', ['rentables' => $rentables, 'message' => 'Related Items', 'carouselClass'=>'slider2','carouselControls' => 'controls2', 'carouselP' =>'previous previous2', 'carouselN' => 'next next2'], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+         <?php echo $__env->make('partials._rentablesCarousel', ['rentables' => $rentables, 'message' => 'Related Items', 'carouselClass'=>'slider2','carouselControls' => 'controls2', 'carouselP' =>'previous previous2', 'carouselN' => 'next next2', 'currentUser'=>$currentUser], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     </section>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>    

@@ -100,7 +100,7 @@
                         <div class="product-details">
                             <div class="price-favorite">
                                 <h1>${{$leaseItem->rent}}</h1>
-                                    @if($currentUser != null and $currentUser->favorites != null and in_array($leaseItem->id, explode(", " , $currentUser->favorites)))
+                                    @if($currentUser != null and $currentUser->leaseFavorites != null and in_array($leaseItem->id, explode(", " , $currentUser->leaseFavorites)))
                                         <form action="/users/removefavorite" method="GET">
                                             @csrf
                                             <input type="hidden" name="type" value="leaseItem">
@@ -266,7 +266,7 @@
     </section>
     
     <section class = "listings-parent-container">
-         @include('partials._subleaseCarousel', ['subleases'=> $subleaseQuery, 'message' => 'Places for Leasing', 'carouselClass'=>'slider3','carouselControls' => 'controls3', 'carouselP' =>'previous previous3', 'carouselN' => 'next next3'])
+         @include('partials._subleaseCarousel', ['subleases'=> $subleaseQuery, 'message' => 'Places for Leasing', 'carouselClass'=>'slider3','carouselControls' => 'controls3', 'carouselP' =>'previous previous3', 'carouselN' => 'next next3', "currentUser"=>$currentUser])
     </section>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>    

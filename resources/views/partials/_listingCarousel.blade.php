@@ -27,7 +27,9 @@
                     <div class="my-slider {{$carouselClass}}">
                         @foreach($listings as $listing)
                             <div>
-                                <x-carousel-card :listing="$listing"/>
+                                <x-carousel-card 
+                                :listing="$listing"
+                                :currentUser="$currentUser"/>
                             </div>
                         @endforeach                      
                     </div>

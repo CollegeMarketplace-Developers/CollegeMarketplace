@@ -1,0 +1,58 @@
+### INSTRUCTIONS FOR NEW DEVELOPERS ###
+
+1. Download and Install XAMP (Default Settings for installation works)
+
+1.5 I HIGHLY reccommend to uninstall and reinstall XAMPP even if you already
+have XAMPP on your local machine since this has been an issue before
+
+2 Open XAMPP and run Apache and MySQL
+
+2.5 If MySQL is not starting (shutting down unexpectedly) use this link to help: https://stackoverflow.com/questions/18022809/how-to-solve-error-mysql-shutdown-unexpectedly OR THIS video if error 'invalid settings' https://www.youtube.com/watch?v=RjYxxYlXkOs
+
+3 Select 'Admin' in XAMPP in the MySQL row (its to the right of the stop button) -> Click the New button in PhpMyAdmin -> Add college_marketplace database within XAMPP PHPMYADMIN -> Click Create Button
+
+4 Clone repo into C:/xampp/htdocs
+
+5 Add college marketplace folder that was cloned to VSCode workspace (File -> Add Folder To Workspace -> C:/xampp/htdocs/college_marketplace)
+
+6. Run within the C:/xampp/htdocs/College Marketplace Terminal the following command(s):
+
+cp .env.example .env
+composer update --no-scripts
+composer dump-autoload
+
+7. COPY THIS INTO .ENV FILE AND REPLACE SECTION STARTING WITH DB_CONNECTION WITH THE FOLLOWING TEXT:
+DB_CONNECTION=mysql
+RDS_HOSTNAME=127.0.0.1
+RDS_PORT=3306
+RDS_DB_NAME=college_marketplace
+RDS_USERNAME=root
+RDS_PASSWORD=
+
+8. Set Encryption key in your config/app.php by running the following command:
+php artisan key:generate
+
+9. Run the following commands:
+php artisan route:cache
+php artisan route:clear
+php artisan config:cache
+php artisan config:clear
+php artisan optimize
+
+10. Run within the C:/xampp/htdocs/College Marketplace Terminal the following command(s):
+
+php artisan migrate
+php artisan db:seed
+
+11. Add GCP Keys To .env file Be Able To Login -> Refer to the notion page for the keys
+
+12. Run within the C:/xampp/htdocs/College Marketplace Terminal the following command(s):
+
+php artisan serve
+
+13. CTRL + LEFT CLICK THE LINK THAT SAYS http://127.0.0.1:8000 within the terminal to launch college marketplace
+
+14. Reach out to Davi or Ayub for any help with these issues. Please make sure to have gone through these steps thoroughly before reaching out to us :)
+
+NOTES:
+Helpful link to set up database locally: https://stackoverflow.com/questions/28429493/how-to-connect-mysql-workbench-to-amazon-rds

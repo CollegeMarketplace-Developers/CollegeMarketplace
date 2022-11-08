@@ -16,7 +16,7 @@
 
         
         <div class = "listings-parent-container">
-            <?php echo $__env->make('partials._carouselByCategory',['furnitureItems' => $furnitureItems, 'clothesItems'=>$clothesItems, "electronicsItems"=>$electronicsItems, 'kitchenItems' => $kitchenItems, 'schoolItems' =>$schoolItems, 'bookItems'=>$bookItems], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+            <?php echo $__env->make('partials._carouselByCategory',['furnitureItems' => $furnitureItems, 'clothesItems'=>$clothesItems, "electronicsItems"=>$electronicsItems, 'kitchenItems' => $kitchenItems, 'schoolItems' =>$schoolItems, 'bookItems'=>$bookItems, 'currentUser'=>$user], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
         
         
@@ -27,34 +27,31 @@
         
 
         
-        <?php if(!empty($listingsNear)): ?> 
-            <div class = "listings-parent-container">
-                <?php echo $__env->make('partials._listingCarousel', ['listings' => $listingsNear, 'message' => 'Within A Mile', 'carouselClass'=>'my-slider','carouselControls' => 'controls', 'carouselP' =>'previous previous1', 'carouselN' => 'next next1'], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-            </div>
-        <?php else: ?> 
-        <?php endif; ?>
+        
 
         
         <div class="listings-parent-container">
             <?php echo $__env->make('partials._rentablesCarousel',
             ['rentables'=> $rentables, 'message' => 'For Rent' , 'carouselClass' => 'slider2',
-            'carouselControls' => 'controls2', 'carouselP' =>' previous previous2', 'carouselN' => 'next next2'], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+            'carouselControls' => 'controls2', 'carouselP' =>' previous previous2', 'carouselN' => 'next next2', 'currentUser'=>$user], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
         
         
         <div class = "listings-parent-container">
-            <?php echo $__env->make('partials._cardGallary', ['listings' => $listings, 'heading'=>'Items Recently Added', 'displayTags' => true, 'displayMoreButton' => true], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+            <?php echo $__env->make('partials._cardGallary', ['listings' => $listings, 'heading'=>'Items Recently Added', 'displayTags' => true, 'displayMoreButton' => true,
+            'currentUser' => $user], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
 
         
         <div class="listings-parent-container">
             <?php echo $__env->make('partials._subleaseCarousel',
             ['subleases'=> $subleases, 'message' => 'Places For Leasing' , 'carouselClass' => 'slider3',
-            'carouselControls' => 'controls3', 'carouselP' =>' previous previous3', 'carouselN' => 'next next3'], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+            'carouselControls' => 'controls3', 'carouselP' =>' previous previous3', 'carouselN' => 'next next3', 'currentUser' => $user], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
     </main>
 
     <script>
+
         if("<?php echo e($user == null); ?>") {
             getLocation();
         }

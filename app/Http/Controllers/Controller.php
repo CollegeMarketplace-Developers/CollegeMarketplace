@@ -130,6 +130,8 @@ class Controller extends BaseController
                 }
             }
         }
+
+        // dd($user != null ? $user->all()[0] : null);
         
         // dd(collect($electronicsItems)->merge($electronicsRent)->sortByDesc('created_at')->slice(0,16)->all());
         return view('main.index', [
@@ -144,7 +146,7 @@ class Controller extends BaseController
             'listingsNear' => $stack,
             'rentables' => Rentable::latest()->where('status', 'like', 'Available' )->take(10)->get()->all(),
             'subleases'=>Sublease::latest()->where('status', 'like', 'Available')->take(10)->get()->all(),
-            'user' => $user
+            'user' => $user != null ? $user->all()[0] : null
         ]);
     }
 
@@ -219,6 +221,8 @@ class Controller extends BaseController
 
     public function search(Request $request){
         // dd(\Request::getRequestUri());
+        $user = User::find(auth()->user());
+
         $map = new HashMap("String", "Array");
         $input = $request->except('_token');
         foreach ($input as $key => $value) {
@@ -250,9 +254,11 @@ class Controller extends BaseController
                     $totalResults = collect(Listing::latest()->get())->sortByDesc('id')->paginate(50);
                 }
 
+                // dd($totalResults);
                 header("Cache-Control: must-revalidate");
                 return view('main.search', [
-                    'listings' => $totalResults
+                    'listings' => $totalResults,
+                    'user' =>  $user != null ? $user->all()[0] : null
                 ]);
             } elseif ((request('type') ?? false) && request('type') == 'rentable') {
                 // show results from rentables table with filters applied
@@ -266,7 +272,8 @@ class Controller extends BaseController
 
                 header("Cache-Control: must-revalidate");
                 return view('main.search', [
-                    'listings' => $totalResults
+                    'listings' => $totalResults,
+                    'user' =>  $user != null ? $user->all()[0] : null
                 ]);
             } elseif ((request('type') ?? false) && request('type') == 'lease') {
                 $totalResults = null;
@@ -279,7 +286,8 @@ class Controller extends BaseController
 
                 header("Cache-Control: must-revalidate");
                 return view('main.search', [
-                    'listings' => $totalResults
+                    'listings' => $totalResults,
+                    'user' =>  $user != null ? $user->all()[0] : null
                 ]);
             } elseif ((request('type') ?? false) && request('type') == 'all') {
                 $totalResults = null;
@@ -292,9 +300,11 @@ class Controller extends BaseController
                     $totalResults = collect(Listing::latest()->get())->merge(Rentable::latest()->get())->merge(Sublease::latest()->get())->sortByDesc('id')->paginate(50);
                 }
 
+                // dd($user != null ? $user->all()[0] : null);
                 header("Cache-Control: must-revalidate");
                 return view('main.search', [
-                    'listings' => $totalResults
+                    'listings' => $totalResults,
+                    'user' =>  $user != null ? $user->all()[0] : null
                 ]);
             }
         }

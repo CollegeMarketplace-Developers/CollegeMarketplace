@@ -1,8 +1,8 @@
-<?php foreach($attributes->onlyProps(['listing', 'rentable', 'sublease']) as $__key => $__value) {
+<?php foreach($attributes->onlyProps([ 'listing', 'rentable', 'sublease']) as $__key => $__value) {
     $$__key = $$__key ?? $__value;
 } ?>
-<?php $attributes = $attributes->exceptProps(['listing', 'rentable', 'sublease']); ?>
-<?php foreach (array_filter((['listing', 'rentable', 'sublease']), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
+<?php $attributes = $attributes->exceptProps([ 'listing', 'rentable', 'sublease']); ?>
+<?php foreach (array_filter(([ 'listing', 'rentable', 'sublease']), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
     $$__key = $$__key ?? $__value;
 } ?>
 <?php $__defined_vars = get_defined_vars(); ?>
@@ -10,6 +10,10 @@
     if (array_key_exists($__key, $__defined_vars)) unset($$__key);
 } ?>
 <?php unset($__defined_vars); ?>
+<?php foreach ((['currentUser']) as $__key => $__value) {
+    $__consumeVariable = is_string($__key) ? $__key : $__value;
+    $$__consumeVariable = is_string($__key) ? $__env->getConsumableComponentData($__key, $__value) : $__env->getConsumableComponentData($__value);
+} ?>
 <div>
     
     <?php if($listing != null): ?>
@@ -50,12 +54,27 @@
                     ?>
                     <img src=<?php echo e($listing->image_uploads ? Storage::disk('s3')->url($imgLinks) : $site); ?>  alt="image doesnt exist">
                 </a>
+                <?php if($currentUser != null and $currentUser->favorites != null and in_array($listing->id, explode(", " , $currentUser->favorites))): ?>
+                    <form action="/users/removefavorite" method="GET">
+                        <?php echo csrf_field(); ?>
+                        <input type="hidden" name="type" value="listing">
+                        <input type="hidden" name="id" value="<?php echo e($listing->id); ?>">
+                        <button><i class="fa-solid fa-heart saved"></i></button>
+                    </form>
+                <?php else: ?>
+                    <form action="/users/addfavorite" method="GET">
+                        <?php echo csrf_field(); ?>
+                        <input type="hidden" name="type" value="listing">
+                        <input type="hidden" name="id" value="<?php echo e($listing->id); ?>">
+                        <button><i class="fa-solid fa-heart bouncy"></i></button>
+                    </form>
+                <?php endif; ?>
             </div>
             
             <div class = "listing-details">
                 <div class="listing-details-top">
                     <h1>$<?php echo e($listing->price); ?></h1>
-                    <i class="fa-solid fa-heart"></i>
+                    
                 </div>
                 <div class="listing-details-middle">
                     <a href="/listings/<?php echo e($listing->id); ?>"><?php echo e($listing->item_name); ?></a>
@@ -104,12 +123,27 @@
                     ?>
                     <img src=<?php echo e($rentable->image_uploads ? Storage::disk('s3')->url($imgLinks) : $site); ?>  alt="image doesnt exist">
                 </a>
+                <?php if($currentUser != null and $currentUser->rentableFavorites != null and in_array($rentable->id, explode(", " , $currentUser->rentableFavorites))): ?>
+                    <form action="/users/removefavorite" method="GET">
+                        <?php echo csrf_field(); ?>
+                        <input type="hidden" name="type" value="rentable">
+                        <input type="hidden" name="id" value="<?php echo e($rentable->id); ?>">
+                        <button><i class="fa-solid fa-heart saved"></i></button>
+                    </form>
+                <?php else: ?>
+                    <form action="/users/addfavorite" method="GET">
+                        <?php echo csrf_field(); ?>
+                        <input type="hidden" name="type" value="rentable">
+                        <input type="hidden" name="id" value="<?php echo e($rentable->id); ?>">
+                        <button><i class="fa-solid fa-heart bouncy"></i></button>
+                    </form>
+                <?php endif; ?>
             </div>
             
             <div class = "listing-details">
                 <div class="listing-details-top">
                     <h1>$<?php echo e($rentable->rental_charging); ?> / <?php echo e($rentable->rental_duration); ?></h1>
-                    <i class="fa-solid fa-heart"></i>
+                    
                 </div>
                 <div class="listing-details-middle">
                     <a href="/rentables/<?php echo e($rentable->id); ?>"><?php echo e($rentable->rental_title); ?></a>
@@ -156,11 +190,25 @@
                     ?>
                     <img src=<?php echo e($sublease->image_uploads ? Storage::disk('s3')->url($imgLinks) : $site); ?>  alt="image doesnt exist">
                 </a>
+                <?php if($currentUser != null and $currentUser->leaseFavorites != null and in_array($sublease->id, explode(", " , $currentUser->leaseFavorites))): ?>
+                    <form action="/users/removefavorite" method="GET">
+                        <?php echo csrf_field(); ?>
+                        <input type="hidden" name="type" value="leaseItem">
+                        <input type="hidden" name="id" value="<?php echo e($sublease->id); ?>">
+                        <button><i class="fa-solid fa-heart saved"></i></button>
+                    </form>
+                <?php else: ?>
+                    <form action="/users/addfavorite" method="GET">
+                        <?php echo csrf_field(); ?>
+                        <input type="hidden" name="type" value="leaseItem">
+                        <input type="hidden" name="id" value="<?php echo e($sublease->id); ?>">
+                        <button><i class="fa-solid fa-heart bouncy"></i></button>
+                    </form>
+                <?php endif; ?>
             </div>
             <div class = "listing-details">
                 <div class="listing-details-top">
                     <h1>$<?php echo e($sublease->rent); ?> / Mo | <?php echo e($sublease->negotiable); ?></h1>
-                    <i class="fa-solid fa-heart"></i>
                 </div>
                 <div class="listing-details-middle">
                    <a href="/subleases/<?php echo e($sublease->id); ?>"><?php echo e($sublease->sublease_title); ?></a>
@@ -177,4 +225,6 @@
             <a href="/subleases/<?php echo e($sublease->id); ?>" class="clickable-card"></a>
         </div>
     <?php endif; ?>
-</div><?php /**PATH C:\xampp\htdocs\CollegeMarketplace\resources\views/components/carousel-card.blade.php ENDPATH**/ ?>
+</div>
+
+<?php /**PATH C:\xampp\htdocs\CollegeMarketplace\resources\views/components/carousel-card.blade.php ENDPATH**/ ?>
