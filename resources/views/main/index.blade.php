@@ -8,7 +8,7 @@
 
         {{-- showing items based on category --}}
         <div class = "listings-parent-container">
-            @include('partials._carouselByCategory',['furnitureItems' => $furnitureItems, 'clothesItems'=>$clothesItems, "electronicsItems"=>$electronicsItems, 'kitchenItems' => $kitchenItems, 'schoolItems' =>$schoolItems, 'bookItems'=>$bookItems])
+            @include('partials._carouselByCategory',['furnitureItems' => $furnitureItems, 'clothesItems'=>$clothesItems, "electronicsItems"=>$electronicsItems, 'kitchenItems' => $kitchenItems, 'schoolItems' =>$schoolItems, 'bookItems'=>$bookItems, 'currentUser'=>$user])
         </div>
         
         
@@ -19,34 +19,36 @@
         {{-- Show liked items--}}
 
         {{-- Show listings near--}}
-        @if(!empty($listingsNear)) 
+        {{-- @if(!empty($listingsNear)) 
             <div class = "listings-parent-container">
                 @include('partials._listingCarousel', ['listings' => $listingsNear, 'message' => 'Within A Mile', 'carouselClass'=>'my-slider','carouselControls' => 'controls', 'carouselP' =>'previous previous1', 'carouselN' => 'next next1'])
             </div>
         @else 
-        @endif
+        @endif --}}
 
         {{-- carousel for rentables --}}
         <div class="listings-parent-container">
             @include('partials._rentablesCarousel',
             ['rentables'=> $rentables, 'message' => 'For Rent' , 'carouselClass' => 'slider2',
-            'carouselControls' => 'controls2', 'carouselP' =>' previous previous2', 'carouselN' => 'next next2'])
+            'carouselControls' => 'controls2', 'carouselP' =>' previous previous2', 'carouselN' => 'next next2', 'currentUser'=>$user])
         </div>
         
         {{-- main card gallery for items posted within the last 24hrs --}}
         <div class = "listings-parent-container">
-            @include('partials._cardGallary', ['listings' => $listings, 'heading'=>'Items Recently Added', 'displayTags' => true, 'displayMoreButton' => true])
+            @include('partials._cardGallary', ['listings' => $listings, 'heading'=>'Items Recently Added', 'displayTags' => true, 'displayMoreButton' => true,
+            'currentUser' => $user])
         </div>
 
         {{-- carousel for subleases --}}
         <div class="listings-parent-container">
             @include('partials._subleaseCarousel',
             ['subleases'=> $subleases, 'message' => 'Places For Leasing' , 'carouselClass' => 'slider3',
-            'carouselControls' => 'controls3', 'carouselP' =>' previous previous3', 'carouselN' => 'next next3'])
+            'carouselControls' => 'controls3', 'carouselP' =>' previous previous3', 'carouselN' => 'next next3', 'currentUser' => $user])
         </div>
     </main>
 
     <script>
+
         if("{{$user == null}}") {
             getLocation();
         }

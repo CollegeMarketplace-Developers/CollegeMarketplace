@@ -24,6 +24,8 @@ use App\Http\Controllers\GoogleController;
 |
 */
 
+//new master branch
+
 // main routes
 
 Route::get('/', [Controller::class, 'index']); //homepage

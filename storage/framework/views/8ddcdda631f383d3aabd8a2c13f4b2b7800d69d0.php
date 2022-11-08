@@ -108,7 +108,7 @@
                         <div class="product-details">
                             <div class="price-favorite">
                                 <h1>$<?php echo e($leaseItem->rent); ?></h1>
-                                    <?php if($currentUser != null and $currentUser->favorites != null and in_array($leaseItem->id, explode(", " , $currentUser->favorites))): ?>
+                                    <?php if($currentUser != null and $currentUser->leaseFavorites != null and in_array($leaseItem->id, explode(", " , $currentUser->leaseFavorites))): ?>
                                         <form action="/users/removefavorite" method="GET">
                                             <?php echo csrf_field(); ?>
                                             <input type="hidden" name="type" value="leaseItem">
@@ -274,7 +274,7 @@
     </section>
     
     <section class = "listings-parent-container">
-         <?php echo $__env->make('partials._subleaseCarousel', ['subleases'=> $subleaseQuery, 'message' => 'Places for Leasing', 'carouselClass'=>'slider3','carouselControls' => 'controls3', 'carouselP' =>'previous previous3', 'carouselN' => 'next next3'], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+         <?php echo $__env->make('partials._subleaseCarousel', ['subleases'=> $subleaseQuery, 'message' => 'Places for Leasing', 'carouselClass'=>'slider3','carouselControls' => 'controls3', 'carouselP' =>'previous previous3', 'carouselN' => 'next next3', "currentUser"=>$currentUser], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     </section>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>    

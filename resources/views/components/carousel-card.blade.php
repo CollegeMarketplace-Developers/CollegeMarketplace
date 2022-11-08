@@ -1,4 +1,5 @@
-@props(['listing', 'rentable', 'sublease'])
+@props([ 'listing', 'rentable', 'sublease'])
+@aware(['currentUser'])
 <div>
     {{-- if the card is a listing card --}}
     @if($listing != null)
@@ -41,12 +42,27 @@
                     @endphp
                     <img src={{$listing->image_uploads ? Storage::disk('s3')->url($imgLinks) : $site }}  alt="image doesnt exist">
                 </a>
+                @if($currentUser != null and $currentUser->favorites != null and in_array($listing->id, explode(", " , $currentUser->favorites)))
+                    <form action="/users/removefavorite" method="GET">
+                        @csrf
+                        <input type="hidden" name="type" value="listing">
+                        <input type="hidden" name="id" value="{{$listing->id}}">
+                        <button><i class="fa-solid fa-heart saved"></i></button>
+                    </form>
+                @else
+                    <form action="/users/addfavorite" method="GET">
+                        @csrf
+                        <input type="hidden" name="type" value="listing">
+                        <input type="hidden" name="id" value="{{$listing->id}}">
+                        <button><i class="fa-solid fa-heart bouncy"></i></button>
+                    </form>
+                @endif
             </div>
             {{-- </a> --}}
             <div class = "listing-details">
                 <div class="listing-details-top">
                     <h1>${{$listing->price}}</h1>
-                    <i class="fa-solid fa-heart"></i>
+                    {{-- <i class="fa-solid fa-heart"></i> --}}
                 </div>
                 <div class="listing-details-middle">
                     <a href="/listings/{{$listing->id}}">{{$listing->item_name}}</a>
@@ -97,12 +113,27 @@
                     @endphp
                     <img src={{$rentable->image_uploads ? Storage::disk('s3')->url($imgLinks) : $site}}  alt="image doesnt exist">
                 </a>
+                @if($currentUser != null and $currentUser->rentableFavorites != null and in_array($rentable->id, explode(", " , $currentUser->rentableFavorites)))
+                    <form action="/users/removefavorite" method="GET">
+                        @csrf
+                        <input type="hidden" name="type" value="rentable">
+                        <input type="hidden" name="id" value="{{$rentable->id}}">
+                        <button><i class="fa-solid fa-heart saved"></i></button>
+                    </form>
+                @else
+                    <form action="/users/addfavorite" method="GET">
+                        @csrf
+                        <input type="hidden" name="type" value="rentable">
+                        <input type="hidden" name="id" value="{{$rentable->id}}">
+                        <button><i class="fa-solid fa-heart bouncy"></i></button>
+                    </form>
+                @endif
             </div>
             {{-- </a> --}}
             <div class = "listing-details">
                 <div class="listing-details-top">
                     <h1>${{$rentable->rental_charging}} / {{$rentable->rental_duration}}</h1>
-                    <i class="fa-solid fa-heart"></i>
+                    {{-- <i class="fa-solid fa-heart"></i> --}}
                 </div>
                 <div class="listing-details-middle">
                     <a href="/rentables/{{$rentable->id}}">{{$rentable->rental_title}}</a>
@@ -149,11 +180,25 @@
                     @endphp
                     <img src={{$sublease->image_uploads ? Storage::disk('s3')->url($imgLinks) : $site }}  alt="image doesnt exist">
                 </a>
+                @if($currentUser != null and $currentUser->leaseFavorites != null and in_array($sublease->id, explode(", " , $currentUser->leaseFavorites)))
+                    <form action="/users/removefavorite" method="GET">
+                        @csrf
+                        <input type="hidden" name="type" value="leaseItem">
+                        <input type="hidden" name="id" value="{{$sublease->id}}">
+                        <button><i class="fa-solid fa-heart saved"></i></button>
+                    </form>
+                @else
+                    <form action="/users/addfavorite" method="GET">
+                        @csrf
+                        <input type="hidden" name="type" value="leaseItem">
+                        <input type="hidden" name="id" value="{{$sublease->id}}">
+                        <button><i class="fa-solid fa-heart bouncy"></i></button>
+                    </form>
+                @endif
             </div>
             <div class = "listing-details">
                 <div class="listing-details-top">
                     <h1>${{$sublease->rent}} / Mo | {{$sublease->negotiable}}</h1>
-                    <i class="fa-solid fa-heart"></i>
                 </div>
                 <div class="listing-details-middle">
                    <a href="/subleases/{{$sublease->id}}">{{$sublease->sublease_title}}</a>
@@ -171,3 +216,4 @@
         </div>
     @endif
 </div>
+

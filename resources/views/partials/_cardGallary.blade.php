@@ -16,7 +16,7 @@
         <ul class="cards">
             @unless(count($listings) == 0)
                 @foreach($listings as $listing)
-                    <x-gallery-card :listing="$listing" :displayTags="$displayTags"/>
+                    <x-gallery-card :listing="$listing" :displayTags="$displayTags" :currentUser="$currentUser"/>
                 @endforeach
             @else
                 <p class="empty-gallary-message">NO Listings Found!</p>

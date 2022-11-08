@@ -25,7 +25,7 @@
                 @unless(count($rentables) == 0)
                     <div class="{{$carouselClass}}">
                         @foreach($rentables as $rentable)
-                            <x-carousel-card :listing="null" :rentable="$rentable"/>
+                            <x-carousel-card :listing="null" :rentable="$rentable" :currentUser="$currentUser"/>
                         @endforeach
                     </div>
                 @else

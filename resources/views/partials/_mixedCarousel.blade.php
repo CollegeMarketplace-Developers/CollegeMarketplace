@@ -28,9 +28,15 @@
                         @foreach($listings as $listing)
                             <div>
                                 @if($listing instanceof App\Models\Listing)
-                                    <x-carousel-card :listing="$listing"/>
+                                    <x-carousel-card 
+                                    :listing="$listing"
+                                    :currentUser="$currentUser" />
                                 @elseif($listing instanceof App\Models\Rentable)
-                                    <x-carousel-card :listing="null" :rentable="$listing"/>
+                                    <x-carousel-card 
+                                    :listing="null" 
+                                    :rentable="$listing"
+                                    :currentUser="$currentUser"
+                                    />
                                 @endif
                             </div>
                         @endforeach                      
@@ -41,6 +47,16 @@
             </div>
         </div>
     </div>
+    <script>
+        //prints out all the itmes in the given carousel
+        // var gw = {!! json_encode(array_values($listings)) !!};
+        // console.log(gw);
+        
+        //prints out the current user logged in
+        var user = {!! json_encode($currentUser) !!}
+        console.log(user);
+    </script>
+
     {{-- <script>
         $(document).ready(function() {
             var stickyElementPositioner = $('.controller');

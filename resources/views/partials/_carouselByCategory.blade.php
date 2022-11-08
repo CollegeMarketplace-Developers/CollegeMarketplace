@@ -12,22 +12,28 @@
         </ul>
         <div class="category-carousel-display">
             <div class="category-display type1">
-                @include('partials._mixedCarousel', ['listings' => $furnitureItems, 'message' => 'Furniture Items', 'carouselClass'=>'furniture-slider','carouselControls' => 'furniture-controls', 'carouselP' =>'previous furniture-previous', 'carouselN' => 'next furniture-next'])
+                @include('partials._mixedCarousel', ['listings' => $furnitureItems, 'message' => 'Furniture Items', 'carouselClass'=>'furniture-slider','carouselControls' => 'furniture-controls', 'carouselP' =>'previous furniture-previous', 'carouselN' => 'next furniture-next',
+                'currentUser'=>$currentUser])
             </div>
             <div class="category-display type2">
-                @include('partials._mixedCarousel', ['listings' => $clothesItems, 'message' => 'Clothes Items', 'carouselClass'=>'clothes-slider','carouselControls' => 'clothes-controls', 'carouselP' =>'previous clothes-previous', 'carouselN' => 'next clothes-next'])
+                @include('partials._mixedCarousel', ['listings' => $clothesItems, 'message' => 'Clothes Items', 'carouselClass'=>'clothes-slider','carouselControls' => 'clothes-controls', 'carouselP' =>'previous clothes-previous', 'carouselN' => 'next clothes-next',
+                'currentUser'=>$currentUser])
             </div>
             <div class="category-display type3">
-                @include('partials._mixedCarousel', ['listings' => $electronicsItems, 'message' => 'Electronics Items', 'carouselClass'=>'electronics-slider','carouselControls' => 'electronics-controls', 'carouselP' =>'previous electronics-previous', 'carouselN' => 'next electronics-next'])
+                @include('partials._mixedCarousel', ['listings' => $electronicsItems, 'message' => 'Electronics Items', 'carouselClass'=>'electronics-slider','carouselControls' => 'electronics-controls', 'carouselP' =>'previous electronics-previous', 'carouselN' => 'next electronics-next',
+                'currentUser'=>$currentUser])
             </div>
             <div class="category-display type4">
-                @include('partials._mixedCarousel', ['listings' => $kitchenItems, 'message' => 'Kitchen Items', 'carouselClass'=>'kitchen-slider','carouselControls' => 'kitchen-controls', 'carouselP' =>'previous kitchen-previous', 'carouselN' => 'next kitchen-next'])
+                @include('partials._mixedCarousel', ['listings' => $kitchenItems, 'message' => 'Kitchen Items', 'carouselClass'=>'kitchen-slider','carouselControls' => 'kitchen-controls', 'carouselP' =>'previous kitchen-previous', 'carouselN' => 'next kitchen-next',
+                'currentUser'=>$currentUser])
             </div>
             <div class="category-display type5">
-                @include('partials._mixedCarousel', ['listings' => $schoolItems, 'message' => 'School Items', 'carouselClass'=>'school-slider','carouselControls' => 'school-controls', 'carouselP' =>'previous school-previous', 'carouselN' => 'next school-next'])
+                @include('partials._mixedCarousel', ['listings' => $schoolItems, 'message' => 'School Items', 'carouselClass'=>'school-slider','carouselControls' => 'school-controls', 'carouselP' =>'previous school-previous', 'carouselN' => 'next school-next',
+                'currentUser'=>$currentUser])
             </div>
             <div class="category-display type6">
-                @include('partials._mixedCarousel', ['listings' => $bookItems, 'message' => 'Book Items', 'carouselClass'=>'book-slider','carouselControls' => 'book-controls', 'carouselP' =>'previous book-previous', 'carouselN' => 'next book-next'])
+                @include('partials._mixedCarousel', ['listings' => $bookItems, 'message' => 'Book Items', 'carouselClass'=>'book-slider','carouselControls' => 'book-controls', 'carouselP' =>'previous book-previous', 'carouselN' => 'next book-next',
+                'currentUser'=>$currentUser])
             </div>
         </div>
     </div>
