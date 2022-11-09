@@ -60,6 +60,7 @@ class UserController extends Controller
     {
         //call function to update all matches found
         $userWatchItems = WatchItem::latest()->where('user_id', 'like', auth()->user()->id)->orderBy('matches_found', 'desc')->get();
+        $user = User::find(auth()->user());
         // dd($userWatchItems);
         $this->recommendMatches($userWatchItems);
         // dd('test');
@@ -69,7 +70,8 @@ class UserController extends Controller
             [
                 'myListings' => auth()->user()->allPosts(),
                 'likedList' => auth()->user()->allLiked(),
-                'watchList' => $userWatchItems
+                'watchList' => $userWatchItems,
+                'currentUser'=> $user != null ? $user->all()[0] : null
             ]
         );
     }
@@ -293,6 +295,7 @@ class UserController extends Controller
 
     public function removeFavorite(Request $request)
     {
+        // dd($request);
         $currentUser = User::find(auth()->id());
         $favorites = null;
         if ($request->type == "listing") {

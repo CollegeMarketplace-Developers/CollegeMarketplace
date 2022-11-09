@@ -1,4 +1,4 @@
-@props(['listing', 'displayTags'])
+@props(['listing', 'displayTags', 'currentUser'])
 {{-- data-aos-once="true" --}}
 <li class="cards_item" data-aos="zoom-in" data-aos-once="true">
     <div class="card"> 
@@ -21,7 +21,7 @@
 
                 {{-- has the item been favorited --}}
                 <div class="card_favorite">
-                    {{-- @if($currentUser != null and $currentUser->favorites != null and in_array($listing->id, explode(", " , $currentUser->favorites)))
+                    @if($currentUser != null and $currentUser->favorites != null and in_array($listing->id, explode(", " , $currentUser->favorites)))
                         <form action="/users/removefavorite" method="GET">
                             @csrf
                             <input type="hidden" name="type" value="listing">
@@ -35,8 +35,8 @@
                             <input type="hidden" name="id" value="{{$listing->id}}">
                             <button><i class="fa-solid fa-heart bouncy"></i></button>
                         </form>
-                    @endif --}}
-                    <i class="fa-solid fa-heart"></i>
+                    @endif
+                    {{-- <i class="fa-solid fa-heart"></i> --}}
                 </div>
                 <a href="/listings/{{$listing->id}}">
                     @php
@@ -65,7 +65,22 @@
                 </div>
 
                 <div class="card_favorite">
-                    <i class="fa-solid fa-heart"></i>
+                    @if($currentUser != null and $currentUser->rentableFavorites != null and in_array($listing->id, explode(", " , $currentUser->rentableFavorites)))
+                        <form action="/users/removefavorite" method="GET">
+                            @csrf
+                            <input type="hidden" name="type" value="rentable">
+                            <input type="hidden" name="id" value="{{$listing->id}}">
+                            <button><i class="fa-solid fa-heart saved"></i></button>
+                        </form>
+                    @else
+                        <form action="/users/addfavorite" method="GET">
+                            @csrf
+                            <input type="hidden" name="type" value="rentable">
+                            <input type="hidden" name="id" value="{{$listing->id}}">
+                            <button><i class="fa-solid fa-heart bouncy"></i></button>
+                        </form>
+                    @endif
+                    {{-- <i class="fa-solid fa-heart"></i> --}}
                 </div>
                 <a href="/rentables/{{$listing->id}}">
                     @php
@@ -94,7 +109,22 @@
                 </div>
 
                 <div class="card_favorite">
-                    <i class="fa-solid fa-heart"></i>
+                    @if($currentUser != null and $currentUser->leaseFavorites != null and in_array($listing->id, explode(", " , $currentUser->leaseFavorites)))
+                        <form action="/users/removefavorite" method="GET">
+                            @csrf
+                            <input type="hidden" name="type" value="leaseItem">
+                            <input type="hidden" name="id" value="{{$listing->id}}">
+                            <button><i class="fa-solid fa-heart saved"></i></button>
+                        </form>
+                    @else
+                        <form action="/users/addfavorite" method="GET">
+                            @csrf
+                            <input type="hidden" name="type" value="leaseItem">
+                            <input type="hidden" name="id" value="{{$listing->id}}">
+                            <button><i class="fa-solid fa-heart bouncy"></i></button>
+                        </form>
+                    @endif
+                    {{-- <i class="fa-solid fa-heart"></i> --}}
                 </div>
                 <a href="/subleases/{{$listing->id}}">
                     @php
@@ -124,7 +154,7 @@
                 </a>  
             @else
                 <div>
-                    <h4>${{$listing->rent}} / Mo | {{$listing->negotiable}}</h4>  
+                    <h4>${{$listing->rent}} / Monthly </h4>  
                     <p>{{$listing->sublease_title}}</p>
                 </div>  
                 {{-- <div>

@@ -1,0 +1,33 @@
+<div class="chat-seller">
+                            @php
+                                $type = null;
+                                if($listing instanceof \App\Models\Listing){
+                                    $type="listing";
+                                }
+                                elseif($listing instanceof \App\Models\Rentable){
+                                    $type="rentable";
+                                }
+                                else {
+                                    $type="lease";
+                                }
+                                // this is the listing owner
+                                $itemID = $listing->id;
+                                $ownerID = $listing->user_id;
+
+                                // this is the current user logged in and the one messaging the owner
+                                $from = $currentUser ? $currentUser->id : -1;
+                                $item = $listing->id;
+                            @endphp
+
+                            @if($currentUser != null && $currentUser->id == $ownerID)
+                                {{-- if post is mine --}}
+                                <a href="/all/{{$type}}/{{$itemID}}/{{$ownerID}}/{{$from}}/messages">
+                                    <p>My Messages</p>
+                                </a>
+                            @else
+                                {{-- only go to this link if I am not the listing owner, aka I'm messaging buyer --}}
+                                <a href="/all/{{$type}}/{{$itemID}}/{{$ownerID}}/{{$from}}/messages">
+                                    <p>Chat with Seller</p>
+                                </a>
+                            @endif
+                        </div>

@@ -26,14 +26,14 @@
                     <div class="<?php echo e($carouselClass); ?>">
                         <?php $__currentLoopData = $rentables; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rentable): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
-<?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'components.carousel-card','data' => ['listing' => null,'rentable' => $rentable]] + (isset($attributes) ? (array) $attributes->getIterator() : [])); ?>
+<?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'components.carousel-card','data' => ['listing' => null,'rentable' => $rentable,'currentUser' => $currentUser]] + (isset($attributes) ? (array) $attributes->getIterator() : [])); ?>
 <?php $component->withName('carousel-card'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
 <?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['listing' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(null),'rentable' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($rentable)]); ?>
+<?php $component->withAttributes(['listing' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(null),'rentable' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($rentable),'currentUser' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($currentUser)]); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>

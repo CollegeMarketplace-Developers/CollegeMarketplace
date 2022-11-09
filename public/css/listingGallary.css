@@ -168,11 +168,54 @@
   bottom:5px;
   padding: 5px;
 }
+
 .card_image .card_favorite i{
   font-size: 20px;
 }
 .card_image .card_favorite i:hover{
   cursor: pointer;
+  color:var(--accent-color);
+}
+
+.card_favorite form button{
+    color: var(--font-color-light);
+    border: none;
+    outline: none;
+    padding: 7px;
+    background: none;
+}
+
+
+.bouncy {
+    animation: bouncy 5s infinite linear;
+    position: relative;
+}
+
+@keyframes bouncy {
+    0% {
+        top: 0em;
+    }
+    40% {
+        top: 0em;
+    }
+    43% {
+        top: -0.7em;
+    }
+    46% {
+        top: 0em;
+    }
+    48% {
+        top: -0.2em;
+    }
+    50% {
+        top: 0em;
+    }
+    100% {
+        top: 0em;
+    }
+}
+
+.saved{
   color:var(--accent-color);
 }
 

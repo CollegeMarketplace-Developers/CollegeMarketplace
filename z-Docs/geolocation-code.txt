@@ -1,0 +1,46 @@
+
+        //this code is no longer being used
+        // function getLocation() {
+        //     if (navigator.geolocation) {
+        //         navigator.geolocation.getCurrentPosition(showPosition, showError, options);
+        //     } else { 
+        //         console.log("location not supported")
+        //     }
+        // }
+
+        // this code is no longer being used
+        // function showPosition(position) {
+        //     var latitude = position.coords.latitude;
+        //     var longitude =  position.coords.longitude;
+        //     console.log("Latitude: " + latitude + 
+        //     "<br>Longitude: " + longitude);
+
+        //     var test = document.getElementById("location");
+        //     test.innerHTML =" Latitude: " + latitude + 
+        //     " Longitude: " + longitude;
+        //     document.getElementById('latitude').value=latitude;
+        //     document.getElementById('longitude').value=longitude;
+        // }
+
+        // function showError(error) {
+        //     switch(error.code) {
+        //         case error.PERMISSION_DENIED:
+        //             console.log("User denied the request for Geolocation.");
+        //         break;
+        //         case error.POSITION_UNAVAILABLE:
+        //             console.log("Location information is unavailable.");
+        //         break;
+        //         case error.TIMEOUT:
+        //             console.log( "The request to get user location timed out.");
+        //         break;
+        //         case error.UNKNOWN_ERROR:
+        //             console.log( "An unknown error occurred.");
+        //         break;
+        //     }
+        // }
+        // this code is no longer being used
+        // var options = {
+        //     enableHighAccuracy: true,
+        //     timeout: 1000,
+        //     maximumAge: 0
+        // };
