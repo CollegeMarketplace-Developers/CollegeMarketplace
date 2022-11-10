@@ -16,8 +16,14 @@
             @include('partials._componentDesignOne')
         </div>
 
-        {{-- Show liked items--}}
-
+        {{-- Show liked items if the user is logged in and has liked items--}}
+        @if($user != null && $likedItems != null && count($likedItems) > 0)
+            <div class="listings-parent-container">
+                @include('partials._mixedCarousel', ['listings' => $likedItems, 'message' => 'Liked Items', 'carouselClass'=>'liked-items-slider','carouselControls' => 'liked-items-controls', 'carouselP' =>'previous book-previous', 'carouselN' => 'next book-next',
+                'currentUser'=>$user])
+            </div>
+        @endif
+        
         {{-- Show listings near--}}
         {{-- @if(!empty($listingsNear)) 
             <div class = "listings-parent-container">
@@ -48,6 +54,46 @@
     </main>
 
     <script>
+
+        var likedItems = {!! json_encode(array_values($likedItems)) !!};
+        if(likedItems.length>0){
+            tns({
+                container: ".liked-items-slider",
+                "slideBy":1,
+                "speed":400,
+                "nav":false,
+                autoplayButton: false,
+                autoplay: true,
+                autoplayText:["",""],
+                controlsContainer:"#liked-items-controls",
+                responsive:{
+                    1500:{
+                        items: 5,
+                        gutter: 5
+                    },
+                    1200:{
+                        items: 4,
+                        gutter: 10
+                    },
+                    // 1100:{
+                    //     items: 3,
+                    //     gutter: 15
+                    // },
+                    1024:{
+                        items: 3,
+                        gutter: 15
+                    },
+                    700:{
+                        items: 2,
+                        gutter: 20
+                    },
+                    480:{
+                        items: 1
+                    }
+                }
+            })
+        }
+
 
         if("{{$user == null}}") {
             getLocation();

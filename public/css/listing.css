@@ -378,6 +378,7 @@
 /* bottom description and map stuff beings here */
 .description-chat{
     width: 65%;
+    min-width: 65%;
     display: flex;
     flex-direction: column;
     gap:20px;
@@ -690,6 +691,7 @@
     }
     .description-chat{
         width: 60%;
+        min-width: 60%;
     }
     .card-wrapper-selected {
         padding: 4% 50px;

@@ -108,7 +108,9 @@ class Controller extends BaseController
 
         $stack = array();
         $user = User::find(auth()->user());
-        
+        $likedItems = auth()->user() != null ? auth()->user()->allLiked()->all() : array();
+        // dd($likedItems);
+
         if($user != null) {
             $currentUser = $user->first();
             
@@ -134,6 +136,7 @@ class Controller extends BaseController
         // dd($user != null ? $user->all()[0] : null);
         
         // dd(collect($electronicsItems)->merge($electronicsRent)->sortByDesc('created_at')->slice(0,16)->all());
+        
         return view('main.index', [
             'listings'=> $totalResults,
             'furnitureItems' => collect($furnitureItems)->merge($furnitureRent)->sortByDesc('created_at')->slice(0,16)->all(),
@@ -146,7 +149,8 @@ class Controller extends BaseController
             'listingsNear' => $stack,
             'rentables' => Rentable::latest()->where('status', 'like', 'Available' )->take(10)->get()->all(),
             'subleases'=>Sublease::latest()->where('status', 'like', 'Available')->take(10)->get()->all(),
-            'user' => $user != null ? $user->all()[0] : null
+            'user' => $user != null ? $user->all()[0] : null,
+            'likedItems' => $likedItems
         ]);
     }
 
