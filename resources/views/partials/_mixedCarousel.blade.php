@@ -37,6 +37,12 @@
                                     :rentable="$listing"
                                     :currentUser="$currentUser"
                                     />
+                                @elseif($listing instanceof App\Models\Sublease)
+                                    <x-carousel-card 
+                                    :listing="null" 
+                                    :rentable="null" 
+                                    :sublease="$listing"
+                                    :currentUser="$currentUser"/>
                                 @endif
                             </div>
                         @endforeach                      
@@ -47,17 +53,15 @@
             </div>
         </div>
     </div>
-    <script>
+    {{--<script>
         //prints out all the itmes in the given carousel
         // var gw = {!! json_encode(array_values($listings)) !!};
         // console.log(gw);
         
         //prints out the current user logged in
-        var user = {!! json_encode($currentUser) !!}
-        console.log(user);
-    </script>
-
-    {{-- <script>
+        // var user = {!! json_encode($currentUser) !!}
+        // console.log(user);
+    
         $(document).ready(function() {
             var stickyElementPositioner = $('.controller');
             function stickyElementFixed() {
