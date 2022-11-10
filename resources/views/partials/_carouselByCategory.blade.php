@@ -62,6 +62,8 @@
     var schoolArray =  {!! json_encode(array_values($schoolItems)) !!};
     var bookArray =  {!! json_encode(array_values($bookItems)) !!};
 
+    
+
     // console.log("furniture items: ", furnitureArray.length, furnitureArray);
     // console.log("clothes items: " , clothesArray.length, clothesArray);
     // console.log("electronics items: ",  electronicsArray.length, electronicsArray);

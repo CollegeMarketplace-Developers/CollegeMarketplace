@@ -4,7 +4,7 @@
     {{-- if the card is a listing card --}}
     @if($listing != null)
         
-    <div {{$attributes->merge(['class'=> 'slide single-post-cont'])}} data-aos="fade-right" data-aos-once="true">
+        <div {{$attributes->merge(['class'=> 'slide single-post-cont'])}} data-aos="fade-right" data-aos-once="true">
             {{-- <div class="cr cr-top cr-right cr-sticky listing">{{$listing->status}}</div> --}}
             {{-- <a href="/listings/{{$listing->id}}"> --}}
             <div class="slide-img">
@@ -149,7 +149,7 @@
 
             <a href="/rentables/{{$rentable->id}}" class="clickable-card"></a>
         </div>
-    @else
+    @elseif($sublease != null)
          <div {{$attributes->merge(['class'=> 'slide single-post-cont '])}} data-aos="fade-right" data-aos-once="true">
             {{-- <div class="cr cr-top cr-right cr-sticky sublease">{{$sublease->status}}</div> --}}
             {{-- <a href="/subleases/{{$sublease->id}}"> --}}

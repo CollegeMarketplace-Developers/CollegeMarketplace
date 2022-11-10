@@ -18,7 +18,7 @@
     
     <?php if($listing != null): ?>
         
-    <div <?php echo e($attributes->merge(['class'=> 'slide single-post-cont'])); ?> data-aos="fade-right" data-aos-once="true">
+        <div <?php echo e($attributes->merge(['class'=> 'slide single-post-cont'])); ?> data-aos="fade-right" data-aos-once="true">
             
             
             <div class="slide-img">
@@ -159,7 +159,7 @@
 
             <a href="/rentables/<?php echo e($rentable->id); ?>" class="clickable-card"></a>
         </div>
-    <?php else: ?>
+    <?php elseif($sublease != null): ?>
          <div <?php echo e($attributes->merge(['class'=> 'slide single-post-cont '])); ?> data-aos="fade-right" data-aos-once="true">
             
             
