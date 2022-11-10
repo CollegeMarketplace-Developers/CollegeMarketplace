@@ -4,21 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Listing;
+use App\Models\Message;
 use App\Models\Rentable;
 use App\Models\Sublease;
-use App\Models\Message;
 use App\Libraries\HashMap;
 use App\Models\NewsLetter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\Log;
 
 
 
@@ -150,7 +151,8 @@ class Controller extends BaseController
             'rentables' => Rentable::latest()->where('status', 'like', 'Available' )->take(10)->get()->all(),
             'subleases'=>Sublease::latest()->where('status', 'like', 'Available')->take(10)->get()->all(),
             'user' => $user != null ? $user->all()[0] : null,
-            'likedItems' => $likedItems
+            'likedItems' => $likedItems,
+            'recentlyViewed' => Cache::get('recentlyViewed') != null ? array_reverse(Cache::get('recentlyViewed')) : array()
         ]);
     }
 

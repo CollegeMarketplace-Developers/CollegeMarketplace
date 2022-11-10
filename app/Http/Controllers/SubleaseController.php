@@ -7,6 +7,7 @@ use App\Models\Sublease;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Spatie\Geocoder\Facades\Geocoder;
 
 class SubleaseController extends Controller
@@ -156,6 +157,22 @@ class SubleaseController extends Controller
         // 4) listing Owner, the author of the lease item
         // 5) currentUser, the current user logged in
         header("Cache-Control: must-revalidate");
+
+        $recentlyViewed = Cache::get('recentlyViewed') != null ?Cache::get('recentlyViewed') : null;
+        // dd($recentlyViewed);
+        if($recentlyViewed == null){
+            // Cache::forget('recentlyViewed');
+            Cache::forever("recentlyViewed", array($sublease));
+        }else{
+            Cache::forget('recentlyViewed');
+            if(count($recentlyViewed) >= 10){
+                array_shift($recentlyViewed);
+            }
+            array_push($recentlyViewed, $sublease);
+            Cache::forever("recentlyViewed", $recentlyViewed);
+        }
+        // dd($recentlyViewed);
+        
         return view('subleases.show', [
             'leaseItem' => $sublease,
             'subleaseQuery' => $subleaseQuery,

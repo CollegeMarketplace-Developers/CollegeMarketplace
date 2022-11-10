@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Rentable;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Spatie\Geocoder\Facades\Geocoder;
 
 class RentablesController extends Controller
@@ -107,6 +108,22 @@ class RentablesController extends Controller
             );
         }
         header("Cache-Control: must-revalidate");
+
+        $recentlyViewed = Cache::get('recentlyViewed') != null ?Cache::get('recentlyViewed') : null;
+        // dd($recentlyViewed);
+        if($recentlyViewed == null){
+            // Cache::forget('recentlyViewed');
+            Cache::forever("recentlyViewed", array($rentable));
+        }else{
+            Cache::forget('recentlyViewed');
+            if(count($recentlyViewed) >= 10){
+                array_shift($recentlyViewed);
+            }
+            array_push($recentlyViewed, $rentable);
+            Cache::forever("recentlyViewed", $recentlyViewed);
+        }
+        // dd($recentlyViewed);
+
         return view('rentables.show', [
             // the current listings we are looking at
             'rentable' => $rentable,
