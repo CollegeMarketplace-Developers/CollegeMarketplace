@@ -32,7 +32,7 @@
 }
 
 #controls, #controls2, #controls3, #furniture-controls, #clothes-controls, #electronics-controls,  #kitchen-controls, #school-controls, #book-controls,
-#liked-items-controls{
+#liked-items-controls, #recently-viewed-controls{
     position: absolute;
     top: 50%;
     width: 100%;
@@ -133,10 +133,18 @@
     z-index:10;
 }
 
-#controls i, #controls2 i, #controls3 i, #furniture-controls i, #clothes-controls i, #electronics-controls i, #kitchen-controls i, #school-controls i, #book-controls i, #liked-items-controls i{
+#controls i, #controls2 i, #controls3 i, #furniture-controls i, #clothes-controls i, #electronics-controls i, #kitchen-controls i, #school-controls i, #book-controls i, #liked-items-controls i, #recently-viewed-controls i{
     color: white;
     font-size: 1.3rem;
     z-index: 10;
+}
+
+/* tiny-slider carousel bug where a small circle button shows up in the top left corner */
+/* this line hides the button */
+/* the button is to toggle auto play on the carousel, keep playing or stop */
+.tns-outer [aria-controls], .tns-outer [data-action] {
+    cursor: pointer;
+    visibility: hidden;
 }
 
 .cr {

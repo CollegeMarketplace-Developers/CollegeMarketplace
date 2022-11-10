@@ -19,7 +19,14 @@
         {{-- Show liked items if the user is logged in and has liked items--}}
         @if($user != null && $likedItems != null && count($likedItems) > 0)
             <div class="listings-parent-container">
-                @include('partials._mixedCarousel', ['listings' => $likedItems, 'message' => 'Liked Items', 'carouselClass'=>'liked-items-slider','carouselControls' => 'liked-items-controls', 'carouselP' =>'previous book-previous', 'carouselN' => 'next book-next',
+                @include('partials._mixedCarousel', ['listings' => $likedItems, 'message' => 'Liked Items', 'carouselClass'=>'liked-items-slider','carouselControls' => 'liked-items-controls', 'carouselP' =>'previous liked-items-previous', 'carouselN' => 'next liked-items-next',
+                'currentUser'=>$user])
+            </div>
+        @endif
+
+        @if($recentlyViewed != null && count($recentlyViewed) > 0)
+            <div class="listings-parent-container">
+                @include('partials._mixedCarousel', ['listings' => $recentlyViewed, 'message' => 'Recently Viewed Items', 'carouselClass'=>'recently-viewed-slider','carouselControls' => 'recently-viewed-controls', 'carouselP' =>'previous recently-viewed-previous', 'carouselN' => 'next recently-viewed-next',
                 'currentUser'=>$user])
             </div>
         @endif
@@ -56,6 +63,7 @@
     <script>
 
         var likedItems = {!! json_encode(array_values($likedItems)) !!};
+        var recentlyViewed = {!! json_encode(array_values($recentlyViewed)) !!};
         if(likedItems.length>0){
             tns({
                 container: ".liked-items-slider",
@@ -66,6 +74,44 @@
                 autoplay: true,
                 autoplayText:["",""],
                 controlsContainer:"#liked-items-controls",
+                responsive:{
+                    1500:{
+                        items: 5,
+                        gutter: 5
+                    },
+                    1200:{
+                        items: 4,
+                        gutter: 10
+                    },
+                    // 1100:{
+                    //     items: 3,
+                    //     gutter: 15
+                    // },
+                    1024:{
+                        items: 3,
+                        gutter: 15
+                    },
+                    700:{
+                        items: 2,
+                        gutter: 20
+                    },
+                    480:{
+                        items: 1
+                    }
+                }
+            })
+        }
+
+        if(recentlyViewed.length>0){
+            tns({
+                container: ".recently-viewed-slider",
+                "slideBy":1,
+                "speed":400,
+                "nav":false,
+                autoplayButton: false,
+                autoplay: true,
+                autoplayText:["",""],
+                controlsContainer:"#recently-viewed-controls",
                 responsive:{
                     1500:{
                         items: 5,
