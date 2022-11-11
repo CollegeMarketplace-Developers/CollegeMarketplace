@@ -28,8 +28,6 @@
                     <label for="show-features" style="position: relative;">Buy <span class="down-arrow"></span> </label>
                     <ul>
                     <li><a href="/shop/all?type=listing">For Sale</a></li>
-                    <!-- <li><a href="/shop/all?type=rentable">For Rent</a></li>
-                    <li><a href="/shop/all?type=lease">For Lease</a></li> -->
                     <li><a href="/shop/all?type=all&negotiable=free">Free Listings</a></li>
                     <li>
                         <a class="desktop-link">By Category</a>
@@ -49,12 +47,11 @@
                     </ul>
                 </li>
 
-                {{-- button to rent --}}
-                <li><a class="desktop-link" href="/shop/all?type=rentable">Rent</a></li>
+                {{-- button for renting --}}
+                <li><a href="/shop/all?type=rentable">Rent</a></li>
 
-
-                {{-- button to lease --}}
-                <li><a class="desktop-link" href="/shop/all?type=lease">Lease</a></li>
+                {{-- button for leasing --}}
+                <li><a href="/shop/all?type=lease">Lease</a></li>
                 
                 {{-- Post things --}}
 
