@@ -42,7 +42,7 @@ php artisan optimize
 10. Run within the C:/xampp/htdocs/College Marketplace Terminal the following command(s):
 
 php artisan migrate
-php artisan db:seed
+php artisan db:seed (If exception pops up continue and do all the next steps and then run this command again after you tried php artisan serve one time and stopped the server)
 
 11. Add GCP Keys To .env file Be Able To Login -> Refer to the notion page for the keys
 

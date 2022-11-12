@@ -3,18 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Faker\Core\Number;
 use App\Models\Listing;
 use App\Models\Rentable;
 use App\Models\Sublease;
 use App\Models\YardSale;
 use App\Libraries\HashMap;
-use Faker\Core\Number;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Cache;
 use Spatie\Geocoder\Facades\Geocoder;
+use Illuminate\Support\Facades\Redirect;
 
 class ListingController extends Controller
 {
@@ -71,6 +72,24 @@ class ListingController extends Controller
         }
 
         header("Cache-Control: must-revalidate");
+
+        // dd($listing);
+
+        // dd(array($listing));
+        $recentlyViewed = Cache::get('recentlyViewed') != null ?Cache::get('recentlyViewed') : null;
+        // dd($recentlyViewed);
+        if($recentlyViewed == null){
+            // Cache::forget('recentlyViewed');
+            Cache::forever("recentlyViewed", array($listing));
+        }else{
+            Cache::forget('recentlyViewed');
+            if(count($recentlyViewed) >= 10){
+                array_shift($recentlyViewed);
+            }
+            array_push($recentlyViewed, $listing);
+            Cache::forever("recentlyViewed", $recentlyViewed);
+        }
+        // dd($recentlyViewed);
 
         // dd($listingQuery->all());
         return view('listings.show',[
