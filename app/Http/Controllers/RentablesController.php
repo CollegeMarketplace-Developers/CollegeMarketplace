@@ -10,12 +10,51 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Spatie\Geocoder\Facades\Geocoder;
 
+
 class RentablesController extends Controller
 {
     public function create()
     {
         header("Cache-Control: must-revalidate");
         return view('rentables.create');
+    }
+
+    public function push_current_page_to_recently_viewed($listing) {
+        // Configuration Variables
+        $num_to_store     =   10; // If there are more than this many stored, delete the oldest one
+        $minutes_to_store = 1440; // These cookies will automatically be forgotten after this number of minutes. 1440 is 24 hours.
+
+        // Create an object with the data required to create the "Recently Viewed" widget 
+        $current_page["name"]       = $listing->rental_title;
+        $current_page["id"]         = $listing->id;
+        $current_page["url" ]       = \Request::url(); // The current URL  
+
+        // Get the existing cookie data from the user 
+        $recent                  = \Cookie::get(  'recently_viewed_content');
+
+        // Decode the data.
+        $recent                  = json_decode($recent, TRUE);
+
+        // If the URL already exists in the user's history, delete the older one
+        if ( $recent ) {
+                foreach ( $recent as $key=>$val ) {
+                        if ( $val["url"] == $current_page["url"])
+                                unset( $recent[$key] );
+                }
+        }
+
+        // Push the current page into the recently viewed posts array 
+        $recent[ time() ] = $current_page;
+
+        // If more than $num_to_store elements, then delete everything except the newest $num_to_store 
+        if (sizeof($recent) > $num_to_store) {
+                // These are already in the correct order, but would theoretically be logical to sort by key here.
+                $recent = array_slice($recent, sizeof($recent)-10, sizeof($recent), true);
+        }
+
+        // Queue the updated "recently viewed" list to update on the user's next page load 
+        // I.e., don't show the current page as "recently viewed" until they navigate away from it (or otherwise refresh the page)
+        \Cookie::queue('recently_viewed_content', json_encode($recent), $minutes_to_store);
     }
 
     public function store(Request $request)
@@ -109,7 +148,7 @@ class RentablesController extends Controller
         }
         header("Cache-Control: must-revalidate");
 
-        $recentlyViewed = Cache::get('recentlyViewed') != null ?Cache::get('recentlyViewed') : null;
+        /*$recentlyViewed = Cache::get('recentlyViewed') != null ?Cache::get('recentlyViewed') : null;
         // dd($recentlyViewed);
         if($recentlyViewed == null){
             // Cache::forget('recentlyViewed');
@@ -121,8 +160,10 @@ class RentablesController extends Controller
             }
             array_push($recentlyViewed, $rentable);
             Cache::forever("recentlyViewed", $recentlyViewed);
-        }
+        }*/
         // dd($recentlyViewed);
+
+        $this->push_current_page_to_recently_viewed($rentable);
 
         return view('rentables.show', [
             // the current listings we are looking at
