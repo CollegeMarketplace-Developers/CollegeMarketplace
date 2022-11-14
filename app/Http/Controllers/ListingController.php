@@ -136,7 +136,7 @@ class ListingController extends Controller
         $recently_viewed_content = json_decode(\Cookie::get('recently_viewed_content'), TRUE);
         if($recently_viewed_content) {
             krsort( $recently_viewed_content );
-            dd($recently_viewed_content);
+            //dd($recently_viewed_content);
         }
         
         // dd($listingQuery->all());
