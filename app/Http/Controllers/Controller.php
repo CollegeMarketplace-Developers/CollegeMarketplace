@@ -167,7 +167,7 @@ class Controller extends BaseController
 
         $user = User::find(auth()->user());
         \DB::statement("SET SQL_MODE=''");
-        $messages = Message::join('users','messages.from','=','users.id')->orderBy('messages.created_at','desc')->where('to','=',$user->first()->id)->where('is_read','=','0')->groupBy('from')->limit(10)->get();
+        $messages = Message::join('users','messages.from','=','users.id')->orderBy('messages.created_at','desc')->where('to','=',$user->first()->id)->where('is_read','=','0')->groupBy('from')->get();
 
         /*foreach($messages as $mess) {
             $resultArr[User::select('*')->where('id','=',$mess->from)] = $mess;
