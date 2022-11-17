@@ -4,6 +4,8 @@
 
 {{-- css for individual user listing --}}
 @inject('listingController', 'App\Http\Controllers\ListingController')
+@inject('cookieController', 'App\Http\Controllers\CookieController')
+
 <link rel="stylesheet" type="text/css" href="/css/listing.css">
 
 <x-layout>
@@ -129,7 +131,12 @@
                             <div class="product-extra">
                                 @php
                                     $listingController::updateViewCount($listing);
+
+                                    // set cookie data
+                                    $test = $cookieController::setCookie($listing);
+
                                 @endphp
+                                {{-- <p>{{$test}}</p> --}}
                                 <p><i class="fa-solid fa-eye"></i><span>{{$listing->view_count}}</span></p>
                                 <p><i class="fa-solid fa-location-dot"></i><span>{{$listing->city}}, {{$listing->state}}</span></p>
                             </div>

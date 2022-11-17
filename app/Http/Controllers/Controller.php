@@ -20,8 +20,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
-
+use Illuminate\Support\Facades\Cookie;
 
 class Controller extends BaseController
 {
@@ -138,6 +137,8 @@ class Controller extends BaseController
         
         // dd(collect($electronicsItems)->merge($electronicsRent)->sortByDesc('created_at')->slice(0,16)->all());
         
+        $recentlyViewed = Cookie::has('recentlyViewed') ? explode(", ", Cookie::get('recentlyViewed')) : array();
+        
         return view('main.index', [
             'listings'=> $totalResults,
             'furnitureItems' => collect($furnitureItems)->merge($furnitureRent)->sortByDesc('created_at')->slice(0,16)->all(),
@@ -152,7 +153,8 @@ class Controller extends BaseController
             'subleases'=>Sublease::latest()->where('status', 'like', 'Available')->take(10)->get()->all(),
             'user' => $user != null ? $user->all()[0] : null,
             'likedItems' => $likedItems,
-            'recentlyViewed' => Cache::get('recentlyViewed') != null ? array_reverse(Cache::get('recentlyViewed')) : array()
+            'recentlyViewed'=>$recentlyViewed
+            // 'recentlyViewed' => Cache::get('recentlyViewed') != null ? array_reverse(Cache::get('recentlyViewed')) : array()
         ]);
     }
 

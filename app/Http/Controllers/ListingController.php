@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Spatie\Geocoder\Facades\Geocoder;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Redirect;
 
 class ListingController extends Controller
@@ -75,21 +76,33 @@ class ListingController extends Controller
 
         // dd($listing);
 
-        // dd(array($listing));
-        $recentlyViewed = Cache::get('recentlyViewed') != null ?Cache::get('recentlyViewed') : null;
-        // dd($recentlyViewed);
+        $name = 'recentlyViewed';
+        $time = 2628000; //this is 5 years
+        $recentlyViewed = Cookie::has('recentlyViewed') ? explode(", ", Cookie::get('recentlyViewed')) : null;
+
         if($recentlyViewed == null){
-            // Cache::forget('recentlyViewed');
-            Cache::forever("recentlyViewed", array($listing));
+            Cookie::forever($name, implode(", ", array($listing)), $time);
         }else{
-            Cache::forget('recentlyViewed');
+            Cookie::queue(Cookie::forget($name));
             if(count($recentlyViewed) >= 10){
                 array_shift($recentlyViewed);
             }
             array_push($recentlyViewed, $listing);
-            Cache::forever("recentlyViewed", $recentlyViewed);
+            Cookie::forever($name, implode(", ", $recentlyViewed), $time);
         }
-        // dd($recentlyViewed);
+
+        // recently viewed using caching
+        // $recentlyViewed = Cache::get('recentlyViewed') != null ?Cache::get('recentlyViewed') : null;
+        // if($recentlyViewed == null){
+        //     Cache::forever("recentlyViewed", array($listing));
+        // }else{
+        //     Cache::forget('recentlyViewed');
+        //     if(count($recentlyViewed) >= 10){
+        //         array_shift($recentlyViewed);
+        //     }
+        //     array_push($recentlyViewed, $listing);
+        //     Cache::forever("recentlyViewed", $recentlyViewed);
+        // }
 
         // dd($listingQuery->all());
         return view('listings.show',[
