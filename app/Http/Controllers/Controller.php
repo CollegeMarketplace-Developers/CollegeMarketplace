@@ -145,14 +145,15 @@ class Controller extends BaseController
         if($recently_viewed_content) {
             krsort( $recently_viewed_content );
             // dd($recently_viewed_content);
+            // dd($recently_viewed_content);
             $recentlyViewed = array();
             foreach($recently_viewed_content as $item){
-                if(array_key_exists('sublease', $item)){
-                    array_push($recentlyViewed, new Sublease($item['sublease']));
-                }elseif(array_key_exists('rentable', $item)){
-                    array_push($recentlyViewed, new Rentable($item['rentable']));
-                }elseif(array_key_exists('listing', $item)){
-                    array_push($recentlyViewed, new Listing($item['listing']));
+                if($item['type'] == 'listing'){
+                    array_push($recentlyViewed, Listing::find($item['id']));
+                }elseif($item['type'] == 'rentable'){
+                    array_push($recentlyViewed, Rentable::find($item['id']));
+                }elseif($item['type'] == 'sublease'){
+                    array_push($recentlyViewed, Sublease::find($item['id']));
                 }
             }
         }

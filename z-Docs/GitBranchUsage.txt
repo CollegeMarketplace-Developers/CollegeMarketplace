@@ -38,3 +38,30 @@ Add Changes to Master Branch
             (Resolve Any conflicts, do 'git add' on conflicted files after resolving conflicts)
         2.6 git commit -m "Your comments"
         2.7 git push origin master
+
+
+--------------------------------------------------------------------
+
+Reverting Branch to an older commit: 
+- To revert to a commit that's older than the most recent commit:
+
+1) checkout to the branch
+git checkout {branch name}
+
+2) git log to see all previous commits to respective branch
+git log
+
+3) Resets index to former commit; replace '56e05fced' with your commit code
+git reset {56e05fced} 
+
+4) Moves pointer back to previous HEAD
+git reset --soft HEAD@{1}
+
+5) git commit with custom message for example the following, replace the hash with your commit hash
+git commit -m "Revert to 56e05fced"
+
+6) Updates working copy to reflect the new commit
+git reset --hard
+
+7) Push your changes to respective branch
+git push -f
