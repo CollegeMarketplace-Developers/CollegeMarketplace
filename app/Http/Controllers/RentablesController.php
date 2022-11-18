@@ -30,7 +30,7 @@ class RentablesController extends Controller
 
             // Create an object with the data required to create the "Recently Viewed" widget 
             $current_page["rentable"]       = $listing;
-            // $current_page["name"]       = $listing->item_name;
+            // $current_page["name"]       = $listing->rental_title;
             // $current_page["id"]         = $listing->id;
             // $current_page["type"]       = "rentable";
             $current_page["url" ]       = \Request::url(); // The current URL  
