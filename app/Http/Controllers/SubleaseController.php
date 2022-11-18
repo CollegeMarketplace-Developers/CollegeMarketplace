@@ -29,10 +29,10 @@ class SubleaseController extends Controller
             $minutes_to_store = 1440; // These cookies will automatically be forgotten after this number of minutes. 1440 is 24 hours.
 
             // Create an object with the data required to create the "Recently Viewed" widget 
-            $current_page["sublease"]       = $listing;
-            // $current_page["name"]       = $listing->item_name;
-            // $current_page["id"]         = $listing->id;
-            // $current_page["type"]       = "sublease";
+            // $current_page["sublease"]       = $listing;
+            // $current_page["name"]       = $listing->sublease_title;
+            $current_page["id"]         = $listing->id;
+            $current_page["type"]       = "sublease";
             $current_page["url" ]       = \Request::url(); // The current URL  
 
             // Get the existing cookie data from the user 
