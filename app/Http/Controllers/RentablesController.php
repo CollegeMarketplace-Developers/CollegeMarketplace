@@ -29,9 +29,10 @@ class RentablesController extends Controller
             $minutes_to_store = 1440; // These cookies will automatically be forgotten after this number of minutes. 1440 is 24 hours.
 
             // Create an object with the data required to create the "Recently Viewed" widget 
-            $current_page["name"]       = $listing->item_name;
-            $current_page["id"]         = $listing->id;
-            $current_page["type"]       = "rentable";
+            $current_page["rentable"]       = $listing;
+            // $current_page["name"]       = $listing->item_name;
+            // $current_page["id"]         = $listing->id;
+            // $current_page["type"]       = "rentable";
             $current_page["url" ]       = \Request::url(); // The current URL  
 
             // Get the existing cookie data from the user 
@@ -39,6 +40,8 @@ class RentablesController extends Controller
 
             // Decode the data.
             $recent                  = json_decode($recent, TRUE);
+
+            //  dd(sizeof($recent));
 
             // If the URL already exists in the user's history, delete the older one
             if ( $recent ) {
@@ -60,6 +63,7 @@ class RentablesController extends Controller
             // Queue the updated "recently viewed" list to update on the user's next page load 
             // I.e., don't show the current page as "recently viewed" until they navigate away from it (or otherwise refresh the page)
             \Cookie::queue('recently_viewed_content', json_encode($recent), $minutes_to_store);
+            // dd(sizeof(json_decode(\Cookie::get('recently_viewed_content'), TRUE)));
         }
     }
 

@@ -24,15 +24,17 @@ class ListingController extends Controller
 
         if($listing->user_id != auth()->id()) {
 
+            // dd("called recently viewed current page method");
         
             // Configuration Variables
             $num_to_store     =   10; // If there are more than this many stored, delete the oldest one
             $minutes_to_store = 1440; // These cookies will automatically be forgotten after this number of minutes. 1440 is 24 hours.
 
             // Create an object with the data required to create the "Recently Viewed" widget 
-            $current_page["name"]       = $listing->item_name;
-            $current_page["id"]         = $listing->id;
-            $current_page["type"]       = "listing";
+            $current_page["listing"]       = $listing;
+            // $current_page["name"]       = $listing->item_name;
+            // $current_page["id"]         = $listing->id;
+            // $current_page["type"]       = "listing";
             $current_page["url" ]       = \Request::url(); // The current URL  
 
             // Get the existing cookie data from the user 
@@ -43,10 +45,10 @@ class ListingController extends Controller
 
             // If the URL already exists in the user's history, delete the older one
             if ( $recent ) {
-                    foreach ( $recent as $key=>$val ) {
-                            if ( $val["url"] == $current_page["url"])
-                                    unset( $recent[$key] );
-                  }
+                foreach ( $recent as $key=>$val ) {
+                    if ( $val["url"] == $current_page["url"])
+                            unset( $recent[$key] );
+                }
             }
 
             // Push the current page into the recently viewed posts array 
@@ -60,7 +62,11 @@ class ListingController extends Controller
 
             // Queue the updated "recently viewed" list to update on the user's next page load 
             // I.e., don't show the current page as "recently viewed" until they navigate away from it (or otherwise refresh the page)
+            // dd($recent);
             \Cookie::queue('recently_viewed_content', json_encode($recent), $minutes_to_store);
+            // dd(json_decode(\Cookie::get('recently_viewed_content'), TRUE));
+            // dd("called recently viewed current page method");
+
         }
     }
 
@@ -138,12 +144,6 @@ class ListingController extends Controller
         // dd($recentlyViewed);
 
         $this->push_current_page_to_recently_viewed($listing);
-
-        $recently_viewed_content = json_decode(\Cookie::get('recently_viewed_content'), TRUE);
-        if($recently_viewed_content) {
-            krsort( $recently_viewed_content );
-            dd($recently_viewed_content);
-        }
         
         // dd($listingQuery->all());
         return view('listings.show',[

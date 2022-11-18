@@ -138,6 +138,26 @@ class Controller extends BaseController
         
         // dd(collect($electronicsItems)->merge($electronicsRent)->sortByDesc('created_at')->slice(0,16)->all());
         
+        $recently_viewed_content = json_decode(\Cookie::get('recently_viewed_content'), TRUE);
+
+        // dd($recently_viewed_content);
+        $recentlyViewed = null;
+        if($recently_viewed_content) {
+            krsort( $recently_viewed_content );
+            // dd($recently_viewed_content);
+            $recentlyViewed = array();
+            foreach($recently_viewed_content as $item){
+                if(array_key_exists('sublease', $item)){
+                    array_push($recentlyViewed, new Sublease($item['sublease']));
+                }elseif(array_key_exists('rentable', $item)){
+                    array_push($recentlyViewed, new Rentable($item['rentable']));
+                }elseif(array_key_exists('listing', $item)){
+                    array_push($recentlyViewed, new Listing($item['listing']));
+                }
+            }
+        }
+        // dd($recentlyViewed);
+        // dd($likedItems);
         return view('main.index', [
             'listings'=> $totalResults,
             'furnitureItems' => collect($furnitureItems)->merge($furnitureRent)->sortByDesc('created_at')->slice(0,16)->all(),
@@ -152,7 +172,7 @@ class Controller extends BaseController
             'subleases'=>Sublease::latest()->where('status', 'like', 'Available')->take(10)->get()->all(),
             'user' => $user != null ? $user->all()[0] : null,
             'likedItems' => $likedItems,
-            'recentlyViewed' => Cache::get('recentlyViewed') != null ? array_reverse(Cache::get('recentlyViewed')) : array()
+            'recentlyViewed' => $recentlyViewed != null ? $recentlyViewed : array()
         ]);
     }
 
