@@ -10,6 +10,7 @@ class Listing extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'id',
         'user_id',
         'item_name',
         'price',
@@ -20,13 +21,17 @@ class Listing extends Model
         'description',
         'image_uploads',
         'street',
-        'apartment_floor',
         'city',
         'state',
         'country',
         'postcode',
+        'status',
         'latitude',
-        'longitude'
+        'longitude',
+        'created_at',
+        'updated_at',
+        'apartment_floor',
+        'view_count'
     ];
     public function scopeFilter($query, array $filters){
         // dd($filters); -> have the keys
