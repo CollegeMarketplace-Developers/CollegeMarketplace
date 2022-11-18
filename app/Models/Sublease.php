@@ -10,6 +10,7 @@ class Sublease extends Model
     use HasFactory;
     protected $fillable = [
 
+        'id',
         // sublease owner
         'user_id',
 
@@ -32,9 +33,14 @@ class Sublease extends Model
         'country',
         'postcode',
         'status', //either rented or available
+
+        'created_at',
+        'updated_at',
+
         'latitude',
         'longitude',
-        'apartment_floor'
+        'apartment_floor',
+        'view_count'
     ];
 
     // this rentable belongs to a certain user

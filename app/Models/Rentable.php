@@ -9,6 +9,7 @@ class Rentable extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'id',
         'user_id',
         'rental_title',
         'rental_duration', //hourly, daily, weekly, monthly
@@ -25,9 +26,14 @@ class Rentable extends Model
         'country',
         'postcode',
         'status', //either rented or available,
+
+        'created_at',
+        'updated_at',
+
         'apartment_floor',
         'latitude',
-        'longitude'
+        'longitude',
+        'view_count'
     ];
 
     // this rentable belongs to a certain user
