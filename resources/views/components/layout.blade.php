@@ -31,12 +31,10 @@
         <script src="//unpkg.com/alpinejs" defer></script>
 
         {{-- css for the homepage and all other general styling--}}
-        
-        <!-- {!! style_ts('/css/app.css') !!} -->
-        <link rel="stylesheet" types ="text/css" href="/css/styles.css?v=<?php echo time(); ?>" />
-                                                <!-- public/css/styles.css-->
+        <link rel="stylesheet" types ="text/css" href="/css/styles.css" />
+
         {{-- for carousel --}}
-        <link rel="stylesheet" types ="text/css" href="/css/carousel.css?v=<?php echo time(); ?>">
+        <link rel="stylesheet" types ="text/css" href="/css/carousel.css">
 
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
