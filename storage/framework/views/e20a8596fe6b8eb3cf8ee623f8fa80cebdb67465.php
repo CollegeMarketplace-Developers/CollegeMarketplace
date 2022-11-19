@@ -382,6 +382,7 @@ unset($__errorArgs, $__bag); ?>
         // source code from code pen
         // link: https://codepen.io/webbarks/pen/QWjwWNV
         // script to change between view cards for create listing
+
         $( document ).ready(function() {
             var base_color = "black";
             // var active_color = "rgb(237, 40, 70)";
@@ -485,18 +486,21 @@ unset($__errorArgs, $__bag); ?>
 
         const input = document.querySelector('.imgUpload');
         const preview = document.querySelector('.preview');
-
-        $('form').submit(function(e){
-            for(const tempFile of input.files){
-                if(validFileType(tempFile)) {
-                    if (tempFile.size > 5*1024*1024) {
-                        alert("Too large Image. Only images smaller than 5MB can be uploaded. Only images smaller then 5MB will be kept");
-                        e.preventDefault();
-                        break;
+        var canSubmit = true;
+        $(document).ready(function(){
+            $('form').submit(function(e){
+                for(const tempFile of input.files){
+                    if(validFileType(tempFile)) {
+                        if (tempFile.size > 5*1024*1024) {
+                            alert("Too large Image. Only images smaller than 5MB can be uploaded. Only images smaller then 5MB will be kept");
+                            e.preventDefault();
+                            canSubmit = false;
+                            break;
+                        }
                     }
-                }
-            }      
-            e.currentTarget.submit();     
+                }      
+                if(canSubmit){$('form').unbind('submit').submit();}   
+            });
         });
 
         // input.style.opacity = 0;
@@ -582,7 +586,7 @@ unset($__errorArgs, $__bag); ?>
 
         function initAutocomplete() {
             address1Field = document.getElementById("street");
-            address2Field = document.getElementById("streetTwo");
+            address2Field = document.getElementById("apartment_floor");
             postalField = document.getElementById("postcode");
 
             // Create the autocomplete object, restricting the search predictions to
@@ -615,38 +619,42 @@ unset($__errorArgs, $__bag); ?>
 
                 switch (componentType) {
                     case "street_number": {
-                    address1 = `${component.long_name} ${address1}`;
-                    break;
-                }
-                case "route": {
-                    address1 = `${address1}${component.long_name} `;
-                    break;
-                }
-                case "postal_code": {
-                    postcode = `${component.long_name}${postcode}`;
-                    break;
-                }
+                        address1 = `${component.long_name} ${address1}`;
+                        break;
+                    }
 
-                case "postal_code_suffix": {
-                    postcode = `${postcode}-${component.long_name}`;
-                    break;
-                }
+                    case "route": {
+                        address1 = `${address1}${component.long_name} `;
+                        break;
+                    }
 
-                case "locality":
-                    (document.getElementById("city")).value =
-                    component.long_name;
-                    break;
+                    case "postal_code": {
+                        postcode = `${component.long_name}${postcode}`;
+                        break;
+                    }
 
-                case "administrative_area_level_1": {
-                    (document.getElementById("state")).value =
-                    component.short_name;
-                    break;
-                }
+                    case "postal_code_suffix": {
+                        postcode = `${postcode}-${component.long_name}`;
+                        break;
+                    }
 
-                case "country":
-                    (document.getElementById("country")).value =
-                    component.long_name;
-                    break;
+                    case "locality":{
+                        (document.getElementById("city")).value =
+                        component.long_name;
+                        break;
+                    }
+
+                    case "administrative_area_level_1": {
+                        (document.getElementById("state")).value =
+                        component.short_name;
+                        break;
+                    }
+
+                    case "country":{
+                        (document.getElementById("country")).value =
+                        component.long_name;
+                        break;
+                    }
                 }
             }
             address1Field.value = address1;
@@ -703,7 +711,7 @@ unset($__errorArgs, $__bag); ?>
         };
     </script>
     <script async
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHQxwBJAiHYROOX3zT6P7AwnBq1WGVmnM&callback=initAutocomplete&libraries=places&v=weekly"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2Umn-3TUxP23ok373mWr0U4CHQDItcEk&callback=initAutocomplete&libraries=places&v=weekly"
       defer
     ></script>
  <?php echo $__env->renderComponent(); ?>
