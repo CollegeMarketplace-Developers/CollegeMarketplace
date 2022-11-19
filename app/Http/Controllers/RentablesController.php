@@ -286,6 +286,14 @@ class RentablesController extends Controller
 
         $formFields['category'] = implode(", ", $formFields['category']);
         // dd($rentable);
+        
+        Geocoder::setApiKey(config('geocoder.key'));
+        Geocoder::setCountry(config('geocoder.country', 'US'));
+        $resArr = Geocoder::getCoordinatesForAddress($formFields['street'].' '.$formFields['city']);
+
+        $formFields['latitude'] = $resArr['lat'];
+        $formFields['longitude'] = $resArr['lng'];
+
         $rentable->update($formFields);
         return redirect('/rentables/' . $rentable->id)->with('message', 'Listing Updated Successfully!');
     }

@@ -380,7 +380,7 @@
         let address = ['{{$listing->street}}', '{{$listing->city}}', '{{$listing->state}}', '{{$listing->postcode}}', '{{$listing->country}}'];
         
         // console.log("This is the address for the map: " + address);
-        console.log("This is the url for the map:  " + getGoogleMapsImage(address));
+        // console.log("This is the url for the map:  " + getGoogleMapsImage(address));
         
         function myFunction(imgs) {
             var expandImg = document.getElementById("expandedImg");
