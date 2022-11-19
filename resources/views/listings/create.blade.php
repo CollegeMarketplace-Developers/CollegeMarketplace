@@ -256,38 +256,42 @@
 
                 switch (componentType) {
                     case "street_number": {
-                    address1 = `${component.long_name} ${address1}`;
-                    break;
-                }
-                case "route": {
-                    address1 = `${address1}${component.long_name} `;
-                    break;
-                }
-                case "postal_code": {
-                    postcode = `${component.long_name}${postcode}`;
-                    break;
-                }
+                        address1 = `${component.long_name} ${address1}`;
+                        break;
+                    }
+                    
+                    case "route": {
+                        address1 = `${address1}${component.long_name} `;
+                        break;
+                    }
 
-                case "postal_code_suffix": {
-                    postcode = `${postcode}-${component.long_name}`;
-                    break;
-                }
+                    case "postal_code": {
+                        postcode = `${component.long_name}${postcode}`;
+                        break;
+                    }
 
-                case "locality":
-                    (document.getElementById("city")).value =
-                    component.long_name;
-                    break;
+                    case "postal_code_suffix": {
+                        postcode = `${postcode}-${component.long_name}`;
+                        break;
+                    }
 
-                case "administrative_area_level_1": {
-                    (document.getElementById("state")).value =
-                    component.short_name;
-                    break;
-                }
+                    case "locality":{
+                        (document.getElementById("city")).value =
+                        component.long_name;
+                        break;
+                    }
 
-                case "country":
-                    (document.getElementById("country")).value =
-                    component.long_name;
-                    break;
+                    case "administrative_area_level_1": {
+                        (document.getElementById("state")).value =
+                        component.short_name;
+                        break;
+                    }
+
+                    case "country":{
+                        (document.getElementById("country")).value =
+                        component.long_name;
+                        break;
+                    }
                 }
             }
             address1Field.value = address1;
