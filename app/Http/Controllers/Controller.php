@@ -98,9 +98,9 @@ class Controller extends BaseController
         // dd($furnitureItems);
 
         header("Cache-Control: must-revalidate");
-    //     dd(collect($furnitureItems)->merge($furnitureRent)->sortByDesc('created_at')->slice(0,16),
-    // collect($clothesItems)->merge($clothesRent)->sortByDesc('created_at')->slice(0,16)
-    //     );
+        //     dd(collect($furnitureItems)->merge($furnitureRent)->sortByDesc('created_at')->slice(0,16),
+        // collect($clothesItems)->merge($clothesRent)->sortByDesc('created_at')->slice(0,16)
+        //     );
 
         $listingResultsFull = Listing::latest()->where('status', '!=', 'Sold' )->limit(50)->get();
         $retnablesResultsFull = Rentable::latest()->where('status', '!=', 'Rented' )->limit(50)->get();
@@ -523,6 +523,7 @@ class Controller extends BaseController
         if ($checkUser != null) {
             $formfields['user_id'] = $checkUser->id;
         }
+
         $enrollEmail = NewsLetter::create($formfields);
         return back()->with('message', 'Successfully Enrolled in News Letter');
     }
@@ -542,6 +543,7 @@ class Controller extends BaseController
         array_push($array, $rental);
         array_push($array, $lease);
         $get = $array[random_int(0, count($array) - 1)];
+
         while (count($array) > 0) {
             if ($get == null) {
                 if (($key = array_search($get, $array)) !== false) {
@@ -551,6 +553,7 @@ class Controller extends BaseController
                 return $get;
             }
         }
+        
         return null;
     }
 }

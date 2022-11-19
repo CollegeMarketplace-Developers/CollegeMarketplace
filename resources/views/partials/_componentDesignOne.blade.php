@@ -43,7 +43,8 @@
                 <div class="btn"></div>
             </div>
         </div>
-        <div class="showRandomItem">
+        <h1 class="recommended-item-title">Recommended Item</h1>
+        <div class="showRandomItem" id="showRandomItem">
             @php
                 $randomItem = $generalController::getRandomItem();
 
@@ -68,8 +69,9 @@
                             <h1>{{$randomItem->price}}</h1>
                             <p>{{$randomItem->item_name}}</p>
                         </div>
-                        <a href="/listings/{{$randomItem->id}}" class="type-sale">Buy</a>
                     </div>
+                    <button onclick="getNewItem()" class="next-recommended type-sale"><i class="fa-solid fa-xmark"></i></button>
+                    <a class="view-item type-sale" href="/listings/{{$randomItem->id}}" >Buy</a>
                 @elseif($randomItem instanceof App\Models\Rentable)
                     <a href="/rentables/{{$randomItem->id}}">
                         <img src={{$randomItem->image_uploads ? Storage::disk('s3')->url($imgLinks) : asset($link) }}  alt="image doesnt exist">
@@ -79,8 +81,9 @@
                             <h1>{{$randomItem->rental_charging}} / {{$randomItem->rental_duration}}</h1>
                             <p>{{$randomItem->rental_title}}</p>
                         </div>
-                        <a href="/rentables/{{$randomItem->id}}" class="type-rent">Rent</a>
                     </div>
+                    <button onclick="getNewItem()" class="next-recommended type-rent"><i class="fa-solid fa-xmark"></i></button>
+                    <a href="/rentables/{{$randomItem->id}}" class="view-item type-rent">Rent</a>
                 @else
                     <a href="/subleases/{{$randomItem->id}}">
                         <img src={{$randomItem->image_uploads ? Storage::disk('s3')->url($imgLinks) : asset($link) }}  alt="image doesnt exist">
@@ -90,8 +93,9 @@
                             <h1>{{$randomItem->rent}}</h1>
                             <p>{{$randomItem->sublease_title}}</p>
                         </div>
-                        <a href="/subleases/{{$randomItem->id}}" class="type-lease">Lease</a>
                     </div>
+                    <button onclick="getNewItem()" class="next-recommended type-lease"><i class="fa-solid fa-xmark"></i></button>
+                    <a href="/subleases/{{$randomItem->id}}" class="view-item type-lease">Lease</a>
                 @endif
             @else
                 @php
@@ -160,4 +164,121 @@
         repeater();
     }
     repeat();
+
+    function getNewItem(){
+        console.log("button clicked");
+
+        $.ajax({
+            type: "GET",
+            url: "/random/item", // need to create this route
+            data: "JSON",
+            cache: false,
+            success: function (data) {
+                // console.log(data);
+                if(data != null){
+                    // console.log(data);
+                    $(document).ready(function(){
+                        $('#showRandomItem').empty();
+
+                        $href = $('<a>',{href: "localhost:3000"});
+                        $titleImage = data.image_uploads != null ? jQuery.parseJSON(data.image_uploads) : null;
+                        $source = $titleImage == null ? 'https://picsum.photos/300/200?sig=' + Math.floor(Math.random() * 100) + 1 : 'https://cmimagestoragebucket.s3.amazonaws.com/'+$titleImage[0];
+                        $imgTag = $("<img/>", {
+                            id: 'test',
+                            src: $source,
+                            alt: 'test'
+                        });
+                        $href.append($imgTag).appendTo('#showRandomItem');
+                        
+                        if(data.item_name != null){
+
+                            $href.attr("href", "/listings/"+data.id);
+
+                            $banner = $('<div/>',{
+                                class: 'random-item-content',
+                                html: $('<div/>').append($('<h1>',{
+                                    text: data.price
+                                    })).append($('<p>',{
+                                        text: data.item_name
+                                    }))
+                            });
+                            $banner.appendTo('#showRandomItem');
+
+                            $button = $('<button>',{
+                                class: 'next-recommended type-sale'
+                            }).append($('<i/>', {
+                                class: 'fa-solid fa-xmark'
+                            })).attr("onclick", "getNewItem()");
+                            $button.appendTo('#showRandomItem');
+
+                            $linkHref = $('<a>', {
+                                href: "/listings/"+data.id,
+                                class: "view-item type-sale",
+                                text: "Buy"
+                            }).appendTo('#showRandomItem');
+
+                        }else if(data.rental_title != null){
+
+                            $href.attr("href", "/rentables/"+data.id);
+                            
+                            $banner = $('<div/>',{
+                                class: 'random-item-content',
+                                html: $('<div/>').append($('<h1>',{
+                                        text: data.rental_charging + " / " + data.rental_duration
+                                    })).append($('<p>',{
+                                        text: data.rental_title
+                                    }))
+                            });
+                            $banner.appendTo('#showRandomItem');
+
+                            $button = $('<button>',{
+                                class: 'next-recommended type-rent'
+                            }).append($('<i/>', {
+                                class: 'fa-solid fa-xmark'
+                            })).attr("onclick", "getNewItem()");
+                            $button.appendTo('#showRandomItem');
+
+                            $linkHref = $('<a>', {
+                                href: "/rentables/"+data.id,
+                                class: "view-item type-rent",
+                                text: "Rent"
+                            }).appendTo('#showRandomItem');
+
+                        }else if(data.sublease_title != null){
+
+                            $href.attr("href", "/subleases/"+data.id);
+
+                            $banner = $('<div/>',{
+                                class: 'random-item-content',
+                                html: $('<div/>').append($('<h1>',{
+                                    text: data.rent
+                                    })).append($('<p>',{
+                                        text: data.sublease_title
+                                    }))
+                            });
+                            $banner.appendTo('#showRandomItem');
+
+                            $button = $('<button>',{
+                                class: 'next-recommended type-lease'
+                            }).append($('<i/>', {
+                                class: 'fa-solid fa-xmark'
+                            })).attr("onclick", "getNewItem()");
+                            $button.appendTo('#showRandomItem');
+
+                            $linkHref = $('<a>', {
+                                href: "/subleases/"+data.id,
+                                class: "view-item type-lease",
+                                text: "Lease"
+                            }).appendTo('#showRandomItem');
+
+                        }
+                    });
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+            }
+        });
+    }
+
 </script>
