@@ -20,10 +20,18 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // will create 10 random users and insert them into the db
+        $random = 0;
         User::factory(7)->create();
-        Listing::factory(20)->create();
-        Rentable::factory(20)->create();
-        Sublease::factory(20)->create();
+        for($i = 0; $i < 1000; $i++){
+            $random = rand(1,3);
+            if($random == 1){
+                Listing::factory(1)->create();
+            }elseif($random == 2){
+                Rentable::factory(1)->create();
+            }elseif($random == 3){
+                Sublease::factory(1)->create();
+            }
+        }
         // Message::factory(10000)->create();
 
         // $user = User::factory()->create(

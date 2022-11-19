@@ -28,6 +28,7 @@
                         @foreach($listings as $listing)
                             <div>
                                 @if($listing instanceof App\Models\Listing)
+                                {{-- @if(array_key_exists('item_name',(array) $listing) && $listing['item_name'] != null) --}}
                                     <x-carousel-card 
                                     :listing="$listing"
                                     :currentUser="$currentUser" />

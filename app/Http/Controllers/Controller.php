@@ -138,6 +138,27 @@ class Controller extends BaseController
         
         // dd(collect($electronicsItems)->merge($electronicsRent)->sortByDesc('created_at')->slice(0,16)->all());
         
+        $recently_viewed_content = json_decode(\Cookie::get('recently_viewed_content'), TRUE);
+
+        // dd($recently_viewed_content);
+        $recentlyViewed = null;
+        if($recently_viewed_content) {
+            krsort( $recently_viewed_content );
+            // dd($recently_viewed_content);
+            // dd($recently_viewed_content);
+            $recentlyViewed = array();
+            foreach($recently_viewed_content as $item){
+                if($item['type'] == 'listing'){
+                    array_push($recentlyViewed, Listing::find($item['id']));
+                }elseif($item['type'] == 'rentable'){
+                    array_push($recentlyViewed, Rentable::find($item['id']));
+                }elseif($item['type'] == 'sublease'){
+                    array_push($recentlyViewed, Sublease::find($item['id']));
+                }
+            }
+        }
+        // dd($recentlyViewed);
+        // dd($likedItems);
         return view('main.index', [
             'listings'=> $totalResults,
             'furnitureItems' => collect($furnitureItems)->merge($furnitureRent)->sortByDesc('created_at')->slice(0,16)->all(),
@@ -152,7 +173,7 @@ class Controller extends BaseController
             'subleases'=>Sublease::latest()->where('status', 'like', 'Available')->take(10)->get()->all(),
             'user' => $user != null ? $user->all()[0] : null,
             'likedItems' => $likedItems,
-            'recentlyViewed' => Cache::get('recentlyViewed') != null ? array_reverse(Cache::get('recentlyViewed')) : array()
+            'recentlyViewed' => $recentlyViewed != null ? $recentlyViewed : array()
         ]);
     }
 
@@ -167,7 +188,7 @@ class Controller extends BaseController
 
         $user = User::find(auth()->user());
         \DB::statement("SET SQL_MODE=''");
-        $messages = Message::join('users','messages.from','=','users.id')->orderBy('messages.created_at','desc')->where('to','=',$user->first()->id)->where('is_read','=','0')->groupBy('from')->limit(10)->get();
+        $messages = Message::join('users','messages.from','=','users.id')->orderBy('messages.created_at','desc')->where('to','=',$user->first()->id)->where('is_read','=','0')->groupBy('from')->get();
 
         /*foreach($messages as $mess) {
             $resultArr[User::select('*')->where('id','=',$mess->from)] = $mess;

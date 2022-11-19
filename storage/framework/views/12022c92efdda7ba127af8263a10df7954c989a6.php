@@ -28,6 +28,7 @@
                         <?php $__currentLoopData = $listings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $listing): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <div>
                                 <?php if($listing instanceof App\Models\Listing): ?>
+                                
                                     <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
 <?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'components.carousel-card','data' => ['listing' => $listing,'currentUser' => $currentUser]] + (isset($attributes) ? (array) $attributes->getIterator() : [])); ?>
 <?php $component->withName('carousel-card'); ?>
