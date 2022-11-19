@@ -353,8 +353,6 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-
-                            
                         </section>
 
 
@@ -374,7 +372,7 @@ unset($__errorArgs, $__bag); ?>
     <script>
         function initAutocomplete() {
             address1Field = document.getElementById("street");
-            address2Field = document.getElementById("streetTwo");
+            address2Field = document.getElementById("apartment_floor");
             postalField = document.getElementById("postcode");
 
             // Create the autocomplete object, restricting the search predictions to
@@ -406,39 +404,44 @@ unset($__errorArgs, $__bag); ?>
                 const componentType = component.types[0];
 
                 switch (componentType) {
+
                     case "street_number": {
-                    address1 = `${component.long_name} ${address1}`;
-                    break;
-                }
-                case "route": {
-                    address1 = `${address1}${component.long_name} `;
-                    break;
-                }
-                case "postal_code": {
-                    postcode = `${component.long_name}${postcode}`;
-                    break;
-                }
+                        address1 = `${component.long_name} ${address1}`;
+                        break;
+                    }
 
-                case "postal_code_suffix": {
-                    postcode = `${postcode}-${component.long_name}`;
-                    break;
-                }
+                    case "route": {
+                        address1 = `${address1}${component.long_name} `;
+                        break;
+                    }
 
-                case "locality":
-                    (document.getElementById("city")).value =
-                    component.long_name;
-                    break;
+                    case "postal_code": {
+                        postcode = `${component.long_name}${postcode}`;
+                        break;
+                    }
 
-                case "administrative_area_level_1": {
-                    (document.getElementById("state")).value =
-                    component.short_name;
-                    break;
-                }
+                    case "postal_code_suffix": {
+                        postcode = `${postcode}-${component.long_name}`;
+                        break;
+                    }
 
-                case "country":
-                    (document.getElementById("country")).value =
-                    component.long_name;
-                    break;
+                    case "locality":{
+                        (document.getElementById("city")).value =
+                        component.long_name;
+                        break;
+                    }
+
+                    case "administrative_area_level_1": {
+                        (document.getElementById("state")).value =
+                        component.short_name;
+                        break;
+                    }
+
+                    case "country":{
+                        (document.getElementById("country")).value =
+                        component.long_name;
+                        break;
+                    }
                 }
             }
             address1Field.value = address1;
@@ -448,48 +451,6 @@ unset($__errorArgs, $__bag); ?>
             // prediction, set cursor focus on the second address line to encourage
             // entry of subpremise information such as apartment, unit, or floor number.
             address2Field.focus();
-        }
-
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition, showError);
-            } else { 
-                console.log("location not supported")
-            }
-        }
-
-        function showPosition(position) {
-            var latitude = position.coords.latitude;
-            var longitude =  position.coords.longitude;
-            console.log("Latitude: " + latitude + 
-            "<br>Longitude: " + longitude);
-
-            // displayLocation(latitude,longitude);
-            // const reverse = require('reverse-geocode');
-            // console.log(reverse.lookup(37.8072792, -122.4780652, 'us'));
-
-            var test = document.getElementById("location");
-            test.innerHTML =" Latitude: " + latitude + 
-            " Longitude: " + longitude;
-            document.getElementById('latitude').value=latitude;
-            document.getElementById('longitude').value=longitude;
-        }
-
-        function showError(error) {
-            switch(error.code) {
-                case error.PERMISSION_DENIED:
-                    console.log("User denied the request for Geolocation.");
-                break;
-                case error.POSITION_UNAVAILABLE:
-                    console.log("Location information is unavailable.");
-                break;
-                case error.TIMEOUT:
-                    console.log( "The request to get user location timed out.");
-                break;
-                case error.UNKNOWN_ERROR:
-                    console.log( "An unknown error occurred.");
-                break;
-            }
         }
 
         // source code from code pen
@@ -617,17 +578,21 @@ unset($__errorArgs, $__bag); ?>
         const input = document.querySelector('.imgUpload');
         const preview = document.querySelector('.preview');
 
-        $('form').submit(function(e){
-            for(const tempFile of input.files){
-                if(validFileType(tempFile)) {
-                    if (tempFile.size > 5*1024*1024) {
-                        alert("Too large Image. Only images smaller than 5MB can be uploaded. Only images smaller then 5MB will be kept");
-                        e.preventDefault();
-                        break;
+        var canSubmit = true;
+        $(document).ready(function(){
+            $('form').submit(function(e){
+                for(const tempFile of input.files){
+                    if(validFileType(tempFile)) {
+                        if (tempFile.size > 5*1024*1024) {
+                            alert("Too large Image. Only images smaller than 5MB can be uploaded. Only images smaller then 5MB will be kept");
+                            e.preventDefault();
+                            canSubmit = false;
+                            break;
+                        }
                     }
-                }
-            }      
-            e.currentTarget.submit();     
+                }      
+                if(canSubmit){$('form').unbind('submit').submit();}  
+            });
         });
 
         // input.style.opacity = 0;

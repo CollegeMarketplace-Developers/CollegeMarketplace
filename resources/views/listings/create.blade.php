@@ -194,12 +194,6 @@
                             @error('postcode')
                                 <p>{{$message}}</p>
                             @enderror
-
-                            {{-- <input type="hidden" name="latitude" id ="latitude" value = "{{null}}"> --}}
-                            {{-- <input type="hidden" name="longitude" id = "longitude" value = "{{null}}"> --}}
-
-                            {{-- <p class="create-listing-header">Use My Location:</p> --}}
-                            {{-- <h6 onclick="getLocation()" class = "preview" id="location" style="font-size:1em;">Get Location</h6> --}}
                         </section>
 
 
@@ -216,10 +210,6 @@
             </div>
         </div>
     </div>
-    {{-- <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
-    integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
-    crossorigin=""></script> --}}
-    {{-- <script src="../../../node_modules/reverse-geocode/reverse-geocode.js"></script> --}}
     <script>
         function initAutocomplete() {
             address1Field = document.getElementById("street");
@@ -427,7 +417,6 @@
                     }
                 }      
                 if(canSubmit){$('form').unbind('submit').submit();}
-                
             });
         });
 
@@ -511,6 +500,7 @@
                 return (number/1048576).toFixed(1) + 'MB';
             }
         }
+        
     </script>
     <script async
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2Umn-3TUxP23ok373mWr0U4CHQDItcEk&callback=initAutocomplete&libraries=places&v=weekly"
