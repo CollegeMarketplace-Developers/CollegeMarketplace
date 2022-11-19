@@ -21,6 +21,8 @@
 .img-slider-container{
     position: relative;
     width: 66%;
+    min-width: 66%;
+    max-width: 66%;
     height: 300px;
     /* margin: 10px; */
     background: #1D212B;
@@ -131,6 +133,11 @@
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 }
 
+.recommended-item-title{
+  display: none;
+  padding:0 15px;
+}
+
 .showRandomItem{
     flex-grow: 1;
     height: 300px;
@@ -148,12 +155,12 @@
 
 .showRandomItem .random-item-content{
     position:absolute;
-    bottom:0;
+    top:0;
     min-height: 50px;
     padding:5px;
     box-sizing: border-box;
     width: 100%;
-    background: rgba(0,0,0, 0.5);
+    background: rgba(0,0,0, 0.7);
     padding: 20px;
     display: flex;
     flex-direction: row;
@@ -161,31 +168,64 @@
     align-items: center;
 }
 
+.showRandomItem .random-item-content i{
+  font-size:17px;
+}
+
 .showRandomItem .random-item-content h1{
     color:var(--accent-color);
+    padding-right: 10px;
 }
 
 .showRandomItem .random-item-content p{
     text-decoration: none;
     font-size: 0.95em;
+    padding-right:10px;
 }
 
-.showRandomItem .random-item-content a{
+.showRandomItem .view-item,
+.showRandomItem .next-recommended{
+    position: absolute;
+    bottom:20px;
+    right:20px;
     padding: 10px 20px;
     border-radius: var(--br-medium);
     color: white;
     text-align: center;
     height: fit-content;    
+    border:none;
+    cursor:pointer;
 }
 
+.showRandomItem .next-recommended{
+    left:20px;
+    width: fit-content;
+}
 
 @media(max-width: 900px){
-    .showRandomItem{
+    /* .showRandomItem{
         display: none;
+    } */
+    .recommended-item-title{
+      display: flex;
+      color:var(--font-color-dark);
+      text-align: left;
+      margin-top: 40px;
+      width: 100%;
+    }
+    .component-container-inner{
+      flex-direction: column;
     }
     .img-slider-container{
         width: 100%;
+        min-width: 100%;
+        max-width: 100%;
     }
+
+    .showRandomItem{
+      width: 100%;
+    }
+
 }
 @media (max-width: 620px){
 
@@ -210,6 +250,12 @@
     width: 10px;
     height: 10px;
     margin: 8px;
+  }
+}
+
+@media(max-width: 600px){
+  .recommended-item-title{
+    font-size: 22px;
   }
 }
 
