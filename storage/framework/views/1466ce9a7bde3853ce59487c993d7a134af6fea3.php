@@ -389,7 +389,7 @@
         let address = ['<?php echo e($listing->street); ?>', '<?php echo e($listing->city); ?>', '<?php echo e($listing->state); ?>', '<?php echo e($listing->postcode); ?>', '<?php echo e($listing->country); ?>'];
         
         // console.log("This is the address for the map: " + address);
-        console.log("This is the url for the map:  " + getGoogleMapsImage(address));
+        // console.log("This is the url for the map:  " + getGoogleMapsImage(address));
         
         function myFunction(imgs) {
             var expandImg = document.getElementById("expandedImg");
