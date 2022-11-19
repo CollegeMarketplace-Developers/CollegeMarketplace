@@ -274,16 +274,24 @@ class ListingController extends Controller
         $formFields['category'] = implode(", ", $formFields['category']);
         // dd($formFields);
 
+        Geocoder::setApiKey(config('geocoder.key'));
+        Geocoder::setCountry(config('geocoder.country', 'US'));
+        $resArr = Geocoder::getCoordinatesForAddress($formFields['street'].' '.$formFields['city']);
+
+        $formFields['latitude'] = $resArr['lat'];
+        $formFields['longitude'] = $resArr['lng'];
+
         $listing->update($formFields);
 
-        $client = new \GuzzleHttp\Client();
-        $geocoder = new Geocoder($client);
-        $geocoder->setApiKey(config('geocoder.key'));
-        $geocoder->setCountry(config('geocoder.country', 'US'));
-        $resArr = $geocoder->getCoordinatesForAddress($newListing->street.' '.$newListing->city);
+        
+        // $client = new \GuzzleHttp\Client();
+        // $geocoder = new Geocoder($client);
+        // $geocoder->setApiKey(config('geocoder.key'));
+        // $geocoder->setCountry(config('geocoder.country', 'US'));
+        // $resArr = $geocoder->getCoordinatesForAddress($newListing->street.' '.$newListing->city);
 
-        $newListing->latitude = $resArr['lat'];
-        $newListing->longitude = $resArr['lng']; 
+        // $newListing->latitude = $resArr['lat'];
+        // $newListing->longitude = $resArr['lng']; 
 
         return redirect('/listings/'.$listing->id)->with('message', 'Listing Updated Successfully!');
     }
