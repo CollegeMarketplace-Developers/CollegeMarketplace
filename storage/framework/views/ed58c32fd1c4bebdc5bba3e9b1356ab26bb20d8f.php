@@ -137,6 +137,7 @@
             <?php if(auth()->guard()->check()): ?>
                 <label for="show-notifications-panel" class="bell-icon">
                     <i class="fa-solid fa-bell"></i>
+                    <span class = "red-dot-notification" id="notifier"></span>
                 </label>
                 <label for="show-profile-panel" class="profile-icon">
                     <i class="fa-solid fa-user"></i>
@@ -175,6 +176,41 @@
     // document.getElementById("logout-button").addEventListener("click", function () {
     // form.submit();
     // });
+
+    //if the user is logged in, check every 10 seconds if there are unread messages
+    if("<?php echo e(!auth()->guest()); ?>"){
+        $(document).ready(function(){
+            setInterval(function(){
+                console.log('checkign');
+                checkForUnreadMessages();
+            }, 10000);
+        });
+    }
+
+    function checkForUnreadMessages(){
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
+        $.ajax({
+            type:'GET',
+            url: '/unreadmessages/count',
+            data: 'JSON',
+            cache: false, //look into caching later
+            success:function(data) {
+                //add your success handling here
+                if(data == 0){
+                    document.getElementById('notifier').style.display = "none";
+                }else{
+                    document.getElementById('notifier').style.display = "flex";
+                }
+            },
+            error: function (data, textStatus, errorThrown) {
+                console.log("failed");
+                //add your failed handling here
+            },
+        });
+    }
+
     $(document).ready(function(){
         $('input.panel').on('change', function() {
             $('input.panel').not(this).prop('checked', false);  

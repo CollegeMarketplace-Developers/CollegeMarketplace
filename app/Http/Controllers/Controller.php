@@ -33,19 +33,6 @@ class Controller extends BaseController
         return view('main.features');
     }
 
-    public function getDistance($latitude1, $longitude1, $latitude2, $longitude2) {
-        $earth_radius = 3959;
-    
-        $dLat = deg2rad($latitude2 - $latitude1);
-        $dLon = deg2rad($longitude2 - $longitude1);
-    
-        $a = sin($dLat/2) * sin($dLat/2) + cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * sin($dLon/2) * sin($dLon/2);
-        $c = 2 * asin(sqrt($a));
-        $d = $earth_radius * $c;
-    
-        return $d;
-    }
-    
     //MashAllah! lmaoo
      //show the index page
     public function index(){
@@ -177,6 +164,14 @@ class Controller extends BaseController
         ]);
     }
 
+    public function getUnreadMessagesCount(Request $request){
+        // return "test";
+        $user = User::find(auth()->user());
+        \DB::statement("SET SQL_MODE=''");
+        $messages = Message::join('users','messages.from','=','users.id')->orderBy('messages.created_at','desc')->where('to','=',$user->first()->id)->where('is_read','=','0')->groupBy('from')->count();
+        return $messages;
+    }
+
     //method to be used in the ajax request
     public function getUnreadMessages(Request $request) {
         return $this->getUnrdMessages();
@@ -184,15 +179,10 @@ class Controller extends BaseController
 
     //helper method to get unread messages to display in notification tab (latest one from each user)
     public function getUnrdMessages() {
-        $resultArr = array();
-
         $user = User::find(auth()->user());
         \DB::statement("SET SQL_MODE=''");
         $messages = Message::join('users','messages.from','=','users.id')->orderBy('messages.created_at','desc')->where('to','=',$user->first()->id)->where('is_read','=','0')->groupBy('from')->get();
 
-        /*foreach($messages as $mess) {
-            $resultArr[User::select('*')->where('id','=',$mess->from)] = $mess;
-        }*/
         return $messages;
     }
 
@@ -244,6 +234,19 @@ class Controller extends BaseController
             }
         }
         return $stack;
+    }
+
+    public function getDistance($latitude1, $longitude1, $latitude2, $longitude2) {
+        $earth_radius = 3959;
+    
+        $dLat = deg2rad($latitude2 - $latitude1);
+        $dLon = deg2rad($longitude2 - $longitude1);
+    
+        $a = sin($dLat/2) * sin($dLat/2) + cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * sin($dLon/2) * sin($dLon/2);
+        $c = 2 * asin(sqrt($a));
+        $d = $earth_radius * $c;
+    
+        return $d;
     }
 
     public function search(Request $request){
@@ -337,8 +340,7 @@ class Controller extends BaseController
         }
     }
 
-    public function getListingsQuery(Request $map)
-    {
+    public function getListingsQuery(Request $map){
         $map = $map->except('_token', 'type', 'page', 'utilities');
         // dd($map);
         if (!empty($map)) {
@@ -401,8 +403,7 @@ class Controller extends BaseController
         }
     }
 
-    public function getRentableQuery(Request $map)
-    {
+    public function getRentableQuery(Request $map){
         $map = $map->except('_token', 'type', 'page', 'utilities');
         if (!empty($map)) {
             $string = "Select * from rentables as r where ";
@@ -459,8 +460,7 @@ class Controller extends BaseController
         }
     }
 
-    public function getSubleaseQuery(Request $map)
-    {
+    public function getSubleaseQuery(Request $map){
         $map = $map->except('_token', 'type', 'page', 'category', 'tags');
         //done search, condition, price, utilities
         if (!empty($map)) {
@@ -507,8 +507,7 @@ class Controller extends BaseController
         }
     }
 
-    public function enrollEmail(Request $request)
-    {
+    public function enrollEmail(Request $request){
         // dd($request->all());
         $formfields = [
             'email' => $request->email
@@ -528,8 +527,7 @@ class Controller extends BaseController
         return back()->with('message', 'Successfully Enrolled in News Letter');
     }
 
-    public static function getRandomItem()
-    {
+    public static function getRandomItem(){
         // $model1s = Listing::inRandomOrder()->take(1)->get();
         // $model2s = Rentable::inRandomOrder()->take(1)->get();
         // $model3s = Sublease::inRandomOrder()->take(1)->get();
