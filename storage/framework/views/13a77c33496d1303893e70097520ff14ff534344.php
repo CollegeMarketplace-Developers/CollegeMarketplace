@@ -52,7 +52,7 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                            <input type="number" min="0.00" name = "price" max="10000.00" step="0.01" placeholder="Price or 0 for free"  value="<?php echo e(old('price', null)); ?>"/>
+                            <input type="number" min="0.00" name = "price" max="10000.00" step="0.01" placeholder="Price or 0 for free"  value="<?php echo e(old('price', null)); ?>" id="price-input"/>
                             <?php $__errorArgs = ['price'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -68,7 +68,7 @@ unset($__errorArgs, $__bag); ?>
                                 Price Negotiable, Fixed, or Free
                             </p>
                             <div class="condition-box">
-                                <select name="negotiable" id="">
+                                <select name="negotiable" id="price-type">
                                     <option value="Fixed" <?php echo e((old("negotiable") == 'Fixed' ? "selected":"")); ?>>Fixed</option>
                                     
                                     <option value="Negotiable" <?php echo e((old("negotiable") == 'Negotiable' ? "selected":"")); ?>>Negotiable/ OBO (best offer)</option>
@@ -329,12 +329,6 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-
-                            
-                            
-
-                            
-                            
                         </section>
 
 
@@ -351,9 +345,18 @@ unset($__errorArgs, $__bag); ?>
             </div>
         </div>
     </div>
-    
-    
     <script>
+
+        $(document).ready(function(){
+            $('#price-type').change(function(){
+                if($(this).val() == 'Free'){
+                    $('#price-input').val(0);
+                    $('#price-input').attr('readonly', true);
+                }else{
+                    $('#price-input').attr('readonly', false);
+                }
+            });
+        });
         function initAutocomplete() {
             address1Field = document.getElementById("street");
             address2Field = document.getElementById("apartment_floor");
@@ -389,38 +392,42 @@ unset($__errorArgs, $__bag); ?>
 
                 switch (componentType) {
                     case "street_number": {
-                    address1 = `${component.long_name} ${address1}`;
-                    break;
-                }
-                case "route": {
-                    address1 = `${address1}${component.long_name} `;
-                    break;
-                }
-                case "postal_code": {
-                    postcode = `${component.long_name}${postcode}`;
-                    break;
-                }
+                        address1 = `${component.long_name} ${address1}`;
+                        break;
+                    }
+                    
+                    case "route": {
+                        address1 = `${address1}${component.long_name} `;
+                        break;
+                    }
 
-                case "postal_code_suffix": {
-                    postcode = `${postcode}-${component.long_name}`;
-                    break;
-                }
+                    case "postal_code": {
+                        postcode = `${component.long_name}${postcode}`;
+                        break;
+                    }
 
-                case "locality":
-                    (document.getElementById("city")).value =
-                    component.long_name;
-                    break;
+                    case "postal_code_suffix": {
+                        postcode = `${postcode}-${component.long_name}`;
+                        break;
+                    }
 
-                case "administrative_area_level_1": {
-                    (document.getElementById("state")).value =
-                    component.short_name;
-                    break;
-                }
+                    case "locality":{
+                        (document.getElementById("city")).value =
+                        component.long_name;
+                        break;
+                    }
 
-                case "country":
-                    (document.getElementById("country")).value =
-                    component.long_name;
-                    break;
+                    case "administrative_area_level_1": {
+                        (document.getElementById("state")).value =
+                        component.short_name;
+                        break;
+                    }
+
+                    case "country":{
+                        (document.getElementById("country")).value =
+                        component.long_name;
+                        break;
+                    }
                 }
             }
             address1Field.value = address1;
@@ -556,7 +563,6 @@ unset($__errorArgs, $__bag); ?>
                     }
                 }      
                 if(canSubmit){$('form').unbind('submit').submit();}
-                
             });
         });
 
@@ -640,6 +646,7 @@ unset($__errorArgs, $__bag); ?>
                 return (number/1048576).toFixed(1) + 'MB';
             }
         }
+        
     </script>
     <script async
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2Umn-3TUxP23ok373mWr0U4CHQDItcEk&callback=initAutocomplete&libraries=places&v=weekly"
