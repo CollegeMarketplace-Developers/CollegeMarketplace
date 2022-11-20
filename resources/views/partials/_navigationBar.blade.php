@@ -220,7 +220,6 @@
     if("{{!auth()->guest()}}"){
         $(document).ready(function(){
             setInterval(function(){
-                console.log('checkign');
                 checkForUnreadMessages();
             }, 10000);
         });
