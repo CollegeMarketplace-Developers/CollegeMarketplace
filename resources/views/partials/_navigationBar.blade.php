@@ -133,7 +133,7 @@
             </ul>
 
             <ul class="user-panel">
-                <div class="recently-viewed">
+                {{-- <div class="recently-viewed">
                     <p>Recently Viewed</p>
                     <div class="recently-viewed-list">
                         @foreach (range(0, 9) as $number)
@@ -143,14 +143,13 @@
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos, vero.</p>
                                     <div class="details-row">
                                         <p><i class="fa-solid fa-sack-dollar"></i>200</p>
-                                        {{-- <p><i class="fa-solid fa-message"></i> 100 </p> --}}
                                         <p><i class="fa-solid fa-eye"></i> 2.6k</p>
                                     </div>
                                 </div>
                             </a>
                         @endforeach
                     </div>
-                </div>
+                </div> --}}
                 <li>
                     <a class="desktop-link" href="/users/manage">My Profile</a>
                 </li>
