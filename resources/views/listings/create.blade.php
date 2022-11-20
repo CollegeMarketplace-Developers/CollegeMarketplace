@@ -37,7 +37,7 @@
                             @error('item_name')
                                 <p>{{$message}}</p>
                             @enderror
-                            <input type="number" min="0.00" name = "price" max="10000.00" step="0.01" placeholder="Price or 0 for free"  value="{{ old('price', null) }}"/>
+                            <input type="number" min="0.00" name = "price" max="10000.00" step="0.01" placeholder="Price or 0 for free"  value="{{ old('price', null) }}" id="price-input"/>
                             @error('price')
                                 <p>{{$message}}</p>
                             @enderror
@@ -46,7 +46,7 @@
                                 Price Negotiable, Fixed, or Free
                             </p>
                             <div class="condition-box">
-                                <select name="negotiable" id="">
+                                <select name="negotiable" id="price-type">
                                     <option value="Fixed" {{ (old("negotiable") == 'Fixed' ? "selected":"") }}>Fixed</option>
                                     
                                     <option value="Negotiable" {{ (old("negotiable") == 'Negotiable' ? "selected":"") }}>Negotiable/ OBO (best offer)</option>
@@ -211,6 +211,17 @@
         </div>
     </div>
     <script>
+
+        $(document).ready(function(){
+            $('#price-type').change(function(){
+                if($(this).val() == 'Free'){
+                    $('#price-input').val(0);
+                    $('#price-input').attr('readonly', true);
+                }else{
+                    $('#price-input').attr('readonly', false);
+                }
+            });
+        });
         function initAutocomplete() {
             address1Field = document.getElementById("street");
             address2Field = document.getElementById("apartment_floor");
