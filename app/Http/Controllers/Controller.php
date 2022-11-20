@@ -27,15 +27,41 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function features()
-    {
+    //MashAllah! lmaoo
+    //show the index page
+    public function index(){
+
         header("Cache-Control: must-revalidate");
-        return view('main.features');
+
+        //if the user is logged in, we'll know, other wise it wil be null
+        $user = User::find(auth()->user());
+
+        //Items from each category sorted by category and date added recently
+        $categoryResults = $this->getResultsPerCategoryForCarousel();
+
+        //get the recently viewed itemms by the user
+        $recentlyViewed = $this->getRecentlyViewedItems();
+
+        return view('main.index', [
+            'listings'=> $this->getResultsForCardGallery(),
+            'furnitureItems' => $categoryResults[0],
+            'clothesItems' => $categoryResults[1],
+            'electronicsItems' => $categoryResults[2],
+            'kitchenItems' => $categoryResults[3],
+            'schoolItems' => $categoryResults[4],
+            'bookItems' => $categoryResults[5],
+            //'listingsNear' => Listing::latest()->where('status', '!=', 'Sold' )->take(10)->get(),
+            'listingsNear' => $this->getNearItemsWithUserLocationFromDB(),
+            'rentables' => Rentable::latest()->where('status', 'like', 'Available' )->take(10)->get()->all(),
+            'subleases'=> Sublease::latest()->where('status', 'like', 'Available')->take(10)->get()->all(),
+            'user' => $user != null ? $user->all()[0] : null,
+            'likedItems' => $this->getUserLikedItems(),
+            'recentlyViewed' => $recentlyViewed != null ? $recentlyViewed : array()
+        ]);
     }
 
-    //MashAllah! lmaoo
-     //show the index page
-    public function index(){
+    //get posts for the card gallery on the homepage
+    public function getResultsForCardGallery(){
         //Option 1: return results that were added in the last 24 hours for only sale items
         // $latest = Listing::latest()->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())->simplePaginate(16);
         // if(count($latest) == 0){
@@ -63,6 +89,13 @@ class Controller extends BaseController
         $subleaseResults = Sublease::latest()->where('status', 'like', 'Available')->limit(40)->get();
         $totalResults = collect($listingResults)->merge($rentableResults)->merge($subleaseResults)->sortByDesc('created_at')->slice(0, 40);
         // dd($totalResults);
+        return $totalResults;
+    }
+
+    //items from the db sorted by category and the most recent added
+    public function getResultsPerCategoryForCarousel(){
+
+        $results = array();
 
         $furnitureItems = Listing::latest()->where('status', '!=', 'Sold')->Where('category', 'LIKE', '%furniture%')->limit(10)->get();
         $clothesItems = Listing::latest()->where('status', '!=', 'Sold')->where('category', 'LIKE', '%clothes%')->limit(10)->get();
@@ -84,11 +117,54 @@ class Controller extends BaseController
         //     );
         // dd($furnitureItems);
 
-        header("Cache-Control: must-revalidate");
-        //     dd(collect($furnitureItems)->merge($furnitureRent)->sortByDesc('created_at')->slice(0,16),
-        // collect($clothesItems)->merge($clothesRent)->sortByDesc('created_at')->slice(0,16)
-        //     );
+        array_push($results,
+                collect($furnitureItems)->merge($furnitureRent)->sortByDesc('created_at')->slice(0,16)->all(),
+                collect($clothesItems)->merge($clothesRent)->sortByDesc('created_at')->slice(0,16)->all(),
+                collect($electronicsItems)->merge($electronicsRent)->sortByDesc('created_at')->slice(0,16)->all(),
+                collect($kitchenItems)->merge($kitchenRent)->sortByDesc('created_at')->slice(0,16)->all(),
+                collect($schoolItems)->merge($schoolRent)->sortByDesc('created_at')->slice(0,16)->all(),
+                collect($bookItems)->merge($bookRent)->sortByDesc('created_at')->slice(0,16)->all());
 
+        // dd($results);
+        return $results;
+    }
+
+    //returns all the liked items of the user
+    public function getUserLikedItems(){
+        $likedItems = auth()->user() != null ? auth()->user()->allLiked()->all() : array();
+        // dd($likedItems);
+        return $likedItems;
+    }
+
+    //returns the items recently viewed by the user
+    //the auth state doesnt affect the recently viewed as we use cookies
+    public function getRecentlyViewedItems(){
+        $recently_viewed_content = json_decode(\Cookie::get('recently_viewed_content'), TRUE);
+
+        // dd($recently_viewed_content);
+        $recentlyViewed = null;
+        if($recently_viewed_content) {
+            krsort( $recently_viewed_content );
+            // dd($recently_viewed_content);
+            // dd($recently_viewed_content);
+            $recentlyViewed = array();
+            foreach($recently_viewed_content as $item){
+                if($item['type'] == 'listing'){
+                    array_push($recentlyViewed, Listing::find($item['id']));
+                }elseif($item['type'] == 'rentable'){
+                    array_push($recentlyViewed, Rentable::find($item['id']));
+                }elseif($item['type'] == 'sublease'){
+                    array_push($recentlyViewed, Sublease::find($item['id']));
+                }
+            }
+        }
+
+        return $recentlyViewed;
+    }
+
+    //this method is used on the initial page load if the users exact location is updated in the db
+    //the latitute and longitude in the database is used to extract listings nearby
+    public function getNearItemsWithUserLocationFromDB(){
         $listingResultsFull = Listing::latest()->where('status', '!=', 'Sold' )->limit(50)->get();
         $retnablesResultsFull = Rentable::latest()->where('status', '!=', 'Rented' )->limit(50)->get();
         $subleaseResultsFull = Sublease::latest()->where('status', 'like', 'Available' )->limit(50)->get();
@@ -96,8 +172,6 @@ class Controller extends BaseController
 
         $stack = array();
         $user = User::find(auth()->user());
-        $likedItems = auth()->user() != null ? auth()->user()->allLiked()->all() : array();
-        // dd($likedItems);
 
         if($user != null) {
             $currentUser = $user->first();
@@ -122,48 +196,11 @@ class Controller extends BaseController
         }
 
         // dd($user != null ? $user->all()[0] : null);
-        
-        // dd(collect($electronicsItems)->merge($electronicsRent)->sortByDesc('created_at')->slice(0,16)->all());
-        
-        $recently_viewed_content = json_decode(\Cookie::get('recently_viewed_content'), TRUE);
 
-        // dd($recently_viewed_content);
-        $recentlyViewed = null;
-        if($recently_viewed_content) {
-            krsort( $recently_viewed_content );
-            // dd($recently_viewed_content);
-            // dd($recently_viewed_content);
-            $recentlyViewed = array();
-            foreach($recently_viewed_content as $item){
-                if($item['type'] == 'listing'){
-                    array_push($recentlyViewed, Listing::find($item['id']));
-                }elseif($item['type'] == 'rentable'){
-                    array_push($recentlyViewed, Rentable::find($item['id']));
-                }elseif($item['type'] == 'sublease'){
-                    array_push($recentlyViewed, Sublease::find($item['id']));
-                }
-            }
-        }
-        // dd($recentlyViewed);
-        // dd($likedItems);
-        return view('main.index', [
-            'listings'=> $totalResults,
-            'furnitureItems' => collect($furnitureItems)->merge($furnitureRent)->sortByDesc('created_at')->slice(0,16)->all(),
-            'clothesItems' => collect($clothesItems)->merge($clothesRent)->sortByDesc('created_at')->slice(0,16)->all(),
-            'electronicsItems' => collect($electronicsItems)->merge($electronicsRent)->sortByDesc('created_at')->slice(0,16)->all(),
-            'kitchenItems' => collect($kitchenItems)->merge($kitchenRent)->sortByDesc('created_at')->slice(0,16)->all(),
-            'schoolItems' => collect($schoolItems)->merge($schoolRent)->sortByDesc('created_at')->slice(0,16)->all(),
-            'bookItems' => collect($bookItems)->merge($bookRent)->sortByDesc('created_at')->slice(0,16)->all(),
-            //'listingsNear' => Listing::latest()->where('status', '!=', 'Sold' )->take(10)->get(),
-            'listingsNear' => $stack,
-            'rentables' => Rentable::latest()->where('status', 'like', 'Available' )->take(10)->get()->all(),
-            'subleases'=>Sublease::latest()->where('status', 'like', 'Available')->take(10)->get()->all(),
-            'user' => $user != null ? $user->all()[0] : null,
-            'likedItems' => $likedItems,
-            'recentlyViewed' => $recentlyViewed != null ? $recentlyViewed : array()
-        ]);
+        return $stack;
     }
 
+    //used to notify the user of any new messages, called every 10 seconds
     public function getUnreadMessagesCount(Request $request){
         // return "test";
         $user = User::find(auth()->user());
@@ -191,6 +228,7 @@ class Controller extends BaseController
         return $this->getAP();
     }
 
+    //helper function for active posts
     public function getAP() {
         $user = User::find(auth()->user());
 
@@ -203,6 +241,7 @@ class Controller extends BaseController
         // return array('success'=> 'itworked');
     }
 
+    //get listings near the user
     public function getListingsFromLatLng(Request $request) {
         //error_log($request->longitude);
         return $this->getProximateListings($request->latitude,$request->longitude); 
@@ -236,6 +275,7 @@ class Controller extends BaseController
         return $stack;
     }
 
+    //helper method to calculte the distance between user and a specific listing
     public function getDistance($latitude1, $longitude1, $latitude2, $longitude2) {
         $earth_radius = 3959;
     
@@ -553,5 +593,10 @@ class Controller extends BaseController
         }
         
         return null;
+    }
+
+    public function features(){
+        header("Cache-Control: must-revalidate");
+        return view('main.features');
     }
 }

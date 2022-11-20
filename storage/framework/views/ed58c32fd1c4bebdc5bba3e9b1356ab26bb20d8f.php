@@ -94,24 +94,7 @@
             </ul>
 
             <ul class="user-panel">
-                <div class="recently-viewed">
-                    <p>Recently Viewed</p>
-                    <div class="recently-viewed-list">
-                        <?php $__currentLoopData = range(0, 9); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $number): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <a href="">
-                                <img src="" alt="">
-                                <div class="recently-viewed-details">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos, vero.</p>
-                                    <div class="details-row">
-                                        <p><i class="fa-solid fa-sack-dollar"></i>200</p>
-                                        
-                                        <p><i class="fa-solid fa-eye"></i> 2.6k</p>
-                                    </div>
-                                </div>
-                            </a>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    </div>
-                </div>
+                
                 <li>
                     <a class="desktop-link" href="/users/manage">My Profile</a>
                 </li>

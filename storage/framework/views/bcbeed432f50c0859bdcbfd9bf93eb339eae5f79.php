@@ -60,7 +60,7 @@
                                     url: '',
                                     text: 'Check out this rentable!'
                                     }).then(() => {
-                                    console.log('Thanks for sharing!');
+                                        console.log('Thanks for sharing!');
                                     })
                                     .catch(console.error);
                                 } 
@@ -69,11 +69,7 @@
                                         shareDialog.classList.add('is-open');
                                 }
                                 });
-
-                                closeButton.addEventListener('click', event => {
-                                shareDialog.classList.remove('is-open');
-                                });
-                            </script>
+                        </script>
                             <?php
                                 if(isset($rentable->image_uploads)){
                                     //decode the json object
@@ -137,6 +133,8 @@
                                     <p>Condition:</p>
                                     <span><?php echo e($rentable->condition); ?></span>
                                 </div>
+                            </div>
+                            <div class="product-extra">
                                 <?php
                                     $rentableController::updateViewCount($rentable);
                                 ?>
@@ -156,91 +154,116 @@
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </div>
                                 </div>
-                                <div>
-                                    <p>Date Posted:</p>
-                                    <span><?php echo e($date); ?></span>
-                                </div>
                             </div>
-                        </div>
-                        <div class="map-container" id = "map-container">
+                            <div class = "date-posted">
+                                <p>Date Posted:</p>
+                                <span><?php echo e($date); ?></span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="selected-row">
-                    <div class="product-description-area">
-                        <div class="controls">
-                            
-                            
-                            
-                            
-                            <?php if($currentUser != null and $rentable->user_id == $currentUser->id): ?>
-                                <form method="POST" action="/rentables/<?php echo e($rentable->id); ?>/update">
-                                    <?php echo csrf_field(); ?>
-                                    <?php echo method_field('PUT'); ?>
-                                    <select name="status" id="status" style = " font-size: 17px; text-align:center;" onchange="this.form.submit()">
-                                        <option style = "text-align:center;">Status</option>
-                                        <option style = "text-align:center;" value="Available">Available</option>
-                                        <option style = "text-align:center;" value="Pending">Pending</option>
-                                        <option style = "text-align:center;" value="Rented">Rented</option>  
-                                    </select>
-                                </form>
+                    <div class ="description-chat">
+                        <div class="product-description-area">
+                            <div class="controls">
                                 
-                            
-                                <form class = "editForm" action="/rentables/<?php echo e($rentable->id); ?>/edit" method = "GET">
-                                    <?php echo csrf_field(); ?>
-                                    <input type="hidden" name="id" value="<?php echo e($rentable->id); ?>">
-                                    <button><i class="fa fa-pencil" aria-hidden="true"></i></button>
-                                </form>
+                                
+                                
+                                
+                                <?php if($currentUser != null and $rentable->user_id == $currentUser->id): ?>
+                                    <form method="POST" action="/rentables/<?php echo e($rentable->id); ?>/update">
+                                        <?php echo csrf_field(); ?>
+                                        <?php echo method_field('PUT'); ?>
+                                        <select name="status" id="status" style = " font-size: 17px; text-align:center;" onchange="this.form.submit()">
+                                            <option style = "text-align:center;">Status</option>
+                                            <option style = "text-align:center;" value="Available">Available</option>
+                                            <option style = "text-align:center;" value="Pending">Pending</option>
+                                            <option style = "text-align:center;" value="Sold">Sold</option>  
+                                        </select>
+                                    </form>
+                                    
+                                
+                                    <form class = "editForm" action="/rentables/<?php echo e($rentable->id); ?>/edit" method = "GET">
+                                        <?php echo csrf_field(); ?>
+                                        <input type="hidden" name="id" value="<?php echo e($rentable->id); ?>">
+                                        <button><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                    </form>
 
-                                <span id="delete-modal-trigger">
-                                    <i class="fa fa-trash" ></i>
-                                </span>
-                            <?php endif; ?>
-                            
+                                    <span id="delete-modal-trigger">
+                                        <i class="fa fa-trash" ></i>
+                                    </span>
+                                <?php endif; ?>
+                                
+                            </div>
+                            <h1>Description</h1>
+                            <p><?php echo e($rentable->description); ?></p>
                         </div>
-                        <h1>Description</h1>
-                        <p><?php echo e($rentable->description); ?></p>
+                        <div class="chat-container">
+                            
+                            <?php if($currentUser != null && $rentable->user_id == $currentUser->id): ?>
+                                <div class="user-wrapper">
+                                    <ul class="users">
+                                        <?php if(count($allUsers) >= 1): ?>
+                                            <?php $__currentLoopData = $allUsers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <li class="user" id="<?php echo e($user->id); ?>">
+
+                                                    <?php if($user->unread): ?>
+                                                        <span class="pending"><?php echo e($user->unread); ?></span>
+                                                    <?php endif; ?>
+
+                                                    
+                                                    <div class="media-left">
+                                                        <img src="<?php echo e($user->avatar); ?>" alt="" class="media-object">
+                                                    </div>
+
+                                                    <div class="media-body">
+                                                        <p class="name"><?php echo e($user->first_name); ?> <?php echo e($user->last_name); ?> | ID: <?php echo e($user->id); ?> </p>
+                                                        <p class='email'><?php echo e($user ->email); ?> </p>   
+                                                    </div>
+                                                </li>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        <?php else: ?>
+                                            <li class="no-messages"><span>You have no messages</span></li>
+                                        <?php endif; ?>
+                                    </ul>
+                                </div>
+                            <?php endif; ?>
+
+                            
+                            <div id="scroll-to-bottom" class="messages-container active">
+
+                                
+                                <?php if($currentUser != null && $rentable->user_id == $currentUser->id): ?>
+                                    <a class="message-back">
+                                        <i class="fa-solid fa-arrow-left"></i>
+                                    </a>
+                                <?php else: ?>
+                                
+                                    <a class="back-placeholder">
+                                        Chat with <?php echo e($rentableOwner->first_name); ?> <?php echo e($rentableOwner->last_name); ?>
+
+                                    </a>
+                                <?php endif; ?>
+
+                                <ul class="messages" id='messages'>
+                                    
+                                </ul>
+
+                                <div id = "input-text" class=input-text>
+                                    <input type="text" name="message" placeholder="Message Seller" class="submit">
+                                </div>
+                            </div> 
+                        </div>
                     </div>
                     <div class="about-seller-and-chat">
+                        <div class="map-container" id = "map-container">
+                        </div>
                         <div class="about-seller">
                             <i class="fa-solid fa-user"></i>
                             <div>
                                 <p>Name</p>
                                 <p>Joined: <span>2001-14-16</span></p>
                             </div>
-                        </div>
-                        <div class="chat-seller">
-                            <?php
-                                $type = null;
-                                if($rentable instanceof \App\Models\Rentable){
-                                    $type="rentable";
-                                }
-                                elseif($rentable instanceof \App\Models\Rentable){
-                                    $type="rentable";
-                                }
-                                else {
-                                    $type="lease";
-                                }
-                                // this is the rentable owner
-                                $itemID = $rentable->id;
-                                $ownerID = $rentable->user_id;
-
-                                // this is the current user logged in and the one messaging the owner
-                                $from = $currentUser ? $currentUser->id : -1;
-                                $item = $rentable->id;
-                            ?>
-
-                            <?php if($currentUser != null && $currentUser->id == $ownerID): ?>
-                                
-                                <a href="/all/<?php echo e($type); ?>/<?php echo e($itemID); ?>/<?php echo e($ownerID); ?>/<?php echo e($from); ?>/messages">
-                                    <p>My Messages</p>
-                                </a>
-                            <?php else: ?>
-                                
-                                <a href="/all/<?php echo e($type); ?>/<?php echo e($itemID); ?>/<?php echo e($ownerID); ?>/<?php echo e($from); ?>/messages">
-                                    <p>Chat with Seller</p>
-                                </a>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -258,7 +281,7 @@
                     <img src="<?php echo e(asset('/images/sad-dog.png')); ?>" alt="">
                 </div>
                 <span class="close">&times;</span>
-                <h1>Delete Rentable</h1>
+                <h1>Delete rentable</h1>
                 <p>Are you sure you want to delete this rentable?</p>
 
                 <div class="clearfix">
@@ -365,45 +388,288 @@
         }
         let address = ['<?php echo e($rentable->street); ?>', '<?php echo e($rentable->city); ?>', '<?php echo e($rentable->state); ?>', '<?php echo e($rentable->postcode); ?>', '<?php echo e($rentable->country); ?>'];
         
-        console.log(getGoogleMapsImage(address));
+        // console.log("This is the address for the map: " + address);
+        console.log("This is the url for the map:  " + getGoogleMapsImage(address));
+        
         function myFunction(imgs) {
             var expandImg = document.getElementById("expandedImg");
             expandImg.src = imgs.src;
         }
+
         var rentable_id = "<?php echo e($rentable->id); ?>"
         var rentableOwner = "<?php echo e($rentable->user_id); ?>";
         var userLoggedIn = "<?php echo e($currentUser ? $currentUser->id : -1); ?>";
         var receiverSelected = null; //the person whose chat we have open
 
         //delete modal
-        var deleteModal = document.getElementById("delete-modal");
-        var deleteButton = document.getElementById("delete-modal-trigger");
-        var deleteSpan = document.getElementsByClassName("close")[0];
-        var cancelBtn = document.getElementById('cancelbtn');
-        deleteButton.onclick = function() {
-            deleteModal.style.display = "grid";
-        }
-        deleteSpan.onclick = function() {
-            deleteModal.style.display = "none";
-        }
-        cancelBtn.onclick = function() {
-            deleteModal.style.display = "none";
-        }
-        window.onclick = function(event) {
-            if (event.target == deleteModal) {
+        if(userLoggedIn == rentableOwner){
+            var deleteModal = document.getElementById("delete-modal");
+            var deleteButton = document.getElementById("delete-modal-trigger");
+            var deleteSpan = document.getElementsByClassName("close")[0];
+            var cancelBtn = document.getElementById('cancelbtn');
+            deleteButton.onclick = function() {
+                deleteModal.style.display = "grid";
+            }
+            deleteSpan.onclick = function() {
                 deleteModal.style.display = "none";
+            }
+            cancelBtn.onclick = function() {
+                deleteModal.style.display = "none";
+            }
+            window.onclick = function(event) {
+                if (event.target == deleteModal) {
+                    deleteModal.style.display = "none";
+                }
             }
         }
 
-        function toggleText() {
-            navigator.clipboard.writeText(window.location.href);
-            var text = document.getElementById("demo");
-            if (text.style.display === "none") {
-                text.style.display = "block";
-            } else {
-                text.style.display = "none";
+        // function toggleText() {
+        //     navigator.clipboard.writeText(window.location.href);
+        //     var text = document.getElementById("demo");
+        //     if (text.style.display === "none") {
+        //         text.style.display = "block";
+        //     } else {
+        //         text.style.display = "none";
+        //     }
+        // }
+
+        $(document).ready(function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // Pusher.logToConsole = true;
+            var pusher = new Pusher('5b40ba1f12ea9bf24b29', {
+                cluster: 'us2'
+            });
+            var channel = pusher.subscribe('my-channel');
+
+            // 2 cases
+            // if I am not the rentable owner, show me messages that have been sent to me instantly
+            // if I am the rentable owner -> get selected user and update their information or display a pending symbol
+            channel.bind('my-event', function(data) {
+                console.log(data);
+                console.log("this doesnt work");
+                if (userLoggedIn == data.from) {
+                    // if I am not the rentable owner and I am sending a message
+                    if(userLoggedIn != rentableOwner){
+                        loadConversation(rentableOwner, userLoggedIn);
+                    }else{ //if I am the rentable owner and I am sending the message
+                        //  need to have an option for a user selected or pending
+                        if(receiverSelected != null){ // if the receiver is selected
+                            $('#'+receiverSelected).click();
+                        }
+                    }
+                }else if (userLoggedIn == data.to) {
+                    if(userLoggedIn != rentableOwner){
+                        loadConversation(rentableOwner, userLoggedIn);
+                    }else{ //if the rentable owner is the user logged in
+                        if(receiverSelected != null){ // if the receiver is selected
+                            $('#'+receiverSelected).click();
+                        }else{
+                            console.log(data);
+                            if(data.for_rentable == rentable_id){
+                                var pending = parseInt($('#' + data.from).find('.pending').html());
+                                if (pending) {
+                                    $('#' + data.from).find('.pending').html(pending + 1);
+                                } else {
+                                    $('#' + data.from).append('<span class="pending">1</span>');
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            // if I am the rentable owner, I want to see all the users that have contacted me
+            if(rentableOwner == userLoggedIn){
+                $('.messages-container').removeClass('active');
+                $('.user-wrapper').addClass('active');
             }
+            // back button to switch from messages container to users list container
+            $('.message-back').click(function(){
+                $('.messages-container').removeClass('active');
+                $('.user-wrapper').addClass('active');
+                receiverSelected = null;
+            });
+            
+            // if the rentable is not mine, load all messages from the rentable owner, to me the current user logged in
+            if("<?php echo e(!auth()->guest()); ?>"){
+                loadConversation(rentableOwner, userLoggedIn);
+            }
+
+            // load the initial conversation
+            function loadConversation(UserSending, UserReceiving ){
+                if("<?php echo e($rentable->user_id); ?>" != userLoggedIn){
+                    var ul = document.getElementById("messages");
+                    ul.innerHTML = null;
+                    
+                    $.ajax({
+                        type: "GET",
+                        url: "/messages?from=" + UserSending + "&to=" + UserReceiving + "&rentable_id=" + rentable_id, // need to create this route
+                        data: "JSON",
+                        cache: false,
+                        success: function (data) {
+                            // console.log(data);
+                            if(data != null){
+                                
+                                var ul = document.getElementById("messages");
+                                for(var i = 0; i< data.length; i++){
+                                    // console.log(data[i]);
+                                    var li = document.createElement("li");
+                                    li.className = 'message clearfix'
+                                    
+                                    var div = document.createElement('div');
+                                    if(data[i].from == userLoggedIn){
+                                        div.className="sent"
+                                    }else{
+                                        div.className="received"
+                                    }
+                                    var message = document.createElement('p');
+                                    message.innerHTML = data[i].message;
+                                    div.appendChild(message);
+                                    var date = document.createElement('p');
+                                    date.innerHTML = "<?php echo e(date('d M y, h:i a', strtotime(" + data[i].created_at + "))); ?>";
+                                    date.className='date';
+                                    div.appendChild(date);
+                                    li.appendChild(div);
+                                    ul.appendChild(li);
+                                    scrollToBottomFunc();
+                                }
+                            }
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                            alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+                        }
+                    });
+                }
+            }
+
+
+            // code for getting initial messages when a user profile is clicked or when I click contact seller for the first time
+            // if I am the rentable owner, I want to click on a user and get all the messages from me to them or them to me
+            $('.user').click(function(){
+                var ul = document.getElementById("messages");
+                ul.innerHTML = null;
+                
+
+                // make the user class inactive and show the messages
+                $('.user-wrapper').removeClass('active');
+                $('.messages-container').addClass('active');
+
+                // the receiver selected is the person we clicked on
+                // we use that person's id to send messages
+                receiverSelected = $(this).attr('id');
+
+                // remove pending symbol since we have seen messages
+                $(this).find('.pending').remove();
+
+                // perform an ajax request to get all messages to and from that specific user we clicked on
+
+                // console.log("from: " + receiverSelected + " to: " +rentableOwner)
+                $.ajax({
+                    type: "GET",
+                    url: "/messages?from=" + receiverSelected + "&to=" + rentableOwner + "&rentable_id=" + rentable_id, 
+                    data: "JSON",
+                    cache: false,
+                    success: function (data) {
+                        if(data != null){
+                            
+                            // once we obtain all the messages
+                            //we put them in an unordered list and display them
+
+                            console.log('Received Messages Successfully For User: ' + receiverSelected);
+                            var ul = document.getElementById("messages");
+                            for(var i = 0; i< data.length; i++){
+                                var li = document.createElement("li");
+                                li.className = 'message clearfix'
+                                
+                                var div = document.createElement('div');
+                                if(data[i].from == rentableOwner){
+                                    div.className="sent"
+                                }else{
+                                    div.className="received"
+                                }
+                                var message = document.createElement('p');
+                                message.innerHTML = data[i].message;
+                                div.appendChild(message);
+                                var date = document.createElement('p');
+                                date.innerHTML = "<?php echo e(date('d M y, h:i a', strtotime(" + data[i].created_at + "))); ?>";
+                                date.className='date';
+                                div.appendChild(date);
+                                li.appendChild(div);
+                                ul.appendChild(li);
+
+                                // scroll to the bottom of all the displayed messages
+                                scrollToBottomFunc();
+                            }
+                        }
+                    },
+
+                    // post error if there is any
+                    error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                        alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+                    }
+                });
+            });
+
+
+
+            // take to take in to account two different scenarios
+            //1) if the rentable is not mine, i wanna be able to message the rentable owner
+            //2) if the rentable is mine, select a specifc user, then get their id and sent them the message
+            //code for sending messages
+            if("<?php echo e(!auth()->guest()); ?>"){
+                $(document).on('keyup', 'input', function(e){
+                    var msg = $(this).val();
+                    var datastr = null;
+                    console.log('rentable Owner: ' + rentableOwner);
+                    console.log('user logged in: '+ userLoggedIn);
+                    // if I am the rentable owner, then i need a receiver id which should be the person I have selected form the users list
+                    if(rentableOwner == userLoggedIn){
+                        // if it is my ownrentable, use receiver id, instead of rentable owner id
+                        datastr = "receiver_id=" + receiverSelected + "&message=" + msg + "&for_rentable=" + rentable_id;
+                            // console.log(datastr);
+                    }else{ //else send a message to the rentable owner from me thats default
+                        // console.log("bottom branch");
+                        datastr = "receiver_id=" + rentableOwner + "&message=" + msg + "&for_rentable=" + rentable_id;
+                    }
+
+                    if(e.keyCode == 13 && msg != '' && rentableOwner != ''){
+                        $(this).val(''); // while pressed enter text box will be empty
+                        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                        $.ajax({
+                            url: "/sendmessage", 
+                            type: 'POST',
+                            data: datastr,
+                            dataType: 'JSON',
+                            _token: CSRF_TOKEN,
+                            cache: false,
+                            success: function (data) {
+                                console.log(data);
+                            },
+                            error: function (jqXHR, status, err) {
+                                console.log(err);
+                            },
+                            complete: function () {
+                                // scrollToBottomFunc();
+                            }
+                        })
+                    }
+                });
+            }
+        });
+
+         // make a function to scroll down auto
+        function scrollToBottomFunc() {
+           let scroll_to_bottom = document.getElementById('messages');
+            scrollBottom(scroll_to_bottom);
         }
+
+        function scrollBottom(element) {
+            element.scroll({ top: element.scrollHeight, behavior: "smooth"})
+        }
+        //stuff for chat ends here
     </script>
     <!-- for dynamic map, not needed since using static -->
     <!-- <script
