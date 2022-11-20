@@ -40,6 +40,7 @@ Route::get('/random/item', [Controller::class, 'getRandomItem']);
 
 //private 
 Route::get('/unreadmessages',[Controller::class,'getUnreadMessages']);//side panel
+Route::get('/unreadmessages/count', [Controller::class, 'getUnreadMessagesCount']);//sidepanel
 Route::get('/activeposts',[Controller::class,'getActivePosts']);//side panel
 Route::get('/users/manage', [UserController::class, 'manage'])->middleware('auth');
 Route::post('/users/manage/createWatchItem', [UserController::class, 'createWatchItem'])->middleware('auth');
