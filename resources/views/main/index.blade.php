@@ -26,7 +26,7 @@
 
         @if($recentlyViewed != null && count($recentlyViewed) > 0)
             <div class="listings-parent-container">
-                @include('partials._mixedCarousel', ['listings' => $recentlyViewed, 'message' => 'Recently Viewed Items', 'carouselClass'=>'recently-viewed-slider','carouselControls' => 'recently-viewed-controls', 'carouselP' =>'previous recently-viewed-previous', 'carouselN' => 'next recently-viewed-next',
+                @include('partials._mixedCarousel', ['listings' => $recentlyViewed, 'message' => 'Recently Viewed', 'carouselClass'=>'recently-viewed-slider','carouselControls' => 'recently-viewed-controls', 'carouselP' =>'previous recently-viewed-previous', 'carouselN' => 'next recently-viewed-next',
                 'currentUser'=>$user])
             </div>
         @endif

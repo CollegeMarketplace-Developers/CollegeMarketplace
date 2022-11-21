@@ -218,8 +218,12 @@
     //if the user is logged in, check every 10 seconds if there are unread messages
     if("{{!auth()->guest()}}"){
         $(document).ready(function(){
-            setInterval(function(){
+            var checkMessages = setInterval(function(){
                 checkForUnreadMessages();
+                if("{{auth()->guest()}}"){
+                    clearInterval(checkMessages);
+                    console.log("User Was Logged Out. Stopped Ajax Requests for Unread Messages");
+                }
             }, 10000);
         });
     }

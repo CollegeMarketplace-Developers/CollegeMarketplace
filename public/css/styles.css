@@ -95,6 +95,10 @@ li{
     background-color: #A98B98;
 }
 
+.type-free{
+    background-color: var(--accent-color);
+}
+
 .flash-message{
     position:absolute;
     top:0;

@@ -8,7 +8,7 @@
         <div class="controller">
             <h2><?php echo e($heading); ?></h2>
             <?php if($displayMoreButton): ?>
-                <a href="/shop/all?type=all" class="button1" style="font-size:14px;">All Items ></a>
+                <a href="/shop/all?type=all" class="button1" style="font-size:14px;">All Items</a>
             <?php endif; ?>
         </div>
     
