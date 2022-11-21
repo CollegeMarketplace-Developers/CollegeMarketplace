@@ -20,17 +20,18 @@
         @if($user != null && $likedItems != null && count($likedItems) > 0)
             <div class="listings-parent-container">
                 @include('partials._mixedCarousel', ['listings' => $likedItems, 'message' => 'Liked Items', 'carouselClass'=>'liked-items-slider','carouselControls' => 'liked-items-controls', 'carouselP' =>'previous liked-items-previous', 'carouselN' => 'next liked-items-next',
-                'currentUser'=>$user])
+                'currentUser'=>$user, 'extraLink' => '/shop/all?type=all'])
             </div>
         @endif
 
         @if($recentlyViewed != null && count($recentlyViewed) > 0)
             <div class="listings-parent-container">
                 @include('partials._mixedCarousel', ['listings' => $recentlyViewed, 'message' => 'Recently Viewed Items', 'carouselClass'=>'recently-viewed-slider','carouselControls' => 'recently-viewed-controls', 'carouselP' =>'previous recently-viewed-previous', 'carouselN' => 'next recently-viewed-next',
-                'currentUser'=>$user])
+                'currentUser'=>$user, 'extraLink'=> '/shop/all?type=all'])
             </div>
         @endif
         
+
         {{-- Show listings near--}}
         {{-- @if(!empty($listingsNear)) 
             <div class = "listings-parent-container">
