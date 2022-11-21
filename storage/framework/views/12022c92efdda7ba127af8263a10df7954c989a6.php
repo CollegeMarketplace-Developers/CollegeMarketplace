@@ -19,7 +19,7 @@
                     <div> 
                         
                         <h2><?php echo e($message); ?> <span>Recently Added</span></h2>
-                        <a style="font-size:14px;" href="/shop/all?type=listing" class="button1">MORE</a>
+                        <a style="font-size:14px;" href="<?php echo e($extraLink); ?>" class="button1">MORE ></a>
                     </div>
                 </div>
                 
