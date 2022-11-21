@@ -11,6 +11,12 @@
                 {{-- <span class="ribbon ribbon-listing">
                     {{$listing->status}}
                 </span> --}}
+                @if($listing->negotiable == "Free")
+                    <div class="ribbon">
+                        <span class="ribbon2">F<br>R<br>E<br>E<br></span>
+                    </div>
+                @endif
+
                 @if($listing->status =='Available')
                     <div class="status green">
                     </div>
@@ -72,7 +78,11 @@
                         <p>{{$listing->city}}, {{$listing->state}}</p>
                         <p>{{$listing->condition}}</p>
                     </div>
-                    <a class="type-sale" href="/listings/{{$listing->id}}">Buy</a>
+                    @if($listing->negotiable == "Free")
+                        <a class="type-free" href="/listings/{{$listing->id}}">Claim</a>
+                    @else
+                        <a class="type-sale" href="/listings/{{$listing->id}}">Buy</a>
+                    @endif
                 </div>
             </div>
 

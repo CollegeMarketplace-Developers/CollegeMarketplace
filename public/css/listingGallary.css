@@ -105,7 +105,7 @@
   background-color: cornflowerblue;
 }
 
-.ribbon{
+/* .ribbon{
   position: absolute;
   width: fit-content;
   padding: 5px 20px;
@@ -127,7 +127,7 @@
   padding: 0 0 7px;
   background-color: inherit;
   border-radius: 5px 0 0 5px;
-}
+} */
 
 .card_image .status{
     width: 15px;

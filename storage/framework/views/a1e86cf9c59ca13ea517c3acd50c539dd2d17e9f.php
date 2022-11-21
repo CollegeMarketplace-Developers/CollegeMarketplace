@@ -20,7 +20,7 @@
                     <div> 
                         
                         <h2><?php echo e($message); ?></h2>
-                        <a style="font-size:14px;" href="/shop/all?type=listing" class="button1">MORE ></a>
+                        <a style="font-size:14px;" href="/shop/all?type=listing" class="button1">MORE</a>
                     </div>
                 </div>
                 <?php if (! (count($listings) == 0)): ?>

@@ -47,9 +47,20 @@
                                     </div>
                                 </div>
                             <?php endif; ?> 
-                            <div class = "share-container">
-                            <form><button class="share-button" type="button"><i class="fa-solid fa-arrow-up-from-bracket"></i></button></form>
-                            </div>
+                            
+                            <?php if($listing->negotiable == "Free"): ?>
+                                <div class="ribbon product-ribbon">
+                                    <span class="ribbon2 product-ribbon-inner" style="font-size: 17px !important;">F<br>R<br>E<br>E<br></span>
+                                </div>
+                                <div class = "share-container bottom-right">
+                                    <form><button class="share-button" type="button"><i class="fa-solid fa-arrow-up-from-bracket"></i></button></form>
+                                </div>
+                            <?php else: ?>
+                                <div class = "share-container">
+                                    <form><button class="share-button" type="button"><i class="fa-solid fa-arrow-up-from-bracket"></i></button></form>
+                                </div>
+                            <?php endif; ?>
+
                             <script>
                                 const shareButton = document.querySelector('.share-button');
 

@@ -25,10 +25,16 @@
                     <div class="status">
                     </div>
                 <?php endif; ?>
-                <div class="card_type sale">
-                    <p>Buy</p>
-                </div>
 
+                <?php if($listing->negotiable == "Free"): ?>
+                    <div class="ribbon">
+                        <span class="ribbon2 gallery-ribbon">F<br>R<br>E<br>E<br></span>
+                    </div>
+                <?php else: ?>
+                    <div class="card_type sale">
+                        <p>Buy</p>
+                    </div>
+                <?php endif; ?>
 
                 
                 <div class="card_favorite">
