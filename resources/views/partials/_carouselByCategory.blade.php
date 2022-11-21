@@ -13,27 +13,27 @@
         <div class="category-carousel-display">
             <div class="category-display type1">
                 @include('partials._mixedCarousel', ['listings' => $furnitureItems, 'message' => 'Furniture Items', 'carouselClass'=>'furniture-slider','carouselControls' => 'furniture-controls', 'carouselP' =>'previous furniture-previous', 'carouselN' => 'next furniture-next',
-                'currentUser'=>$currentUser])
+                'currentUser'=>$currentUser, 'extraLink' => '/shop/all?type=all&category=furniture'])
             </div>
             <div class="category-display type2">
                 @include('partials._mixedCarousel', ['listings' => $clothesItems, 'message' => 'Clothes Items', 'carouselClass'=>'clothes-slider','carouselControls' => 'clothes-controls', 'carouselP' =>'previous clothes-previous', 'carouselN' => 'next clothes-next',
-                'currentUser'=>$currentUser])
+                'currentUser'=>$currentUser, 'extraLink' => '/shop/all?type=all&category=clothes'])
             </div>
             <div class="category-display type3">
                 @include('partials._mixedCarousel', ['listings' => $electronicsItems, 'message' => 'Electronics Items', 'carouselClass'=>'electronics-slider','carouselControls' => 'electronics-controls', 'carouselP' =>'previous electronics-previous', 'carouselN' => 'next electronics-next',
-                'currentUser'=>$currentUser])
+                'currentUser'=>$currentUser, 'extraLink' => '/shop/all?type=all&category=electronics'])
             </div>
             <div class="category-display type4">
                 @include('partials._mixedCarousel', ['listings' => $kitchenItems, 'message' => 'Kitchen Items', 'carouselClass'=>'kitchen-slider','carouselControls' => 'kitchen-controls', 'carouselP' =>'previous kitchen-previous', 'carouselN' => 'next kitchen-next',
-                'currentUser'=>$currentUser])
+                'currentUser'=>$currentUser, 'extraLink' => '/shop/all?type=all&category=kitchen'])
             </div>
             <div class="category-display type5">
                 @include('partials._mixedCarousel', ['listings' => $schoolItems, 'message' => 'School Items', 'carouselClass'=>'school-slider','carouselControls' => 'school-controls', 'carouselP' =>'previous school-previous', 'carouselN' => 'next school-next',
-                'currentUser'=>$currentUser])
+                'currentUser'=>$currentUser, 'extraLink' => '/shop/all?type=all&category=school%20accessories'])
             </div>
             <div class="category-display type6">
                 @include('partials._mixedCarousel', ['listings' => $bookItems, 'message' => 'Book Items', 'carouselClass'=>'book-slider','carouselControls' => 'book-controls', 'carouselP' =>'previous book-previous', 'carouselN' => 'next book-next',
-                'currentUser'=>$currentUser])
+                'currentUser'=>$currentUser, 'extraLink' => '/shop/all?type=all&category=books'])
             </div>
         </div>
     </div>

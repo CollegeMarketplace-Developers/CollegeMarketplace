@@ -39,9 +39,9 @@ Route::get('/random/item', [Controller::class, 'getRandomItem']);
 //User related routes
 
 //private 
-Route::get('/unreadmessages',[Controller::class,'getUnreadMessages']);//side panel
-Route::get('/unreadmessages/count', [Controller::class, 'getUnreadMessagesCount']);//sidepanel
-Route::get('/activeposts',[Controller::class,'getActivePosts']);//side panel
+Route::get('/unreadmessages',[Controller::class,'getUnreadMessages'])->middleware('auth');//side panel
+Route::get('/unreadmessages/count', [Controller::class, 'getUnreadMessagesCount'])->middleware('auth');//sidepanel
+Route::get('/activeposts',[Controller::class,'getActivePosts'])->middleware('auth');//side panel
 Route::get('/users/manage', [UserController::class, 'manage'])->middleware('auth');
 Route::post('/users/manage/createWatchItem', [UserController::class, 'createWatchItem'])->middleware('auth');
 Route::get('/users/removefavorite', [UserController::class, 'removeFavorite'])->middleware('auth');
