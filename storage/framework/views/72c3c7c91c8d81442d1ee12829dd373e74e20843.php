@@ -34,6 +34,7 @@
 
         <?php if($recentlyViewed != null && count($recentlyViewed) > 0): ?>
             <div class="listings-parent-container">
+
                 <?php echo $__env->make('partials._mixedCarousel', ['listings' => $recentlyViewed, 'message' => 'Recently Viewed Items', 'carouselClass'=>'recently-viewed-slider','carouselControls' => 'recently-viewed-controls', 'carouselP' =>'previous recently-viewed-previous', 'carouselN' => 'next recently-viewed-next',
                 'currentUser'=>$user, 'extraLink'=> '/shop/all?type=all'], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             </div>

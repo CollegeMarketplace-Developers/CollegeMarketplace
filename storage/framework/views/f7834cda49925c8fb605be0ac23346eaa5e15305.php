@@ -23,6 +23,12 @@
             
             <div class="slide-img">
                 
+                <?php if($listing->negotiable == "Free"): ?>
+                    <div class="ribbon">
+                        <span class="ribbon2">F<br>R<br>E<br>E<br></span>
+                    </div>
+                <?php endif; ?>
+
                 <?php if($listing->status =='Available'): ?>
                     <div class="status green">
                     </div>
@@ -84,7 +90,11 @@
                         <p><?php echo e($listing->city); ?>, <?php echo e($listing->state); ?></p>
                         <p><?php echo e($listing->condition); ?></p>
                     </div>
-                    <a class="type-sale" href="/listings/<?php echo e($listing->id); ?>">Buy</a>
+                    <?php if($listing->negotiable == "Free"): ?>
+                        <a class="type-free" href="/listings/<?php echo e($listing->id); ?>">Claim</a>
+                    <?php else: ?>
+                        <a class="type-sale" href="/listings/<?php echo e($listing->id); ?>">Buy</a>
+                    <?php endif; ?>
                 </div>
             </div>
 

@@ -14,10 +14,16 @@
                     <div class="status">
                     </div>
                 @endif
-                <div class="card_type sale">
-                    <p>Buy</p>
-                </div>
 
+                @if($listing->negotiable == "Free")
+                    <div class="ribbon">
+                        <span class="ribbon2 gallery-ribbon">F<br>R<br>E<br>E<br></span>
+                    </div>
+                @else
+                    <div class="card_type sale">
+                        <p>Buy</p>
+                    </div>
+                @endif
 
                 {{-- has the item been favorited --}}
                 <div class="card_favorite">
