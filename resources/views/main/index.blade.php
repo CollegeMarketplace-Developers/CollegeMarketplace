@@ -63,19 +63,6 @@
 
     <script>
 
-        // Immediately-invoked function expression
-        (function() {
-        // Load the script
-        const script = document.createElement("script");
-        script.src = 'https://code.jquery.com/jquery-3.3.1.min.js';
-        script.type = 'text/javascript';
-        script.addEventListener('load', () => {
-            console.log(`jQuery ${$.fn.jquery} has been loaded successfully!`);
-            // use jQuery below
-        });
-        document.head.appendChild(script);
-        })();
-
         var likedItems = {!! json_encode(array_values($likedItems)) !!};
         var recentlyViewed = {!! json_encode(array_values($recentlyViewed)) !!};
         if(likedItems.length>0){
