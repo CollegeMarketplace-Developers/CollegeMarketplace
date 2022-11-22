@@ -492,7 +492,7 @@
 
         });
 
-const input = document.querySelector('.imgUpload');
+        const input = document.querySelector('.imgUpload');
         const preview = document.querySelector('.preview');
 
         $('form').submit(function(e){

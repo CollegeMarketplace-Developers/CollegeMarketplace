@@ -302,7 +302,12 @@ class Controller extends BaseController
             $value = explode(",", $value);
             $map->put($key, $value);
         }
-        // dd($request ->all());
+
+        //basically checks if distance exists
+        //this would return false which would make the if statement false, unless that exists
+        // dd(request('distance') ?? false);
+        // dd('came to search');
+        dd($map);
         // dd("test");
         if (
             $request->fullUrl() != $request->url() &&
@@ -361,13 +366,20 @@ class Controller extends BaseController
                 ]);
             } elseif ((request('type') ?? false) && request('type') == 'all') {
                 $totalResults = null;
-                if (!empty($request->except('_token', 'type', 'page'))) {
+                //if there are other parameters passed in other than type=all, with the exception of the following, then need to do this
+                if (!empty($request->except('_token', 'type', 'page', 'distance'))) {
+
                     $listingResults = $this->getListingsQuery($request);
                     $rentableResults = $this->getRentableQuery($request);
                     $subleaseResults = $this->getSubleaseQuery($request);
+
                     $totalResults = collect($listingResults)->merge($rentableResults)->merge($subleaseResults)->sortByDesc('id')->paginate(50);
+
                 } else {
+                    //if only type is passed in and no other parameters are passed, then perform a generic laravel SQL query that will collect the results and return them
                     $totalResults = collect(Listing::latest()->get())->merge(Rentable::latest()->get())->merge(Sublease::latest()->get())->sortByDesc('id')->paginate(50);
+                    // dd($request->distance);
+                    // dd($totalResults->paginate(50));
                 }
 
                 // dd($user != null ? $user->all()[0] : null);
@@ -381,8 +393,12 @@ class Controller extends BaseController
     }
 
     public function getListingsQuery(Request $map){
-        $map = $map->except('_token', 'type', 'page', 'utilities');
+        $performDistance = false;
+        if($map->distance){$performDistance = true;}
+        // dd($performDistance);
+        $map = $map->except('_token', 'type', 'page', 'utilities', 'distance');
         // dd($map);
+
         if (!empty($map)) {
             $string = "Select * from listings as l where ";
             foreach ($map as $key => $values) {
@@ -437,14 +453,18 @@ class Controller extends BaseController
                 $string = $string . " AND ";
             }
             $string = substr($string, 0, -5);
-
+            // dd($string);
             $userQuery = DB::select($string);
+            // dd($userQuery);
             return Listing::hydrate($userQuery);
         }
     }
 
     public function getRentableQuery(Request $map){
-        $map = $map->except('_token', 'type', 'page', 'utilities');
+        $performDistance = false;
+        if($map->distance){$performDistance = true;}
+
+        $map = $map->except('_token', 'type', 'page', 'utilities', 'distance');
         if (!empty($map)) {
             $string = "Select * from rentables as r where ";
             foreach ($map as $key => $values) {
@@ -501,7 +521,10 @@ class Controller extends BaseController
     }
 
     public function getSubleaseQuery(Request $map){
-        $map = $map->except('_token', 'type', 'page', 'category', 'tags');
+        $performDistance = false;
+        if($map->distance){$performDistance = true;}
+
+        $map = $map->except('_token', 'type', 'page', 'category', 'tags', 'distance');
         //done search, condition, price, utilities
         if (!empty($map)) {
             $string = "Select * from subleases as s where ";

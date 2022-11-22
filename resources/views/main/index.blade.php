@@ -26,7 +26,7 @@
 
         @if($recentlyViewed != null && count($recentlyViewed) > 0)
             <div class="listings-parent-container">
-                @include('partials._mixedCarousel', ['listings' => $recentlyViewed, 'message' => 'Recently Viewed Items', 'carouselClass'=>'recently-viewed-slider','carouselControls' => 'recently-viewed-controls', 'carouselP' =>'previous recently-viewed-previous', 'carouselN' => 'next recently-viewed-next',
+                @include('partials._mixedCarousel', ['listings' => $recentlyViewed, 'message' => 'Recently Viewed', 'carouselClass'=>'recently-viewed-slider','carouselControls' => 'recently-viewed-controls', 'carouselP' =>'previous recently-viewed-previous', 'carouselN' => 'next recently-viewed-next',
                 'currentUser'=>$user, 'extraLink'=> '/shop/all?type=all'])
             </div>
         @endif
@@ -49,7 +49,7 @@
         
         {{-- main card gallery for items posted within the last 24hrs --}}
         <div class = "listings-parent-container">
-            @include('partials._cardGallary', ['listings' => $listings, 'heading'=>'Items Recently Added', 'displayTags' => true, 'displayMoreButton' => true,
+            @include('partials._cardGallary', ['listings' => $listings, 'heading'=>'Recently Added', 'displayTags' => true, 'displayMoreButton' => true,
             'currentUser' => $user])
         </div>
 

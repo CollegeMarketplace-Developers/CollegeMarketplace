@@ -42,7 +42,16 @@
                         <li><a href="/shop/all?type=all&category=school%20accessories">School Accessories</a></li>
                         </ul>
                     </li>
-                    <li><a href="/shop/all?distance=0%20-%200.5%20Mi">Listings < .5 Mile</a></li>
+                    
+                    <li>
+                        <form id = "distanceForm" method="GET" action="/shop/all?type=all&distance=0%20-%200.5%20Mi">
+                            <?php echo csrf_field(); ?>
+                            <input type="hidden" name="type" id="type" value="all">
+                            <input type="hidden" name="lat" id="lat" value = '0'>
+                            <input type="hidden" name="lng" id="lng" value = '0'>
+                            <button type="submit"  id="submit" >Listings < .5 Mile</button>
+                        </form>
+                    </li>
                     <li><a href="/shop/all?type=all">All Items</a></li>
                     </ul>
                 </li>
@@ -159,6 +168,66 @@
     // document.getElementById("logout-button").addEventListener("click", function () {
     // form.submit();
     // });
+    
+
+    function showMyPosition(position) {
+        $(document).ready(function(){
+            console.log(position.coords.latitude+" "+position.coords.longitude);
+            $('#lat').val(position.coords.latitude);
+            $('#lng').val(position.coords.longitude);
+        });
+    }
+
+    function showMyError(error) {
+    //     switch(error.code) {
+    //         case error.PERMISSION_DENIED:
+    //             console.log("User denied the request for Geolocation.");
+    //         break;
+    //         case error.POSITION_UNAVAILABLE:
+    //             console.log("Location information is unavailable.");
+    //         break;
+    //         case error.TIMEOUT:
+    //             console.log( "The request to get user location timed out.");
+    //         break;
+    //         case error.UNKNOWN_ERROR:
+    //             console.log( "An unknown error occurred.");
+    //         break;
+    //     }
+    }
+
+    var myoptions = {
+        enableHighAccuracy: true,
+        timeout: 1000,
+        maximumAge: 0
+    };
+
+    //if the user is not logged in
+    var isSubmittable = false;
+    if("<?php echo e(auth()->guest()); ?>") {
+        console.log('user not logged in')
+        //if: if the user is not logged in | allowed to get current location
+            // $(document).ready(function(){
+            //     $('#distanceForm').submit(function(e){   
+            //         // e.preventDefault(); 
+
+            //         if (navigator.geolocation) {
+            //             navigator.geolocation.getCurrentPosition(showMyPosition,showMyError,myoptions);
+            //             isSubmittable = true;
+            //         } else { 
+            //             console.log("location not supported")
+            //         }
+
+            //         // if(isSubmittable){$('#distanceForm').unbind('submit').submit();}
+            //     });
+            // });
+        //if: if the user is not logged in |not allowed to user current location
+
+    }else if("<?php echo e(!auth()->guest()); ?>"){ //if the user is logged in
+        console.log('user logged in');
+        //elseif: if the user is logged in | lat lng in db
+        //elseif: if the user is logged in | no lat/long in db | allowed to get current location
+        //elseif: if the user is logged in | no lat lng in db | not allowed to user current location
+    }
 
     //if the user is logged in, check every 10 seconds if there are unread messages
     if("<?php echo e(!auth()->guest()); ?>"){
