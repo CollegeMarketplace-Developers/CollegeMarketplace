@@ -27,8 +27,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    //MashAllah! lmaoo
-    //show the index page
+    //MashAllah! lmaoo + show the index page
     public function index(){
 
         header("Cache-Control: must-revalidate");
@@ -289,6 +288,35 @@ class Controller extends BaseController
         return $d;
     }
 
+    //intput is a collection of items + must return a collection of items
+    public function getListingsWithinRange($collection, $userLat, $userLng, $distanceLowerLimit, $distanceHigherLimit){
+        // dd($collection);
+        $stack = array();
+        foreach ($collection as $res) {
+            $calculatedDistance = $this->getDistance(floatval($userLat),floatval($userLng),$res->latitude,$res->longitude);
+            if($calculatedDistance <= $distanceHigherLimit && $calculatedDistance >= $distanceLowerLimit) {
+                array_push($stack,$res);
+            }
+        }
+
+        // dd(collect( $stack));
+        return collect($stack);
+    }
+
+    public function searchNearbyHelperFunction($totalResults, $lat, $lng, $distance){
+        if($distance == "0.5 Mi"){
+            return $this->getListingsWithinRange($totalResults, $lat, $lng, 0, 0.5);
+        }else if($distance == "1 Mi"){
+            return $this->getListingsWithinRange($totalResults, $lat, $lng, 0, 1);
+        }else if($distance == "1.5 Mi"){
+            return $this->getListingsWithinRange($totalResults, $lat, $lng, 0, 1.5);
+        }else if($distance == "2 Mi"){
+            return $this->getListingsWithinRange($totalResults, $lat, $lng, 0, 2);
+        }else if($distance == "> 2 Mi"){
+            return $this->getListingsWithinRange($totalResults, $lat, $lng, 2, 1000);
+        }
+    }
+    
     public function search(Request $request){
         // dd(\Request::getRequestUri());
         $user = User::find(auth()->user());
@@ -302,8 +330,13 @@ class Controller extends BaseController
             $value = explode(",", $value);
             $map->put($key, $value);
         }
-        // dd($request ->all());
-        // dd("test");
+
+        //basically checks if distance exists
+        //this would return false which would make the if statement false, unless that exists
+        // dd(request('distance') ?? false);
+
+        // dd($map);
+
         if (
             $request->fullUrl() != $request->url() &&
             ((request('distance') ?? false)
@@ -317,11 +350,42 @@ class Controller extends BaseController
             if ((request('type') ?? false) && request('type') == 'listing') {
                 // show results from rentables table with filters applied
                 $totalResults = null;
-                if (!empty($request->except('_token', 'type', 'page'))) {
+                if (!empty($request->except('_token', 'type', 'page', 'distance', 'lat', 'lng'))) {
                     $listingResults = $this->getListingsQuery($request);
-                    $totalResults = collect($listingResults)->sortByDesc('id')->paginate(50);
-                } else {
-                    $totalResults = collect(Listing::latest()->get())->sortByDesc('id')->paginate(50);
+
+                    if($request->distance && $request->lat != 'null' && $request->lng != 'null' ){
+                        $totalResults = collect($listingResults)->sortByDesc('id');
+                        $response = $this->searchNearbyHelperFunction($totalResults, $request->lat, $request->lng, $request->distance);
+
+                        //if the response from running the nearby item is null then return an empty item
+                        //can't paginate on null
+                        //if the distance doesnt find anything return an empty list
+                        if($response != null){
+                            $totalResults= $response->paginate(50);
+                        }else{
+                            $totalResults = collect(array());
+                        }
+
+                    }else{
+                        $totalResults = collect($listingResults)->sortByDesc('id')->paginate(50);
+                    }
+                
+                } else if(empty($request->except('_token', 'type', 'page', 'distance', 'lat', 'lng'))){
+                    $totalResults = collect(Listing::latest()->get())->sortByDesc('id');
+
+                    if($request->distance && $request->lat != 'null' && $request->lng != 'null' ){
+                        
+                        $response = $this->searchNearbyHelperFunction($totalResults, $request->lat, $request->lng, $request->distance);
+
+                        if($response != null){
+                            $totalResults= $response->paginate(50);
+                        }else{
+                            $totalResults = collect(array());
+                        }
+
+                    }else{ //else keep the total results the same | do not perform the distance function
+                        $totalResults = $totalResults->paginate(50);
+                    }
                 }
 
                 // dd($totalResults);
@@ -333,11 +397,44 @@ class Controller extends BaseController
             } elseif ((request('type') ?? false) && request('type') == 'rentable') {
                 // show results from rentables table with filters applied
                 $totalResults = null;
-                if (!empty($request->except('_token', 'type', 'page'))) {
+                if (!empty($request->except('_token', 'type', 'page', 'distance', 'lat', 'lng'))) {
+                    // dd('top branch');
                     $rentableResults = $this->getRentableQuery($request);
-                    $totalResults = collect($rentableResults)->sortByDesc('id')->paginate(50);
-                } else {
-                    $totalResults = Rentable::latest()->paginate(50);
+
+                    if($request->distance && $request->lat != 'null' && $request->lng != 'null' ){
+                        $totalResults = collect($rentableResults)->sortByDesc('id');
+                        $response = $this->searchNearbyHelperFunction($totalResults, $request->lat, $request->lng, $request->distance);
+
+                        //if the response from running the nearby item is null then return an empty item
+                        //can't paginate on null
+                        //if the distance doesnt find anything return an empty list
+                        if($response != null){
+                            $totalResults= $response->paginate(50);
+                        }else{
+                            $totalResults = collect(array());
+                        }
+
+                    }else{
+                        $totalResults = collect($rentableResults)->sortByDesc('id')->paginate(50);
+                    }
+                    
+                } else if(empty($request->except('_token', 'type', 'page', 'distance', 'lat', 'lng'))){
+                    // dd('bottom branch');
+                    $totalResults = collect(Rentable::latest()->get())->sortByDesc('id');
+
+                    if($request->distance && $request->lat != 'null' && $request->lng != 'null' ){
+                        
+                        $response = $this->searchNearbyHelperFunction($totalResults, $request->lat, $request->lng, $request->distance);
+
+                        if($response != null){
+                            $totalResults= $response->paginate(50);
+                        }else{
+                            $totalResults = collect(array());
+                        }
+
+                    }else{ //else keep the total results the same | do not perform the distance function
+                        $totalResults = $totalResults->paginate(50);
+                    }
                 }
 
                 header("Cache-Control: must-revalidate");
@@ -345,29 +442,114 @@ class Controller extends BaseController
                     'listings' => $totalResults,
                     'user' =>  $user != null ? $user->all()[0] : null
                 ]);
+
             } elseif ((request('type') ?? false) && request('type') == 'lease') {
                 $totalResults = null;
-                if (!empty($request->except('_token', 'type', 'page', 'category'))) {
-                    $subleaseResults = $this->getSubleaseQuery($request);
-                    $totalResults = collect($subleaseResults)->sortByDesc('id')->paginate(50);
-                } else {
-                    $totalResults = Sublease::latest()->paginate(50);
-                }
 
+                if (!empty($request->except('_token', 'type', 'page', 'category', 'distance', 'lat', 'lng'))) {
+                    // dd('Top Main Branch');
+                    $subleaseResults = $this->getSubleaseQuery($request);
+
+                    if($request->distance && $request->lat != 'null' && $request->lng != 'null' ){
+
+                        $totalResults = collect($subleaseResults)->sortByDesc('id');
+
+                        $response = $this->searchNearbyHelperFunction($totalResults, $request->lat, $request->lng, $request->distance);
+                        
+                        //if the response from running the nearby item is null then return an empty item
+                        //can't paginate on null
+                        //if the distance doesnt find anything return an empty list
+                        if($response != null){
+                            $totalResults= $response->paginate(50);
+                        }else{
+                            $totalResults = collect(array());
+                        }
+
+                    }else{
+                         $totalResults = collect($subleaseResults)->sortByDesc('id')->paginate(50);
+                    }
+                }else if(empty($request->except('_token', 'type', 'page', 'category', 'distance', 'lat', 'lng'))){
+                    // dd('Middle Main Branch');
+                    $totalResults = collect(Sublease::latest()->get())->sortByDesc('id');
+
+                    if($request->distance && $request->lat != 'null' && $request->lng != 'null' ){
+                        
+                        $response = $this->searchNearbyHelperFunction($totalResults, $request->lat, $request->lng, $request->distance);
+
+                        if($response != null){
+                            $totalResults= $response->paginate(50);
+                        }else{
+                            $totalResults = collect(array());
+                        }
+
+                    }else{ //else keep the total results the same | do not perform the distance function
+                        $totalResults = $totalResults->paginate(50);
+                    }
+                }
+                
                 header("Cache-Control: must-revalidate");
                 return view('main.search', [
                     'listings' => $totalResults,
                     'user' =>  $user != null ? $user->all()[0] : null
                 ]);
+
             } elseif ((request('type') ?? false) && request('type') == 'all') {
                 $totalResults = null;
-                if (!empty($request->except('_token', 'type', 'page'))) {
+                //if there are other parameters passed in other than type=all, with the exception of the following, then need to do this
+                //basically any other filters like categories, condition, utilities, etc.. go in this branch
+                
+                //if both auth and guest have lat and lng + other categories
+                if (!empty($request->except('_token', 'type', 'page', 'distance', 'lat', 'lng'))) {
+                    // dd('Top Main Branch');
+                    // dd($request->except('_token', 'type', 'page', 'distance', 'lat', 'lng'));
                     $listingResults = $this->getListingsQuery($request);
                     $rentableResults = $this->getRentableQuery($request);
                     $subleaseResults = $this->getSubleaseQuery($request);
-                    $totalResults = collect($listingResults)->merge($rentableResults)->merge($subleaseResults)->sortByDesc('id')->paginate(50);
-                } else {
-                    $totalResults = collect(Listing::latest()->get())->merge(Rentable::latest()->get())->merge(Sublease::latest()->get())->sortByDesc('id')->paginate(50);
+
+                    //if nearby location is toggled and its a valid lat and lng
+                    if($request->distance && $request->lat != 'null' && $request->lng != 'null' ){
+                        // dd('top inner branch');
+                        $totalResults = collect($listingResults)->merge($rentableResults)->merge($subleaseResults)->sortByDesc('id');
+
+                        $response = $this->searchNearbyHelperFunction($totalResults, $request->lat, $request->lng, $request->distance);
+
+                        //if the response from running the nearby item is null then return an empty item
+                        //can't paginate on null
+                        //if the distance doesnt find anything return an empty list
+                        if($response != null){
+                            $totalResults= $response->paginate(50);
+                        }else{
+                            $totalResults = collect(array());
+                        }
+
+                    }else{
+                        
+                        // do not perform the distance function because the lat/lng is not valid
+                        $totalResults = collect($listingResults)->merge($rentableResults)->merge($subleaseResults)->sortByDesc('id')->paginate(50);
+                    }   
+
+                } else if(empty($request->except('_token', 'type', 'page', 'distance', 'lat', 'lng'))){
+                    // dd('Middle Main Branch');
+                    //if just trying to find nearby items without any other filters applied
+                    
+                    $totalResults = collect(Listing::latest()->get())->merge(Rentable::latest()->get())->merge(Sublease::latest()->get())->sortByDesc('id');
+
+                    // dd($totalResults->paginate(50));
+                    //if there is a valid distance and a valid lat and long
+                    if($request->distance && $request->lat != 'null' && $request->lng != 'null' ){
+                        
+                        $response = $this->searchNearbyHelperFunction($totalResults, $request->lat, $request->lng, $request->distance);
+
+                        if($response != null){
+                            $totalResults= $response->paginate(50);
+                        }else{
+                            $totalResults = collect(array());
+                        }
+
+                    //if only type is passed in and no other parameters are passed, then perform a generic laravel SQL query that will collect the results and return them
+                    }else{ //else keep the total results the same | do not perform the distance function
+                        $totalResults = $totalResults->paginate(50);
+                    }
                 }
 
                 // dd($user != null ? $user->all()[0] : null);
@@ -380,10 +562,12 @@ class Controller extends BaseController
         }
     }
 
-    public function getListingsQuery(Request $map){
-        $map = $map->except('_token', 'type', 'page', 'utilities');
+    public function getListingsQuery( $input){
+        // dd($performDistance);
+        $map = $input->except('_token', 'type', 'page', 'utilities', 'distance', 'lat', 'lng');
         // dd($map);
-        if (!empty($map)) {
+
+        if (!empty($map) && $input->utilities == null) {
             $string = "Select * from listings as l where ";
             foreach ($map as $key => $values) {
                 // dd($key);
@@ -437,15 +621,16 @@ class Controller extends BaseController
                 $string = $string . " AND ";
             }
             $string = substr($string, 0, -5);
-
+            // dd($string);
             $userQuery = DB::select($string);
+            // dd($userQuery);
             return Listing::hydrate($userQuery);
         }
     }
 
-    public function getRentableQuery(Request $map){
-        $map = $map->except('_token', 'type', 'page', 'utilities');
-        if (!empty($map)) {
+    public function getRentableQuery($input){
+        $map = $input->except('_token', 'type', 'page', 'utilities', 'distance', 'lat', 'lng');
+        if (!empty($map)  && $input->utilities == null) {
             $string = "Select * from rentables as r where ";
             foreach ($map as $key => $values) {
                 if ($key == "search") {
@@ -500,10 +685,13 @@ class Controller extends BaseController
         }
     }
 
-    public function getSubleaseQuery(Request $map){
-        $map = $map->except('_token', 'type', 'page', 'category', 'tags');
+    public function getSubleaseQuery($input){
+
+        // dd($map->category == null);
+        $map = $input->except('_token', 'type', 'page', 'category', 'tags', 'distance', 'lat', 'lng');
         //done search, condition, price, utilities
-        if (!empty($map)) {
+        //do not perform if categories present
+        if (!empty($map) && $input->category == null) {
             $string = "Select * from subleases as s where ";
             foreach ($map as $key => $values) {
                 if ($key == "search") {
