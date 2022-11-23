@@ -33,12 +33,15 @@
         //if we are toggling the type, type always needs to have a default of all, unless specified
         //the type=all is replaced by the specified type
         if($nextMap->contains($key)) {
+
+            //this is the array that is that stored at the respective key
             $storedAtKey = $nextMap->get($key);
             if($key == "type"){
                 $nextMap->remove($key);
                 $nextMap->put($key, array($value));
                 return $nextMap;
             }
+
             if(in_array($value, $storedAtKey)) {
                 // basically deleting key-> value pair if present
                 if (($index = array_search($value, $storedAtKey)) !== NULL) {
@@ -48,13 +51,27 @@
                 if(count($storedAtKey) == 0) {
                     $nextMap->remove($key);
                 }
+                if($key == "distance"){
+                    $nextMap->remove('lat');
+                    $nextMap->remove('lng');
+                }
             } else {
-                // if adding a new value to a key value pair
-                array_push($storedAtKey, $value);
-                $nextMap->put($key, $storedAtKey);
+                if($key == 'distance'){
+                    unset($storedAtKey[0]);
+                    array_push($storedAtKey, $value);
+                    $nextMap->put($key, $storedAtKey);
+                }else{
+                    // if adding a new value to a key value pair
+                    array_push($storedAtKey, $value);
+                    $nextMap->put($key, $storedAtKey);
+                }
             }
         } else {
             $nextMap->put($key, array($value));
+            if($key == 'distance'){
+                $nextMap->put('lat', !auth()->guest() && auth()->user()->latitude != null ? array(auth()->user()->latitude) : array('null'));
+                $nextMap->put('lng', !auth()->guest() && auth()->user()->longitude != null ? array(auth()->user()->longitude) : array('null'));
+            }
         }
         return $nextMap;
     }
@@ -139,11 +156,11 @@
                     <label for="dist" style="position: relative;">Distance <span class="down-arrow"></span> </label>
 
                     <ul>
-                    <li><a href="{{urlBuilder(toggleParam('distance', '0 - 0.5 Mi', $map), $base)}}">0 - 0.5 Mi</a></li>
-                    <li><a href="{{urlBuilder(toggleParam('distance', '0.5 - 1 Mi', $map), $base)}}">0.5 - 1 Mi</a></li>
-                    <li><a href="{{urlBuilder(toggleParam('distance', '1 - 1.5 Mi', $map), $base)}}">1 - 1.5 Mi</a></li>
-                    <li><a href="{{urlBuilder(toggleParam('distance', '1.5 - 2 Mi', $map), $base)}}">1.5 - 2 Mi</a></li>
-                    <li><a href="{{urlBuilder(toggleParam('distance', '> 2 Mi', $map), $base)}}"> > 2 Mi</a></li>
+                    <li><a id = "distance-half1" href="{{urlBuilder(toggleParam('distance', '0.5 Mi', $map), $base)}}">< 0.5 Miles</a></li>
+                    <li><a id = "distance-half2"href="{{urlBuilder(toggleParam('distance', '1 Mi', $map), $base)}}">< 1 Miles</a></li>
+                    <li><a id = "distance-half3"href="{{urlBuilder(toggleParam('distance', '1.5 Mi', $map), $base)}}">< 1.5 Miles</a></li>
+                    <li><a id = "distance-half4"href="{{urlBuilder(toggleParam('distance', '2 Mi', $map), $base)}}">< 2 Miles</a></li>
+                    <li><a id = "distance-half5"href="{{urlBuilder(toggleParam('distance', '> 2 Mi', $map), $base)}}"> > 2 Miles</a></li>
                     </ul>
                 </li>
 
@@ -165,18 +182,37 @@
 
         <div class="filters-applied-container">
             <ul class="filters-applied-list" id="filters-ul">
-                  @php
-                        $data = Request::except('_token');
-                        foreach ( $data as $key => $values) {
-                            $value = explode(",", $values);
-                            foreach($value as $val){
-                                $response = urlBuilder(toggleParam($key, $val, $map), $base);
-                                @endphp
-                                    <li><span>{{$key}}: </span>{{$val}}<a href="{{$response}}"><i class='fa-solid fa-xmark'></i></a></li>
-                                @php
+                @php
+                    $data = Request::except('_token');
+                    foreach ( $data as $key => $values) {
+                        $value = explode(",", $values);
+                        foreach($value as $val){
+                            $response = urlBuilder(toggleParam($key, $val, $map), $base);
+
+                            if($key == 'distance'){
+                                $tempMap = new HashMap("String", "Array");
+                                foreach ( $data as $insideKey => $insideValue) {
+                                    $insideValue = explode(",", $insideValue);
+                                    $tempMap -> put($insideKey, $insideValue);
+                                }
+
+                                $tempMap = toggleParam('distance', $data['distance'], $tempMap);
+                                
+                                $response = urlBuilder($tempMap, $base);
                             }
+                            if(($key == "lat" || $val== "null" ) ||
+                                $key == "lng" || $val == "null" ){
+                                
+                                //need to say that can't apply nearby filter because user location is not found
+                                continue;
+                            }
+
+                            @endphp
+                                <li><span>{{$key}}: </span>{{$val}}<a href="{{$response}}"><i class='fa-solid fa-xmark'></i></a></li>
+                            @php
                         }
-                  @endphp
+                    }
+                @endphp
             </ul>
         </div>
         {{-- need to create an event listener for the above filters where the results is a list of listings that are paginated and then passed into the card gallery --}}
@@ -185,6 +221,199 @@
         </div>
     </div>
     <script>
+
+        var userLat = null;
+        var userLng = null;
+        navigator.permissions.query({ name: 'geolocation' }).then((permissionStatus) => {
+            permissionStatus.onchange = () => {
+                console.log(permissionStatus.state);
+                updateCurrentUrl();
+            };
+        });
+
+        updateCurrentUrl();
+        function updateCurrentUrl(){
+             //CASE 1:
+            //  if the user is not logged in
+            if("{{auth()->guest()}}") {
+                //CASE 1: 
+                //  try to get the user's current location
+                //  if location feature is allowed, will update the url and go to the link with the updated lat/lng
+                if (navigator.geolocation) { 
+                    navigator.geolocation.getCurrentPosition(
+                        (position)=>{
+                            userLat = position.coords.latitude;
+                            userLng = position.coords.longitude;
+                            console.log('retrieved new coordinates');
+                            replaceParameters();
+                            goToUpdatedUrl(getUpdatedUrl(position.coords.latitude, position.coords.longitude));
+                        },((error)=>{
+                            switch(error.code) {
+                                case error.PERMISSION_DENIED:
+                                    console.log("User denied the request for Geolocation.");
+                                    goToUpdatedUrl(getUpdatedUrl('null', 'null'));
+                                break;
+                                case error.POSITION_UNAVAILABLE:
+                                    console.log("Location information is unavailable.");
+                                    goToUpdatedUrl(getUpdatedUrl('null', 'null'));
+                                break;
+                                case error.TIMEOUT:
+                                    console.log( "The request to get user location timed out.");
+                                    goToUpdatedUrl(getUpdatedUrl('null', 'null'));
+                                break;
+                                case error.UNKNOWN_ERROR:
+                                    console.log( "An unknown error occurred.");
+                                    goToUpdatedUrl(getUpdatedUrl('null', 'null'));
+                                break;
+                            }
+                        }),{
+                            enableHighAccuracy: true,
+                            timeout: 1000,
+                            maximumAge: 0
+                    });
+                //CASE 2:
+                //  other wise the nearby items are just regular items 
+                //  the user is not logged in, so we can't check their location on file, also not given permission to retrieve user's location
+                }else{
+                    //for the initial page load when location services are toggled off
+                    goToUpdatedUrl('null', 'null');
+                }                
+            // CASE 2:
+            //  If the user is logged in
+            }else if("{{!auth()->guest()}}"){
+                var currentUser = {!!json_encode(auth()->user())!!};
+
+                //CASE 1: 
+                //  if the user is logged in and has lat and long in the db
+                //  the links in the side filter panel will be updatd accordingly, nothing to do here
+                if(currentUser.latitude != null && currentUser.longitude != null){
+                    console.log('first branch' + getUpdatedUrl(currentUser.latitude, currentUser.longitude));
+                    goToUpdatedUrl(getUpdatedUrl(currentUser.latitude, currentUser.longitude));
+           
+                //CASE 2:
+                //  if the user is logged in and there is no lat/long in db and we are allowed to get current location
+                //  the users location is updated in the db via a jax request in the navbar script area
+                }else if (currentUser.latitude == null && currentUser.longitude == null){ 
+                    console.log('second branch');
+
+                    if (navigator.geolocation) { 
+                        navigator.geolocation.getCurrentPosition(
+                            (position)=>{
+                                userLat = position.coords.latitude;
+                                userLng = position.coords.longitude;
+                                goToUpdatedUrl(getUpdatedUrl(position.coords.latitude, position.coords.longitude));
+                            },((error)=>{
+                                switch(error.code) {
+                                    case error.PERMISSION_DENIED:
+                                        console.log("User denied the request for Geolocation.");
+                                        goToUpdatedUrl(getUpdatedUrl('null', 'null'));
+                                    break;
+                                    case error.POSITION_UNAVAILABLE:
+                                        console.log("Location information is unavailable.");
+                                        goToUpdatedUrl(getUpdatedUrl('null', 'null'));
+                                    break;
+                                    case error.TIMEOUT:
+                                        console.log( "The request to get user location timed out.");
+                                        goToUpdatedUrl(getUpdatedUrl('null', 'null'));
+                                    break;
+                                    case error.UNKNOWN_ERROR:
+                                        console.log( "An unknown error occurred.");
+                                        goToUpdatedUrl(getUpdatedUrl('null', 'null'));
+                                    break;
+                                }
+                            }),{
+                                enableHighAccuracy: true,
+                                timeout: 1000,
+                                maximumAge: 0
+                        });
+                    }
+                    
+                //CASE 3:
+                //  if the user is logged in and there is not lat/long in the db.
+                //  we are also not allowed to extract the users location.
+                }else{
+                    console.log('third branch' + getUpdatedUrl(null, null));
+                    goToUpdatedUrl(getUpdatedUrl('null', 'null'));    
+                }
+            }
+        }
+
+        function getUpdatedUrl(lat, lng){
+
+            var urlString = window.location.href;
+            let paramString = urlString.split('?')[1];
+            let queryString = new URLSearchParams(paramString);
+            var urlBase = "/shop/all";
+
+            urlBase = urlBase + "?";
+            var goToNewUrl = false;
+
+            for (let pair of queryString.entries()) {
+                // console.log("Key is: " + pair[0] + " Value is: " + pair[1]);
+
+                if(pair[0] == 'page'){
+                    continue;
+                }
+                if(pair[0] == 'lat'){
+                     console.log(pair[1] , lat);
+                    if(pair[1] != lat){goToNewUrl = true;}
+                    urlBase = urlBase + pair[0]+"="+lat+"&";
+                }else if(pair[0] == 'lng'){
+                    if(pair[1] != lng){goToNewUrl = true;}
+                    urlBase = urlBase + pair[0]+"="+lng+"&";
+                }else{
+                    urlBase = urlBase + pair[0]+"="+pair[1]+"&";
+                }
+            }
+            
+            urlBase = urlBase.substring(0, urlBase.length-1);
+            // console.log(goToNewUrl);
+            return [goToNewUrl, urlBase];
+        }
+
+        function goToUpdatedUrl(input){
+            if(input[0]){
+                window.location.href = input[1];
+            }
+        }
+
+        function replaceParameters(){
+
+            document.getElementById('distance-half1').href = replaceSingleParameter(document.getElementById('distance-half1').href);
+            document.getElementById('distance-half2').href = replaceSingleParameter(document.getElementById('distance-half2').href);
+            document.getElementById('distance-half3').href = replaceSingleParameter(document.getElementById('distance-half3').href);
+            document.getElementById('distance-half4').href = replaceSingleParameter(document.getElementById('distance-half4').href);
+            document.getElementById('distance-half5').href = replaceSingleParameter(document.getElementById('distance-half5').href);
+            
+            console.log(document.getElementById('distance-half1').href);
+            console.log(document.getElementById('distance-half2').href);
+            console.log(document.getElementById('distance-half3').href);
+            console.log(document.getElementById('distance-half4').href);
+            console.log(document.getElementById('distance-half5').href);
+        }
+
+        function replaceSingleParameter(inputUrl){
+            let paramString = inputUrl.split('?')[1];
+            let queryString = new URLSearchParams(paramString);
+            var urlBase = "/shop/all";
+
+            urlBase = urlBase + "?";
+            for (let pair of queryString.entries()) {
+                if(pair[0] == 'page'){
+                    continue;
+                }
+                if(pair[0] == 'lat'){
+                    urlBase = urlBase + pair[0]+"="+userLat+"&";
+                }else if(pair[0] == 'lng'){
+                    urlBase = urlBase + pair[0]+"="+userLng+"&";
+                }else{
+                    urlBase = urlBase + pair[0]+"="+pair[1]+"&";
+                }
+            }
+            urlBase = urlBase.substring(0, urlBase.length-1);
+            return urlBase;
+        }
+        
         function isEmpty(val){
             return (val === undefined || val == null || val.length <= 0) ? true : false;
         }
@@ -246,5 +475,6 @@
             base = base.slice(0,-1);
             location.assign(base);
         }
+
     </script>
 </x-layout> 

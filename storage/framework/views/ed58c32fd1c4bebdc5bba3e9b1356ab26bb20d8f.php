@@ -42,7 +42,8 @@
                         <li><a href="/shop/all?type=all&category=school%20accessories">School Accessories</a></li>
                         </ul>
                     </li>
-                    <li><a href="/shop/all?distance=0%20-%200.5%20Mi">Listings < .5 Mile</a></li>
+                    <li><a id ="nearbyItemsLink" href="/shop/all?type=all&distance=0.5%20Mi">Listings < .5 Mile</a></li>
+                    
                     <li><a href="/shop/all?type=all">All Items</a></li>
                     </ul>
                 </li>
@@ -147,6 +148,7 @@
             
             <button type="submit" class="go-icon"><i class="fas fa-long-arrow-alt-right"></i></button>
         </form>
+
         <div class="search-message">
             <span></span>
             <p>Please keep the search generic. Use simple words like table or camera</p>
@@ -154,11 +156,147 @@
     </nav>
 </div>
 <script>
-    // var form = document.getElementById("logout-form");
 
-    // document.getElementById("logout-button").addEventListener("click", function () {
-    // form.submit();
-    // });
+    // ---------------------------------------------------------------
+    // User Location related  functions
+    // ---------------------------------------------------------------
+
+    navigator.permissions.query({ name: 'geolocation' }).then((permissionStatus) => {
+        permissionStatus.onchange = () => {
+            // console.log(permissionStatus.state);
+            updateUrlForNearbyItems();
+        };
+    });
+
+    var updateUserLatLng = false;
+
+    updateUrlForNearbyItems();
+
+    function updateUrlForNearbyItems(){
+         //CASE 1:
+        //  if the user is not logged in
+        if("<?php echo e(auth()->guest()); ?>") {
+            // console.log('The USER is not logged in. Status is GUEST.')
+
+            //CASE 1: 
+            //  try to get the user's current location
+            //  if location feature is allowed, will update the url link for nearby items in the navbar
+            if (navigator.geolocation) { 
+                navigator.geolocation.getCurrentPosition(showMyPosition,showMyError,myoptions);
+
+            //CASE 2:
+            //  other wise the nearby items are just regular items 
+            //  the user is not logged in, so we can't check their location on file, also not given permission to retrieve user's location
+            } else { 
+                // console.log("Unable to extract users location via GEOLOCATION.");
+                $('#nearbyItemsLink').attr('href', '/shop/all?type=all&distance=0.5%20Mi&lat=null&lng=null');
+            }
+        //CASE 2:
+        //  if the user is logged in
+        }else if("<?php echo e(!auth()->guest()); ?>"){
+            // console.log('The USER is logged in. Status is AUTH.');
+            var currentUser = <?php echo json_encode(auth()->user()); ?>;
+            // console.log(currentUser);
+
+            //CASE 1: 
+            //  if the user is logged in and has lat and long in the db
+            if(currentUser.latitude != null && currentUser.longitude != null){
+                // console.log('User was logged in and the location was retrieved from the DB; The href was updated to: ');
+                // console.log('/shop/all?type=all&distance=0.5%20Mi&lat=' + currentUser.latitude+ "&lng="+currentUser.longitude);
+                $('#nearbyItemsLink').attr('href', '/shop/all?type=all&distance=0.5%20Mi&lat=' +currentUser.latitude + "&lng="+currentUser.longitude);
+            }
+
+            //CASE 2:
+            //  if the user is logged in and there is no lat/long in db and we are allowed to get current location
+            else if(currentUser.latitude == null && currentUser.longitude == null){
+                // console.log('User was logged in but the location was not found in DB.');
+                updateUserLatLng = true;
+                navigator.geolocation.getCurrentPosition(showMyPosition,showMyError,myoptions);
+
+            }
+
+            //CASE 3:
+            //  if the user is logged in and ther eis not lat/long in the db.
+            //  we are also not allowed to extract the users location.
+            else{
+                // console.log("Unable to extract users location via GEOLOCATION.");
+                $('#nearbyItemsLink').attr('href', '/shop/all?type=all&distance=0.5%20Mi&lat=null&lng=null');
+            }
+        }
+    }
+
+    function showMyPosition(position) {
+        $(document).ready(function(){
+
+            // console.log('Users location was extracted via GEOLOCATION and the href link is updated to: '+'/shop/all?type=all&distance=0.5%20Mi&lat=' + position.coords.latitude + "&lng="+position.coords.longitude);
+
+            $('#nearbyItemsLink').attr('href', '/shop/all?type=all&distance=0.5%20Mi&lat=' + position.coords.latitude + "&lng="+position.coords.longitude);
+
+            if(updateUserLatLng){
+                if("<?php echo e(!auth()->guest()); ?>") {
+                    $(document).ready(function(){
+                        var currentUser = <?php echo json_encode(auth()->user()); ?>;
+
+                        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                        var datastr = "USER_ID=" + currentUser.id + "&lat=" + position.coords.latitude + "&lng=" + position.coords.longitude;
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: "/users/update/latlng", 
+                            type: 'POST',
+                            data: datastr,
+                            dataType: 'JSON',
+                            _token: CSRF_TOKEN,
+                            cache: false,
+                            success: function (data) {
+                                console.log(data);
+                            },
+                            error: function (jqXHR, status, err) {
+                                console.log(err);
+                            },
+                            complete: function () {
+                                // scrollToBottomFunc();
+                            }
+                        })
+                    });
+                }
+            }
+        });
+    }
+
+    function showMyError(error) {
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+                $('#nearbyItemsLink').attr('href', '/shop/all?type=all&distance=0.5%20Mi&lat=null&lng=null');
+                // console.log("User denied the request for Geolocation.");
+            break;
+            case error.POSITION_UNAVAILABLE:
+                $('#nearbyItemsLink').attr('href', '/shop/all?type=all&distance=0.5%20Mi&lat=null&lng=null');
+                // console.log("Location information is unavailable.");
+            break;
+            case error.TIMEOUT:
+                $('#nearbyItemsLink').attr('href', '/shop/all?type=all&distance=0.5%20Mi&lat=null&lng=null');
+                // console.log( "The request to get user location timed out.");
+            break;
+            case error.UNKNOWN_ERROR:
+                $('#nearbyItemsLink').attr('href', '/shop/all?type=all&distance=0.5%20Mi&lat=null&lng=null');
+                // console.log( "An unknown error occurred.");
+            break;
+        }
+    }
+
+    var myoptions = {
+        enableHighAccuracy: true,
+        timeout: 1000,
+        maximumAge: 0
+    };
+
+    // -------------------------------------------------------
+    // Side panel related functions
+    // -------------------------------------------------------
 
     //if the user is logged in, check every 10 seconds if there are unread messages
     if("<?php echo e(!auth()->guest()); ?>"){
@@ -387,4 +525,5 @@
             }
         });
     }
+
 </script><?php /**PATH C:\xampp\htdocs\CollegeMarketplace\resources\views/partials/_navigationBar.blade.php ENDPATH**/ ?>

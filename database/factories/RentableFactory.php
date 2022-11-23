@@ -43,11 +43,17 @@ class RentableFactory extends Factory
             'status' => $rentalStatus[array_rand($rentalStatus)],
 
             // rental location
-            'street' => $this->faker->streetAddress(),
-            'city' =>$this->faker->city(),
-            'state'=>$this->faker->state(),
-            'country'=>$this->faker->country(),
-            'postcode'=>$this->faker->postcode(),
+            'street'=>'4176 Dale Boulevard',
+            // 'city' =>$this->faker->city(),
+            'city'=>'Dale City',
+            // 'state'=>$this->faker->state(),
+            'state'=>'VA',
+            // 'country'=>$this->faker->country(),
+            'country'=>'United States',
+            // 'postcode'=>$this->faker->postcode(),
+            'postcode'=>'22193',
+            'latitude'=>'38.6440193',
+            'longitude'=>'-77.3352243',
             'created_at' => now(),
             'updated_at' => now()
         ];

@@ -36,11 +36,18 @@ class SubleaseFactory extends Factory
             'image_uploads' =>null,
 
             // rental location
-            'street' => $this->faker->streetAddress(),
-            'city' =>$this->faker->city(),
-            'state'=>$this->faker->state(),
-            'country'=>$this->faker->country(),
-            'postcode'=>$this->faker->postcode(),
+            'street'=>'14894 Emberdale Drive',
+            // 'city' =>$this->faker->city(),
+            'city'=>'Dale City',
+            // 'state'=>$this->faker->state(),
+            'state'=>'VA',
+            // 'country'=>$this->faker->country(),
+            'country'=>'United States',
+            // 'postcode'=>$this->faker->postcode(),
+            'postcode'=>'22193-2678',
+            'latitude'=>'38.630017',
+            'longitude'=>'-77.338868',
+
             'status'=> $leaseStatus[array_rand($leaseStatus)],
             'created_at' => now(),
             'updated_at' => now()

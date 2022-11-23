@@ -31,7 +31,6 @@ use App\Http\Controllers\GoogleController;
 Route::get('/', [Controller::class, 'index']); //homepage
 Route::get('/shop/all', [Controller::class, 'search']); //search page
 Route::get('/item',[Controller::class,'getListingsFromLatLng']);
-
 Route::get('/random/item', [Controller::class, 'getRandomItem']);
 
 //---------------------------------------------------------------------
@@ -50,6 +49,7 @@ Route::post('/users/additionalInfo', [UserController::class, 'updateInfo'])->mid
 Route::delete('/users/delete/{user}', [UserController::class, 'destroy'])->middleware('auth');
 Route::delete('/watchitems/{watchItem}', [UserController::class, 'deleteWatchItem']);
 Route::post( '/remove_recommendation',[UserController::class, 'removeRecommendedItem']);
+Route::post('/users/update/latlng', [UserController::class, 'updateUserLatLng']);
 
 //Google Auth routes for login
 Route::get('/login', [GoogleController::class, 'loginWithGoogle'])->name('login')->middleware('guest');

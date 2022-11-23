@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         // will create 10 random users and insert them into the db
         $random = 0;
         User::factory(7)->create();
-        for($i = 0; $i < 1000; $i++){
+        for($i = 0; $i < 100; $i++){
             $random = rand(1,3);
             if($random == 1){
                 Listing::factory(1)->create();
