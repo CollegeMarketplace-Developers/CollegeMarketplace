@@ -56,8 +56,7 @@ class UserController extends Controller
         return back()->withErrors(['email'=>'Invalid Credentials'])->onlyInput('email');
     }*/
 
-    public function manage()
-    {
+    public function manage(){
         //call function to update all matches found
         $userWatchItems = WatchItem::latest()->where('user_id', 'like', auth()->user()->id)->orderBy('matches_found', 'desc')->get();
         $user = User::find(auth()->user());
@@ -76,12 +75,7 @@ class UserController extends Controller
         );
     }
 
-    //words aut est rem dicta animi et 
-    // Ipsam Est Ut.
-    // sed 
-    // sunt sed
-    public function recommendMatches(Collection $userWatchItems)
-    {
+    public function recommendMatches(Collection $userWatchItems){
         // dd($userWatchItems);
         foreach ($userWatchItems as $watchItem) {
             $watchTags = explode(", ", $watchItem->key_tags);
@@ -215,8 +209,7 @@ class UserController extends Controller
         return;
     }
 
-    public function removeRecommendedItem(Request $request)
-    {
+    public function removeRecommendedItem(Request $request){
         // dd($request->all());
         $recommendedItem = WatchItem::find($request->watchitem_id);
         $dontRecommendArray = null;
@@ -233,8 +226,7 @@ class UserController extends Controller
         return back()->with('message', "The Recommended Item will no longer be associated with the WatchList");
     }
 
-    public function createWatchItem(Request $request)
-    {
+    public function createWatchItem(Request $request){
         // dd($request->all());
         $formFields = $request->validate([
             'user_id' => 'required',
@@ -247,14 +239,12 @@ class UserController extends Controller
         return back()->with('message', 'Watch Item Created!');
     }
 
-    public function deleteWatchItem(Request $request, WatchItem $watchItem)
-    {
+    public function deleteWatchItem(Request $request, WatchItem $watchItem){
         $watchItem->delete();
         return back()->with('message', "Watch Item Deleted Successfully!");
     }
 
-    public function addFavorite(Request $request)
-    {
+    public function addFavorite(Request $request){
         $currentUser = User::find(auth()->id());
         $favorites = null;
         if ($request->type == "listing") { //if favorite type is listing
@@ -293,8 +283,7 @@ class UserController extends Controller
         return back()->with('message', "Added to Favorites!");
     }
 
-    public function removeFavorite(Request $request)
-    {
+    public function removeFavorite(Request $request){
         // dd($request);
         $currentUser = User::find(auth()->id());
         $favorites = null;
@@ -334,8 +323,7 @@ class UserController extends Controller
         return back()->with('message', "Removed from Favorites!");
     }
 
-    public function updateInfo(Request $request)
-    {
+    public function updateInfo(Request $request){
         $formFields = $request->validate([
             'street' => 'required',
             'city' => 'required',
@@ -367,8 +355,17 @@ class UserController extends Controller
         return back()->with('message', 'User Address & Number Updated');
     }
 
-    public function destroy(User $user)
-    {
+    public function updateUserLatLng(Request $request){
+        $currentUser = User::find(auth()->user())->first();
+        $currentUser->latitude = $request->lat;
+        $currentUser->longitude = $request->lng;
+        $currentUser->save();
+
+        return response()->json(['Attempt'=>'Success!']);
+
+    }
+
+    public function destroy(User $user){
         $user->delete();
         return redirect('/')->with('message', "User Account Deleted Successfully!");
     }
