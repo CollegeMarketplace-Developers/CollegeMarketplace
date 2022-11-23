@@ -143,14 +143,14 @@
                             </div>
                             <div class="product-category">
                                 <?php
-                                    $categories = explode(", ", $leaseItem->category);
+                                    $utilities = explode(", ", $leaseItem->utilities);
                                     $date = $leaseItem->created_at ->format('Y-m-d');
                                 ?>
                                 <div class="categories-container">
-                                    <p>Categories:</p>
+                                    <p>Utilities Included:</p>
                                     <div class="categories">
-                                        <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <a href="/shop/all?type=all&category=<?php echo e($category); ?>"><?php echo e($category); ?></a>
+                                        <?php $__currentLoopData = $utilities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $utility): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <a href="/shop/all?type=all&utilities=<?php echo e($utility); ?>"><?php echo e($utility); ?></a>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </div>
                                 </div>
