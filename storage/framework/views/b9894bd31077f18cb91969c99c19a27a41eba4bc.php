@@ -8,32 +8,30 @@
                 <img src="" alt="">
                 <div class="info">
                     <h2>BUY</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua.</p>
+                    <p>Buy furniture, books, supplies, and more from your fellow students!</p>
                 </div>
             </div>
             <div class="single-slide">
                 <img src="" alt="">
                 <div class="info">
-                    <h2>Sell</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua.</p>
+                    <h2>SELL</h2>
+                    <p>Connect with a nearby student and sell your new or used items.
+                    Making money at college has never been easier!</p>
                 </div>
             </div>
             <div class="single-slide">
                 <img src="" alt="">
                 <div class="info">
                     <h2>RENT</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua.</p>
+                    <p>Need a place to stay? No worries!
+                    Get started by checking out all the places available near your university or on-grounds!</p>
                 </div>
             </div>
             <div class="single-slide">
                 <img src="" alt="">
                 <div class="info">
                     <h2>LEASE</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua.</p>
+                    <p>Need a lease? We got you covered! Check out leasing options available near you.</p>
                 </div>
             </div>
             <div class="navigation">

@@ -135,14 +135,14 @@
                             </div>
                             <div class="product-category">
                                 @php
-                                    $categories = explode(", ", $leaseItem->category);
+                                    $utilities = explode(", ", $leaseItem->utilities);
                                     $date = $leaseItem->created_at ->format('Y-m-d');
                                 @endphp
                                 <div class="categories-container">
-                                    <p>Categories:</p>
+                                    <p>Utilities Included:</p>
                                     <div class="categories">
-                                        @foreach($categories as $category)
-                                            <a href="/shop/all?type=all&category={{$category}}">{{$category}}</a>
+                                        @foreach($utilities as $utility)
+                                            <a href="/shop/all?type=all&utilities={{$utility}}">{{$utility}}</a>
                                         @endforeach
                                     </div>
                                 </div>
