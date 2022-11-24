@@ -72,12 +72,14 @@
                                     }
                                 }
                             @endphp
-                            <img src={{$rentable->image_uploads ? Storage::disk('s3')->url($titleImage) : asset('/images/rotunda.jpg')}} id = "expandedImg" alt="image doesnt exist">
+                            <!-- <img src={{$rentable->image_uploads ? Storage::disk('s3')->url($titleImage) : asset('/images/rotunda.jpg')}} id = "expandedImg" alt="image doesnt exist"> -->
+                            <img src={{$rentable->image_uploads ? Storage::disk('s3')->url($link): Storage::disk('s3')->url('devimages/rotunda.jpg')}} id = "expandedImg" alt = "image doesn't exist"> 
                         </div>
                         <div class = "img-showcase">
                             @if(is_array(json_decode($rentable->image_uploads)))
                                 @foreach(json_decode($rentable->image_uploads) as $link)
-                                    <img src={{$rentable->image_uploads ? Storage::disk('s3')->url($link) : asset('/images/rotunda.jpg')}} alt = "shoe image" onclick="myFunction(this);">
+                                    <!-- <img src={{$rentable->image_uploads ? Storage::disk('s3')->url($link) : asset('/images/rotunda.jpg')}} alt = "shoe image" onclick="myFunction(this);"> -->
+                                    <img src={{$rentable->image_uploads ? Storage::disk('s3')->url($link): Storage::disk('s3')->url('devimages/rotunda.jpg')}} alt = "shoe image" onclick="myFunction(this);"> 
                                 @endforeach
                             @else
                                 @php
@@ -269,7 +271,7 @@
         <div class="modal" id="delete-modal">
             <div class="modal-content">
                 <div class="sad-dog-container">
-                    <img src="{{asset('/images/sad-dog.png')}}" alt="">
+                    <img src="https://cmimagestoragebucket.s3.amazonaws.com/devimages/sad-dog.png" alt="">
                 </div>
                 <span class="close">&times;</span>
                 <h1>Delete rentable</h1>
