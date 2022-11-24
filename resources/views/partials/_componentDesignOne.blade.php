@@ -54,7 +54,7 @@
                     }
                 }
 
-                $hardLink=['/images/rotunda.jpg', '/images/old-cabell.jpg', '/images/cavalier-horse.jpg'];
+                $hardLink=['https://cmimagestoragebucket.s3.amazonaws.com/devimages/rotunda.jpg', 'https://cmimagestoragebucket.s3.amazonaws.com/devimages/old-cabell.jpg', 'https://cmimagestoragebucket.s3.amazonaws.com/devimages/cavalier-horse.jpg'];
                 $link = $hardLink[random_int(0, count($hardLink)-1)];
             @endphp
             @if($randomItem != null)
@@ -100,7 +100,7 @@
                     $uhoh=['/images/confused.jpg', '/images/confused-removebg-preview.png'];
                     $uhohLink = $uhoh[random_int(0, count($uhoh)-1)];
                 @endphp
-                <img src={{asset('/images/confused.jpg') }}  alt="Item was not found nor the image">
+                <img src="https://cmimagestoragebucket.s3.amazonaws.com/devimages/confused.jpg"  alt="Item was not found nor the image">
                 <div class="random-item-content">
                     <p>No Items Found :(</p>
                 </div>

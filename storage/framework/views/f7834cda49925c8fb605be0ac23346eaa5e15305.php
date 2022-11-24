@@ -55,7 +55,7 @@
                         $site = 'https://picsum.photos/300/200?sig='. rand(0,100);
                     ?>
                     <?php
-                        $hardLink=['/images/rotunda.jpg', '/images/old-cabell.jpg', '/images/cavalier-horse.jpg'];
+                        $hardLink=['https://cmimagestoragebucket.s3.amazonaws.com/devimages/rotunda.jpg', '/images/old-cabell.jpg', '/images/cavalier-horse.jpg'];
                         $link = $hardLink[random_int(0, count($hardLink)-1)];
                     ?>
                     <img src=<?php echo e($listing->image_uploads ? Storage::disk('s3')->url($imgLinks) : $site); ?>  alt="image doesnt exist">
@@ -128,7 +128,7 @@
                     ?>
                     
                     <?php
-                        $hardLink=['/images/rotunda.jpg', '/images/old-cabell.jpg', '/images/cavalier-horse.jpg'];
+                        $hardLink=['https://cmimagestoragebucket.s3.amazonaws.com/devimages/rotunda.jpg', '/images/old-cabell.jpg', '/images/cavalier-horse.jpg'];
                         $link = $hardLink[random_int(0, count($hardLink)-1)];
                     ?>
                     <img src=<?php echo e($rentable->image_uploads ? Storage::disk('s3')->url($imgLinks) : $site); ?>  alt="image doesnt exist">
@@ -195,7 +195,7 @@
                     ?>
                     
                     <?php
-                        $hardLink=['/images/rotunda.jpg', '/images/old-cabell.jpg', '/images/cavalier-horse.jpg'];
+                        $hardLink=['https://cmimagestoragebucket.s3.amazonaws.com/devimages/rotunda.jpg', '/images/old-cabell.jpg', '/images/cavalier-horse.jpg'];
                         $link = $hardLink[random_int(0, count($hardLink)-1)];
                     ?>
                     <img src=<?php echo e($sublease->image_uploads ? Storage::disk('s3')->url($imgLinks) : $site); ?>  alt="image doesnt exist">
