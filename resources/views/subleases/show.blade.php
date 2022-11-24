@@ -72,12 +72,12 @@
                                     }
                                 }
                             @endphp
-                            <img src={{$leaseItem->image_uploads ? Storage::disk('s3')->url($titleImage) : asset('/images/rotunda.jpg')}} id = "expandedImg" alt="image doesnt exist">
+                            <img src={{$leaseItem->image_uploads ? Storage::disk('s3')->url($titleImage) : Storage::disk('s3')->url('devimages/rotunda.jpg')}} id = "expandedImg" alt="image doesnt exist">
                         </div>
                         <div class = "img-showcase">
                             @if(is_array(json_decode($leaseItem->image_uploads)))
                                 @foreach(json_decode($leaseItem->image_uploads) as $link)
-                                    <img src={{$leaseItem->image_uploads ? Storage::disk('s3')->url($link) : asset('/images/rotunda.jpg')}} alt = "shoe image" onclick="myFunction(this);">
+                                    <img src={{$leaseItem->image_uploads ? Storage::disk('s3')->url($link) : Storage::disk('s3')->url('devimages/rotunda.jpg')}} alt = "shoe image" onclick="myFunction(this);">
                                 @endforeach
                             @else
                                 @php
