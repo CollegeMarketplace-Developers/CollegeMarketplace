@@ -278,7 +278,7 @@
         <div class="modal" id="delete-modal">
             <div class="modal-content">
                 <div class="sad-dog-container">
-                    <img src="<?php echo e(asset('/images/sad-dog.png')); ?>" alt="">
+                    <img src="https://cmimagestoragebucket.s3.amazonaws.com/devimages/sad-dog.png" alt="">
                 </div>
                 <span class="close">&times;</span>
                 <h1>Delete rentable</h1>

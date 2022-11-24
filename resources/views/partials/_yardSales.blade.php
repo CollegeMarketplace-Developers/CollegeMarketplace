@@ -40,12 +40,12 @@
                                     @if(isset($imgLinks[1]))
                                         <img src={{$yardSale->image_uploads ? asset('storage/'.$imgLinks[1]) : asset('/images/rotunda.jpg')}} id = "expandedImg" alt="image doesnt exist">
                                     @else
-                                        <img src={{asset('/images/old-cabell.jpg')}} id = "expandedImg" alt="image doesnt exist">
+                                        <img src="https://cmimagestoragebucket.s3.amazonaws.com/devimages/old-cabell.jpg" id = "expandedImg" alt="image doesnt exist">
                                     @endif
                                     @if(isset($imgLinks[2]))
                                         <img src={{$yardSale->image_uploads ? asset('storage/'.$imgLinks[2]) : asset('/images/rotunda.jpg')}} id = "expandedImg" alt="image doesnt exist">
                                     @else
-                                        <img src={{asset('/images/cavalier-horse.jpg')}} id = "expandedImg" alt="image doesnt exist">
+                                        <img src="https://cmimagestoragebucket.s3.amazonaws.com/devimages/cavalier-horse.jpg" id = "expandedImg" alt="image doesnt exist">
                                     @endif
                                 @endif
                             </div>
@@ -56,15 +56,15 @@
                 <div class="mySlides">
                     {{-- <div class="numbertext"></div> --}}
                     <div class="yard-header-img">
-                        <img src="/images/rotunda.jpg" alt="">
+                        <img src="https://cmimagestoragebucket.s3.amazonaws.com/devimages/rotunda.jpg" alt="">
                          <div class="no-yard-sales">
                             <h1>There are currently no yard sales nearby!</h1>
                             <h4>Make one to get started!</h4>
                         </div>
                     </div>
                     <div class="stackable-images">
-                        <img src="/images/old-cabell.jpg" alt="">
-                        <img src="/images/cavalier-horse.jpg" alt="">
+                        <img src="https://cmimagestoragebucket.s3.amazonaws.com/devimages/old-cabell.jpg" alt="">
+                        <img src="https://cmimagestoragebucket.s3.amazonaws.com/devimages/cavalier-horse.jpg" alt="">
                     </div>
                 </div>
             @endif

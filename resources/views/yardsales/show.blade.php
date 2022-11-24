@@ -112,7 +112,7 @@
                     <h1>Maps feature</h1>
                 </div>
                 <div class="chat-container">
-                    <h1><?php echo count({{$allUsers}})?></h1>
+                    <h1><?php echo count({{$allUsers}}) ?></h1>
                 </div>
             </div> 
         </div>
