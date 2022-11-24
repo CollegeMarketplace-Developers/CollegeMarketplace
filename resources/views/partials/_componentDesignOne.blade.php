@@ -54,7 +54,8 @@
                     }
                 }
 
-                $hardLink=['https://cmimagestoragebucket.s3.amazonaws.com/devimages/rotunda.jpg', 'https://cmimagestoragebucket.s3.amazonaws.com/devimages/old-cabell.jpg', 'https://cmimagestoragebucket.s3.amazonaws.com/devimages/cavalier-horse.jpg'];
+                //$hardLink=['https://cmimagestoragebucket.s3.amazonaws.com/devimages/rotunda.jpg', 'https://cmimagestoragebucket.s3.amazonaws.com/devimages/old-cabell.jpg', 'https://cmimagestoragebucket.s3.amazonaws.com/devimages/cavalier-horse.jpg'];
+                $hardLink=['/images/rotunda.jpg', '/images/old-cabell.jpg', '/images/cavalier-horse.jpg'];
                 $link = $hardLink[random_int(0, count($hardLink)-1)];
             @endphp
             @if($randomItem != null)
