@@ -148,6 +148,13 @@
                                         @endforeach
                                     </div>
                                 </div>
+                                <!-- Added to differentiate listing types -->
+                                <div class="categories-container">
+                                    <p>Listing Type:</p>
+                                    <div class="categories-rentables">
+                                        <a href="#">For Rent</a>
+                                    </div>
+                                </div>
                             </div>
                             <div class = "date-posted">
                                 <p>Date Posted:</p>
