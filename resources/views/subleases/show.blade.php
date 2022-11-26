@@ -150,7 +150,7 @@
                                 <div class="categories-container">
                                     <p>Listing Type:</p>
                                     <div class="categories-subleases">
-                                        <a href="">For Lease</a>
+                                    <a href="#" onclick="return false;">For Lease</a>
                                     </div>
                                 </div>
                             </div>

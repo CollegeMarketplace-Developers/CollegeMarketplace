@@ -161,7 +161,7 @@
                                 <div class="categories-container">
                                     <p>Listing Type:</p>
                                     <div class="categories-listing">
-                                        <a href="">For Sale</a>
+                                    <a href="#" onclick="return false;">For Sale</a>
                                     </div>
                                 </div>
                             </div>

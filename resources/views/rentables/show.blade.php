@@ -152,7 +152,7 @@
                                 <div class="categories-container">
                                     <p>Listing Type:</p>
                                     <div class="categories-rentables">
-                                        <a href="">For Rent</a>
+                                    <a href="#" onclick="return false;">For Rent</a>
                                     </div>
                                 </div>
                             </div>
