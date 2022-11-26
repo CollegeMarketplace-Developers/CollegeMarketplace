@@ -413,7 +413,7 @@
     background-color: peru;
     color: white;
     font-size: 15px;
-    line-height: 30px;
+    line-height: 32px;
     white-space: nowrap;
 }
 
@@ -423,7 +423,7 @@
     background-color: var(--rent-color);
     color: white;
     font-size: 15px;
-    line-height: 30px;
+    line-height: 32px;
     white-space: nowrap;
 }
 
@@ -434,7 +434,7 @@
     background-color: var(--lease-color);
     color: white;
     font-size: 15px;
-    line-height: 30px;
+    line-height: 32px;
     white-space: nowrap;
 }
 
