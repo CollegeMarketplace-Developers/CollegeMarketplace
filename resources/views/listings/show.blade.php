@@ -15,7 +15,7 @@
                 <a href="javascript:history.back()" class="button1 b-button">
                     <i class="fa-solid fa-arrow-left"></i> Back
                 </a>
-            </div> 
+            </div>
 
             {{-- main show area --}}
             <div class = "card-selected">
@@ -155,6 +155,13 @@
                                         @foreach($categories as $category)
                                             <a href="/shop/all?type=all&category={{$category}}">{{$category}}</a>
                                         @endforeach
+                                    </div>
+                                </div>
+                                <!-- Added to differentiate listing types -->
+                                <div class="categories-container">
+                                    <p>Listing Type:</p>
+                                    <div class="categories-listing">
+                                    <a href="#" onclick="return false;">For Sale</a>
                                     </div>
                                 </div>
                             </div>

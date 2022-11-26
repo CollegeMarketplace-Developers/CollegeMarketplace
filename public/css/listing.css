@@ -97,17 +97,18 @@
     font-size: 20px;
 }
 
-.img-display .bottom-right{
+.img-display .bottom-right {
     bottom: 20px;
-    top:unset;
+    top: unset;
 }
 
-.product-ribbon, .product-ribbon-inner{
+.product-ribbon,
+.product-ribbon-inner {
     width: 40px !important;
     right: 10px !important;
 }
 
-.product-ribbon-inner{
+.product-ribbon-inner {
     top: -8px !important;
 }
 
@@ -118,13 +119,12 @@
     width: 0 !important;
     right: -9.5px !important;
     top: -0.5px !important;
-    border-bottom: 9px solid #8D5A20 !important;
+    border-bottom: 9px solid #8d5a20 !important;
     border-right: 10px solid transparent !important;
 }
 
-
 .product-ribbon-inner::after {
-    bottom:-18px !important;
+    bottom: -18px !important;
     border-left: 20px solid var(--accent-color) !important;
     border-right: 20px solid var(--accent-color) !important;
     border-bottom: 20px solid transparent !important;
@@ -221,7 +221,7 @@
     flex-grow: 1;
     gap: 20px;
     width: 100%;
-    color:var(--font-color-dark);
+    color: var(--font-color-dark);
 }
 
 .product-content .product-details {
@@ -278,7 +278,7 @@
     padding: 0 20px;
 }
 
-.price-favorite form button{
+.price-favorite form button {
     color: var(--font-color-light);
     border: none;
     outline: none;
@@ -357,7 +357,7 @@
 }
 
 .product-extra div span,
-.product-details .date-posted span{
+.product-details .date-posted span {
     color: var(--accent-color);
 }
 
@@ -406,15 +406,48 @@
     white-space: nowrap;
 }
 
+.categories-listing a {
+    padding: 5px 10px;
+    padding-top: 5px;
+    margin-top: 5px;
+    background-color: peru;
+    color: white;
+    font-size: 15px;
+    line-height: 25px;
+    white-space: nowrap;
+}
+
+.categories-rentables a {
+    padding: 5px 10px;
+    padding-top: 5px;
+    margin-top: 5px;
+    background-color: var(--rent-color);
+    color: white;
+    font-size: 15px;
+    line-height: 25px;
+    white-space: nowrap;
+}
+
+.categories-subleases a {
+    padding: 5px 10px;
+    padding-top: 5px;
+    margin-top: 5px;
+    background-color: var(--lease-color);
+    color: white;
+    font-size: 15px;
+    line-height: 25px;
+    white-space: nowrap;
+}
+
 /* right side of the show page css ends here */
 
 /* bottom description and map stuff beings here */
-.description-chat{
+.description-chat {
     width: 65%;
     min-width: 65%;
     display: flex;
     flex-direction: column;
-    gap:20px;
+    gap: 20px;
     border-radius: var(--br-large);
     height: fit-content;
 }
@@ -426,7 +459,6 @@
     height: fit-content;
     color: var(--font-color-light);
     background: var(--background-color-dark);
-
 }
 
 .product-description-area .controls {
@@ -467,7 +499,7 @@
 .controls span i {
     font-size: 20px;
     padding: 5px 10px;
-    color:var(--font-color-light);
+    color: var(--font-color-light);
     cursor: pointer;
 }
 
@@ -489,10 +521,10 @@
     height: fit-content;
 }
 
-.about-seller{
+.about-seller {
     height: 80px;
     width: 100%;
-    background-color: #2D2B37;
+    background-color: #2d2b37;
     /* background: var(--accent-color); */
 
     display: flex;
@@ -718,11 +750,11 @@
 }
 
 @media (max-width: 1200px) {
-    .selected-row .product-imgs{
+    .selected-row .product-imgs {
         width: 60%;
         min-width: 60%;
     }
-    .description-chat{
+    .description-chat {
         width: 60%;
         min-width: 60%;
     }
@@ -736,7 +768,7 @@
         flex-direction: column;
     }
 
-    .description-chat{
+    .description-chat {
         width: 100%;
     }
 
