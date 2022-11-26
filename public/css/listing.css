@@ -413,18 +413,17 @@
     background-color: peru;
     color: white;
     font-size: 15px;
-    line-height: 25px;
+    line-height: 32px;
     white-space: nowrap;
 }
 
 .categories-rentables a {
     padding: 5px 10px;
     padding-top: 5px;
-    margin-top: 5px;
     background-color: var(--rent-color);
     color: white;
     font-size: 15px;
-    line-height: 25px;
+    line-height: 32px;
     white-space: nowrap;
 }
 
@@ -435,7 +434,7 @@
     background-color: var(--lease-color);
     color: white;
     font-size: 15px;
-    line-height: 25px;
+    line-height: 32px;
     white-space: nowrap;
 }
 
