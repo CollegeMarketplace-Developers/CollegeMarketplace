@@ -33,8 +33,11 @@ class Controller extends BaseController
         header("Cache-Control: must-revalidate");
 
         //if the user is logged in, we'll know, other wise it wil be null
-        $user = User::find(auth()->user());
-
+        //$user = User::find(auth()->user());
+        //$user = User::find(Auth::id());
+        //dd($user);
+        $user = Auth::user();
+        //dd($user);
         //Items from each category sorted by category and date added recently
         $categoryResults = $this->getResultsPerCategoryForCarousel();
 
@@ -130,7 +133,9 @@ class Controller extends BaseController
 
     //returns all the liked items of the user
     public function getUserLikedItems(){
-        $likedItems = auth()->user() != null ? auth()->user()->allLiked()->all() : array();
+        //$likedItems = auth()->user() != null ? auth()->user()->allLiked()->all() : array();
+        $likedItems = Auth::check() ? auth()->user()->allLiked()->all() : array();
+
         // dd($likedItems);
         return $likedItems;
     }
@@ -170,7 +175,8 @@ class Controller extends BaseController
         $allFull = collect($listingResultsFull)->merge($retnablesResultsFull)->merge($subleaseResultsFull)->sortByDesc('created_at');
 
         $stack = array();
-        $user = User::find(auth()->user());
+        //$user = User::find(auth()->user());
+        $user = Auth::user();
 
         if($user != null) {
             $currentUser = $user->first();
@@ -202,7 +208,8 @@ class Controller extends BaseController
     //used to notify the user of any new messages, called every 10 seconds
     public function getUnreadMessagesCount(Request $request){
         // return "test";
-        $user = User::find(auth()->user());
+        //$user = User::find(auth()->user());
+        $user = Auth::user();
         \DB::statement("SET SQL_MODE=''");
         $messages = Message::join('users','messages.from','=','users.id')->orderBy('messages.created_at','desc')->where('to','=',$user->first()->id)->where('is_read','=','0')->groupBy('from')->count();
         return $messages;
@@ -215,7 +222,8 @@ class Controller extends BaseController
 
     //helper method to get unread messages to display in notification tab (latest one from each user)
     public function getUnrdMessages() {
-        $user = User::find(auth()->user());
+        //$user = User::find(auth()->user());
+        $user = Auth::user();
         \DB::statement("SET SQL_MODE=''");
         $messages = Message::join('users','messages.from','=','users.id')->orderBy('messages.created_at','desc')->where('to','=',$user->first()->id)->where('is_read','=','0')->groupBy('from')->get();
 
@@ -229,7 +237,8 @@ class Controller extends BaseController
 
     //helper function for active posts
     public function getAP() {
-        $user = User::find(auth()->user());
+        //$user = User::find(auth()->user());
+        $user = Auth::user();
 
         $listingResultsFull = Listing::latest()->where('status', '!=', 'Sold' )->where('user_id','=',$user->first()->id)->limit(10)->get();
         $retnablesResultsFull = Rentable::latest()->where('status', '!=', 'Rented' )->where('user_id','=',$user->first()->id)->limit(10)->get();
@@ -319,7 +328,8 @@ class Controller extends BaseController
     
     public function search(Request $request){
         // dd(\Request::getRequestUri());
-        $user = User::find(auth()->user());
+        //$user = User::find(auth()->user());
+        $user = Auth::user();
 
         $map = new HashMap("String", "Array");
         $input = $request->except('_token');
