@@ -73,7 +73,7 @@
                                 }
                             @endphp
                             <!-- <img src={{$rentable->image_uploads ? Storage::disk('s3')->url($titleImage) : asset('/images/rotunda.jpg')}} id = "expandedImg" alt="image doesnt exist"> -->
-                            <img src={{$rentable->image_uploads ? Storage::disk('s3')->url($link): Storage::disk('s3')->url('devimages/rotunda.jpg')}} id = "expandedImg" alt = "image doesn't exist"> 
+                            <img src={{$rentable->image_uploads ? Storage::disk('s3')->url($titleImage): Storage::disk('s3')->url('devimages/rotunda.jpg')}} id = "expandedImg" alt = "image doesn't exist"> 
                         </div>
                         <div class = "img-showcase">
                             @if(is_array(json_decode($rentable->image_uploads)))

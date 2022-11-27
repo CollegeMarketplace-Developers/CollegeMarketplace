@@ -15,11 +15,17 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('from');
-            $table->bigInteger('to');
-            $table->unsignedBigInteger('for_listing')->nullable();
+
+            //$table->bigInteger('from');
+            $table->uuid('from');
+
+            //$table->bigInteger('to');
+            $table->uuid('to'); 
+            //$table->unsignedBigInteger('for_listing')->nullable();
+            $table->uuid('for_listing'); 
             $table->foreign('for_listing')->references('id')->on('listings')->onDelete('cascade');
-            $table->unsignedBigInteger('for_rentals')->nullable();
+            //$table->unsignedBigInteger('for_rentals')->nullable();
+            $table->uuid('for_rentals')->nullable(); 
             $table->text('message');
             $table->tinyInteger('is_read');
             $table->timestamps();

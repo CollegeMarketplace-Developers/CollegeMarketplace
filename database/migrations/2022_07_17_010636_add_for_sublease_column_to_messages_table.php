@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('messages', function (Blueprint $table) {
-            $table->unsignedBigInteger('for_sublease')->nullable();
+            $table->uuid('for_sublease')->nullable(); 
+            //$table->unsignedBigInteger('for_sublease')->nullable();
             $table->foreign('for_sublease')->references('id')->on('subleases')->onDelete('cascade');
         });
     }

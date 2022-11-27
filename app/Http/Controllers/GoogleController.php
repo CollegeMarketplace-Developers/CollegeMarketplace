@@ -18,6 +18,7 @@ class GoogleController extends Controller
     public function callbackFromGoogle()
     {
         try {
+            echo "test";
             $user = Socialite::driver('google')->stateless()->user();
 
             //if(explode("@", $user->email)[1] !== 'virginia.edu'){
@@ -49,6 +50,7 @@ class GoogleController extends Controller
             echo "here";
             return redirect('/')->with("message", "User logged In");
         } catch (\Throwable $th) {
+            //TODO: Do something else with the error here other than just redirect back to this page
             return redirect('/login');
         }
     }

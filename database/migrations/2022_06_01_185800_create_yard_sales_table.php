@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+
     /**
      * Run the migrations.
      *
@@ -15,10 +16,12 @@ return new class extends Migration
     {
         Schema::create('yard_sales', function (Blueprint $table) {
             // id of the user
-            $table->id()->unique();
+            //$table->id()->unique();
+            $table->uuid('id')->unique();
 
             // the user id that created the yard sale post
-            $table->unsignedBigInteger('user_id'); 
+            //$table->unsignedBigInteger('user_id'); 
+            $table->uuid('user_id'); 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             // yard sale title

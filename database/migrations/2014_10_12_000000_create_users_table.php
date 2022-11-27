@@ -14,8 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-             // user primary id whic is unsigned and unique
-            $table->id('id')->unique();
+            // user primary id whic is unsigned and unique
+
+            //$table->id('id')->unique();
+            $table->uuid('id')->unique();
+
             // set it as the primary id
             // $table->primary('user_id');
             // user first name

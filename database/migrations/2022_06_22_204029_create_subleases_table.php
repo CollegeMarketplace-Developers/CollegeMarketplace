@@ -14,8 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('subleases', function (Blueprint $table) {
-            $table->id('id')->unique();
-            $table->unsignedBigInteger('user_id'); 
+            //$table->id('id')->unique();
+            $table->uuid('id')->unique();
+
+            //$table->unsignedBigInteger('user_id'); 
+            $table->uuid('user_id'); 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             //sublease attributes

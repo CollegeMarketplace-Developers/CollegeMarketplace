@@ -14,8 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('news_letters', function (Blueprint $table) {
-            $table->id('id')->unique();
-            $table->unsignedBigInteger('user_id')->nullable(); 
+            //$table->id('id')->unique();
+            $table->uuid('id')->unique(); 
+            //$table->unsignedBigInteger('user_id')->nullable(); 
+            $table->uuid('user_id')->nullable(); 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('email');
             $table->timestamps();

@@ -92,7 +92,7 @@ class MessageController extends Controller
         return response()->json($response);
     }
 
-    public function goToMessagePage(Request $request){
+    /*public function goToMessagePage(Request $request){
         // dd( $request->type, $request->itemID, $request->ownerID, $request->from);
         if($request->type=='listing'){
             $listing = Listing::find($request->itemID);
@@ -130,5 +130,5 @@ class MessageController extends Controller
 
         // add two more else ifs for rentables and lease items
         dd('didnt work | check message controller | goToMessagePage');
-    }
+    }*/
 }

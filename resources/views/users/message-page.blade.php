@@ -175,7 +175,7 @@
             // if I am the listing owner -> get selected user and update their information or display a pending symbol
             channel.bind('my-event', function(data) {
                 console.log(data);
-                console.log("this doesnt work");
+                console.log("this does work");
                 if (userLoggedIn == data.from) {
                     // if I am not the listing owner and I am sending a message
                     if(userLoggedIn != listingOwner){
@@ -315,7 +315,9 @@
                                 message.innerHTML = data[i].message;
                                 div.appendChild(message);
                                 var date = document.createElement('p');
-                                date.innerHTML = "{{date('d M y, h:i a', strtotime(" + data[i].created_at + "))}}";
+                                //date.innerHTML = "{{date('d M y, h:i a', strtotime(" + data[i].created_at + "))}}";
+                                console.log(data[i].created_at);
+                                date.innerHTML = data[i].created_at;
                                 date.className='date';
                                 div.appendChild(date);
                                 li.appendChild(div);
