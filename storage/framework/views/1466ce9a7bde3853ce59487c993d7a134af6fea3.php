@@ -23,7 +23,7 @@
                 <a href="javascript:history.back()" class="button1 b-button">
                     <i class="fa-solid fa-arrow-left"></i> Back
                 </a>
-            </div> 
+            </div>
 
             
             <div class = "card-selected">
@@ -91,12 +91,12 @@
                                     }
                                 }
                             ?>
-                            <img src=<?php echo e($listing->image_uploads ? Storage::disk('s3')->url($titleImage) : asset('/images/rotunda.jpg')); ?> id = "expandedImg" alt="image doesnt exist">
+                            <img src=<?php echo e($listing->image_uploads ? Storage::disk('s3')->url($titleImage) : Storage::disk('s3')->url('devimages/rotunda.jpg')); ?> id = "expandedImg" alt="image doesnt exist">
                         </div>
                         <div class = "img-showcase">
                             <?php if(is_array(json_decode($listing->image_uploads))): ?>
                                 <?php $__currentLoopData = json_decode($listing->image_uploads); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $link): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <img src=<?php echo e($listing->image_uploads ? Storage::disk('s3')->url($link) : asset('/images/rotunda.jpg')); ?> alt = "shoe image" onclick="myFunction(this);">
+                                    <img src=<?php echo e($listing->image_uploads ? Storage::disk('s3')->url($link) : Storage::disk('s3')->url('devimages/rotunda.jpg')); ?> alt = "shoe image" onclick="myFunction(this);">
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             <?php else: ?>
                                 <?php
@@ -163,6 +163,13 @@
                                         <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <a href="/shop/all?type=all&category=<?php echo e($category); ?>"><?php echo e($category); ?></a>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </div>
+                                </div>
+                                <!-- Added to differentiate listing types -->
+                                <div class="categories-container">
+                                    <p>Listing Type:</p>
+                                    <div class="categories-listing">
+                                    <a href="#" onclick="return false;">For Sale</a>
                                     </div>
                                 </div>
                             </div>
@@ -540,7 +547,10 @@
                                     message.innerHTML = data[i].message;
                                     div.appendChild(message);
                                     var date = document.createElement('p');
-                                    date.innerHTML = "<?php echo e(date('d M y, h:i a', strtotime(" + data[i].created_at + "))); ?>";
+                                    console.log(data[i].created_at);
+                                    date.innerHTML = "<?php echo e(\Carbon\Carbon::parse("+data[i].created_at+")->format('m/d/Y H:i:s')); ?>"
+                                    //date.innerHTML = data[i].created_at;
+                                    //date.innerHTML = "<?php echo e(date('d M y, h:i a', strtotime(" + data[i].created_at + "))); ?>";
                                     date.className='date';
                                     div.appendChild(date);
                                     li.appendChild(div);

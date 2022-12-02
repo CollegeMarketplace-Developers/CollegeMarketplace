@@ -538,7 +538,10 @@
                                     message.innerHTML = data[i].message;
                                     div.appendChild(message);
                                     var date = document.createElement('p');
-                                    date.innerHTML = "{{date('d M y, h:i a', strtotime(" + data[i].created_at + "))}}";
+                                    console.log(data[i].created_at);
+                                    date.innerHTML = "{{ \Carbon\Carbon::parse("+data[i].created_at+")->format('m/d/Y H:i:s')}}"
+                                    //date.innerHTML = data[i].created_at;
+                                    //date.innerHTML = "{{date('d M y, h:i a', strtotime(" + data[i].created_at + "))}}";
                                     date.className='date';
                                     div.appendChild(date);
                                     li.appendChild(div);

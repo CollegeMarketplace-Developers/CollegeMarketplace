@@ -43,6 +43,8 @@ class Sublease extends Model
         'view_count'
     ];
 
+    protected $dates = ['created_at', 'updated_at'];
+
     // this rentable belongs to a certain user
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
