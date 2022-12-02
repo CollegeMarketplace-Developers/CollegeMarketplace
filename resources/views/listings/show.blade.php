@@ -15,7 +15,7 @@
                 <a href="javascript:history.back()" class="button1 b-button">
                     <i class="fa-solid fa-arrow-left"></i> Back
                 </a>
-            </div> 
+            </div>
 
             {{-- main show area --}}
             <div class = "card-selected">
@@ -83,12 +83,12 @@
                                     }
                                 }
                             @endphp
-                            <img src={{$listing->image_uploads ? Storage::disk('s3')->url($titleImage) : asset('/images/rotunda.jpg')}} id = "expandedImg" alt="image doesnt exist">
+                            <img src={{$listing->image_uploads ? Storage::disk('s3')->url($titleImage) : Storage::disk('s3')->url('devimages/rotunda.jpg')}} id = "expandedImg" alt="image doesnt exist">
                         </div>
                         <div class = "img-showcase">
                             @if(is_array(json_decode($listing->image_uploads)))
                                 @foreach(json_decode($listing->image_uploads) as $link)
-                                    <img src={{$listing->image_uploads ? Storage::disk('s3')->url($link) : asset('/images/rotunda.jpg')}} alt = "shoe image" onclick="myFunction(this);">
+                                    <img src={{$listing->image_uploads ? Storage::disk('s3')->url($link) : Storage::disk('s3')->url('devimages/rotunda.jpg')}} alt = "shoe image" onclick="myFunction(this);">
                                 @endforeach
                             @else
                                 @php
@@ -155,6 +155,13 @@
                                         @foreach($categories as $category)
                                             <a href="/shop/all?type=all&category={{$category}}">{{$category}}</a>
                                         @endforeach
+                                    </div>
+                                </div>
+                                <!-- Added to differentiate listing types -->
+                                <div class="categories-container">
+                                    <p>Listing Type:</p>
+                                    <div class="categories-listing">
+                                    <a href="#" onclick="return false;">For Sale</a>
                                     </div>
                                 </div>
                             </div>
@@ -280,7 +287,7 @@
         <div class="modal" id="delete-modal">
             <div class="modal-content">
                 <div class="sad-dog-container">
-                    <img src="{{asset('/images/sad-dog.png')}}" alt="">
+                    <img src="https://cmimagestoragebucket.s3.amazonaws.com/devimages/sad-dog.png" alt="">
                 </div>
                 <span class="close">&times;</span>
                 <h1>Delete Listing</h1>

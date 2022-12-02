@@ -190,7 +190,7 @@ class SubleaseController extends Controller
                 FROM users
                 INNER JOIN messages on messages.to = users.id
                 INNER JOIN users as users2 ON messages.from = users2.id
-                WHERE messages.for_sublease = " . $sublease->id . " and users2.id != " . auth()->id() . "
+                WHERE messages.for_sublease = \"" . $sublease->id . "\" and users2.id != \"" . auth()->id() . "\"
                 GROUP BY users2.id, users2.first_name, users2.last_name, users2.avatar, users2.email
                 "
             );

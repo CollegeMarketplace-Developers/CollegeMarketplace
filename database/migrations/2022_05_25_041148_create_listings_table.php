@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('listings', function (Blueprint $table) {
             // create the listing id which is unsigned and unique
-            $table->id('id')->unique();
+            $table->uuid('id')->unique();
         
             //create the user id which will serve as the foreign key
-            $table->unsignedBigInteger('user_id'); 
+            $table->uuid('user_id'); 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             // listing name
             $table->string('item_name');
