@@ -538,6 +538,7 @@
                                     message.innerHTML = data[i].message;
                                     div.appendChild(message);
                                     var date = document.createElement('p');
+                                    //console.log(data[i].created_at);
                                     date.innerHTML = "{{date('d M y, h:i a', strtotime(" + data[i].created_at + "))}}";
                                     date.className='date';
                                     div.appendChild(date);
