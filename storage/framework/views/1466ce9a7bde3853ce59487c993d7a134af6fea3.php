@@ -548,9 +548,11 @@
                                     div.appendChild(message);
                                     var date = document.createElement('p');
                                     console.log(data[i].created_at);
-                                    date.innerHTML = "<?php echo e(\Carbon\Carbon::parse("+data[i].created_at+")->format('m/d/Y H:i:s')); ?>"
-                                    //date.innerHTML = data[i].created_at;
-                                    //date.innerHTML = "<?php echo e(date('d M y, h:i a', strtotime(" + data[i].created_at + "))); ?>";
+                                    var formatDate = data[i].created_at.split("-");
+                                    var fullTime = formatDate[2].split("T");
+                                    var splitTime = fullTime[1].split(":");
+                                    date.innerHTML = formatDate[1] + "/" + fullTime[0] + "/" + formatDate[0] + " "+ splitTime[0] + ":" + splitTime[1] +" utc"; 
+                                    //date.innerHTML = "<?php echo e(date('d M y, h:i', strtotime(str_replace("-",".","+data[i].created_at + ")))); ?>";
                                     date.className='date';
                                     div.appendChild(date);
                                     li.appendChild(div);
