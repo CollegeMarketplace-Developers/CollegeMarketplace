@@ -595,7 +595,10 @@
                                 message.innerHTML = data[i].message;
                                 div.appendChild(message);
                                 var date = document.createElement('p');
-                                date.innerHTML = "{{date('d M y, h:i a', strtotime(" + data[i].created_at + "))}}";
+                                var formatDate = data[i].created_at.split("-");
+                                var fullTime = formatDate[2].split("T");
+                                var splitTime = fullTime[1].split(":");
+                                date.innerHTML = formatDate[1] + "/" + fullTime[0] + "/" + formatDate[0] + " "+ splitTime[0] + ":" + splitTime[1] +" utc";
                                 date.className='date';
                                 div.appendChild(date);
                                 li.appendChild(div);
