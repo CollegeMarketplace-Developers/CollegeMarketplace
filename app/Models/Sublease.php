@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\UUID;
 
 class Sublease extends Model
 {
-    use HasFactory, UUID;
+    use HasFactory;
     protected $fillable = [
 
         'id',
