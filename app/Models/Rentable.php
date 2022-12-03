@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\UUID;
 
 class Rentable extends Model
 {
-    use HasFactory;
+    use HasFactory, UUID;
     protected $fillable = [
         'id',
         'user_id',

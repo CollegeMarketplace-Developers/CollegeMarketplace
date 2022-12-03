@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id()->unique();
 
             // the user id that created the yard sale post
-            $table->unsignedBigInteger('user_id'); 
+            $table->uuid('user_id'); 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             // yard sale title
