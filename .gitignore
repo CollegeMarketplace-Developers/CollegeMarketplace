@@ -12,6 +12,3 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-/.ebextensions/alb-http-to-https-redirection-full.config
-/storage/*
-/storage/!.gitignore
