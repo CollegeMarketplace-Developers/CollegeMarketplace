@@ -14,3 +14,5 @@ yarn-error.log
 /.vscode
 /.ebextensions/alb-http-to-https-redirection-full.config
 /storage/framework/views
+/storage/*
+/storage/!.gitignore
