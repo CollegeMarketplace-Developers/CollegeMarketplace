@@ -31,7 +31,7 @@ use App\Http\Controllers\GoogleController;
 Route::get('/', [Controller::class, 'index']); //homepage
 Route::get('/shop/all', [Controller::class, 'search']); //search page
 Route::get('/item',[Controller::class,'getListingsFromLatLng']);
-Route::get('/random/item', [Controller::class, 'getRandomItem']);
+//Route::get('/random/item', [Controller::class, 'getRandomItem']);
 
 //---------------------------------------------------------------------
 
