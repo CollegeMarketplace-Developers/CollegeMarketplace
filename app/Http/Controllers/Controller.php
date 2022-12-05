@@ -755,7 +755,7 @@ class Controller extends BaseController
         return back()->with('message', 'Successfully Enrolled in News Letter');
     }
 
-    public static function getRandomItem(){
+    /*public static function getRandomItem(){
         // $model1s = Listing::inRandomOrder()->take(1)->get();
         // $model2s = Rentable::inRandomOrder()->take(1)->get();
         // $model3s = Sublease::inRandomOrder()->take(1)->get();
@@ -781,7 +781,7 @@ class Controller extends BaseController
         }
         
         return null;
-    }
+    }*/
 
     public function features(){
         header("Cache-Control: must-revalidate");
