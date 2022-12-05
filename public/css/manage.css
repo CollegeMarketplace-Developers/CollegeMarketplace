@@ -174,7 +174,7 @@
     background-color: pink;
     border-radius: 10px;
     overflow: hidden;
-    background: url("../images/profile-theme.jpg");
+    background: url("https://cmimagestoragebucket.s3.amazonaws.com/devimages/header-image.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

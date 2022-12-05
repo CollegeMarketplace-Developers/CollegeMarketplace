@@ -29,7 +29,7 @@
     border-radius: var(--br-large);
     overflow: hidden;
     overflow: hidden;
-    background: url('../images/header-image.png');
+    background: url('https://cmimagestoragebucket.s3.amazonaws.com/devimages/header-image.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

@@ -47,6 +47,7 @@ class MessageController extends Controller
     public function postMessage(Request $request)
     {
         $from = Auth::id();
+        
         $to = $request->receiver_id;
         $message = $request->message;
         $listing_id = $request->for_listing;
@@ -62,7 +63,6 @@ class MessageController extends Controller
         $data->message = $message;
         $data->is_read = 0; // message will be unread when sending message
         $data->save();
-
 
         // pusher
         $options = array(
@@ -89,6 +89,7 @@ class MessageController extends Controller
             'for_sublease' => $request->for_sublease,
             "message" => $data
         );
+        //dd($response);
         return response()->json($response);
     }
 
