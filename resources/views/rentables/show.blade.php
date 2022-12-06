@@ -506,7 +506,7 @@
                     
                     $.ajax({
                         type: "GET",
-                        url: "/messages?from=" + UserSending + "&to=" + UserReceiving + "&rentable_id=" + rentable_id, // need to create this route
+                        url: "/messages?from=" + UserSending + "&to=" + UserReceiving + "&rental_id=" + rentable_id, // need to create this route
                         data: "JSON",
                         cache: false,
                         success: function (data) {
@@ -532,7 +532,7 @@
                                     var formatDate = data[i].created_at.split("-");
                                     var fullTime = formatDate[2].split("T");
                                     var splitTime = fullTime[1].split(":");
-                                    date.innerHTML = formatDate[1] + "/" + fullTime[0] + "/" + formatDate[0] + " "+ splitTime[0] + ":" + splitTime[1] +" UTC";
+                                    date.innerHTML = formatDate[1] + "/" + fullTime[0] + "/" + formatDate[0] + " "+ splitTime[0] + ":" + splitTime[1] +" UTC"; 
                                     date.className='date';
                                     div.appendChild(date);
                                     li.appendChild(div);
@@ -572,7 +572,7 @@
                 // console.log("from: " + receiverSelected + " to: " +rentableOwner)
                 $.ajax({
                     type: "GET",
-                    url: "/messages?from=" + receiverSelected + "&to=" + rentableOwner + "&rentable_id=" + rentable_id, 
+                    url: "/messages?from=" + receiverSelected + "&to=" + rentableOwner + "&rental_id=" + rentable_id, 
                     data: "JSON",
                     cache: false,
                     success: function (data) {
@@ -600,7 +600,7 @@
                                 var formatDate = data[i].created_at.split("-");
                                 var fullTime = formatDate[2].split("T");
                                 var splitTime = fullTime[1].split(":");
-                                date.innerHTML = formatDate[1] + "/" + fullTime[0] + "/" + formatDate[0] + " "+ splitTime[0] + ":" + splitTime[1] +" UTC";
+                                date.innerHTML = formatDate[1] + "/" + fullTime[0] + "/" + formatDate[0] + " "+ splitTime[0] + ":" + splitTime[1] +" UTC"; 
                                 date.className='date';
                                 div.appendChild(date);
                                 li.appendChild(div);
@@ -634,11 +634,11 @@
                     // if I am the rentable owner, then i need a receiver id which should be the person I have selected form the users list
                     if(rentableOwner == userLoggedIn){
                         // if it is my ownrentable, use receiver id, instead of rentable owner id
-                        datastr = "receiver_id=" + receiverSelected + "&message=" + msg + "&for_rentable=" + rentable_id;
+                        datastr = "receiver_id=" + receiverSelected + "&message=" + msg + "&for_rentals=" + rentable_id;
                             // console.log(datastr);
                     }else{ //else send a message to the rentable owner from me thats default
                         // console.log("bottom branch");
-                        datastr = "receiver_id=" + rentableOwner + "&message=" + msg + "&for_rentable=" + rentable_id;
+                        datastr = "receiver_id=" + rentableOwner + "&message=" + msg + "&for_rentals=" + rentable_id;
                     }
 
                     if(e.keyCode == 13 && msg != '' && rentableOwner != ''){

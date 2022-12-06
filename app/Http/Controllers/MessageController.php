@@ -25,17 +25,40 @@ class MessageController extends Controller
         $to = $request->to;
         $listing_id = $request->listing_id;
         $rental_id = $request->rental_id;
+        $leaseItem_id = $request->leaseItem_id; 
 
-        // Make read all unread message
-        Message::where(['from' => $from, 'to' => $to])->update(['is_read' => 1]);
+        // Make read all unread message        
+        if($listing_id != null) {
+            Message::where(['from' => $from, 'to' => $to, 'for_listing' => $listing_id])->update(['is_read' => 1]);
 
-        $messages = Message::where(
-            function ($query) use ($from, $to, $listing_id) {
-                $query->where('from', $from)->where('to', $to)->where('for_listing', $listing_id);
-            }
-        )->orWhere(function ($query) use ($from, $to, $listing_id) {
-            $query->where('from', $to)->where('to', $from)->where('for_listing', $listing_id);
-        })->get();
+            $messages = Message::where(
+                function ($query) use ($from, $to, $listing_id) {
+                    $query->where('from', $from)->where('to', $to)->where('for_listing', $listing_id);
+                }
+            )->orWhere(function ($query) use ($from, $to, $listing_id) {
+                $query->where('from', $to)->where('to', $from)->where('for_listing', $listing_id);
+            })->get();
+        } else if($rental_id != null) {
+            Message::where(['from' => $from, 'to' => $to, 'for_rentals' => $rental_id])->update(['is_read' => 1]);
+            
+            $messages = Message::where(
+                function ($query) use ($from, $to, $rental_id) {
+                    $query->where('from', $from)->where('to', $to)->where('for_rentals', $rental_id);
+                }
+            )->orWhere(function ($query) use ($from, $to, $rental_id) {
+                $query->where('from', $to)->where('to', $from)->where('for_rentals', $rental_id);
+            })->get();
+        } else {
+            Message::where(['from' => $from, 'to' => $to, 'for_sublease' => $leaseItem_id])->update(['is_read' => 1]);
+
+            $messages = Message::where(
+                function ($query) use ($from, $to, $leaseItem_id) {
+                    $query->where('from', $from)->where('to', $to)->where('for_sublease', $leaseItem_id);
+                }
+            )->orWhere(function ($query) use ($from, $to, $leaseItem_id) {
+                $query->where('from', $to)->where('to', $from)->where('for_sublease', $leaseItem_id);
+            })->get();
+        }
 
         // dd($messages);
         return $messages;

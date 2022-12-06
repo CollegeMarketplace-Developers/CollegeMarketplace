@@ -530,7 +530,7 @@
                                     var formatDate = data[i].created_at.split("-");
                                     var fullTime = formatDate[2].split("T");
                                     var splitTime = fullTime[1].split(":");
-                                    date.innerHTML = formatDate[1] + "/" + fullTime[0] + "/" + formatDate[0] + " "+ splitTime[0] + ":" + splitTime[1] +" UTC";
+                                    date.innerHTML = formatDate[1] + "/" + fullTime[0] + "/" + formatDate[0] + " "+ splitTime[0] + ":" + splitTime[1] +" UTC"; 
                                     date.className='date';
                                     div.appendChild(date);
                                     li.appendChild(div);
@@ -598,7 +598,7 @@
                                 var formatDate = data[i].created_at.split("-");
                                 var fullTime = formatDate[2].split("T");
                                 var splitTime = fullTime[1].split(":");
-                                date.innerHTML = formatDate[1] + "/" + fullTime[0] + "/" + formatDate[0] + " "+ splitTime[0] + ":" + splitTime[1] +" UTC";
+                                date.innerHTML = formatDate[1] + "/" + fullTime[0] + "/" + formatDate[0] + " "+ splitTime[0] + ":" + splitTime[1] +" UTC"; 
                                 date.className='date';
                                 div.appendChild(date);
                                 li.appendChild(div);
@@ -632,11 +632,11 @@
                     // if I am the leaseItem owner, then i need a receiver id which should be the person I have selected form the users list
                     if(leaseItemOwner == userLoggedIn){
                         // if it is my ownleaseItem, use receiver id, instead of leaseItem owner id
-                        datastr = "receiver_id=" + receiverSelected + "&message=" + msg + "&for_leaseItem=" + leaseItem_id;
+                        datastr = "receiver_id=" + receiverSelected + "&message=" + msg + "&for_sublease=" + leaseItem_id;
                             // console.log(datastr);
                     }else{ //else send a message to the leaseItem owner from me thats default
                         // console.log("bottom branch");
-                        datastr = "receiver_id=" + leaseItemOwner + "&message=" + msg + "&for_leaseItem=" + leaseItem_id;
+                        datastr = "receiver_id=" + leaseItemOwner + "&message=" + msg + "&for_sublease=" + leaseItem_id;
                     }
 
                     if(e.keyCode == 13 && msg != '' && leaseItemOwner != ''){
