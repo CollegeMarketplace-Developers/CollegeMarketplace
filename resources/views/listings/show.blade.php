@@ -458,8 +458,8 @@
             // if I am not the listing owner, show me messages that have been sent to me instantly
             // if I am the listing owner -> get selected user and update their information or display a pending symbol
             channel.bind('my-event', function(data) {
-                console.log(data);
-                console.log("this doesnt work");
+                //console.log(data);
+                //console.log("this doesnt work");
                 if (userLoggedIn == data.from) {
                     // if I am not the listing owner and I am sending a message
                     if(userLoggedIn != listingOwner){

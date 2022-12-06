@@ -25,17 +25,38 @@ class MessageController extends Controller
         $to = $request->to;
         $listing_id = $request->listing_id;
         $rental_id = $request->rental_id;
+        $leaseItem_id = $request->leaseItem_id; 
 
         // Make read all unread message
+        //TODO: Does this check for messages on a specific listing/rentable/sublease or does it mark
+        //all messages between the users(evenet if on 2 different posts) as read
         Message::where(['from' => $from, 'to' => $to])->update(['is_read' => 1]);
 
-        $messages = Message::where(
-            function ($query) use ($from, $to, $listing_id) {
-                $query->where('from', $from)->where('to', $to)->where('for_listing', $listing_id);
-            }
-        )->orWhere(function ($query) use ($from, $to, $listing_id) {
-            $query->where('from', $to)->where('to', $from)->where('for_listing', $listing_id);
-        })->get();
+        if($listing_id != null) {
+            $messages = Message::where(
+                function ($query) use ($from, $to, $listing_id) {
+                    $query->where('from', $from)->where('to', $to)->where('for_listing', $listing_id);
+                }
+            )->orWhere(function ($query) use ($from, $to, $listing_id) {
+                $query->where('from', $to)->where('to', $from)->where('for_listing', $listing_id);
+            })->get();
+        } else if($rental_id != null) {
+            $messages = Message::where(
+                function ($query) use ($from, $to, $rental_id) {
+                    $query->where('from', $from)->where('to', $to)->where('for_rentals', $rental_id);
+                }
+            )->orWhere(function ($query) use ($from, $to, $rental_id) {
+                $query->where('from', $to)->where('to', $from)->where('for_rentals', $rental_id);
+            })->get();
+        } else {
+            $messages = Message::where(
+                function ($query) use ($from, $to, $leaseItem_id) {
+                    $query->where('from', $from)->where('to', $to)->where('for_sublease', $leaseItem_id);
+                }
+            )->orWhere(function ($query) use ($from, $to, $leaseItem_id) {
+                $query->where('from', $to)->where('to', $from)->where('for_sublease', $leaseItem_id);
+            })->get();
+        }
 
         // dd($messages);
         return $messages;
