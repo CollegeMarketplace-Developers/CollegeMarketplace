@@ -632,11 +632,11 @@
                     // if I am the leaseItem owner, then i need a receiver id which should be the person I have selected form the users list
                     if(leaseItemOwner == userLoggedIn){
                         // if it is my ownleaseItem, use receiver id, instead of leaseItem owner id
-                        datastr = "receiver_id=" + receiverSelected + "&message=" + msg + "&for_leaseItem=" + leaseItem_id;
+                        datastr = "receiver_id=" + receiverSelected + "&message=" + msg + "&for_sublease=" + leaseItem_id;
                             // console.log(datastr);
                     }else{ //else send a message to the leaseItem owner from me thats default
                         // console.log("bottom branch");
-                        datastr = "receiver_id=" + leaseItemOwner + "&message=" + msg + "&for_leaseItem=" + leaseItem_id;
+                        datastr = "receiver_id=" + leaseItemOwner + "&message=" + msg + "&for_sublease=" + leaseItem_id;
                     }
 
                     if(e.keyCode == 13 && msg != '' && leaseItemOwner != ''){

@@ -34,6 +34,7 @@ class Listing extends Model
         'apartment_floor',
         'view_count'
     ];
+    
     public function scopeFilter($query, array $filters){
         // dd($filters); -> have the keys
 

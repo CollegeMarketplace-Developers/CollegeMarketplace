@@ -458,8 +458,8 @@
             // if I am not the listing owner, show me messages that have been sent to me instantly
             // if I am the listing owner -> get selected user and update their information or display a pending symbol
             channel.bind('my-event', function(data) {
-                console.log(data);
-                console.log("this doesnt work");
+                //console.log(data);
+                //console.log("this doesnt work");
                 if (userLoggedIn == data.from) {
                     // if I am not the listing owner and I am sending a message
                     if(userLoggedIn != listingOwner){
@@ -607,9 +607,9 @@
                                 div.appendChild(message);
                                 var date = document.createElement('p');
                                 var formatDate = data[i].created_at.split("-");
-                                    var fullTime = formatDate[2].split("T");
-                                    var splitTime = fullTime[1].split(":");
-                                    date.innerHTML = formatDate[1] + "/" + fullTime[0] + "/" + formatDate[0] + " "+ splitTime[0] + ":" + splitTime[1] +" UTC"; 
+                                var fullTime = formatDate[2].split("T");
+                                var splitTime = fullTime[1].split(":");
+                                date.innerHTML = formatDate[1] + "/" + fullTime[0] + "/" + formatDate[0] + " "+ splitTime[0] + ":" + splitTime[1] +" UTC";
                                 date.className='date';
                                 div.appendChild(date);
                                 li.appendChild(div);
