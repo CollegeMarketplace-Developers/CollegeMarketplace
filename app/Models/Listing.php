@@ -34,7 +34,6 @@ class Listing extends Model
         'apartment_floor',
         'view_count'
     ];
-    protected $dates = ['created_at', 'updated_at'];
     
     public function scopeFilter($query, array $filters){
         // dd($filters); -> have the keys

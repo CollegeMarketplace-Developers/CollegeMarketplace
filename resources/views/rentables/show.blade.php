@@ -205,7 +205,6 @@
                                 <div class="user-wrapper">
                                     <ul class="users">
                                         @if(count($allUsers) >= 1)
-                                            echo $allUsers;
                                             @foreach($allUsers as $user)
                                                 <li class="user" id="{{ $user->id }}">
 

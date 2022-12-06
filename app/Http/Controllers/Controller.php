@@ -217,7 +217,7 @@ class Controller extends BaseController
     public function getUnrdMessages() {
         $user = User::find(auth()->user());
         \DB::statement("SET SQL_MODE=''");
-        $messages = Message::join('users','messages.from','=','users.id')->orderBy('messages.created_at','desc')->where('to','=',$user->first()->id)->where('is_read','=','0')->groupBy('from')->get();
+        $messages = Message::join('users','messages.from','=','users.id')->orderBy('messages.created_at')->where('to','=',$user->first()->id)->where('is_read','=','0')->groupBy('from','for_listing','for_rentals','for_sublease')->get();
 
         return $messages;
     }
