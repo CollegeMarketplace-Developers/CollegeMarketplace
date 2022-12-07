@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -27,8 +28,9 @@ class RentableFactory extends Factory
         $rentalCategory = array('Furniture', 'Clothes', 'Electronics', 'Kitchen', 'School Accessories', "Books");
         $rentableNegotiable = array('Fixed', 'Negotiable');
         return [
+            'id'=>$this->faker->uuid(),
             // ownership
-            'user_id'=> random_int(1,10),
+            'user_id'=> User::inRandomOrder()->take(1)->get()[0]->id,
 
 
             'rental_title' => $this->faker->text(random_int(5,100)),
