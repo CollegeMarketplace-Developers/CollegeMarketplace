@@ -49,10 +49,11 @@ class Controller extends BaseController
             'kitchenItems' => $categoryResults[3],
             'schoolItems' => $categoryResults[4],
             'bookItems' => $categoryResults[5],
+            'leaseItems' => Sublease::latest()->where('status', 'like', 'Available')->take(10)->get()->all(),
             //'listingsNear' => Listing::latest()->where('status', '!=', 'Sold' )->take(10)->get(),
             'listingsNear' => $this->getNearItemsWithUserLocationFromDB(),
             'rentables' => Rentable::latest()->where('status', 'like', 'Available' )->take(10)->get()->all(),
-            'subleases'=> Sublease::latest()->where('status', 'like', 'Available')->take(10)->get()->all(),
+            'subleases'=> Sublease::inRandomOrder()->take(10)->get()->all(),
             'user' => $user != null ? $user->all()[0] : null,
             'likedItems' => $this->getUserLikedItems(),
             'recentlyViewed' => $recentlyViewed != null ? $recentlyViewed : array()

@@ -1,7 +1,7 @@
 .category-carousel-wrapper{
     width: 100%;
     max-width: 1600px;
-    margin-top: 50px;
+    /* margin-top: 50px; */
 }
 
 .category-carousel-inner{
@@ -11,31 +11,90 @@
 }
 
 .category-carousel-inner ul{
-    width: 80%;
-    position: absolute; 
-    left: 50%;
-    transform: translateX(-50%);
-    top: -60px;
-    padding: 10px 30px;
+    width: 100%;
+    /* position: absolute;  */
+    /* left: 50%; */
+    /* transform: translateX(-50%); */
+    /* top: -60px; */
+    /* padding: 20px 0px; */
     display: flex;
-    gap: 40px;
+    gap: 50px;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
+    /* align-items: center;
     justify-content: space-evenly;
     box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
     background: var(--background-color-light);
     color:var(--font-color-dark);
-    border-radius: var(--br-large);
+    border-radius: var(--br-large); */
     z-index: 10;
+    /* background-color: green; */
+}
+
+.category-carousel-inner .single-category-box{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.category-carousel-inner .single-category-box span{
+    font-size: 20px;
+    color: var(--font-color-dark);
 }
 
 .category-carousel-inner ul li{
-    display:inline-block;
+    height: 150px;
+    aspect-ratio: 1/1;
+    background-color: maroon;
+    border-radius: 100%;
+
+    /* display:inline-block;
     text-align: center;
-    font-size: 15px;
+    font-size: 15px; */
 }
-.category-carousel-inner ul li:hover{
-    color:var(--accent-color) !important;
+
+.category-carousel-inner .furniture-toggle{
+    background: url('../images/furniture-category.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.category-carousel-inner .clothes-toggle{
+    background: url('../images/clothes-category.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.category-carousel-inner .electronics-toggle{
+    background: url('../images/electronics-category.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.category-carousel-inner .kitchen-toggle{
+    background: url('../images/kithcen-category.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.category-carousel-inner .school-toggle{
+    background: url('../images/school-category.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.category-carousel-inner .books-toggle{
+    background: url('../images/books-category.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.category-carousel-inner .lease-toggle{
+    background: url('../images/lease-category.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.category-carousel-inner ul li:hover,
+.category-carousel-inner .single-category-box span:hover {
+    /* color:var(--accent-color) !important; */
     cursor:pointer;
 }
 
@@ -69,27 +128,45 @@
     display: flex;
 }
 
-.type2, .type3, .type4, .type5, .type6{
+.type2, .type3, .type4, .type5, .type6, .type7{
     display: none;
 }
 
-@media(max-width: 800px){
+@media(max-width:1500px){
+    .category-carousel-inner ul{
+        justify-content: unset;
+        overflow:scroll;
+        /* padding:0px 20px; */
+        -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        scrollbar-width: none;  /* Firefox */
+    }
+    .category-carousel-inner ul::-webkit-scrollbar { 
+        display: none;  /* Safari and Chrome */
+    }
+}
+/* @media(max-width: 800px){
     .category-carousel-inner ul{
         width: auto;
         justify-content: center;
     }
+} */
+
+@media(max-width: 750px){
+    .category-carousel-inner ul {
+        gap:40px;
+    } 
 }
 
 @media(max-width: 750px){
-    .category-carousel-inner ul li p {
-        display: none;
-    }
-
     .category-carousel-inner ul li{
-        font-size: 18px;
-        padding: 0 10px;
-        /* margin: 10px 0; */
-    }
+        height: 125px;
+    } 
+}
+
+@media(max-width: 600px){
+    .category-carousel-inner ul li {
+        height: 100px;
+    } 
     .category-carousel-inner ul {
         gap:30px;
     } 
@@ -98,18 +175,5 @@
 @media(max-width: 500px){
     .category-carousel-inner ul {
         gap:20px;
-    } 
-}
-
-@media(max-width: 450px){
-    .category-carousel-inner ul {
-        gap:10px;
-    } 
-}
-
-@media(max-width: 400px){
-    .category-carousel-inner ul {
-        gap:5px;
-        padding:10px;
     } 
 }
