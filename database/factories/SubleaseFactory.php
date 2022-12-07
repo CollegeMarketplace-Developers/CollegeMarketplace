@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,7 +23,8 @@ class SubleaseFactory extends Factory
         $leaseStatus = array('Leased', 'Available');
         return [
             // owner of sublease
-            'user_id'=> random_int(1,10),
+            'id'=>$this->faker->uuid(),
+            'user_id'=> User::inRandomOrder()->take(1)->get()[0]->id,
 
             'sublease_title' => $this->faker->text(random_int(5,100)),
             'location' => $this->faker->text(5), //ex. shamrock, standard
