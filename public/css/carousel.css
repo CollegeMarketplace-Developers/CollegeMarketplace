@@ -32,7 +32,8 @@
 }
 
 #controls, #controls2, #controls3, #furniture-controls, #clothes-controls, #electronics-controls,  #kitchen-controls, #school-controls, #book-controls,
-#liked-items-controls, #recently-viewed-controls{
+#liked-items-controls, #recently-viewed-controls,
+#lease-controls{
     position: absolute;
     top: 50%;
     width: 100%;
@@ -133,7 +134,8 @@
     z-index:10;
 }
 
-#controls i, #controls2 i, #controls3 i, #furniture-controls i, #clothes-controls i, #electronics-controls i, #kitchen-controls i, #school-controls i, #book-controls i, #liked-items-controls i, #recently-viewed-controls i{
+#controls i, #controls2 i, #controls3 i, #furniture-controls i, #clothes-controls i, #electronics-controls i, #kitchen-controls i, #school-controls i, #book-controls i, #liked-items-controls i, #recently-viewed-controls i,
+#lease-controls i{
     color: white;
     font-size: 1.3rem;
     z-index: 10;
