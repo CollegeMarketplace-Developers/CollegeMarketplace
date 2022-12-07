@@ -20,6 +20,7 @@ class UserFactory extends Factory
         $first_name = $this->faker->firstName;
         $last_name = $this->faker->lastName;
         return [
+            'id'=>$this->faker->uuid(),
             'first_name' => $first_name,
             'last_name' => $last_name,
             'google_id' =>$this->faker->text(random_int(5,100)),

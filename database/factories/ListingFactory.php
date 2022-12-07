@@ -1,8 +1,9 @@
 <?php
 
 namespace Database\Factories;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
 use NunoMaduro\Collision\Adapters\Phpunit\State;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Listing>
@@ -27,7 +28,8 @@ class ListingFactory extends Factory
         // $temp = 'https://picsum.photos/300/200?sig='. random_int(0,100);
         // $imgUploads = array($temp);
         return [
-            'user_id'=> random_int(1,10),
+            'id'=>$this->faker->uuid(),
+            'user_id'=> User::inRandomOrder()->take(1)->get()[0]->id,
             'item_name' => $this->faker->text(random_int(5,100)),
             'price' => random_int(50,500),
             'negotiable' => $listingNegotiable[array_rand($listingNegotiable)],
