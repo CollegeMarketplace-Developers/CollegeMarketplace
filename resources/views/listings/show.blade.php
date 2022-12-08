@@ -309,14 +309,8 @@
          @include('partials._listingCarousel', ['listings' => $listings, 'message' => 'Related Items', 'carouselClass'=>'my-slider','carouselControls' => 'controls', 'carouselP' =>'previous previous1', 'carouselN' => 'next next1', 'currentUser'=>$currentUser])
     </section>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>    
-
     {{-- for pusher real time messages --}}
     <script src="https://js.pusher.com/7.1/pusher.min.js"></script>
-
-    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
-    integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
-    crossorigin=""></script>
    
     <script>
         function isEmpty(input){
@@ -325,55 +319,21 @@
             }return false;
         }  
         
-        //code for dynamic map
-        /*function initMap() {
-            var mapTwo;
-            var geocoder;
-            var listingLat = "{{$listing->latitude}}";
-            var listingLong = "{{$listing->longitude}}";
-            geocoder = new google.maps.Geocoder();
-            var latlng = new google.maps.LatLng(-34.397, 150.644);
-            var mapOptions = {
-                zoom: 15,
-                center: latlng
-            }
-            mapTwo = new google.maps.Map(document.getElementById('map-container'), mapOptions);
-                console.log(listingLat, listingLong);
-            if(!isEmpty("{{$listing->street}}")  && !isEmpty("{{$listing->state}}")) {
-                console.log('top if');
-                var address = "{{$listing->street." ".$listing->city}}";
-                //console.log(address);
-                geocoder.geocode( { 'address': address}, function(results, status) {
-                    if (status == 'OK') {
-                        mapTwo.setCenter(results[0].geometry.location);
-                        var marker = new google.maps.Marker({
-                        mapTwo: mapTwo,
-                        position: results[0].geometry.location
-                    });
-                    marker.setMap(mapTwo);
-                    } else {
-                        alert('Geocode was not successful for the following reason: ' + status);
-                    }
-                });
-            } else {
-                console.log('bottom if');
-                console.log("{{$listing->latitude}}", "{{$listing->longitude}}");
-                var latlng = new google.maps.LatLng("{{$listing->latitude}}", "{{$listing->longitude}}");
-                //console.log(latlng);
-                var mapOptions = {
-                    zoom: 15,
-                    center: latlng
-                }
-                mapTwo = new google.maps.Map(document.getElementById('map-container'), mapOptions);
-                var marker = new google.maps.Marker({
-                    mapTwo: mapTwo,
-                    position: latlng
-                });
-                marker.setMap(mapTwo);
-            }
-        }*/
+        //
+        //----------------------------- Change Main Image View Code -------------------------
+        //
 
-        //trying to implement static maps
+        function myFunction(imgs) {
+            var expandImg = document.getElementById("expandedImg");
+            expandImg.src = imgs.src;
+        }
+
+        //
+        //----------------------------- Show Map Code -------------------------
+        //
+
+        let address = ['{{$listing->street}}', '{{$listing->city}}', '{{$listing->state}}', '{{$listing->postcode}}', '{{$listing->country}}'];
+        getGoogleMapsImage(address);
         function getGoogleMapsImage(addressElements) {
             var image = document.createElement('img');
             var joined = addressElements.join(',');
@@ -395,52 +355,15 @@
 
             return url;
         }
-        let address = ['{{$listing->street}}', '{{$listing->city}}', '{{$listing->state}}', '{{$listing->postcode}}', '{{$listing->country}}'];
-        
-        // console.log("This is the address for the map: " + address);
-        // console.log("This is the url for the map:  " + getGoogleMapsImage(address));
-        
-        function myFunction(imgs) {
-            var expandImg = document.getElementById("expandedImg");
-            expandImg.src = imgs.src;
-        }
+
+        // 
+        // ----------------------- Messaging Feature Code -----------------------------
+        // 
 
         var listing_id = "{{$listing->id}}"
         var listingOwner = "{{$listing->user_id}}";
         var userLoggedIn = "{{$currentUser ? $currentUser->id : -1}}";
         var receiverSelected = null; //the person whose chat we have open
-
-        //delete modal
-        if(userLoggedIn == listingOwner){
-            var deleteModal = document.getElementById("delete-modal");
-            var deleteButton = document.getElementById("delete-modal-trigger");
-            var deleteSpan = document.getElementsByClassName("close")[0];
-            var cancelBtn = document.getElementById('cancelbtn');
-            deleteButton.onclick = function() {
-                deleteModal.style.display = "grid";
-            }
-            deleteSpan.onclick = function() {
-                deleteModal.style.display = "none";
-            }
-            cancelBtn.onclick = function() {
-                deleteModal.style.display = "none";
-            }
-            window.onclick = function(event) {
-                if (event.target == deleteModal) {
-                    deleteModal.style.display = "none";
-                }
-            }
-        }
-
-        // function toggleText() {
-        //     navigator.clipboard.writeText(window.location.href);
-        //     var text = document.getElementById("demo");
-        //     if (text.style.display === "none") {
-        //         text.style.display = "block";
-        //     } else {
-        //         text.style.display = "none";
-        //     }
-        // }
 
         $(document).ready(function(){
             $.ajaxSetup({
@@ -557,7 +480,6 @@
                 }
             }
 
-
             // code for getting initial messages when a user profile is clicked or when I click contact seller for the first time
             // if I am the listing owner, I want to click on a user and get all the messages from me to them or them to me
             $('.user').click(function(){
@@ -628,8 +550,6 @@
                 });
             });
 
-
-
             // take to take in to account two different scenarios
             //1) if the listing is not mine, i wanna be able to message the listing owner
             //2) if the listing is mine, select a specifc user, then get their id and sent them the message
@@ -684,12 +604,33 @@
         function scrollBottom(element) {
             element.scroll({ top: element.scrollHeight, behavior: "smooth"})
         }
-        //stuff for chat ends here
+
+        // 
+        // ----------------------- Delete Listing Code -----------------------------
+        // 
+
+        if(userLoggedIn == listingOwner){
+            var deleteModal = document.getElementById("delete-modal");
+            var deleteButton = document.getElementById("delete-modal-trigger");
+            var deleteSpan = document.getElementsByClassName("close")[0];
+            var cancelBtn = document.getElementById('cancelbtn');
+            deleteButton.onclick = function() {
+                deleteModal.style.display = "grid";
+            }
+            deleteSpan.onclick = function() {
+                deleteModal.style.display = "none";
+            }
+            cancelBtn.onclick = function() {
+                deleteModal.style.display = "none";
+            }
+            window.onclick = function(event) {
+                if (event.target == deleteModal) {
+                    deleteModal.style.display = "none";
+                }
+            }
+        }
+        
     </script>
-    <!-- for dynamic map, not needed since using static -->
-    <!-- <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2Umn-3TUxP23ok373mWr0U4CHQDItcEk&callback=initMap&libraries=places&v=weekly"
-      defer
-    ></script> -->
+    
 </x-layout>
 {{-- @endsection --}}
