@@ -316,6 +316,7 @@
                             cache: false,
                             success: function (data) {
                                 console.log(data);
+                                location.reload();
                             },
                             error: function (jqXHR, status, err) {
                                 console.log(err);

@@ -7,6 +7,7 @@ use App\Models\Listing;
 use App\Models\Message;
 use App\Models\Rentable;
 use App\Models\Sublease;
+use Illuminate\View\View;
 use App\Libraries\HashMap;
 use App\Models\NewsLetter;
 use Illuminate\Http\Request;
@@ -45,6 +46,7 @@ class Controller extends BaseController
         //get the recently viewed itemms by the user
         $recentlyViewed = $this->getRecentlyViewedItems();
 
+        // dd($this->getNearItemsWithUserLocationFromDB());
         return view('main.index', [
             'listings'=> $this->getResultsForCardGallery(),
             'furnitureItems' => $categoryResults[0],
@@ -54,8 +56,17 @@ class Controller extends BaseController
             'schoolItems' => $categoryResults[4],
             'bookItems' => $categoryResults[5],
             'leaseItems' => Sublease::latest()->where('status', 'like', 'Available')->take(10)->get()->all(),
-            //'listingsNear' => Listing::latest()->where('status', '!=', 'Sold' )->take(10)->get(),
-            'listingsNear' => $this->getNearItemsWithUserLocationFromDB(),
+            'listingsNear' => !empty($this->getNearItemsWithUserLocationFromDB()) ? view('partials._mixedCarousel', 
+                [
+                    'listings' =>  $this->getNearItemsWithUserLocationFromDB(),
+                    'message' => 'Within 2 Miles',
+                    'carouselClass' => 'nearby-items-slider',
+                    'carouselControls' => 'nearby-items-controls',
+                    'carouselP' => 'previous nearby-items-previous',
+                    'carouselN' => 'next nearby-items-next',
+                    'currentUser' => $user != null ? $user->all()[0] : null,
+                    'extraLink' => '/shop/all?type=all'
+                ])->render() : null,
             'rentables' => Rentable::latest()->where('status', 'like', 'Available' )->take(10)->get()->all(),
             'subleases'=> Sublease::inRandomOrder()->take(10)->get()->all(),
             'user' => $user != null ? $user->all()[0] : null,
@@ -314,7 +325,7 @@ class Controller extends BaseController
                 foreach ($allFull as $res) {
                     //make sure the listing by the owner wont show up in the carousel
                     if($res->user_id != $currentUser->id) {
-                        if($this->getDistance($currentUser->latitude,$currentUser->longitude,$res->latitude,$res->longitude) <= 1) {
+                        if($this->getDistance($currentUser->latitude,$currentUser->longitude,$res->latitude,$res->longitude) <= 2) {
                             array_push($stack,$res);
                             $counter+=1;
                         }
@@ -334,8 +345,23 @@ class Controller extends BaseController
     //get listings near the user
     public function getListingsFromLatLng(Request $request) {
         //error_log($request->longitude);
-        return $this->getProximateListings($request->latitude,$request->longitude); 
-        //return array('success'=>'it worked');
+        $user = User::find(auth()->user());
+        
+        // return view('partials._mixedCarousel', compact('listings', ''));
+        return response()->json([
+            'success' => true,
+            'html' => view('partials._mixedCarousel', 
+            [
+                'listings' => $this->getProximateListings($request->latitude,$request->longitude),
+                'message' => 'Within 2 Miles',
+                'carouselClass' => 'nearby-items-slider',
+                'carouselControls' => 'nearby-items-controls',
+                'carouselP' => 'previous nearby-items-previous',
+                'carouselN' => 'next nearby-items-next',
+                'currentUser' => $user != null ? $user->all()[0] : null,
+                'extraLink' => '/shop/all?type=all'
+            ])->render()
+        ]);
     }
 
     //helper method to get listings within a mile
@@ -354,7 +380,7 @@ class Controller extends BaseController
 
         foreach ($allFull as $res) {
             //make sure the listing by the owner wont show up in the carousel
-            if($this->getDistance(floatval($latitude),floatval($longitude),$res->latitude,$res->longitude) <= 1) {
+            if($this->getDistance(floatval($latitude),floatval($longitude),$res->latitude,$res->longitude) <= 2) {
                 array_push($stack,$res);
                 $counter+=1;
             }
