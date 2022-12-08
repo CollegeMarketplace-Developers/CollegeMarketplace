@@ -33,12 +33,15 @@
         
 
         {{-- Show listings near--}}
-        {{-- @if(!empty($listingsNear)) 
+        @if($listingsNear != null) 
             <div class = "listings-parent-container">
-                @include('partials._listingCarousel', ['listings' => $listingsNear, 'message' => 'Within A Mile', 'carouselClass'=>'my-slider','carouselControls' => 'controls', 'carouselP' =>'previous previous1', 'carouselN' => 'next next1'])
+                {{!! $listingsNear !!}}
             </div>
-        @else 
-        @endif --}}
+        @else
+            <div class= "listings-parent-container" id="conditionalRenderNearby">
+
+            </div>
+        @endif
 
         {{-- carousel for rentables --}}
         <div class="listings-parent-container">
@@ -65,6 +68,9 @@
 
         var likedItems = {!! json_encode(array_values($likedItems)) !!};
         var recentlyViewed = {!! json_encode(array_values($recentlyViewed)) !!};
+        var listingsNear = {!! json_encode($listingsNear) !!};
+        var createTns = false;
+
         if(likedItems.length>0){
             tns({
                 container: ".liked-items-slider",
@@ -141,10 +147,102 @@
             })
         }
 
-
-        if("{{$user == null}}") {
-            getLocation();
+        if(listingsNear != null || createTns){
+             tns({
+                container: ".nearby-items-slider",
+                "slideBy":1,
+                "speed":400,
+                "nav":false,
+                autoplayButton: false,
+                autoplay: true,
+                autoplayText:["",""],
+                controlsContainer:"#nearby-items-controls",
+                responsive:{
+                    1500:{
+                        items: 5,
+                        gutter: 5
+                    },
+                    1200:{
+                        items: 4,
+                        gutter: 10
+                    },
+                    // 1100:{
+                    //     items: 3,
+                    //     gutter: 15
+                    // },
+                    1024:{
+                        items: 3,
+                        gutter: 15
+                    },
+                    700:{
+                        items: 2,
+                        gutter: 20
+                    },
+                    480:{
+                        items: 1
+                    }
+                }
+            })
         }
+
+
+        // ---------------------------------------------------------------
+        // User Location related functions to show nearby items
+        // ---------------------------------------------------------------
+
+        navigator.permissions.query({ name: 'geolocation' }).then((permissionStatus) => {
+        permissionStatus.onchange = () => {
+            // console.log(permissionStatus.state);
+            showNearbyItemsCarousel();
+            };
+        });
+
+        showNearbyItemsCarousel();
+        function showNearbyItemsCarousel(){
+            //CASE 1:
+            //  if the user is not logged in
+            if("{{$user == null}}") {
+                navigator.permissions.query({ name: 'geolocation' }).then((result) => {
+                    //CASE 1: 
+                    //  try to get the user's current location
+                    //  if location feature is allowed, call the getLocation() method which will perform an ajax query, then generate a coursel on the main page
+                    if (result.state === 'granted') {
+                        getLocation();
+
+                    //CASE 2:
+                    //  the user is not logged in, we can't check their location on file, also not given permission to retrieve user's location
+                    //in this scenario, we do not show a nearby-carousel at all.
+                    }else if (result.state === 'denied') {
+                        // console.log('came to the bottom one');
+                        $("#conditionalRenderNearby").empty();
+                    }
+                });
+             
+            //CASE 2:
+            //  if the user is logged in
+            }else{
+                var currentUser = {!!json_encode(auth()->user())!!}
+                //CASE 1: 
+                //  if the user is logged in and has lat and long in the db
+                //  Done: if this is the case, then the carousel will auto generate without us needing to do anything.
+                if(currentUser.latitude != null && currentUser.longitude != null){
+                    //the carousel will be auto generated. 
+                    
+                //CASE 2:
+                //  if the user is logged in and there is no lat/long in db and we are allowed to get current location
+                //  once we get permission, the user's location will be put in the db so we can reload the page to auto genearte the nearbycarousel with items
+                }else{
+                    //this is whats essentially happening but we run the following line in the ajax response code once we successfully update the db.
+                    //after reloading, the carousel will be auto generated.
+                    //location.reload();
+                }
+                //CASE 3:
+                //  if the user is logged in and ther eis not lat/long in the db.
+                //  we are also not allowed to extract the users location.
+                //  in this scenario, we don't show a nearby items carousel at all
+
+            }        
+        }   
 
         function getLocation() {
             if (navigator.geolocation) {
@@ -182,12 +280,6 @@
             maximumAge: 0
         };
 
-        /*$(document).ready(function(){
-                $(window).on("load",function(){
-                    getLocation();
-                });
-        });*/
-
         //function to get proximate listings after getting location 
         function getListings(latitude,longitude){
             $.ajaxSetup({
@@ -199,7 +291,44 @@
                 data: 'JSON',
                 cache: false, //look into caching later
                 success:function(data) {
-                    console.log("Listings near the user: ", data);
+                    // console.log("Listings near the user: ", data.html);
+                    createTns = true;
+                    $("#conditionalRenderNearby").html(data.html);
+                    tns({
+                        container: ".nearby-items-slider",
+                        "slideBy":1,
+                        "speed":400,
+                        "nav":false,
+                        autoplayButton: false,
+                        autoplay: true,
+                        autoplayText:["",""],
+                        controlsContainer:"#nearby-items-controls",
+                        responsive:{
+                            1500:{
+                                items: 5,
+                                gutter: 5
+                            },
+                            1200:{
+                                items: 4,
+                                gutter: 10
+                            },
+                            // 1100:{
+                            //     items: 3,
+                            //     gutter: 15
+                            // },
+                            1024:{
+                                items: 3,
+                                gutter: 15
+                            },
+                            700:{
+                                items: 2,
+                                gutter: 20
+                            },
+                            480:{
+                                items: 1
+                            }
+                        }
+                    })
                     // console.log(data);
                     //add your success handling here
                 },
