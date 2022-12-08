@@ -316,6 +316,7 @@
                             cache: false,
                             success: function (data) {
                                 console.log(data);
+                                location.reload();
                             },
                             error: function (jqXHR, status, err) {
                                 console.log(err);
@@ -404,6 +405,10 @@
         });
     });
 
+
+    //
+    //-------------------------- Side Notification and User Panels Code -------------------
+    //
     function change() {
         var decider = document.getElementById('show-notifications-panel');
         if(decider.checked){
@@ -435,6 +440,7 @@
     }
 
     function showUnreadMessages(data){
+        // console.log(data);
         $(document).ready(function(){
             $('#displayUnreadMessages').empty();
             // if there are no unread messages
@@ -459,29 +465,73 @@
 
     function supportUnreadMessages(obj){
         $(document).ready(function(){
-            console.log(obj);
-            // $mainImg = jQuery.parseJSON(obj.image_uploads);
+
+            $titleImage = obj.image_uploads != null ? jQuery.parseJSON(obj.image_uploads) : null;
+            $source = $titleImage == null ? 'https://picsum.photos/300/200?sig=' + Math.floor(Math.random() * 100) + 1 : 'https://cmimagestoragebucket.s3.amazonaws.com/'+$titleImage[0];
+
             var $wrapper = $('<a>', {href: "localhost:3000"}),
             $imgTag = $('<img />', {
                 id: 'test', 
-                src: '', 
+                src: $source, 
                 alt: 'test'
             }),
-            $recentlyMessagedDetails = $("<div />", {class: "recently-messaged-details"});
 
+            $recentlyMessagedDetails = $("<div />", {class: "recently-messaged-details"});
+            $timeDifference = calculateTimeDifference( obj.created_at)
             $recentlyMessagedDetails.append($('<p />', {text: obj.first_name + obj.last_name})).append($('<p />', {
                 html: $('<span />', {text: obj.message})
-            })).append($('<p />', {text: obj.updated_at}));
+            })).append($('<p />', {text: $timeDifference}));
 
             if(obj.for_listing != null){
                 $wrapper.attr("href", "/listings/"+obj.for_listing);
+
+                $wrapper.append($imgTag).append($recentlyMessagedDetails).append($('<p/>', {text: "Sale",class: 'type-badge type-listing'})).appendTo('#displayUnreadMessages');
             }else if(obj.for_rentals != null){
                 $wrapper.attr("href", "/rentables/"+obj.for_rentals);
+
+                $wrapper.append($imgTag).append($recentlyMessagedDetails).append($('<p/>', {text: "Rent",class: 'type-badge type-rent'})).appendTo('#displayUnreadMessages');
             }else if(obj.for_sublease != null){
                 $wrapper.attr("href", "/subleases/"+obj.for_sublease);
+
+                $wrapper.append($imgTag).append($recentlyMessagedDetails).append($('<p/>', {text: "Lease",class: 'type-badge type-lease'})).appendTo('#displayUnreadMessages');
             }
-            $wrapper.append($imgTag).append($recentlyMessagedDetails).appendTo('#displayUnreadMessages');
         });
+    }
+    
+    function calculateTimeDifference(inputTime) {
+        // Get the current time and date
+        const currentTime = new Date();
+
+        // Parse the time and date from the SQL database
+        const sqlTime = new Date(inputTime);
+
+        // Calculate the difference between the two times in milliseconds
+        const timeDifference = currentTime - sqlTime;
+
+        // Convert the time difference to a readable format (e.g. "2 hours, 30 minutes")
+        const formattedTimeDifference = formatTimeDifference(timeDifference);
+
+        // Output the time difference
+        return (formattedTimeDifference);
+    }
+
+    function formatTimeDifference(timeDifference) {
+        // Calculate the number of seconds, minutes, hours, and days in the time difference
+        const seconds = Math.floor(timeDifference / 1000);
+        const minutes = Math.floor(timeDifference / (1000 * 60));
+        const hours = Math.floor(timeDifference / (1000 * 60 * 60));
+        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+        // Return a human-readable string representing the time difference
+        if (seconds < 60) {
+            return "" + seconds + " seconds ago";
+        } else if (minutes < 60) {
+            return "" + minutes + " minutes ago";
+        } else if (hours < 24) {
+            return "" + hours + " hours ago";
+        } else {
+            return "" + days + " days ago";
+        }
     }
 
     function getActivePosts(){
@@ -535,6 +585,7 @@
                 src: $source, 
                 alt: 'test'
             }),
+
             $displayActiveDetails = $("<div />", {class: "sales-active-details"});
             
             if(obj.item_name != null){
