@@ -1,0 +1,47 @@
+ //code for dynamic map
+        /*function initMap() {
+            var mapTwo;
+            var geocoder;
+            var rentableLat = "{{$rentable->latitude}}";
+            var rentableLong = "{{$rentable->longitude}}";
+            geocoder = new google.maps.Geocoder();
+            var latlng = new google.maps.LatLng(-34.397, 150.644);
+            var mapOptions = {
+                zoom: 15,
+                center: latlng
+            }
+            mapTwo = new google.maps.Map(document.getElementById('map-container'), mapOptions);
+                console.log(rentableLat, rentableLong);
+            if(!isEmpty("{{$rentable->street}}")  && !isEmpty("{{$rentable->state}}")) {
+                console.log('top if');
+                var address = "{{$rentable->street." ".$rentable->city}}";
+                //console.log(address);
+                geocoder.geocode( { 'address': address}, function(results, status) {
+                    if (status == 'OK') {
+                        mapTwo.setCenter(results[0].geometry.location);
+                        var marker = new google.maps.Marker({
+                        mapTwo: mapTwo,
+                        position: results[0].geometry.location
+                    });
+                    marker.setMap(mapTwo);
+                    } else {
+                        alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                });
+            } else {
+                console.log('bottom if');
+                console.log("{{$rentable->latitude}}", "{{$rentable->longitude}}");
+                var latlng = new google.maps.LatLng("{{$rentable->latitude}}", "{{$rentable->longitude}}");
+                //console.log(latlng);
+                var mapOptions = {
+                    zoom: 15,
+                    center: latlng
+                }
+                mapTwo = new google.maps.Map(document.getElementById('map-container'), mapOptions);
+                var marker = new google.maps.Marker({
+                    mapTwo: mapTwo,
+                    position: latlng
+                });
+                marker.setMap(mapTwo);
+            }
+        }*/
