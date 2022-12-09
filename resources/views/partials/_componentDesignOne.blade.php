@@ -9,6 +9,7 @@
                 <div class="info">
                     <h2>BUY</h2>
                     <p>Buy furniture, books, supplies, and more from your fellow students!</p>
+                    <a href="/shop/all?type=listing" class="component-buy-button">BUY</a>
                 </div>
             </div>
             <div class="single-slide">
@@ -17,6 +18,7 @@
                     <h2>SELL</h2>
                     <p>Connect with a nearby student and sell your new or used items.
                     Making money at college has never been easier!</p>
+                    <a href="/listings/create" class="component-sell-button">Sell</a>
                 </div>
             </div>
             <div class="single-slide">
@@ -25,6 +27,10 @@
                     <h2>RENT</h2>
                     <p>Need a place to stay? No worries!
                     Get started by checking out all the places available near your university or on-grounds!</p>
+                    <div>
+                        <a href="/rentables/create" class="component-rent-post-button">Post</a>
+                        <a href="/shop/all?type=rentable" class="component-rent-button">Rent</a>
+                    </div>
                 </div>
             </div>
             <div class="single-slide">
@@ -32,6 +38,10 @@
                 <div class="info">
                     <h2>LEASE</h2>
                     <p>Need a lease? We got you covered! Check out leasing options available near you.</p>
+                    <div>
+                        <a href="/subleases/create" class="component-sublease-post-button">Post</a>
+                        <a href="/shop/all?type=lease" class="component-lease-button">Lease</a>
+                    </div>
                 </div>
             </div>
             <div class="navigation">
@@ -97,7 +107,7 @@
         }
         repeater();
     }
-    repeat();
+    // repeat();
 
     function getNewItem(){
         console.log("button clicked");
