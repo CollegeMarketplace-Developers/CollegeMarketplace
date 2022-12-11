@@ -46,6 +46,15 @@ class Controller extends BaseController
         //get the recently viewed itemms by the user
         $recentlyViewed = $this->getRecentlyViewedItems();
 
+
+        //levels to log (debug,info,notice,warning,error,critical,alert,emergency)
+        //I say we only use debug, info, error, critical (rarely emergency)
+        if($user != null) {
+            Log::info("Showing main page with user ".$user->id(). " logged in.");
+        } else {
+            Log::info("Showing main page with no user logged in.");
+        }
+
         // dd($this->getNearItemsWithUserLocationFromDB());
         return view('main.index', [
             'listings'=> $this->getResultsForCardGallery(),
