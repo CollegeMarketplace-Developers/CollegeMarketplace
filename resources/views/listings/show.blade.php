@@ -391,10 +391,6 @@
                 //console.log(data);
                 //console.log("this doesnt work");
 
-                if(userLoggedIn == -1) {
-                    console.log("No one logged in!");
-                }
-
                 if (userLoggedIn == data.from) {
                     // if I am not the listing owner and I am sending a message
                     if(userLoggedIn != listingOwner){
