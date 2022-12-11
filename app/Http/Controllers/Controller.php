@@ -50,7 +50,7 @@ class Controller extends BaseController
         //levels to log (debug,info,notice,warning,error,critical,alert,emergency)
         //I say we only use debug, info, error, critical (rarely emergency)
         if($user != null) {
-            Log::info("Showing main page with user ".$user->id(). " logged in.");
+            Log::info("Showing main page with user ".auth()->user()->id(). " logged in.");
         } else {
             Log::info("Showing main page with no user logged in.");
         }
