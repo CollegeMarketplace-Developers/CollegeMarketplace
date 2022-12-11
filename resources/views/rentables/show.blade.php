@@ -246,7 +246,14 @@
                                 @endif
 
                                 <ul class="messages" id='messages'>
-                                    
+                                    @if(auth()->guest())
+                                        <li class="message clearfix">
+                                            <div class="sent">
+                                                <p>Please log in to begin chat</p>
+                                                <p class='date'>-System</p>
+                                            </div>
+                                        </li>
+                                    @endif
                                 </ul>
 
                                 <div id = "input-text" class=input-text>

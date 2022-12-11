@@ -239,12 +239,19 @@
                                 @else
                                 {{-- if i am not leaseItem owner, just continue chatting | display name of person I am chatting with--}}
                                     <a class="back-placeholder">
-                                        Chat with {{$leaseItem->first_name}} {{$leaseItem->last_name}}
+                                        Chat with {{$listingOwner->first_name}} {{$listingOwner->last_name}}
                                     </a>
                                 @endif
 
                                 <ul class="messages" id='messages'>
-                                    
+                                    @if(auth()->guest())
+                                        <li class="message clearfix">
+                                            <div class="sent">
+                                                <p>Please log in to begin chat</p>
+                                                <p class='date'>-System</p>
+                                            </div>
+                                        </li>
+                                    @endif
                                 </ul>
 
                                 <div id = "input-text" class=input-text>
