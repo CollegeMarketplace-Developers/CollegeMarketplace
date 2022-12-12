@@ -178,7 +178,8 @@
                             @error('street')
                                 <p>{{$message}}</p>
                             @enderror
-                            <input type="text" id = "apartment_floor" name="apartment_floor" placeholder="Apartment, unit, suite, or floor #"  value="{{ old('apartment_floor', null) }}"/>
+                            <input type="text" id = "apartment_floor" name="apartment_floor" placeholder="Apartment, unit, suite, or floor #" pattern="^[a-zA-Z0-9 ]+$" oninvalid="this.setCustomValidity('Please use upper or lower case letters A-Z and numbers 0-9 only')"
+                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" value="{{ old('apartment_floor', null) }}"/>
                             <input type="text" id = "city" name = "city" placeholder="City*" pattern="^[a-zA-Z ]+$" oninvalid="this.setCustomValidity('Please use upper or lower case letters A-Z')"
                             onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" value="{{ old('city', null) }}"/>
                             @error('city')
