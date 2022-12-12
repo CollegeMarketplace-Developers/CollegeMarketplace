@@ -1,6 +1,6 @@
 {{-- source code using Coding Nepal --}}
 {{-- link: https://www.codingnepalweb.com/responsive-dropdown-menu-bar-html-css/ --}}
-<?php $apiKey = $_ENV['GOOGLE_CLIENT_ID'];?>
+<?php $apiKey = getenv('GOOGLE_CLIENT_ID');?>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="<?php echo $apiKey; ?>">
  {{-- css for the navigation bar --}}
