@@ -1,6 +1,6 @@
 {{-- source code using Coding Nepal --}}
 {{-- link: https://www.codingnepalweb.com/responsive-dropdown-menu-bar-html-css/ --}}
-
+<script src="https://apis.google.com/js/platform.js" async defer></script>
  {{-- css for the navigation bar --}}
 <link rel="stylesheet" types ="text/css" href="/css/navigation.css" />
 {{-- navbar area --}}
@@ -182,12 +182,35 @@
             
             {{-- only if the user is logged in, then the side panels will show --}}
             @auth
+            <script>
+                function onLoad() {
+                    gapi.load('auth2', function() {
+                    gapi.auth2.init();
+                    });
+                }
+                // Check if the user is signed in
+                if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
+                // Get the user's profile information
+                var profile = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile();
+                console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+                console.log('Name: ' + profile.getName());
+                console.log('Image URL: ' + profile.getImageUrl());
+                console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+                // Get the user's profile icon URL
+                var profileIconUrl = profile.getImageUrl();
+
+                // Replace the existing icon with the user's profile icon
+                var iconElement = document.getElementById("icon");
+                iconElement.src = profileIconUrl;
+
+                }
+            </script>
                 <label for="show-notifications-panel" class="bell-icon">
                     <i class="fa-solid fa-bell"></i>
                     <span class = "red-dot-notification" id="notifier"></span>
                 </label>
                 <label for="show-profile-panel" class="profile-icon">
-                    <i class="fa-solid fa-user"></i>
+                    <i id = "icon" class="fa-solid fa-user"></i>
                 </label>
             @else
                 <label class="bell-icon">
@@ -197,7 +220,7 @@
                 </label>
                 <label class="profile-icon">
                     <a href="/login">
-                        <i class="fa-solid fa-user"></i>
+                        <i id = "icon" class="fa-solid fa-user"></i>
                     </a>
                 </label>
             @endauth
