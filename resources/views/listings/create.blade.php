@@ -183,7 +183,7 @@
                             @error('city')
                                 <p>{{$message}}</p>
                             @enderror
-                            <input type="text" id = "state" name = "state" placeholder="State*" pattern="[A-Z]" oninvalid="this.setCustomValidity('Please enter your 2 upper case letter state code ie: Virginia - VA')"
+                            <input type="text" id = "state" name = "state" placeholder="State*" pattern="^(?-i:A[LKSZRAEP]|C[AOT]|D[EC]|F[LM]|G[AU]|HI|I[ADLN]|K[SY]|LA|M[ADEHINOPST]|N[CDEHJMVY]|O[HKR]|P[ARW]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY])$" oninvalid="this.setCustomValidity('Please enter your 2 upper case letter state code ie: Virginia - VA')"
                             onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" maxlength="2" value="{{ old('state', null) }}"/>
                             @error('state')
                                 <p>{{$message}}</p>
