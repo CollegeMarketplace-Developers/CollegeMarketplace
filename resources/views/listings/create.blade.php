@@ -173,12 +173,13 @@
                         {{-- card #3 --}}
                         <section class = "listingCard">
                             <p class="create-listing-header">Location</p>
-                            <input type="text" id = "street" name="street" placeholder="Enter a Location*"  value="{{ old('street', null) }}"/>
+                            <input type="text" id = "street" name="street" placeholder="Enter a Location*" pattern="^[a-zA-Z0-9 ]+$" oninvalid="this.setCustomValidity('Please use upper or lower case letters A-Z and numbers 0-9 only')"
+                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" value="{{ old('street', null) }}"/>
                             @error('street')
                                 <p>{{$message}}</p>
                             @enderror
                             <input type="text" id = "apartment_floor" name="apartment_floor" placeholder="Apartment, unit, suite, or floor #"  value="{{ old('apartment_floor', null) }}"/>
-                            <input type="text" id = "city" name = "city" placeholder="City*" pattern="^[a-zA-Z]+$" oninvalid="this.setCustomValidity('Please use upper or lower case letters A-Z')"
+                            <input type="text" id = "city" name = "city" placeholder="City*" pattern="^[a-zA-Z ]+$" oninvalid="this.setCustomValidity('Please use upper or lower case letters A-Z')"
                             onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" value="{{ old('city', null) }}"/>
                             @error('city')
                                 <p>{{$message}}</p>
@@ -188,7 +189,7 @@
                             @error('state')
                                 <p>{{$message}}</p>
                             @enderror
-                            <input type="text" id = "country" name = "country" placeholder="Country*" pattern="^[a-zA-Z]+$" oninvalid="this.setCustomValidity('Please use upper or lower case letters A-Z')"
+                            <input type="text" id = "country" name = "country" placeholder="Country*" pattern="^[a-zA-Z ]+$" oninvalid="this.setCustomValidity('Please use upper or lower case letters A-Z')"
                             onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" value="{{ old('country', null) }}" />
                             @error('country')
                                 <p>{{$message}}</p>
