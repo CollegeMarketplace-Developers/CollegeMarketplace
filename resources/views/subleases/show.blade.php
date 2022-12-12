@@ -328,7 +328,7 @@
         //----------------------------- Show Map Code -------------------------
         //
 
-        let address = ['{{$leaseItem->street}}', '{{$leaseItem->city}}', '{{$leaseItem->state}}', '{{$leaseItem->postcode}}', '{{$leaseItem->country}}'];
+        /*let address = ['{{$leaseItem->street}}', '{{$leaseItem->city}}', '{{$leaseItem->state}}', '{{$leaseItem->postcode}}', '{{$leaseItem->country}}'];
         getGoogleMapsImage(address);
         function getGoogleMapsImage(addressElements) {
             var image = document.createElement('img');
@@ -343,6 +343,50 @@
             //params.append('signature','smZ85pItXiH894n1c2ElR0RY-HQ=');
             var url = 'https://maps.googleapis.com/maps/api/staticmap?' + params.toString();
             //console.log(url);
+            image.src = url;
+            var image2 = document.createElement('img');
+            image2.src = url;
+            document.getElementById('map-container').appendChild(image);
+            document.getElementById('map-container-mobile').appendChild(image2);
+
+            return url;
+        }*/
+
+        GMapCircle('{{$leaseItem->latitude}}','{{$leaseItem->longitude}}',200);
+
+        function GMapCircle(lat,lng,rad,detail=8){
+            var image = document.createElement('img');
+            var uri = 'https://maps.googleapis.com/maps/api/staticmap?';
+            var staticMapSrc = 'center=' + lat + ',' + lng;
+            staticMapSrc += '&size=500x240';
+            staticMapSrc += '&zoom=15';
+            staticMapSrc += '&maptype=roadmap';
+            staticMapSrc += '&key=AIzaSyA2Umn-3TUxP23ok373mWr0U4CHQDItcEk';
+            staticMapSrc += '&path=color:0x0000ff|fillcolor:0x0000ff'; 
+
+            console.log(staticMapSrc);
+            var r    = 6371;
+            var pi   = Math.PI;
+            var _lat  = (parseFloat(lat) * pi) / 180;
+            //console.log(_lat);
+            var _lng  = (parseFloat(lng) * pi) / 180;
+            //console.log(_lng);
+            var d    = (rad/1000) / r;
+
+            var i = 0;
+            for(i = 0; i <= 360; i+=detail) {
+                var brng = i * pi / 180;
+
+                var pLat = Math.asin(Math.sin(_lat) * Math.cos(d) + Math.cos(_lat) * Math.sin(d) * Math.cos(brng));
+                var pLng = ((_lng + Math.atan2(Math.sin(brng) * Math.sin(d) * Math.cos(_lat), Math.cos(d) - Math.sin(_lat) * Math.sin(pLat))) * 180) / pi;
+                pLat = (pLat * 180) / pi;
+
+                //console.log(pLat);
+
+                staticMapSrc += "|" + pLat + "," + pLng;
+            }
+            var url = uri + encodeURI(staticMapSrc);
+
             image.src = url;
             var image2 = document.createElement('img');
             image2.src = url;
