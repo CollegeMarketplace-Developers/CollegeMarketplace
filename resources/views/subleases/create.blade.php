@@ -175,24 +175,30 @@
                         {{-- card #3 --}}
                         <section class = "listingCard">
                         <p class="create-listing-header">Location</p>
-                            <input type="text" id = "street" name="street" placeholder="Enter a Location*"  value="{{ old('street', null) }}"/>
+                            <input type="text" id = "street" name="street" placeholder="Enter a Location*" pattern="^[a-zA-Z0-9 ]+$" oninvalid="this.setCustomValidity('Please use upper or lower case letters A-Z and numbers 0-9 only')"
+                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" value="{{ old('street', null) }}"/>
                             @error('street')
                                 <p>{{$message}}</p>
                             @enderror
-                            <input type="text" id = "apartment_floor" name="apartment_floor" placeholder="Apartment, unit, suite, or floor #"  value="{{ old('apartment_floor', null) }}"/>
-                            <input type="text" id = "city" name = "city" placeholder="City*"  value="{{ old('city', null) }}"/>
+                            <input type="text" id = "apartment_floor" name="apartment_floor" placeholder="Apartment, unit, suite, or floor #" pattern="^[a-zA-Z0-9 ]+$" oninvalid="this.setCustomValidity('Please use upper or lower case letters A-Z and numbers 0-9 only')"
+                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" value="{{ old('apartment_floor', null) }}"/>
+                            <input type="text" id = "city" name = "city" placeholder="City*" pattern="^[a-zA-Z ]+$" oninvalid="this.setCustomValidity('Please use upper or lower case letters A-Z')"
+                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" value="{{ old('city', null) }}"/>
                             @error('city')
                                 <p>{{$message}}</p>
                             @enderror
-                            <input type="text" id = "state" name = "state" placeholder="State*"  value="{{ old('state', null) }}"/>
+                            <input type="text" id = "state" name = "state" placeholder="State*" pattern="^((A[LKSZR])|(C[AOT])|(D[EC])|(F[ML])|(G[AU])|(HI)|(I[DLNA])|(K[SY])|(LA)|(M[EHDAINSOT])|(N[EVHJMYCD])|(MP)|(O[HKR])|(P[WAR])|(RI)|(S[CD])|(T[NX])|(UT)|(V[TIA])|(W[AVIY]))$" oninvalid="this.setCustomValidity('Please enter your 2 upper case letter state code ie: Virginia - VA')"
+                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" maxlength="2" value="{{ old('state', null) }}"/>
                             @error('state')
                                 <p>{{$message}}</p>
                             @enderror
-                            <input type="text" id = "country" name = "country" placeholder="Country*"  value="{{ old('country', null) }}" />
+                            <input type="text" id = "country" name = "country" placeholder="Country*" pattern="^[a-zA-Z ]+$" oninvalid="this.setCustomValidity('Please use upper or lower case letters A-Z')"
+                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" value="{{ old('country', null) }}" />
                             @error('country')
                                 <p>{{$message}}</p>
                             @enderror
-                            <input type="text" id = "postcode" name = "postcode"placeholder="Postcode*"  value="{{ old('postcode', null) }}" />
+                            <input type="text" id = "postcode" name = "postcode"placeholder="Postcode*" pattern="^\d{5}(?:[-\s]\d{4})?$" oninvalid="this.setCustomValidity('Please enter in your zipcode ie: 12345 or 12345-6789')"
+                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" maxlength="10" value="{{ old('postcode', null) }}" />
                             @error('postcode')
                                 <p>{{$message}}</p>
                             @enderror
