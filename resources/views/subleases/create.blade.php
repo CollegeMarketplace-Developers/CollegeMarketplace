@@ -33,7 +33,8 @@
                         {{-- card #1 --}}
                         <section class = "listingCard default-card">
                             <p class="create-listing-header">Lease Details</p>
-                            <input type="text" name = "sublease_title" placeholder="Lease Title"  value="{{ old('sublease_title', null) }}" />
+                            <input type="text" name = "sublease_title" placeholder="Lease Title" pattern="^[a-zA-Z0-9 ]+$" oninvalid="this.setCustomValidity('Please use upper or lower case letters A-Z and numbers 0-9 only. Rental title must be 80 characters or less')"
+                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" maxlength = "80" onkeydown="javascript: return event.keyCode == 189 ? false : true" value="{{ old('sublease_title', null) }}" />
                             @error('sublease_title')
                                 <p>{{$message}}</p>
                             @enderror
@@ -72,10 +73,24 @@
                             <p class="create-listing-header">
                                 Rental Info
                             </p>
-                            <input id="lease_rent" type="number" min="0.00" name = "rent" max="10000.00" step="0.01" placeholder="Rent / Month" value="{{old('rent',null)}}"/>
+                            <input id="lease_rent" type="number" min="0.00" name = "rent" max="10000.00" step="0.01" placeholder="Rent / Month" onkeydown="javascript: return (event.keyCode == 69 || event.keyCode == 189) ? false : true" value="{{old('rent',null)}}"/>
                             @error('rent')
                                 <p>{{$message}}</p>
                             @enderror
+                            <script>
+                                    var leaseInput = document.getElementById('lease_rent');
+
+                                    // Add an event listener that will be called whenever the user
+                                    // changes the value of the input field
+                                    leaseInput.addEventListener('input', function() {
+                                    // Check if the value of the input field is greater than the
+                                    // maximum allowed value (10000 in this case)
+                                    if (this.value > 10000) {
+                                        // If it is, set the value of the input field to 10000
+                                        this.value = 10000;
+                                    }
+                                    });
+                            </script>
                             <div class="condition-box">
                                 <select name="negotiable" id="">
                                     <option value="Fixed" {{ (old("negotiable") == 'Fixed' ? "selected":"") }}>Rent Fixed</option>
