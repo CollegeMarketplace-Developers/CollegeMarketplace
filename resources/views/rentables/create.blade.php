@@ -183,8 +183,8 @@
                         {{-- card #2 --}}
                         <section class = "listingCard">
                             <p class="create-listing-header">Sub-Categories/ Tags (comma seperated)</p>
-                            <input name = "tags" type="text" placeholder="Tags" pattern="^[a-zA-Z0-9, ]+$" oninvalid="this.setCustomValidity('Please use upper or lower case letters A-Z and numbers 0-9 only. Total tags must be 80 characters or less')"
-                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" maxlength = "80" value="{{ old('tags', null) }}"/>
+                            <input name = "tags" type="text" placeholder="Tags"pattern="^[a-zA-Z0-9, ]+$" oninvalid="this.setCustomValidity('Please use upper or lower case letters A-Z and numbers 0-9 only. Total tags must be 80 characters or less')"
+                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" maxlength = "80" onkeydown="javascript: return event.keyCode == 189 ? false : true" value="{{ old('tags', null) }}"/>
                             @error('tags')
                                 <p>{{$message}}</p>
                             @enderror
