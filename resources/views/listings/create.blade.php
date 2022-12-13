@@ -38,7 +38,7 @@
                             @error('item_name')
                                 <p>{{$message}}</p>
                             @enderror
-                            <input type="text" pattern="[0-9.]*" placeholder="Price or 0 for free" maxlength="8" value="{{ old('price', null) }}" id="price-input"/>
+                            <input type="number" min="0.00" name = "price" max="10000.00" step="0.01" pattern="[0-9.]*" placeholder="Price or 0 for free" maxlength="8" value="{{ old('price', null) }}" id="price-input"/>
                             @error('price')
                                 <p>{{$message}}</p>
                             @enderror
