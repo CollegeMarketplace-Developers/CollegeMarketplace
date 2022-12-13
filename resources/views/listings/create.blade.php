@@ -34,12 +34,12 @@
                         <section class = "listingCard default-card">
                             <p class="create-listing-header">Item Description</p>
                             <input type="text" name = "item_name" placeholder="Item Title" pattern="^[a-zA-Z0-9 ]+$" oninvalid="this.setCustomValidity('Please use upper or lower case letters A-Z and numbers 0-9 only. Item title must be 80 characters or less')"
-                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" maxlength = "80" required value="{{ old('item_name', null) }}" />
+                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" maxlength = "80" value="{{ old('item_name', null) }}" />
                             @error('item_name')
                                 <p>{{$message}}</p>
                             @enderror
                             <input type="number" min="0.00" name = "price" max="10000.00" step="0.01" placeholder="Price or 0 for free" pattern="^[0-9.]+$" oninvalid="this.setCustomValidity('Please enter a valid price ie: use numbers 0-9 for a dollar amount followed by a decimal place and cent amount')"
-                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" maxlength = "8" required value="{{ old('price', null) }}" id="price-input"/>
+                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" maxlength = "8" value="{{ old('price', null) }}" id="price-input"/>
                             @error('price')
                                 <p>{{$message}}</p>
                             @enderror
