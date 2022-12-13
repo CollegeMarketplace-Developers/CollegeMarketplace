@@ -34,13 +34,13 @@
                         <section class = "listingCard default-card">
                             <p class="create-listing-header">Lease Details</p>
                             <input type="text" name = "sublease_title" placeholder="Lease Title" pattern="^[a-zA-Z0-9 ]+$" oninvalid="this.setCustomValidity('Please use upper or lower case letters A-Z and numbers 0-9 only. Item title must be 80 characters or less')"
-                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" maxlength = "80" value="{{ old('sublease_title', null) }}" />
+                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" maxlength = "80" onkeydown="javascript: return event.keyCode == 189 ? false : true" value="{{ old('sublease_title', null) }}" />
                             @error('sublease_title')
                                 <p>{{$message}}</p>
                             @enderror
 
                             <p class="create-listing-header">General Location (shamrock, standard, etc)</p>
-                            <input type="text" name = "location" placeholder="General Location" value="{{ old('location', null) }}" />
+                            <input type="text" name = "location" placeholder="General Location" onkeydown="javascript: return event.keyCode == 189 ? false : true" value="{{ old('location', null) }}" />
                             @error('location')
                                 <p>{{$message}}</p>
                             @enderror
