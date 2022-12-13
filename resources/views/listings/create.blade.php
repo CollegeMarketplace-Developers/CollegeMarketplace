@@ -29,24 +29,7 @@
                         
                         <input type="hidden" name="user_id"  value="{{ old('iser_id', '3') }}"
                         >
-                        <script>
-                        // Select your input element.
-                        var number = document.getElementById('price-input');
-
-                        // Listen for input event on numInput.
-                        // Allows numbers 1-9 number row and 1-9 numpad
-                        // Allows decimal from numpad and period
-                        // Allows Backpace and disallows everything else
-                        number.onkeydown = function(e) {
-                            if(!((e.keyCode > 95 && e.keyCode < 106)
-                            || (e.keyCode > 47 && e.keyCode < 58) 
-                            || e.keyCode == 8
-                            || e.keyCode = 110
-                            || e.keyCode = 190)) {
-                                return false;
-                            }
-                        }
-                        </script>
+                        
                         {{-- card #1 --}}
                         <section class = "listingCard default-card">
                             <p class="create-listing-header">Item Description</p>
@@ -55,11 +38,28 @@
                             @error('item_name')
                                 <p>{{$message}}</p>
                             @enderror
-                            <input type="number" min="0" name = "price" max="10000.00" step="0.01" pattern="[0-9.]*" placeholder="Price or 0 for free" maxlength="8" value="{{ old('price', null) }}" id="price-input"/>
+                            <input type="number" min="0" name = "price" max="10000" step="0.01" placeholder="Price or 0 for free" value="{{ old('price', null) }}" id="price-input"/>
                             @error('price')
                                 <p>{{$message}}</p>
                             @enderror
+                            <script>
+                                // Select your input element.
+                                var number = document.getElementById('price-input');
 
+                                // Listen for input event on numInput.
+                                // Allows numbers 1-9 number row and 1-9 numpad
+                                // Allows decimal from numpad and period
+                                // Allows Backpace and disallows everything else
+                                number.onkeydown = function(e) {
+                                    if(!((e.keyCode > 95 && e.keyCode < 106)
+                                    || (e.keyCode > 47 && e.keyCode < 58) 
+                                    || e.keyCode == 8
+                                    || e.keyCode = 110
+                                    || e.keyCode = 190)) {
+                                        return false;
+                                    }
+                                }
+                        </script>
                             <p class="create-listing-header">
                                 Price Negotiable, Fixed, or Free
                             </p>
