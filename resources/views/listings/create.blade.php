@@ -44,11 +44,11 @@
                                 <p>{{$message}}</p>
                             @enderror
                             <script>
-                                    var numberBox = document.getElementById('price-input');
+                                    var priceInput = document.getElementById('price-input');
 
                                     // Add an event listener that will be called whenever the user
                                     // changes the value of the input field
-                                    numberBox.addEventListener('input', function() {
+                                    priceInput.addEventListener('input', function() {
                                     // Check if the value of the input field is greater than the
                                     // maximum allowed value (10000 in this case)
                                     if (this.value > 10000) {
