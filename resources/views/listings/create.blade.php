@@ -38,11 +38,21 @@
                             @error('item_name')
                                 <p>{{$message}}</p>
                             @enderror
-                            <input type="number" onkeydown="javascript: return (event.keyCode == 69 || event.keyCode == 189) ? false : true" min="0" name = "price" max="10000" step="0.01" placeholder="Price or 0 for free" value="{{ old('price', null) }}" id="price-input"/>
+                            <input type="number" onkeydown="limit(this);" onkeyup="limit(this);" min="0" name = "price" max="10000" step="0.01" placeholder="Price or 0 for free" value="{{ old('price', null) }}" id="price-input"/>
                             @error('price')
                                 <p>{{$message}}</p>
                             @enderror
-                            
+                            <script>
+                            function limit(element)
+                            {
+                                var max_chars = 8;
+                                    
+                                if(element.value.length > max_chars) {
+                                    element.value = element.value.substr(0, max_chars);
+                                }
+                                return (event.keyCode == 69 || event.keyCode == 189) ? false : true;
+                            }
+                            </script>
                             <p class="create-listing-header">
                                 Price Negotiable, Fixed, or Free
                             </p>
@@ -153,7 +163,7 @@
                         <section class = "listingCard">
                             <p class="create-listing-header">Sub-Categories/ Tags (comma seperated)</p>
                             <input name = "tags" type="text" placeholder="Tags" pattern="^[a-zA-Z0-9, ]+$" oninvalid="this.setCustomValidity('Please use upper or lower case letters A-Z and numbers 0-9 only. Total tags must be 80 characters or less')"
-                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" maxlength = "80" value="{{ old('tags', null) }}"/>
+                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" maxlength = "80" onkeydown="javascript: return (event.keyCode == 69 || event.keyCode == 189) ? false : true" value="{{ old('tags', null) }}"/>
                             @error('tags')
                                 <p>{{$message}}</p>
                             @enderror
