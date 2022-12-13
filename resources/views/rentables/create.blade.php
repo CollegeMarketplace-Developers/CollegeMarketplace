@@ -33,8 +33,8 @@
                         {{-- card #1 --}}
                         <section class = "listingCard default-card">
                             <p class="create-listing-header">Rental Details</p>
-                            <input type="text" name = "rental_title" placeholder="Rental Title" pattern="^[a-zA-Z0-9 ]+$" oninvalid="this.setCustomValidity('Please use upper or lower case letters A-Z and numbers 0-9 only. Item title must be 80 characters or less')"
-                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" maxlength = "80" value="{{ old('rental_title', null) }}" />
+                            <input type="text" name = "rental_title" placeholder="Rental Title" pattern="^[a-zA-Z0-9 ]+$" oninvalid="this.setCustomValidity('Please use upper or lower case letters A-Z and numbers 0-9 only. Rental title must be 80 characters or less')"
+                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" maxlength = "80" onkeydown="javascript: return event.keyCode == 189 ? false : true" value="{{ old('rental_title', null) }}" />
                             @error('rental_title')
                                 <p>{{$message}}</p>
                             @enderror
@@ -58,12 +58,24 @@
                                 @enderror
                             </div>
 
-                            <input id="rental_charging" type="number" min="0.00" name = "rental_charging" max="10000.00" step="0.01" placeholder="Rental price per " pattern="^[0-9.]+$" oninvalid="this.setCustomValidity('Please enter a valid price ie: use numbers 0-9 for a dollar amount followed by a decimal place and cent amount')"
-                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" maxlength = "8" value="{{ old('rental_charging', null) }}"/>
+                            <input id="rental_charging" type="number" name = "rental_charging" min="0.00" max="10000.00" step="0.01" placeholder="Rental Price per Hour" onkeydown="javascript: return (event.keyCode == 69 || event.keyCode == 189) ? false : true" value="{{ old('rental_charging', null) }}"/>
                             @error('rental_charging')
                                 <p>{{$message}}</p>
                             @enderror
+                            <script>
+                                    var rentalInput = document.getElementById('rental_charging');
 
+                                    // Add an event listener that will be called whenever the user
+                                    // changes the value of the input field
+                                    rentalInput.addEventListener('input', function() {
+                                    // Check if the value of the input field is greater than the
+                                    // maximum allowed value (10000 in this case)
+                                    if (this.value > 10000) {
+                                        // If it is, set the value of the input field to 10000
+                                        this.value = 10000;
+                                    }
+                                    });
+                            </script>
                             <p class="create-listing-header">
                                 Price Negotiable or Fixed
                             </p>

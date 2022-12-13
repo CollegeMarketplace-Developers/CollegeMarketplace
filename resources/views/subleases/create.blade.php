@@ -73,11 +73,24 @@
                             <p class="create-listing-header">
                                 Rental Info
                             </p>
-                            <input id="lease_rent" type="number" min="0.00" name = "rent" max="10000.00" step="0.01" placeholder="Rent / Month" pattern="^[0-9.]+$" oninvalid="this.setCustomValidity('Please enter a valid price ie: use numbers 0-9 for a dollar amount followed by a decimal place and cent amount')"
-                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" maxlength = "8" value="{{old('rent',null)}}"/>
+                            <input id="lease_rent" type="number" placeholder="Rent / Month" min="0.00" max="10000.00" step="0.01" placeholder="Rent/Month" onkeydown="javascript: return (event.keyCode == 69 || event.keyCode == 189) ? false : true" value="{{old('rent',null)}}"/>
                             @error('rent')
                                 <p>{{$message}}</p>
                             @enderror
+                            <script>
+                                    var leaseInput = document.getElementById('lease_rent');
+
+                                    // Add an event listener that will be called whenever the user
+                                    // changes the value of the input field
+                                    leaseInput.addEventListener('input', function() {
+                                    // Check if the value of the input field is greater than the
+                                    // maximum allowed value (10000 in this case)
+                                    if (this.value > 10000) {
+                                        // If it is, set the value of the input field to 10000
+                                        this.value = 10000;
+                                    }
+                                    });
+                            </script>
                             <div class="condition-box">
                                 <select name="negotiable" id="">
                                     <option value="Fixed" {{ (old("negotiable") == 'Fixed' ? "selected":"") }}>Rent Fixed</option>
