@@ -38,7 +38,7 @@
                             @error('item_name')
                                 <p>{{$message}}</p>
                             @enderror
-                            <input type="number" min="0" name = "price" max="10000" step="0.01" placeholder="Price or 0 for free" onkeydown="javascript: return (event.keyCode == 69 || event.keyCode == 189) ? false : true" value="{{ old('price', null) }}" id="price-input"/>
+                            <input type="text" name = "price" maxlength=8 pattern="^[0-9.]+$" placeholder="Price or 0 for free" onkeydown="javascript: return (event.keyCode == 69 || event.keyCode == 189) ? false : true" value="{{ old('price', null) }}" id="price-input"/>
                             @error('price')
                                 <p>{{$message}}</p>
                             @enderror
