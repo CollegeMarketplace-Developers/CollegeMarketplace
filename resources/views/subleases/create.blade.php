@@ -73,7 +73,7 @@
                             <p class="create-listing-header">
                                 Rental Info
                             </p>
-                            <input id="lease_rent" type="number" placeholder="Rent / Month" min="0.00" max="10000.00" step="0.01" placeholder="Rent/Month" onkeydown="javascript: return (event.keyCode == 69 || event.keyCode == 189) ? false : true" value="{{old('rent',null)}}"/>
+                            <input id="lease_rent" type="number" placeholder="Rent / Month" min="0.00" max="10000.00" step="0.01" onkeydown="javascript: return (event.keyCode == 69 || event.keyCode == 189) ? false : true" value="{{old('rent',null)}}"/>
                             @error('rent')
                                 <p>{{$message}}</p>
                             @enderror
