@@ -33,11 +33,13 @@
                         {{-- card #1 --}}
                         <section class = "listingCard default-card">
                             <p class="create-listing-header">Item Description</p>
-                            <input type="text" name = "item_name" placeholder="Item Title"  value="{{ old('item_name', null) }}" />
+                            <input type="text" name = "item_name" placeholder="Item Title" pattern="^[a-zA-Z0-9 ]+$" oninvalid="this.setCustomValidity('Please use upper or lower case letters A-Z and numbers 0-9 only. Item title must be 80 characters or less')"
+                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" maxlength = "80" value="{{ old('item_name', null) }}" />
                             @error('item_name')
                                 <p>{{$message}}</p>
                             @enderror
-                            <input type="number" min="0.00" name = "price" max="10000.00" step="0.01" placeholder="Price or 0 for free"  value="{{ old('price', null) }}" id="price-input"/>
+                            <input type="number" min="0.00" name = "price" max="10000.00" step="0.01" placeholder="Price or 0 for free" pattern="^[0-9.]+$" oninvalid="this.setCustomValidity('Please enter a valid price ie: use numbers 0-9 for a dollar amount followed by a decimal place and cent amount')"
+                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" maxlength = "8" value="{{ old('price', null) }}" id="price-input"/>
                             @error('price')
                                 <p>{{$message}}</p>
                             @enderror
@@ -151,11 +153,12 @@
                         {{-- card #2 --}}
                         <section class = "listingCard">
                             <p class="create-listing-header">Sub-Categories/ Tags (comma seperated)</p>
-                            <input name = "tags" type="text" placeholder="Tags" value="{{ old('tags', null) }}"/>
+                            <input name = "tags" type="text" placeholder="Tags" pattern="^[a-zA-Z0-9, ]+$" oninvalid="this.setCustomValidity('Please use upper or lower case letters A-Z and numbers 0-9 only. Total tags must be 80 characters or less')"
+                            onchange="try{setCustomValidity('')}catch(e){}"  oninput="setCustomValidity(' ')" maxlength = "80" value="{{ old('tags', null) }}"/>
                             @error('tags')
                                 <p>{{$message}}</p>
                             @enderror
-                            <textarea name="description" placeholder="Description" rows="3" style="resize: none;">{{ old('description', null) }}</textarea>
+                            <textarea name="description" placeholder="Description" maxlength = "400" rows="3" style="resize: none;">{{ old('description', null) }}</textarea>
                             @error('description')
                                 <p>{{$message}}</p>
                             @enderror
