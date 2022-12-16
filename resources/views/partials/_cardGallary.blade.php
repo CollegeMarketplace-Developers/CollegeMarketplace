@@ -8,7 +8,8 @@
         <div class="controller">
             <h2>{{$heading}}</h2>
             @if($displayMoreButton)
-                <a href="/shop/all?type=all" class="button1" style="font-size:14px;">All Items</a>
+                <button onclick="getPostings()">Load More!</button>
+                <!-- <a href="/shop/all?type=all" class="button1" style="font-size:14px;">All Items</a> -->
             @endif
         </div>
     
@@ -21,7 +22,6 @@
             @else
                 <p class="empty-gallary-message">NO Listings Found!</p>
             @endunless
-            
         </ul>
         {{-- for pagination --}}
         <div class="pagination-container">
@@ -46,3 +46,29 @@
         </div>
     </div>
 </section>
+
+<script>
+
+    var numPostingsScale = 2;
+
+     function getPostings(){
+        console.log(numPostingsScale);
+            $.ajaxSetup({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+            });
+            $.ajax({
+                type:'GET',
+                url: '/recentlyadded?numPostingsScale='+numPostingsScale,
+                data: 'JSON',
+                cache: false, 
+                success:function(data) {
+                    console.log(data);
+                },
+                error:function (data, textStatus, errorThrown) {
+                    console.log("failed");
+                    //add your failed handling here
+                },
+            });
+            numPostingsScale++;
+        }
+</script>

@@ -219,9 +219,7 @@
 
                                                     @if($user->unread)
                                                         <span class="pending">{{ $user->unread }}</span>
-                                                    @endif
-
-                                                    
+                                                    @endif    
                                                     <div class="media-left">
                                                         <img src="{{ $user->avatar }}" alt="" class="media-object">
                                                     </div>
@@ -264,10 +262,15 @@
                                         </li>
                                     @endif
                                 </ul>
-
-                                <div id = "input-text" class=input-text>
-                                    <input type="text" name="message" placeholder="Message Seller" class="submit">
-                                </div>
+                                @if(auth()->guest()) 
+                                    <div id = "input-text" class=input-text>
+                                        <input type="text" name="message" placeholder="Please Login to begin chat." class="submit" disabled>
+                                    </div>
+                                @else
+                                    <div id = "input-text" class=input-text>
+                                        <input type="text" name="message" placeholder="Message Seller" class="submit">
+                                    </div>   
+                                @endif
                             </div> 
                         </div>
                     </div>
