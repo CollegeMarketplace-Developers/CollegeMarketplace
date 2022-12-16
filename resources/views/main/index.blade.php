@@ -202,11 +202,16 @@
                 }
             })
         }
-
+        
+        
+        // console.log('liked items: ', likedItems);
+        // console.log('recently viewed: ',recentlyViewed);
+        // console.log('listinsNear Normal: ',listingsNear); 
+        // console.log('listinsNear Ajax: ',listingsNearAjaxResult); 
         var listingsNearAjaxResult = false;
         checkCollapsible();
         function checkCollapsible(){
-            if(likedItems.length > 0 || recentlyViewed.lengh > 0 || listingsNear != null || listingsNearAjaxResult){
+            if(likedItems.length > 0 || recentlyViewed.length > 0 || listingsNear != null || listingsNearAjaxResult){
                 console.log('show');
                 document.getElementById('personalizedSection').style.display="flex";
             }else{
