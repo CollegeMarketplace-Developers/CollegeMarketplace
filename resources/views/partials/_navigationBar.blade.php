@@ -1,6 +1,5 @@
 {{-- source code using Coding Nepal --}}
 {{-- link: https://www.codingnepalweb.com/responsive-dropdown-menu-bar-html-css/ --}}
-
  {{-- css for the navigation bar --}}
 <link rel="stylesheet" types ="text/css" href="/css/navigation.css" />
 {{-- navbar area --}}
@@ -187,7 +186,7 @@
                     <span class = "red-dot-notification" id="notifier"></span>
                 </label>
                 <label for="show-profile-panel" class="profile-icon">
-                    <i class="fa-solid fa-user"></i>
+                    <i id = "icon" class="fa-solid fa-user"></i>
                 </label>
             @else
                 <label class="bell-icon">
@@ -197,7 +196,7 @@
                 </label>
                 <label class="profile-icon">
                     <a href="/login">
-                        <i class="fa-solid fa-user"></i>
+                        <i id = "icon" class="fa-solid fa-user"></i>
                     </a>
                 </label>
             @endauth
