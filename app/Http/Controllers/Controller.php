@@ -52,6 +52,9 @@ class Controller extends BaseController
         //info, like the following if-else
         //error, 
         // critical (rarely emergency)
+
+        //I say we only use debug, info, error, critical (rarely emergency)
+
         if($user != null) {
             Log::info("Showing main page with user ".Auth::id(). " logged in.");
         } else {
