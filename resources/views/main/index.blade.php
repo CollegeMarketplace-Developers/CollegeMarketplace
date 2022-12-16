@@ -16,38 +16,46 @@
             @include('partials._componentDesignOne')
         </div>
 
-        {{-- Show liked items if the user is logged in and has liked items--}}
-        @if($user != null && $likedItems != null && count($likedItems) > 0)
-            <div class="listings-parent-container">
-                @include('partials._mixedCarousel', ['listings' => $likedItems, 'message' => 'Liked Items', 'carouselClass'=>'liked-items-slider','carouselControls' => 'liked-items-controls', 'carouselP' =>'previous liked-items-previous', 'carouselN' => 'next liked-items-next',
-                'currentUser'=>$user, 'extraLink' => '/shop/all?type=all'])
-            </div>
-        @endif
-
-        @if($recentlyViewed != null && count($recentlyViewed) > 0)
-            <div class="listings-parent-container">
-                @include('partials._mixedCarousel', ['listings' => $recentlyViewed, 'message' => 'Recently Viewed', 'carouselClass'=>'recently-viewed-slider','carouselControls' => 'recently-viewed-controls', 'carouselP' =>'previous recently-viewed-previous', 'carouselN' => 'next recently-viewed-next',
-                'currentUser'=>$user, 'extraLink'=> '/shop/all?type=all'])
-            </div>
-        @endif
-        
-
-        {{-- Show listings near--}}
-        @if($listingsNear != null) 
-            <div class = "listings-parent-container">
-                {{!! $listingsNear !!}}
-            </div>
-        @else
-            <div class= "listings-parent-container" id="conditionalRenderNearby">
-
-            </div>
-        @endif
-
         {{-- carousel for rentables --}}
         <div class="listings-parent-container">
             @include('partials._rentablesCarousel',
             ['rentables'=> $rentables, 'message' => 'For Rent' , 'carouselClass' => 'slider2',
             'carouselControls' => 'controls2', 'carouselP' =>' previous previous2', 'carouselN' => 'next next2', 'currentUser'=>$user])
+        </div>
+
+        {{-- personalized collapsible area --}}
+        <div class="listings-parent-container" style="display:flex; flex-direction:column;" id="personalizedSection" style="display:none;">
+            <span class="collapsible-button collapsible" id="collapsible-button">
+                <h2>Personalized For You</h2>
+                <i id = "collapseArrow" class="fa-solid fa-arrow-right down"></i>
+            </span>
+            {{-- <button class="collapsible-button" class="collapsible" id="collapsible-button">Personalized For Me</button> --}}
+            <div class="expand-container">
+                <div class="collapsible-container collapsed" id = "collapsible-container">
+                    @if($recentlyViewed != null && count($recentlyViewed) > 0)
+                        @include('partials._mixedCarousel', ['listings' => $recentlyViewed, 'message' => 'Recently Viewed', 'carouselClass'=>'recently-viewed-slider','carouselControls' => 'recently-viewed-controls', 'carouselP' =>'previous recently-viewed-previous', 'carouselN' => 'next recently-viewed-next',
+                            'currentUser'=>$user, 'extraLink'=> '/shop/all?type=all'])
+                    @endif
+
+                    {{-- Show liked items if the user is logged in and has liked items--}}
+                    @if($user != null && $likedItems != null && count($likedItems) > 0)
+                        @include('partials._mixedCarousel', ['listings' => $likedItems, 'message' => 'Liked Items', 'carouselClass'=>'liked-items-slider','carouselControls' => 'liked-items-controls', 'carouselP' =>'previous liked-items-previous', 'carouselN' => 'next liked-items-next',
+                            'currentUser'=>$user, 'extraLink' => '/shop/all?type=all'])
+                    @endif
+
+                    {{-- Show listings near--}}
+                    @if($listingsNear != null) 
+                        <div class = "listings-parent-container">
+                            {{!! $listingsNear !!}}
+                        </div>
+                    @else
+                        <div id="conditionalRenderNearby">
+
+                        </div>
+                    @endif
+
+                </div>
+            </div>
         </div>
         
         {{-- main card gallery for items posted within the last 24hrs --}}
@@ -65,6 +73,16 @@
     </main>
 
     <script>
+
+        document.getElementById("collapsible-button").addEventListener("click", function(){
+            console.log('clicked');
+            var el = document.getElementById("collapsible-container");
+            var arrow = document.getElementById("collapseArrow")
+            el.classList.toggle('expanded');
+            el.classList.toggle('collapsed');
+            arrow.classList.toggle('down');
+            arrow.classList.toggle('up');
+        });
 
         var likedItems = {!! json_encode(array_values($likedItems)) !!};
         var recentlyViewed = {!! json_encode(array_values($recentlyViewed)) !!};
@@ -185,6 +203,17 @@
             })
         }
 
+        var listingsNearAjaxResult = false;
+        checkCollapsible();
+        function checkCollapsible(){
+            if(likedItems.length > 0 || recentlyViewed.lengh > 0 || listingsNear != null || listingsNearAjaxResult){
+                console.log('show');
+                document.getElementById('personalizedSection').style.display="flex";
+            }else{
+                console.log('dont show');
+                document.getElementById('personalizedSection').style.display="none";
+            }
+        }
 
         // ---------------------------------------------------------------
         // User Location related functions to show nearby items
@@ -215,6 +244,8 @@
                     }else if (result.state === 'denied') {
                         // console.log('came to the bottom one');
                         $("#conditionalRenderNearby").empty();
+                        listingsNearAjaxResult = false;
+                        checkCollapsible();
                     }
                 });
              
@@ -293,6 +324,8 @@
                 success:function(data) {
                     // console.log("Listings near the user: ", data.html);
                     createTns = true;
+                    listingsNearAjaxResult = true;
+                    checkCollapsible();
                     $("#conditionalRenderNearby").html(data.html);
                     tns({
                         container: ".nearby-items-slider",
