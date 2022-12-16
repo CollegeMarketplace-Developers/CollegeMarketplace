@@ -122,6 +122,15 @@ class Controller extends BaseController
         return $totalResults;
     }
 
+    public function getResultsForCardGalleryAjax(Request $request){
+        $listingResults = Listing::latest()->where('status', '!=', 'Sold')->limit(40*$request->numPostingsScale)->get();
+        $rentableResults = Rentable::latest()->where('status', 'like', 'Available')->limit(40*$request->numPostingsScale)->get();
+        $subleaseResults = Sublease::latest()->where('status', 'like', 'Available')->limit(40*$request->numPostingsScale)->get();
+        $totalResults = collect($listingResults)->merge($rentableResults)->merge($subleaseResults)->sortByDesc('created_at')->slice(0, 40*$request->numPostingsScale);
+        // dd($totalResults);
+        return $totalResults;
+    }
+
     //get all the items sorted by category to be used in the homepage category carousels
     public function getResultsPerCategoryForCarousel(){
 
@@ -306,9 +315,9 @@ class Controller extends BaseController
     public function getAP() {
         $user = User::find(auth()->user());
 
-        $listingResultsFull = Listing::latest()->where('status', '!=', 'Sold' )->where('user_id','=',$user->first()->id)->limit(10)->get();
-        $retnablesResultsFull = Rentable::latest()->where('status', '!=', 'Rented' )->where('user_id','=',$user->first()->id)->limit(10)->get();
-        $subleaseResultsFull = Sublease::latest()->where('status', 'like', 'Available' )->where('user_id','=',$user->first()->id)->limit(10)->get();
+        $listingResultsFull = Listing::latest()->where('status', '!=', 'Sold' )->where('user_id','=',$user->first()->id)->get();
+        $retnablesResultsFull = Rentable::latest()->where('status', '!=', 'Rented' )->where('user_id','=',$user->first()->id)->get();
+        $subleaseResultsFull = Sublease::latest()->where('status', 'like', 'Available' )->where('user_id','=',$user->first()->id)->get();
         $allFull = collect($listingResultsFull)->merge($retnablesResultsFull)->merge($subleaseResultsFull)->sortByDesc('created_at');
 
         return $allFull;
