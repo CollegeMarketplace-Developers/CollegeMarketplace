@@ -79,8 +79,8 @@
                 </li>
 
 
-                {{-- button to request --}}
-                <li><a href="#">Requests</a></li>
+                <!-- {{-- button to request --}}
+                <li><a href="#">Requests</a></li> -->
 
 
                 {{-- @auth
